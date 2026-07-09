@@ -113,12 +113,11 @@
   .statcard p{font-size:14px;color:var(--slate,#475569);margin:14px 0 0}
 
   /* capturas */
-  .shots{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:24px}
+  .shots{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
   @media(max-width:820px){.shots{grid-template-columns:1fr}}
   .shot{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-soft)}
   .shot img{width:100%;display:block}
   .shot .cap{padding:12px 16px;font-size:13px;color:var(--muted)}
-  .shot-stack{display:flex;flex-direction:column;gap:18px}
 
   .ready{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
   @media(max-width:820px){.ready{grid-template-columns:1fr 1fr}}
@@ -311,21 +310,15 @@
   <div class="wrap">
     <h2>Producto</h2>
     <p class="h2sub">Algunas pantallas del diseño de alta fidelidad</p>
-    <p class="lede">Capturas del diseño de la plataforma: dashboard por cliente, vista de todas las cuentas y comparación de layouts desktop/mobile — incluyendo el estado real de una cuenta con reconexión pendiente.</p>
+    <p class="lede">Capturas del diseño de la plataforma: dashboard por cliente en desktop y mobile, y la vista de todos los clientes de la agencia — incluyendo el estado real de una cuenta con reconexión pendiente.</p>
     <div class="shots">
       <div class="shot">
         <img src="assets/filgrama/dashboard-workspace.jpg" alt="Dashboard de cliente en Fil-Grama, vista desktop y mobile, con una cuenta de TikTok en estado de reconexión">
         <div class="cap">Workspace de cliente: dashboard con alcance, interacciones, engagement y seguidores, más el detalle de cuentas conectadas por red — en desktop y mobile.</div>
       </div>
-      <div class="shot-stack">
-        <div class="shot">
-          <img src="assets/filgrama/lista-clientes.jpg" alt="Lista de clientes de la agencia en Fil-Grama con métricas resumidas por cliente">
-          <div class="cap">Home: lista de clientes de la agencia con métrica resumen configurable.</div>
-        </div>
-        <div class="shot">
-          <img src="assets/filgrama/dashboard-cliente.jpg" alt="Dashboard de cliente de Fil-Grama con filtro por red y por rango de fechas">
-          <div class="cap">Dashboard con filtro por red (Todas / IG / FB / TikTok) y por rango de días.</div>
-        </div>
+      <div class="shot">
+        <img src="assets/filgrama/lista-clientes.jpg" alt="Lista de clientes de la agencia en Fil-Grama con métricas resumidas por cliente, en desktop y mobile">
+        <div class="cap">Home: lista de clientes de la agencia con métrica resumen configurable, en desktop y mobile.</div>
       </div>
     </div>
     <p class="disc">Capturas del diseño de producto en alta fidelidad; algunos valores de métricas son datos de ejemplo usados durante el diseño, no cifras de clientes reales.</p>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enrique Chyrnia — Portfolio · Desarrollo de Software</title>
+<style>
+  :root{
+    --ink:#0B1120; --ink-2:#141c2e; --slate:#475569; --muted:#64748b; --faint:#94a3b8;
+    --accent:#6366F1;         /* índigo personal de Enrique */
+    --accent-deep:#4338CA;
+    --cyan:#22D3EE;
+    /* acentos por proyecto */
+    --teal:#14B8A6; --teal-deep:#0E7490;   /* backend */
+    --indigo:#6366F1; --indigo-deep:#4338CA; /* onboarding */
+    --mist:#F6F8FC; --surface:#ffffff; --line:#E5EAF2; --line-d:rgba(255,255,255,.12);
+    --maxw:1080px;
+    --shadow:0 24px 64px -32px rgba(11,17,32,.5);
+    --shadow-soft:0 12px 34px -20px rgba(11,17,32,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--mist);color:var(--ink);
+    font-family:"Inter",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  h2.k{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 8px;font-weight:800}
+  .h2sub{font-size:27px;letter-spacing:-.02em;color:var(--ink);margin:0 0 20px;font-weight:800;line-height:1.16}
+  .lede{font-size:17px;max-width:70ch;color:#33405a}
+  .note{font-size:15.5px;color:#3a4763;max-width:68ch}
+  section{padding:60px 0}
+  .alt{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+  /* topbar */
+  .topbar{position:sticky;top:0;z-index:40;background:rgba(11,17,32,.85);
+    backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--line-d)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{display:flex;align-items:center;gap:11px;color:#fff;font-weight:800;letter-spacing:-.02em;font-size:16px}
+  .mk{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--cyan));
+    display:grid;place-items:center;color:#fff;font-weight:900;font-size:13px;box-shadow:0 6px 16px -6px rgba(99,102,241,.7)}
+  nav.links{display:flex;gap:20px}
+  nav.links a{color:#aeb9cc;font-size:13.5px;font-weight:600}
+  nav.links a:hover{color:#fff}
+  .btn{font:inherit;font-size:13px;font-weight:700;cursor:pointer;border-radius:9px;padding:8px 15px;
+    border:1px solid rgba(255,255,255,.22);background:transparent;color:#dce3ef;transition:.16s;display:inline-block}
+  .btn:hover{border-color:var(--cyan);color:#fff;text-decoration:none}
+  .btn.solid{background:linear-gradient(135deg,var(--accent),var(--accent-deep));border-color:transparent;color:#fff}
+  @media(max-width:820px){nav.links{display:none}}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;color:#eaf0fb;
+    background:
+      radial-gradient(1100px 460px at 84% -10%,rgba(34,211,238,.18),transparent 60%),
+      radial-gradient(820px 420px at 4% 120%,rgba(99,102,241,.28),transparent 58%),
+      linear-gradient(135deg,var(--ink),#111a2e 55%,#17203a);}
+  .hero::after{content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:34px 34px;mask:radial-gradient(120% 92% at 74% 0%,#000,transparent 74%)}
+  .hero .wrap{position:relative;z-index:2;padding:72px 26px 78px}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:#9df0fb;border:1px solid rgba(34,211,238,.4);background:rgba(34,211,238,.08);padding:6px 13px;border-radius:999px}
+  .hero h1{font-size:clamp(38px,6.4vw,64px);line-height:1.0;letter-spacing:-.04em;margin:20px 0 6px;font-weight:850;color:#fff}
+  .hero .role{font-size:clamp(16px,2.4vw,22px);color:#c5d0e6;font-weight:600;margin:0}
+  .hero .role b{color:#9df0fb;font-weight:700}
+  .hero .lead{font-size:17px;max-width:60ch;color:#c8d2e6;margin:22px 0 0}
+  .hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .stat-row{display:flex;flex-wrap:wrap;gap:30px;margin-top:40px;padding-top:26px;border-top:1px solid var(--line-d)}
+  .stat b{display:block;font-size:22px;color:#fff;font-weight:800;letter-spacing:-.02em}
+  .stat span{font-size:12.5px;color:#9db0cc}
+
+  /* perfil */
+  .two{display:grid;grid-template-columns:1.1fr .9fr;gap:38px;align-items:start}
+  @media(max-width:820px){.two{grid-template-columns:1fr;gap:26px}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow-soft)}
+  .card h3{margin:0 0 8px;font-size:16px;color:var(--ink)}
+  .card p{margin:0;font-size:14.5px;color:var(--slate)}
+
+  /* stack */
+  .techgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+  @media(max-width:820px){.techgrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.techgrid{grid-template-columns:1fr}}
+  .techcol h4{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 11px}
+  .rail{display:flex;flex-wrap:wrap;gap:8px}
+  .tk{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line);padding:7px 12px;border-radius:10px}
+  .tk i{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .tk.t i{background:var(--teal)} .tk.c i{background:var(--cyan)}
+
+  /* proyectos */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px}
+  @media(max-width:820px){.proj-grid{grid-template-columns:1fr}}
+  .proj{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--shadow-soft);display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
+  .proj:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .proj .thumb{height:190px;position:relative;overflow:hidden;display:grid;place-items:center}
+  .proj .body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+  .ptype{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:11px;font-weight:700;
+    letter-spacing:.03em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:12px}
+  .proj h3{margin:0;font-size:20px;letter-spacing:-.01em;color:var(--ink)}
+  .proj .sub{font-size:12.5px;color:var(--muted);margin:2px 0 0;font-weight:600}
+  .proj p{font-size:13.5px;color:var(--slate);margin:12px 0 0}
+  .prole{font-size:12.5px;color:var(--ink);margin:12px 0 0;font-weight:600}
+  .prole span{color:var(--muted);font-weight:500}
+  .ptech{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+  .ptech span{font-size:11px;font-weight:600;color:var(--slate);background:var(--mist);border:1px solid var(--line);padding:4px 9px;border-radius:7px}
+  .pfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+  .pbtn{display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:13px;color:#fff;border-radius:9px;padding:9px 15px}
+  .pbadge{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+
+  /* AWS accents */
+  .a-teal .thumb{background:linear-gradient(160deg,#0b2b2f,#0f3d43 60%,#0b2540)}
+  .a-teal .ptype{background:rgba(20,184,166,.12);color:var(--teal-deep);border:1px solid rgba(20,184,166,.3)}
+  .a-teal .pbtn{background:linear-gradient(135deg,var(--teal),var(--teal-deep))}
+  .a-teal .pbadge{background:#ecfdf5;color:#0e7490;border:1px solid #a7f3d0}
+  /* Indigo accents */
+  .a-ind .thumb{background:linear-gradient(160deg,#161a3a,#1e2352 60%,#14163a)}
+  .a-ind .ptype{background:rgba(99,102,241,.12);color:var(--indigo-deep);border:1px solid rgba(99,102,241,.3)}
+  .a-ind .pbtn{background:linear-gradient(135deg,var(--indigo),var(--indigo-deep))}
+  .a-ind .pbadge{background:#eef0fe;color:var(--indigo-deep);border:1px solid #d6d9fb}
+
+  /* placeholder card */
+  .proj.ghost{border-style:dashed;box-shadow:none;background:transparent}
+  .proj.ghost .thumb{height:auto;padding:34px 20px;background:transparent}
+  .ghost .gh{text-align:center;color:var(--muted)}
+  .ghost .gh b{display:block;color:var(--slate);font-size:15px;margin-bottom:4px}
+
+  /* AWS thumb motif */
+  .aws-motif{display:flex;gap:9px;align-items:center}
+  .aws-motif .nd{width:52px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(20,184,166,.5);
+    display:grid;place-items:center;color:#7fe9dd;font-size:9px;font-weight:700}
+  .aws-motif .gw{width:40px;height:52px;border-radius:9px;background:linear-gradient(160deg,var(--teal),var(--teal-deep));display:grid;place-items:center;color:#fff;font-size:9px;font-weight:800;text-align:center;line-height:1.1}
+  .aws-col{display:flex;flex-direction:column;gap:7px}
+  /* phone thumb */
+  .mini-phone{width:104px;border-radius:18px;background:#05060f;padding:5px;box-shadow:0 20px 40px -20px rgba(0,0,0,.7)}
+  .mini-phone .sc{border-radius:14px;overflow:hidden;background:#fff;height:150px;padding-top:14px;position:relative}
+  .mini-phone .sc::after{content:"";position:absolute;top:0;left:0;right:0;height:14px;background:#05060f}
+  .mp-top{display:flex;align-items:center;gap:5px;padding:6px 8px;border-bottom:1px solid var(--line)}
+  .mp-logo{width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,var(--indigo),var(--cyan))}
+  .mp-h{background:linear-gradient(160deg,var(--ink),#1e2352);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:12px 8px;line-height:1.3}
+  .mp-b{padding:8px;display:flex;flex-direction:column;gap:5px}
+  .mp-line{height:7px;border-radius:3px;background:var(--mist);border:1px solid var(--line)}
+  .mp-btn{height:14px;border-radius:5px;background:var(--indigo);margin-top:2px}
+
+  /* experiencia */
+  .exp{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 24px;box-shadow:var(--shadow-soft)}
+  .exp-head{display:flex;align-items:center;gap:14px}
+  .exp-logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--indigo));display:grid;place-items:center;color:#fff;font-weight:900;font-size:15px;flex:0 0 auto}
+  .exp-co{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .exp-role{font-size:13px;color:var(--muted);font-weight:600}
+  .exp-per{margin-left:auto;font-size:11px;font-weight:700;color:var(--muted);background:var(--mist);border:1px solid var(--line);padding:5px 11px;border-radius:999px}
+  @media(max-width:560px){.exp-per{display:none}}
+  .a-amber .thumb{background:linear-gradient(160deg,#2b210b,#3d310f 60%,#241b0b)}
+  .a-amber .ptype{background:rgba(217,119,6,.12);color:#b45309;border:1px solid rgba(217,119,6,.3)}
+  .a-amber .pbtn{background:linear-gradient(135deg,#f59e0b,#b45309)}
+  .a-amber .pbadge{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+  .adm{width:152px;background:#0f1424;border:1px solid rgba(245,158,11,.4);border-radius:10px;overflow:hidden}
+  .adm-h{height:16px;background:rgba(245,158,11,.18);border-bottom:1px solid rgba(245,158,11,.3)}
+  .adm-row{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .adm-row i{width:16px;height:16px;border-radius:4px;background:rgba(245,158,11,.35);flex:0 0 auto}
+  .adm-row b{height:6px;border-radius:3px;background:rgba(255,255,255,.18);flex:1}
+  .adm-row s{width:34px;height:12px;border-radius:4px;background:rgba(20,184,166,.5)}
+
+  /* contacto */
+  .contact{background:linear-gradient(135deg,var(--ink),#17203a);border-radius:20px;padding:40px;text-align:center;color:#eaf0fb;box-shadow:var(--shadow)}
+  .contact h3{color:#fff;font-size:26px;margin:0 0 8px;letter-spacing:-.02em}
+  .contact p{color:#c3cee4;max-width:52ch;margin:0 auto;font-size:15px}
+  .contact .mail{display:inline-block;margin-top:16px;color:#9df0fb;font-weight:800;font-size:20px}
+  .contact .cbtns{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+
+  footer{padding:30px 0;color:var(--muted);font-size:12.5px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .disc{font-size:12px;color:var(--muted);margin-top:14px;font-style:italic}
+
+  @media print{.topbar,.btn,.pbtn{display:none!important}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{padding:20px 0;break-inside:avoid}.proj{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="mk">EC</span>Enrique Chyrnia</div>
+    <nav class="links">
+      <a href="#perfil">Perfil</a>
+      <a href="#stack">Stack</a>
+      <a href="#proyectos">Experiencia</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="btn solid" href="#contacto">Contacto</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Portfolio · Desarrollo de software</span>
+    <h1>Enrique Chyrnia</h1>
+    <p class="role"><b>Backend</b> · <b>APIs &amp; Integración</b> · <b>Sistemas cloud</b></p>
+    <p class="lead">Trabajo en backend para sistemas web: APIs, integración con servicios externos, persistencia de datos, documentación técnica y despliegue en entornos cloud. Trabajo API-first y dejo documentadas las decisiones técnicas con sus trade-offs.</p>
+    <div class="cta">
+      <a class="btn solid" href="#proyectos">Ver experiencia</a>
+      <a class="btn" href="#contacto">Contacto</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><b>Backend</b><span>APIs · integración · despliegue</span></div>
+      <div class="stat"><b>API-first</b><span>el contrato como fuente de verdad</span></div>
+      <div class="stat"><b>Cloud</b><span>módulos desplegados y probados</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- PERFIL -->
+<section id="perfil">
+  <div class="wrap">
+    <h2 class="k">Perfil</h2>
+    <p class="h2sub">Quién soy y cómo trabajo</p>
+    <div class="two">
+      <div>
+        <p class="lede">Desarrollador de software con foco en <b>backend, APIs e integración</b>. Me gusta participar de todo el ciclo: modelar datos, definir contratos de API, construir la lógica de negocio, documentar y desplegar.</p>
+        <p class="note" style="margin-top:16px">Trabajo <b>API-first</b>: primero el contrato, después el código, para que frontend y backend avancen en paralelo sin pisarse. Documento decisiones técnicas, alternativas y trade-offs para que el equipo pueda entenderlas y mantenerlas.</p>
+        <p class="note" style="margin-top:12px">Actualmente sigo estudiando ingeniería informática; mi experiencia viene de construir, desplegar y probar sistemas reales.</p>
+      </div>
+      <div>
+        <div class="card"><h3>Del requerimiento al deploy</h3><p>Participo desde el análisis técnico hasta el despliegue, colaborando en las decisiones junto al equipo y dejándolas documentadas.</p></div>
+        <div class="card" style="margin-top:14px"><h3>Backend &amp; sistemas</h3><p>Módulos backend Java/Spring en cloud, APIs REST contract-first e integraciones con servicios externos que sostienen el producto.</p></div>
+        <div class="card" style="margin-top:14px"><h3>Honestidad técnica</h3><p>Señalo lo que falta o lo que es riesgo (seguridad, deuda) antes de que sea un problema, y lo dejo documentado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack" class="alt">
+  <div class="wrap">
+    <h2 class="k">Stack</h2>
+    <p class="h2sub">Tecnologías que manejo</p>
+    <div class="techgrid">
+      <div class="techcol">
+        <h4>Backend & arquitectura</h4>
+        <div class="rail"><span class="tk"><i></i>Java</span><span class="tk"><i></i>Spring Boot</span><span class="tk"><i></i>Arquitectura modular</span><span class="tk"><i></i>APIs REST</span></div>
+      </div>
+      <div class="techcol">
+        <h4>APIs, contratos & integración</h4>
+        <div class="rail"><span class="tk c"><i></i>OpenAPI · contract-first</span><span class="tk c"><i></i>Webhooks</span><span class="tk c"><i></i>Colas de mensajería</span></div>
+      </div>
+      <div class="techcol">
+        <h4>Datos & persistencia</h4>
+        <div class="rail"><span class="tk"><i></i>PostgreSQL</span><span class="tk"><i></i>PostGIS · geoespacial</span><span class="tk c"><i></i>Almacenamiento de objetos</span><span class="tk c"><i></i>Redis</span></div>
+      </div>
+      <div class="techcol">
+        <h4>Seguridad & identidad</h4>
+        <div class="rail"><span class="tk"><i></i>JWT · roles</span><span class="tk"><i></i>Spring Security</span><span class="tk c"><i></i>Autenticación federada (OAuth/OIDC)</span></div>
+      </div>
+      <div class="techcol">
+        <h4>Cloud, despliegue & DevOps</h4>
+        <div class="rail"><span class="tk t"><i></i>AWS</span><span class="tk t"><i></i>Docker</span><span class="tk t"><i></i>Terraform</span><span class="tk t"><i></i>CI/CD</span></div>
+      </div>
+      <div class="techcol">
+        <h4>Frontend (secundario)</h4>
+        <div class="rail"><span class="tk"><i></i>TypeScript</span><span class="tk"><i></i>React</span><span class="tk"><i></i>Next.js</span></div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:18px;font-size:14px"><b>Sobre el frontend:</b> es un aporte secundario; en varios módulos la interfaz la desarrolló otra persona del equipo y mi foco fue el backend. <b>PostGIS</b> es la extensión geoespacial de PostgreSQL (búsquedas por cercanía y filtros por ubicación).</p>
+      </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="wrap">
+    <h2 class="k">Experiencia</h2>
+    <p class="h2sub">Experiencia laboral — Backend e infraestructura</p>
+    <div class="exp">
+      <div class="exp-head">
+        <div class="exp-logo">EB</div>
+        <div>
+          <div class="exp-co">Empresa privada · rubro servicios digitales</div>
+          <div class="exp-role">Desarrollador Backend — backend, infraestructura cloud e integración</div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:14px">Trabajé en una empresa privada del rubro servicios digitales, participando como encargado de backend e infraestructura técnica en una plataforma operativa con aplicaciones para usuarios, profesionales y equipo interno. Mi trabajo cubrió tres áreas: la arquitectura backend e infraestructura cloud, el registro de usuarios y el backoffice del equipo interno.</p>
+      <div class="rail" style="margin-top:14px">
+        <span class="tk"><i></i>Backend modular e infraestructura cloud</span><span class="tk c"><i></i>Onboarding y registro de usuarios</span><span class="tk t"><i></i>Backoffice operativo</span>
+      </div>
+      <p class="disc" style="margin-top:12px">Por confidencialidad, este caso está presentado de forma anonimizada: no incluye nombres reales, código fuente, datos internos, credenciales, pantallas privadas ni arquitectura exacta.</p>
+      <div style="margin-top:16px"><a class="pbtn" style="background:linear-gradient(135deg,var(--accent),var(--accent-deep))" href="experiencia-backend-plataforma.html">Ver experiencia laboral →</a></div>
+    </div>
+
+      </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="alt">
+  <div class="wrap">
+    <div class="contact">
+      <h3>Contacto</h3>
+      <p>Disponible para oportunidades de backend, APIs e integraciones. Podés escribirme por trabajo, proyectos o colaboración técnica.</p>
+      <a class="mail" href="mailto:www.enririos@gmail.com">www.enririos@gmail.com</a>
+      <div class="cbtns">
+        <a class="btn solid" href="mailto:www.enririos@gmail.com">Escribime</a>
+        <button class="btn" onclick="window.print()">Exportar PDF</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Enrique Chyrnia · Backend · APIs · Arquitectura</span>
+    <span>© <span id="yr"></span> · Portfolio</span>
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>

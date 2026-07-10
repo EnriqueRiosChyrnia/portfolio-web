@@ -155,6 +155,7 @@
       <a href="#arquitectura">Arquitectura</a>
       <a href="#integraciones">Integraciones</a>
       <a href="#infra">Infraestructura</a>
+      <a href="#diseno">Diseño</a>
       <a href="#stack">Stack</a>
     </nav>
     <div class="controls">
@@ -173,7 +174,7 @@
     <p class="lead">Fil-Grama es una herramienta que estoy construyendo para agencias de marketing: centraliza las métricas orgánicas de las cuentas de sus clientes en Instagram, Facebook y TikTok, guarda un historial propio día a día (las redes no exponen series históricas completas por API) y arma reportes por cliente y por red. Es mi proyecto propio, en camino a convertirse en SaaS.</p>
     <div class="rolebox">
       <b>Rol · Fundador y desarrollador — lo diseñé, construí y desplegué de punta a punta</b>
-      <p>Definí el modelo de datos y la arquitectura, implementé el backend y el frontend, hice las integraciones con TikTok y Meta, armé la infraestructura y hago los despliegues.</p>
+      <p>Definí el modelo de datos y la arquitectura, diseñé la interfaz completa (50 pantallas, del wireframe a la alta fidelidad), implementé el backend y el frontend, hice las integraciones con TikTok y Meta, armé la infraestructura y hago los despliegues.</p>
     </div>
     <div class="stat-row">
       <div class="stat"><b>Java · Spring Boot</b><span>backend modular por dominio</span></div>
@@ -305,8 +306,78 @@
   </div>
 </section>
 
+<!-- ============ DISEÑO DE PRODUCTO ============ -->
+<section id="diseno">
+  <div class="wrap">
+    <h2>Diseño de producto</h2>
+    <p class="h2sub">Diseñé el producto completo antes de escribir el código</p>
+    <div class="two">
+      <div>
+        <p class="lede">Antes de construir, diseñé Fil-Grama de punta a punta: <b>50 pantallas en 6 áreas</b> (acceso y OAuth, clientes, workspace de cliente, administración, panel de plataforma y modo autogestionado), cada una con vista de escritorio y móvil. El flujo de trabajo fue siempre el mismo: primero wireframe de baja fidelidad para acordar estructura y jerarquía, y recién con eso aprobado, la versión de alta fidelidad.</p>
+        <p class="note" style="margin-top:16px">El diseño no quedó suelto: lo acompañan una <b>guía de componentes</b>, un <b>mapa de navegación</b> completo, una auditoría de consistencia visual y un handoff documentado para la implementación del frontend en React.</p>
+      </div>
+      <div>
+        <div class="dcard"><b>Divulgación progresiva</b><span>Poco por defecto, el detalle a un clic. Tres niveles: vistazo → detalle → avanzado.</span></div>
+        <div class="dcard"><b>Lenguaje humano, no técnico</b><span>"Alcance" en vez de nombres de API; cada métrica con un ícono ⓘ que la explica en simple.</span></div>
+        <div class="dcard"><b>Consistencia y responsive</b><span>Mismos patrones entre redes y pantallas; todo diseñado también para móvil.</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:19px;letter-spacing:-.01em;margin:38px 0 4px;color:var(--ink);font-weight:800">Del wireframe a la alta fidelidad</h3>
+    <p class="note" style="color:var(--muted)">La misma pantalla (Audiencia) en sus dos etapas: estructura primero, identidad visual después.</p>
+    <div class="shots" style="margin-top:14px">
+      <div class="shot">
+        <img src="assets/filgrama/diseno/audiencia-wireframe.jpg" alt="Wireframe de baja fidelidad de la pantalla de Audiencia de Fil-Grama" loading="lazy">
+        <div class="cap"><b>1 · Wireframe:</b> estructura y jerarquía en baja fidelidad, con las notas de revisión sobre el propio diseño.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/audiencia-hifi.jpg" alt="Versión de alta fidelidad de la pantalla de Audiencia de Fil-Grama" loading="lazy">
+        <div class="cap"><b>2 · Alta fidelidad:</b> la misma pantalla con la identidad visual aplicada — paleta, tipografía y componentes del sistema.</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:19px;letter-spacing:-.01em;margin:38px 0 4px;color:var(--ink);font-weight:800">Pantallas clave del diseño</h3>
+    <p class="note" style="color:var(--muted)">Una selección de las 50 pantallas diseñadas, en alta fidelidad.</p>
+    <div class="shots" style="margin-top:14px">
+      <div class="shot">
+        <img src="assets/filgrama/diseno/home-clientes.jpg" alt="Diseño de la Home de Fil-Grama: lista de clientes de la agencia con resumen y métricas" loading="lazy">
+        <div class="cap">Home / lista de clientes: resumen de agencia, movimientos de la semana y una tarjeta por cliente con su métrica principal.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/dashboard-cliente.jpg" alt="Diseño del dashboard de cliente con KPIs, metas y cuentas conectadas" loading="lazy">
+        <div class="cap">Dashboard de cliente: alcance con comparación de período, KPIs, metas acordadas con el cliente y estado de las cuentas conectadas.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/todas-las-publicaciones.jpg" alt="Diseño del listado completo de publicaciones con filtros por red, tipo y rango de fechas" loading="lazy">
+        <div class="cap">Todas las publicaciones: filtros por cuenta, tipo y rango, con orden configurable y drill-down al detalle.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/detalle-publicacion.jpg" alt="Diseño del detalle de publicación con preview del contenido y evolución del alcance" loading="lazy">
+        <div class="cap">Detalle de publicación: preview del contenido, métricas y cómo creció el alcance desde que se publicó.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/comparar-cuentas.jpg" alt="Diseño de la comparación de cuentas en tabla, con métricas no comparables señaladas" loading="lazy">
+        <div class="cap">Comparar cuentas: métricas lado a lado, señalando explícitamente cuáles no son comparables entre redes.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/reporte-historial.jpg" alt="Diseño del historial de reportes generados, con formato y programación" loading="lazy">
+        <div class="cap">Reportes: historial de reportes generados (manuales y programados) con formato y descarga.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/onboarding-oauth.jpg" alt="Diseño del paso de onboarding OAuth para elegir qué cuentas de Meta conectar" loading="lazy">
+        <div class="cap">Onboarding OAuth: tras autorizar en Meta, elegir qué cuentas conectar — con estados claros y sin pedir contraseñas nunca.</div>
+      </div>
+      <div class="shot">
+        <img src="assets/filgrama/diseno/panel-plataforma.jpg" alt="Diseño del panel de plataforma multi-tenant con salud del job diario por organización" loading="lazy">
+        <div class="cap">Panel de plataforma (staff): observabilidad multi-tenant — salud del job diario por organización, con datos de terceros pseudonimizados.</div>
+      </div>
+    </div>
+    <p class="disc">Diseños propios de producto (mockups con datos ficticios), previos a la implementación. Las capturas de la app real funcionando están en la sección siguiente.</p>
+  </div>
+</section>
+
 <!-- ============ CAPTURAS ============ -->
-<section id="pantallas">
+<section id="pantallas" class="alt">
   <div class="wrap">
     <h2>Producto</h2>
     <p class="h2sub">Capturas reales de la plataforma funcionando</p>
@@ -334,7 +405,7 @@
 </section>
 
 <!-- ============ STACK ============ -->
-<section id="stack" class="alt">
+<section id="stack">
   <div class="wrap">
     <h2>Stack</h2>
     <p class="h2sub">Tecnologías del proyecto</p>
@@ -368,7 +439,7 @@
 </section>
 
 <!-- ============ ESTADO Y ROADMAP ============ -->
-<section id="roadmap">
+<section id="roadmap" class="alt">
   <div class="wrap">
     <h2>Estado actual</h2>
     <p class="h2sub">En desarrollo activo, camino a SaaS</p>

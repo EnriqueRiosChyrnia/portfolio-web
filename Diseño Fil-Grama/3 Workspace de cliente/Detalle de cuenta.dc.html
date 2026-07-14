@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgSpin { to { transform: rotate(360deg); } }
+    @keyframes filgShimmer { 0% { background-position:-360px 0; } 100% { background-position:360px 0; } }
+    .filg-sk { background:#EAEEF3; background-image:linear-gradient(90deg,#EAEEF3 0,#F3F6FA 180px,#EAEEF3 360px); background-size:720px 100%; animation:filgShimmer 1.25s linear infinite; border-radius:7px; }
+    .filg-hov:hover { background:#F7F9FC; }
+    .filg-card:hover { box-shadow:0 6px 18px rgba(20,25,33,.10); transform:translateY(-1px); }
+    .filg-card { transition:box-shadow .14s, transform .14s; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Detalle de cuenta</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Drill-down de UNA cuenta de red, dentro del workspace del cliente. Se llega tocando una fila de «Cuentas conectadas» en el Dashboard. Cambiá la métrica y el rango: se actualizan los KPIs CORE, el gráfico y las mejores publicaciones. Botón <span style="color:#3D4757; font-weight:500;">«Ver todas las publicaciones»</span> → grilla completa. Cambiá el estado demo para ver con datos, sin publicaciones, cargando y error.</div>
+  </div>
+
+  <!-- demo state switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="4"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · pestaña Dashboard → detalle de cuenta · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <!-- top bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <div style="width:28px; height:28px; border-radius:8px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><polyline points="1,11 5,7 8,9 14,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span style="font-size:16px; font-weight:600; color:#141921; letter-spacing:-.2px;">Fil-Grama</span>
+          </div>
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <!-- workspace header + tabs -->
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:16px 28px 0;">
+          <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Café Aurora</span></div>
+          <div style="display:flex; align-items:center; gap:13px; margin-top:12px;">
+            <div style="width:44px; height:44px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div>
+              <div style="font-size:21px; font-weight:600; color:#141921; letter-spacing:-.3px;">Café Aurora</div>
+              <div style="display:flex; align-items:center; gap:6px; margin-top:6px;">
+                <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">IG</span>
+                <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">FB</span>
+                <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">TikTok</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:4px; margin-top:16px;">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5"><div style="{{ t.style }}">{{ t.label }}</div></sc-for>
+          </div>
+        </div>
+
+        <!-- body -->
+        <div style="background:#F5F7FA; padding:20px 28px 32px; min-height:560px;">
+
+          <!-- account header -->
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-top:14px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:13px;">
+              <div style="width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,#FCEFE6,#F6E1EC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:13px; font-weight:600; color:#B5638A;">CA</span></div>
+              <div>
+                <div style="font-size:22px; font-weight:600; color:#141921; letter-spacing:-.3px;">@cafeaurora</div>
+                <div style="display:flex; align-items:center; gap:9px; margin-top:6px;">
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">Instagram</span>
+                  <span style="display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#1F7A50;"><span style="width:6px; height:6px; border-radius:50%; background:#1F7A50;"></span>Conectada</span>
+                </div>
+              </div>
+            </div>
+            <div onClick="{{ goAllPosts }}" style="height:38px; display:flex; align-items:center; gap:8px; padding:0 16px; background:#fff; border:1px solid #D4DAE3; color:#3D4757; border-radius:9px; font-size:13.5px; font-weight:500; cursor:pointer; flex:none;">Ver todas las publicaciones</div>
+          </div>
+
+          <!-- controls -->
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:20px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:9px;">
+              <span style="font-size:12px; color:#8A95A6; text-transform:uppercase; letter-spacing:.6px;">Métrica</span>
+              <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+                <sc-for list="{{ metricOptions }}" as="m" hint-placeholder-count="4"><div style="{{ m.style }}" onClick="{{ m.onClick }}">{{ m.label }}</div></sc-for>
+              </div>
+              <span onClick="{{ infoToggle.metric }}" onMouseEnter="{{ infoEnter.metric }}" onMouseLeave="{{ infoLeave.metric }}" style="position:relative; display:inline-flex;">
+                <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                <sc-if value="{{ info.metric }}" hint-placeholder-val="{{ false }}">
+                  <span style="position:absolute; top:25px; left:-10px; width:250px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;"><span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">{{ metricLabel }}</span><span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">{{ metricInfo }}</span></span>
+                </sc-if>
+              </span>
+            </div>
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+              <sc-for list="{{ rangeList }}" as="r" hint-placeholder-count="4"><div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div></sc-for>
+            </div>
+          </div>
+
+          <!-- CORE concept KPIs -->
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-top:18px;">
+            <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:16px 18px;">
+                <div style="display:flex; align-items:center; gap:7px;">
+                  <span style="font-size:13px; color:#647084;">{{ k.label }}</span>
+                  <span onClick="{{ k.onToggle }}" onMouseEnter="{{ k.onEnter }}" onMouseLeave="{{ k.onLeave }}" style="position:relative; display:inline-flex;">
+                    <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                    <sc-if value="{{ k.showInfo }}" hint-placeholder-val="{{ false }}">
+                      <span style="position:absolute; top:25px; left:-10px; width:230px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:12px 14px; z-index:30;"><span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">{{ k.label }}</span><span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">{{ k.info }}</span></span>
+                    </sc-if>
+                  </span>
+                </div>
+                <div style="margin-top:11px; min-height:34px;">
+                  <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}"><div class="filg-sk" style="width:74px; height:26px;"></div></sc-if>
+                  <sc-if value="{{ notLoading }}" hint-placeholder-val="{{ true }}"><span style="font-size:28px; font-weight:600; color:#141921; letter-spacing:-.6px; font-variant-numeric:tabular-nums;">{{ k.value }}</span></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- hero metric chart -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px; margin-top:16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="font-size:13px; color:#647084;">{{ metricLabel }}</div>
+                <div style="display:flex; align-items:baseline; gap:13px; margin-top:9px; min-height:46px;">
+                  <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}"><div class="filg-sk" style="width:150px; height:40px;"></div></sc-if>
+                  <sc-if value="{{ notLoading }}" hint-placeholder-val="{{ true }}"><span style="font-size:46px; font-weight:600; color:#141921; letter-spacing:-1.2px; line-height:1; font-variant-numeric:tabular-nums;">{{ heroValue }}</span><span style="{{ heroTrendStyle }}">{{ heroTrend }}</span></sc-if>
+                </div>
+                <div style="font-size:12px; color:#8A95A6; margin-top:7px;">Último valor · {{ rangeLabel }}</div>
+              </div>
+              <div style="font-size:12px; color:#8A95A6; padding-top:4px;">{{ rangeLabel }}</div>
+            </div>
+
+            <sc-if value="{{ showDataNote }}" hint-placeholder-val="{{ false }}">
+              <div style="display:inline-flex; align-items:center; gap:7px; margin-top:12px; background:#EEF3FB; border:1px solid #DCE6F6; border-radius:8px; padding:5px 10px;">
+                <span style="font-size:12px; color:#3D6FB4;">Datos desde {{ firstCaptureLabel }} — fecha de conexión a Fil-Grama</span>
+                <span onClick="{{ infoToggle.nota }}" onMouseEnter="{{ infoEnter.nota }}" onMouseLeave="{{ infoLeave.nota }}" style="position:relative; display:inline-flex;">
+                  <span style="display:inline-flex; width:15px; height:15px; border:1px solid #9FB8DC; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#3D6FB4; cursor:help;">i</span>
+                  <sc-if value="{{ info.nota }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute; top:24px; left:-120px; width:262px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;"><span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">¿Por qué no hay 12 meses completos?</span><span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Esta cuenta se conectó hace menos de un año, así que «últimos 12 meses» arranca en la fecha de conexión. Las redes no comparten el historial anterior — no es un error.</span></span>
+                  </sc-if>
+                </span>
+              </div>
+            </sc-if>
+
+            <div style="margin-top:18px; min-height:209px;">
+              <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+                <div style="height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;"><span style="display:inline-flex; width:26px; height:26px; border:2.4px solid #D7DEE7; border-top-color:{{ accent }}; border-radius:50%; animation:filgSpin .7s linear infinite;"></span><span style="font-size:13px; color:#8A95A6;">Cargando la tendencia…</span></div>
+              </sc-if>
+              <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+                <div style="height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:11px; text-align:center;"><div style="width:48px; height:48px; border-radius:13px; background:#FBEFEC; border:1px solid #F3DAD2; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 8v5" stroke="#C2603F" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.4" r="1.1" fill="#C2603F"/><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="#C2603F" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div style="font-size:14px; font-weight:600; color:#141921;">No pudimos cargar la tendencia</div><div onClick="{{ retry }}" style="height:34px; display:flex; align-items:center; gap:7px; padding:0 15px; background:{{ accent }}; color:#fff; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;">Reintentar</div></div>
+              </sc-if>
+              <sc-if value="{{ showChart }}" hint-placeholder-val="{{ true }}">
+                <svg width="100%" height="200" viewBox="0 0 1000 200" preserveAspectRatio="none">
+                  <line x1="0" y1="30" x2="1000" y2="30" stroke="#F0F3F7" stroke-width="1"/>
+                  <line x1="0" y1="80" x2="1000" y2="80" stroke="#F0F3F7" stroke-width="1"/>
+                  <line x1="0" y1="130" x2="1000" y2="130" stroke="#F0F3F7" stroke-width="1"/>
+                  <line x1="0" y1="180" x2="1000" y2="180" stroke="#F0F3F7" stroke-width="1"/>
+                  <polygon points="{{ chartArea }}" fill="{{ accent }}" fill-opacity="0.06"/>
+                  <polyline points="{{ chartPoints }}" fill="none" stroke="{{ accent }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div style="display:flex; justify-content:space-between; font-size:11px; color:#8A95A6; margin-top:9px;"><sc-for list="{{ axisLabels }}" as="a" hint-placeholder-count="4"><span>{{ a }}</span></sc-for></div>
+              </sc-if>
+            </div>
+          </div>
+
+          <!-- best posts -->
+          <div style="margin-top:26px;">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
+              <span style="font-size:16px; font-weight:600; color:#141921;">Mejores publicaciones</span>
+              <span onClick="{{ goAllPosts }}" style="font-size:13px; color:{{ accent }}; cursor:pointer; font-weight:500;">Ver todas →</span>
+            </div>
+
+            <div style="margin-top:14px;">
+              <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:14px;"><sc-for list="{{ skel6 }}" as="s" hint-placeholder-count="6"><div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:10px;"><div class="filg-sk" style="width:100%; aspect-ratio:1/1; border-radius:10px;"></div><div class="filg-sk" style="width:80%; height:11px; margin-top:10px;"></div></div></sc-for></div>
+              </sc-if>
+              <sc-if value="{{ isPostsEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:48px 30px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;"><div style="width:50px; height:50px; border-radius:14px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#3D6FB4" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#3D6FB4" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#3D6FB4" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div style="font-size:15px; font-weight:600; color:#141921;">Aún no hay publicaciones en este rango</div><div style="font-size:13px; color:#647084; line-height:1.55; max-width:380px;">Cuando esta cuenta publique (o ampliés el rango), vas a ver acá sus mejores piezas.</div></div>
+              </sc-if>
+              <sc-if value="{{ showPosts }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:14px;">
+                  <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+                    <div class="filg-card" style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:10px; cursor:pointer;" onClick="{{ p.onClick }}">
+                      <div style="position:relative; width:100%; aspect-ratio:1/1; border-radius:10px; overflow:hidden; background:#EEF1F5; border:1px solid #E9EDF2; display:flex; align-items:center; justify-content:center;">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                        <span style="position:absolute; top:7px; left:7px; font-size:10px; font-weight:500; color:#fff; background:rgba(20,25,33,.62); border-radius:6px; padding:2px 7px;">{{ p.type }}</span>
+                      </div>
+                      <div style="margin-top:9px; font-size:12.5px; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.caption }}</div>
+                      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-top:6px;"><span style="font-size:11.5px; color:#8A95A6;">{{ p.date }}</span><span style="font-size:13px; font-weight:600; color:#141921;">{{ p.metricStr }}</span></div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="font-size:11.5px; color:#9AA4B2; margin-top:10px;">Ordenadas por {{ metricLabel }} en {{ rangeLower }}.</div>
+              </sc-if>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#8A95A6;">‹ Café Aurora</span><div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div></div>
+        <div style="background:#F5F7FA; padding:16px 16px 22px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <div style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#FCEFE6,#F6E1EC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:12px; font-weight:600; color:#B5638A;">CA</span></div>
+            <div style="flex:1; min-width:0;"><div style="font-size:17px; font-weight:600; color:#141921;">@cafeaurora</div><div style="display:flex; align-items:center; gap:7px; margin-top:4px;"><span style="font-size:10px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">Instagram</span><span style="display:inline-flex; align-items:center; gap:5px; font-size:11px; color:#1F7A50;"><span style="width:5px; height:5px; border-radius:50%; background:#1F7A50;"></span>Conectada</span></div></div>
+          </div>
+          <div style="height:40px; background:#fff; border:1px solid #D4DAE3; border-radius:9px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:13px; font-weight:500; color:#3D4757; margin-top:14px;">Ver todas las publicaciones</div>
+          <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; margin-top:12px;"><sc-for list="{{ rangeList }}" as="r" hint-placeholder-count="4"><div style="{{ r.styleMobile }}" onClick="{{ r.onClick }}">{{ r.label }}</div></sc-for></div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:12px;">
+            <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4"><div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px;"><div style="font-size:11px; color:#647084;">{{ k.label }}</div><div style="font-size:20px; font-weight:600; color:#141921; margin-top:5px;">{{ k.value }}</div></div></sc-for>
+          </div>
+
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:16px; margin-top:12px;">
+            <span style="font-size:12px; color:#647084;">{{ metricLabel }} · {{ rangeLabel }}</span>
+            <div style="display:flex; align-items:baseline; gap:10px; margin-top:7px;"><span style="font-size:32px; font-weight:600; color:#141921; letter-spacing:-.8px; line-height:1;">{{ heroValue }}</span><span style="{{ heroTrendStyle }}">{{ heroTrend }}</span></div>
+            <svg width="100%" height="100" viewBox="0 0 1000 200" preserveAspectRatio="none" style="margin-top:12px;"><polygon points="{{ chartArea }}" fill="{{ accent }}" fill-opacity="0.06"/><polyline points="{{ chartPoints }}" fill="none" stroke="{{ accent }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+
+          <div style="font-size:15px; font-weight:600; color:#141921; margin:18px 0 10px;">Mejores publicaciones</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{ postsMobile }}" as="p" hint-placeholder-count="3"><div style="display:flex; gap:11px; align-items:center; background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:11px;"><div style="width:46px; height:46px; border-radius:8px; background:#EEF1F5; border:1px solid #E9EDF2; flex:none; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.caption }}</div><div style="font-size:11px; color:#8A95A6; margin-top:3px;">{{ p.type }} · {{ p.date }}</div></div><div style="text-align:right; flex:none;"><div style="font-size:14px; font-weight:600; color:#141921;">{{ p.metricStr }}</div><div style="font-size:10px; color:#8A95A6;">{{ metricShort }}</div></div></div></sc-for>
+          </div>
+        </div>
+      </div>
+
+      <!-- annotation -->
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">De dónde se llega</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;">Desde el <span style="color:#3D4757; font-weight:500;">Dashboard</span>, la lista «Cuentas conectadas» ahora es clickeable: cada fila entra a <span style="color:#3D4757; font-weight:500;">este</span> detalle de cuenta. Antes la lista no llevaba a ningún lado.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { demo: 'datos', metric: 'alcance',
+    range: (() => { try { const v = parseInt(localStorage.getItem('fg-range'), 10); return [7,30,90,365].indexOf(v) >= 0 ? v : 30; } catch(e) { return 30; } })(),
+    infoKey: null };
+
+  setRange(v) {
+    try { localStorage.setItem('fg-range', String(v)); } catch(e) {}
+    this.setState({ range: v });
+  }
+
+  /* Valores de @cafeaurora (cuenta ig1): coherentes con la fila de "Cuentas
+     conectadas" del Workspace (72.4k / 5.1k / 9.8k), no con el total del cliente. */
+  metrics = {
+    alcance:      { label:'Alcance',     info:'Cuántas personas distintas vieron el contenido en el período.', value:'72.4k', trend:'▲ 14%' },
+    impresiones:  { label:'Impresiones', info:'Cuántas veces se mostró el contenido, incluyendo repeticiones.', value:'118k', trend:'▲ 9%' },
+    interacciones:{ label:'Interacciones', info:'Me gusta, comentarios y otras reacciones, sumados.', value:'5.1k', trend:'▲ 10%' },
+    seguidores:   { label:'Seguidores',  info:'Total de seguidores y cuánto creció en el período.', value:'9.8k', trend:'▲ 180' },
+  };
+
+  metricOrder = ['alcance','impresiones','interacciones','seguidores'];
+
+  concepts = [
+    { key:'alcance', label:'Alcance', value:'72.4k', info:'Cuántas personas distintas vieron el contenido en el período.' },
+    { key:'interacciones', label:'Interacciones', value:'5.1k', info:'Me gusta, comentarios y otras reacciones, sumados.' },
+    { key:'engagement', label:'Engagement', value:'5.8%', info:'Qué porcentaje de quienes vieron el contenido interactuó.' },
+    { key:'seguidores', label:'Seguidores', value:'9.8k', info:'Total de seguidores y cuánto creció en el período.' },
+  ];
+
+  /* Set estándar de rangos: 7/30/90 + 12 meses (mismo que Dashboard; el elegido
+     viaja entre pantallas vía localStorage 'fg-range'). */
+  ranges = {
+    7:   { label:'Últimos 7 días',  short:'7 días',  axis:['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'], ys:[150,138,144,118,126,92,66] },
+    30:  { label:'Últimos 30 días', short:'30 días', axis:['1 jun','10 jun','20 jun','30 jun'], ys:[150,132,118,96,108,72,84,52] },
+    90:  { label:'Últimos 90 días', short:'90 días', axis:['Abr','May','Jun'], ys:[168,150,156,120,128,86,96,58,44] },
+    365: { label:'Últimos 12 meses', short:'12 meses', axis:['nov 25','ene','mar','may','jul'], ys:[128,118,140,132,156,150,168] },
+  };
+
+  posts = [
+    { caption:'Lanzamiento otoño 2026', type:'Reel', date:'18 jun', metricStr:'22.4k' },
+    { caption:'Detrás de escena: café', type:'Carrusel', date:'14 jun', metricStr:'19.1k' },
+    { caption:'Promo 2x1 finde', type:'Imagen', date:'9 jun', metricStr:'14.7k' },
+    { caption:'Receta: cold brew', type:'Carrusel', date:'5 jun', metricStr:'12.2k' },
+    { caption:'Nuevo horario verano', type:'Imagen', date:'2 jun', metricStr:'9.8k' },
+    { caption:'Encuesta de sabores', type:'Reel', date:'29 may', metricStr:'8.7k' },
+  ];
+
+  seg(active, accent, opts) {
+    opts = opts || {};
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:opts.pad||'0 14px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s', flex:opts.flex||'none' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+                  : { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  trend(str, accent, size) {
+    const up = str.indexOf('▲') === 0;
+    return {
+      display:'inline-flex', alignItems:'center', width:'max-content',
+      fontSize:'13px', fontWeight:600, padding:'3px 8px', borderRadius:'7px',
+      lineHeight:'1.2', fontVariantNumeric:'tabular-nums',
+      background: up ? '#EAF2FB' : '#FBEFEC',
+      color: up ? accent : '#B2552F',
+    };
+  }
+
+  buildChart(ys) {
+    const W = 1000, n = ys.length;
+    const pts = ys.map((y, i) => Math.round(i * (W / (n - 1))) + ',' + y).join(' ');
+    return { points: pts, area: '0,200 ' + pts + ' 1000,200' };
+  }
+
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const demo = st.demo;
+
+    const demoStates = [['datos','Con datos'],['vacio','Sin publicaciones'],['cargando','Cargando'],['error','Error']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ demo:k }), style:this.seg(k===demo, accent) }));
+
+    const tabBase = { padding:'11px 15px', fontSize:'13.5px', whiteSpace:'nowrap', borderBottom:'2px solid transparent', marginBottom:'-1px' };
+    const tabs = ['Dashboard','Publicaciones','Comparar','Audiencia','Reporte','Cuentas'].map(label => label === 'Dashboard'
+      ? { label, style:{ ...tabBase, color:accent, fontWeight:600, borderBottomColor:accent } }
+      : { label, style:{ ...tabBase, color:'#647084' } });
+
+    const m = this.metrics[st.metric];
+    const metricOptions = this.metricOrder.map(key => ({
+      value:key, label:this.metrics[key].label,
+      onClick: () => this.setState({ metric:key }),
+      style: this.seg(key === st.metric, accent, { pad:'0 12px' }),
+    }));
+
+    const r = this.ranges[st.range];
+    const chart = this.buildChart(r.ys);
+    const rangeList = [7,30,90,365].map(v => ({
+      label:this.ranges[v].short, onClick:()=>this.setRange(v),
+      style:this.seg(v===st.range, accent), styleMobile:this.seg(v===st.range, accent, { pad:'0 6px', flex:'1' }),
+    }));
+
+    const ik = st.infoKey;
+    const mkEnter = (key) => () => this.setState({ infoKey:key });
+    const mkLeave = (key) => () => this.setState(s => s.infoKey === key ? { infoKey:null } : null);
+
+    const mkToggle = (key) => () => this.setState(s => ({ infoKey: s.infoKey === key ? null : key }));
+    const kpis = this.concepts.map(c => ({
+      label:c.label, value:c.value, info:c.info,
+      showInfo: ik === c.key, onEnter: mkEnter(c.key), onLeave: mkLeave(c.key), onToggle: mkToggle(c.key),
+    }));
+
+    const loading = demo === 'cargando';
+    const isError = demo === 'error';
+    const isPostsEmpty = demo === 'vacio';
+
+    return {
+      accent,
+      demoStates, tabs,
+      metricOptions, onMetric: (e) => this.setState({ metric: e.target.value }),
+      metricLabel: m.label, metricInfo: m.info, metricShort: this.state.metric === 'engagement' ? 'engmt.' : m.label.toLowerCase(),
+      heroValue: m.value, heroTrend: m.trend, heroTrendStyle: this.trend(m.trend, accent, 15),
+      rangeLabel: r.label, rangeLower: r.label.toLowerCase(), axisLabels: r.axis,
+      chartPoints: chart.points, chartArea: chart.area,
+      rangeList, kpis,
+      firstCaptureLabel: '3-nov-2025',
+      showDataNote: st.range === 365,
+      info: { metric: ik === 'metric', nota: ik === 'nota' }, infoEnter: { metric: mkEnter('metric'), nota: mkEnter('nota') }, infoLeave: { metric: mkLeave('metric'), nota: mkLeave('nota') },
+      infoToggle: { metric: mkToggle('metric'), nota: mkToggle('nota') },
+      loading, notLoading: !loading, isError, isPostsEmpty,
+      showChart: !loading && !isError,
+      showPosts: !loading && !isPostsEmpty,
+      skel6:[0,1,2,3,4,5],
+      posts: this.posts.map(p => ({ ...p, onClick: () => this.go('Detalle de publicación.dc.html') })),
+      postsMobile: this.posts.slice(0,3),
+      goAllPosts: () => this.go('Todas las publicaciones.dc.html'),
+      retry: () => this.setState({ demo:'datos' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

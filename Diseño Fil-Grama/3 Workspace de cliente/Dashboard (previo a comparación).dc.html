@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes fgFadeA { from { opacity:.35; } to { opacity:1; } }
+    @keyframes fgFadeB { from { opacity:.35; } to { opacity:1; } }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:900px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Dashboard de cliente</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Interactivo: cambiá la red y el rango (7/30/90 días) y se actualizan los KPIs y el gráfico. Ordená las mejores publicaciones por columna. Cada métrica tiene su popover <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; vertical-align:middle;">i</span>.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <!-- top bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <!-- page body -->
+        <div style="background:#F5F7FA; padding:20px 28px 30px;">
+
+          <!-- breadcrumb -->
+          <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer;">
+            <span>‹</span><span>Clientes</span>
+          </div>
+
+          <!-- client header -->
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-top:14px;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="width:48px; height:48px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div style="font-size:22px; font-weight:600; color:#141921; letter-spacing:-.3px;">Café Aurora</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:6px;">
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">IG</span>
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">FB</span>
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">TikTok</span>
+                </div>
+              </div>
+            </div>
+            <div style="height:40px; background:{{ accent }}; border-radius:9px; display:flex; align-items:center; padding:0 18px; gap:8px; font-size:14px; font-weight:500; color:#fff; cursor:pointer;">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 1.5h6l3 3v9H3z" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 1.5v3h3" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+              Generar reporte
+            </div>
+          </div>
+
+          <!-- controls -->
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:20px; flex-wrap:wrap;">
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+              <sc-for list="{{ networkList }}" as="n" hint-placeholder-count="4">
+                <div style="{{ n.style }}" onClick="{{ n.onClick }}">{{ n.label }}</div>
+              </sc-for>
+            </div>
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+              <sc-for list="{{ rangeList }}" as="r" hint-placeholder-count="3">
+                <div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- HERO: Alcance + chart -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px; margin-top:18px; animation:{{ fadeAnim }} .2s ease;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="display:flex; align-items:center; gap:7px;">
+                  <span style="font-size:13px; color:#647084;">Alcance</span>
+                  <span onClick="{{ infoToggle.alcance }}" onMouseEnter="{{ infoEnter.alcance }}" onMouseLeave="{{ infoLeave.alcance }}" style="position:relative; display:inline-flex;">
+                    <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                    <sc-if value="{{ info.alcance }}" hint-placeholder-val="{{ false }}">
+                      <span style="position:absolute; top:25px; left:-10px; width:248px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                        <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Alcance</span>
+                        <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Cuántas personas distintas vieron el contenido en el período.</span>
+                      </span>
+                    </sc-if>
+                  </span>
+                </div>
+                <div style="display:flex; align-items:baseline; gap:13px; margin-top:9px;">
+                  <span style="font-size:46px; font-weight:600; color:#141921; letter-spacing:-1.2px; line-height:1; font-variant-numeric:tabular-nums;">{{ heroValue }}</span>
+                  <span style="{{ heroTrendStyle }}">{{ heroTrend }}</span>
+                </div>
+                <div style="font-size:12px; color:#8A95A6; margin-top:7px;">vs. período anterior</div>
+              </div>
+              <div style="font-size:12px; color:#8A95A6; padding-top:4px;">{{ rangeLabel }}</div>
+            </div>
+
+            <div style="margin-top:18px;">
+              <div onMouseMove="{{ onChartMove }}" onMouseLeave="{{ onChartLeave }}" style="position:relative; cursor:crosshair;">
+                <svg width="100%" height="200" viewBox="0 0 1000 200" preserveAspectRatio="none" style="display:block;">
+                  <line x1="0" y1="30" x2="1000" y2="30" stroke="#F0F3F7" stroke-width="1"/>
+                  <line x1="0" y1="80" x2="1000" y2="80" stroke="#F0F3F7" stroke-width="1"/>
+                  <line x1="0" y1="130" x2="1000" y2="130" stroke="#F0F3F7" stroke-width="1"/>
+                  <line x1="0" y1="180" x2="1000" y2="180" stroke="#F0F3F7" stroke-width="1"/>
+                  <polygon points="{{ chartArea }}" fill="{{ accent }}" fill-opacity="0.06"/>
+                  <polyline points="{{ chartPoints }}" fill="none" stroke="{{ accent }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="{{ markerCx }}" y1="0" x2="{{ markerCx }}" y2="200" stroke="#D4DAE3" stroke-width="1" stroke-dasharray="3 3"/>
+                  <circle cx="{{ markerCx }}" cy="{{ markerCy }}" r="4.5" fill="#fff" stroke="{{ accent }}" stroke-width="2.5"/>
+                </svg>
+                <sc-if value="{{ tipShow }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute; left:{{ tipLeftPct }}; top:{{ tipTop }}; transform:translateX(-50%); background:#141921; color:#fff; border-radius:8px; padding:7px 11px; font-size:12px; line-height:1.35; pointer-events:none; white-space:nowrap; box-shadow:0 6px 18px rgba(20,25,33,.22);">
+                    <span style="display:block; color:#B4BDCA; font-size:10.5px;">{{ tipLabel }}</span>
+                    <span style="display:block; font-weight:600; font-variant-numeric:tabular-nums;">{{ tipValue }} de alcance</span>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:11px; color:#8A95A6; margin-top:9px;">
+                <sc-for list="{{ axisLabels }}" as="a" hint-placeholder-count="5"><span>{{ a }}</span></sc-for>
+              </div>
+            </div>
+          </div>
+
+          <!-- secondary KPIs -->
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:16px; animation:{{ fadeAnim }} .2s ease;">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px;">
+              <div style="display:flex; align-items:center; gap:7px;">
+                <span style="font-size:13px; color:#647084;">Interacciones</span>
+                <span onClick="{{ infoToggle.interac }}" onMouseEnter="{{ infoEnter.interac }}" onMouseLeave="{{ infoLeave.interac }}" style="position:relative; display:inline-flex;">
+                  <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                  <sc-if value="{{ info.interac }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute; top:25px; left:-10px; width:240px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                      <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Interacciones</span>
+                      <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Me gusta, comentarios y otras reacciones, sumados.</span>
+                    </span>
+                  </sc-if>
+                </span>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:10px; margin-top:11px;">
+                <span style="font-size:28px; font-weight:600; color:#141921; letter-spacing:-.6px; font-variant-numeric:tabular-nums;">{{ interacValue }}</span>
+                <span style="{{ interacTrendStyle }}">{{ interacTrend }}</span>
+              </div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px;">
+              <div style="display:flex; align-items:center; gap:7px;">
+                <span style="font-size:13px; color:#647084;">Engagement</span>
+                <span onClick="{{ infoToggle.eng }}" onMouseEnter="{{ infoEnter.eng }}" onMouseLeave="{{ infoLeave.eng }}" style="position:relative; display:inline-flex;">
+                  <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                  <sc-if value="{{ info.eng }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute; top:25px; left:-10px; width:248px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                      <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Engagement</span>
+                      <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Qué porcentaje de quienes vieron el contenido interactuó.</span>
+                    </span>
+                  </sc-if>
+                </span>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:10px; margin-top:11px;">
+                <span style="font-size:28px; font-weight:600; color:#141921; letter-spacing:-.6px; font-variant-numeric:tabular-nums;">{{ engValue }}</span>
+                <span style="{{ engTrendStyle }}">{{ engTrend }}</span>
+              </div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px;">
+              <div style="display:flex; align-items:center; gap:7px;">
+                <span style="font-size:13px; color:#647084;">Seguidores</span>
+                <span onClick="{{ infoToggle.seg }}" onMouseEnter="{{ infoEnter.seg }}" onMouseLeave="{{ infoLeave.seg }}" style="position:relative; display:inline-flex;">
+                  <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                  <sc-if value="{{ info.seg }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute; top:25px; left:-10px; width:240px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                      <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Seguidores</span>
+                      <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Total de seguidores y cuánto creció en el período.</span>
+                    </span>
+                  </sc-if>
+                </span>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:10px; margin-top:11px;">
+                <span style="font-size:28px; font-weight:600; color:#141921; letter-spacing:-.6px; font-variant-numeric:tabular-nums;">{{ segValue }}</span>
+                <span style="{{ segTrendStyle }}">{{ segTrend }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- cuentas conectadas (clickeable → detalle de cuenta) -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:16px; overflow:hidden;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:15px 20px;">
+              <span style="font-size:16px; font-weight:600; color:#141921;">Cuentas conectadas</span>
+              <span style="font-size:12px; color:#8A95A6;">{{ accountsHint }}</span>
+            </div>
+            <sc-for list="{{ accountRows }}" as="a" hint-placeholder-count="3">
+              <div onClick="{{ a.onClick }}" style="display:flex; align-items:center; gap:11px; padding:13px 20px; border-top:1px solid #F0F3F7; cursor:pointer;">
+                <div style="width:30px; height:30px; border-radius:8px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10px; font-weight:600; color:{{ a.tintInk }};">{{ a.code }}</span></div>
+                <span style="font-size:13.5px; color:#141921; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.handle }}</span>
+                <span style="{{ a.pillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ a.statusLabel }}</span>
+                <span style="font-size:17px; color:#C4CCD6;">›</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- best posts -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:16px; overflow:hidden;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 20px 14px;">
+              <span style="font-size:16px; font-weight:600; color:#141921;">Mejores publicaciones</span>
+              <span style="font-size:13px; color:{{ accent }}; cursor:pointer;">Ver todas →</span>
+            </div>
+
+            <!-- header -->
+            <div style="display:grid; grid-template-columns:52px 1.7fr .9fr .8fr .9fr .9fr .9fr; gap:12px; padding:0 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+              <div></div><div>Publicación</div><div>Cuenta</div><div>Tipo</div>
+              <div onClick="{{ sortByDate }}" style="cursor:pointer; user-select:none;">Fecha {{ dateArrow }}</div>
+              <div onClick="{{ sortByAlcance }}" style="cursor:pointer; user-select:none;">Alcance {{ alcanceArrow }}</div>
+              <div onClick="{{ sortByInterac }}" style="cursor:pointer; user-select:none;">Interac. {{ interacArrow }}</div>
+            </div>
+
+            <!-- rows -->
+            <sc-for list="{{ posts }}" as="p" hint-placeholder-count="5">
+              <div style="display:grid; grid-template-columns:52px 1.7fr .9fr .8fr .9fr .9fr .9fr; gap:12px; align-items:center; padding:11px 20px; border-bottom:1px solid #F4F6F9;">
+                <div style="width:44px; height:44px; border-radius:8px; background:#EEF1F5;"></div>
+                <div style="font-size:13px; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.title }}</div>
+                <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:10px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">{{ p.netLabel }}</span></div>
+                <div style="font-size:12px; color:#647084;">{{ p.type }}</div>
+                <div style="font-size:12px; color:#647084;">{{ p.date }}</div>
+                <div style="font-size:13px; color:#232A36; font-variant-numeric:tabular-nums;">{{ p.alcanceStr }}</div>
+                <div style="font-size:13px; color:#232A36; font-variant-numeric:tabular-nums;">{{ p.interacStr }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:54px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <span style="font-size:13px; color:#8A95A6;">‹ Clientes</span>
+          <div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:16px 16px 22px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:40px; height:40px; border-radius:10px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div style="font-size:18px; font-weight:600; color:#141921;">Café Aurora</div>
+              <div style="display:flex; gap:5px; margin-top:5px;"><span style="font-size:10px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">IG</span><span style="font-size:10px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">FB</span><span style="font-size:10px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">TikTok</span></div>
+            </div>
+          </div>
+          <div style="height:42px; background:{{ accent }}; border-radius:9px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:14px; font-weight:500; color:#fff; margin-top:14px;">Generar reporte</div>
+
+          <div style="display:flex; gap:8px; margin-top:14px;">
+            <div style="flex:1; display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:1px; overflow:hidden;">
+              <sc-for list="{{ networkList }}" as="n" hint-placeholder-count="4">
+                <div style="{{ n.styleMobile }}" onClick="{{ n.onClick }}">{{ n.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; margin-top:8px;">
+            <sc-for list="{{ rangeList }}" as="r" hint-placeholder-count="3">
+              <div style="{{ r.styleMobileWide }}" onClick="{{ r.onClick }}">{{ r.label }}</div>
+            </sc-for>
+          </div>
+
+          <!-- hero -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:16px; margin-top:14px;">
+            <span style="font-size:12px; color:#647084;">Alcance · {{ rangeLabel }}</span>
+            <div style="display:flex; align-items:baseline; gap:10px; margin-top:7px;">
+              <span style="font-size:34px; font-weight:600; color:#141921; letter-spacing:-.8px; line-height:1;">{{ heroValue }}</span>
+              <span style="{{ heroTrendStyle }}">{{ heroTrend }}</span>
+            </div>
+            <svg width="100%" height="110" viewBox="0 0 1000 200" preserveAspectRatio="none" style="margin-top:12px;">
+              <line x1="0" y1="60" x2="1000" y2="60" stroke="#F0F3F7" stroke-width="1.5"/>
+              <line x1="0" y1="130" x2="1000" y2="130" stroke="#F0F3F7" stroke-width="1.5"/>
+              <polygon points="{{ chartArea }}" fill="{{ accent }}" fill-opacity="0.06"/>
+              <polyline points="{{ chartPoints }}" fill="none" stroke="{{ accent }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- secondary KPIs -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:12px;">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:13px;">
+              <div style="font-size:11px; color:#647084;">Interacciones</div>
+              <div style="font-size:20px; font-weight:600; color:#141921; margin-top:5px; font-variant-numeric:tabular-nums;">{{ interacValue }}</div>
+              <div style="margin-top:5px;"><span style="{{ interacTrendStyleSm }}">{{ interacTrend }}</span></div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:13px;">
+              <div style="font-size:11px; color:#647084;">Engagement</div>
+              <div style="font-size:20px; font-weight:600; color:#141921; margin-top:5px; font-variant-numeric:tabular-nums;">{{ engValue }}</div>
+              <div style="margin-top:5px;"><span style="{{ engTrendStyleSm }}">{{ engTrend }}</span></div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:13px; grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between;">
+              <div>
+                <div style="font-size:11px; color:#647084;">Seguidores</div>
+                <div style="font-size:20px; font-weight:600; color:#141921; margin-top:5px; font-variant-numeric:tabular-nums;">{{ segValue }}</div>
+              </div>
+              <span style="{{ segTrendStyleSm }}">{{ segTrend }}</span>
+            </div>
+          </div>
+
+          <!-- best posts cards -->
+          <div style="font-size:15px; font-weight:600; color:#141921; margin:18px 0 10px;">Mejores publicaciones</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
+              <div style="display:flex; gap:11px; align-items:center; background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:11px;">
+                <div style="width:44px; height:44px; border-radius:8px; background:#EEF1F5; flex:none;"></div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:13px; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.title }}</div>
+                  <div style="font-size:11px; color:#8A95A6; margin-top:3px;">{{ p.netLabel }} · {{ p.type }} · {{ p.date }}</div>
+                </div>
+                <div style="text-align:right; flex:none;"><div style="font-size:14px; font-weight:600; color:#141921;">{{ p.alcanceStr }}</div><div style="font-size:10px; color:#8A95A6;">alcance</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { net: 'todas',
+    range: (() => { try { const v = parseInt(localStorage.getItem('fg-range'), 10); return [7,30,90].indexOf(v) >= 0 ? v : 30; } catch(e) { return 30; } })(),
+    sortKey: 'interac', sortDir: 'desc', infoKey: null, fadeTick: 0, tip: null };
+
+  setRange(v) {
+    try { localStorage.setItem('fg-range', String(v)); } catch(e) {}
+    this.setState(s => ({ range: v, fadeTick: s.fadeTick + 1, tip: null }));
+  }
+
+  kpi = {
+    todas:  { alcance:['128k','▲ 12%'], interac:['9.4k','▲ 8%'], eng:['5.2%','▼ 0.3 pts'], seg:['18.6k','▲ 320'] },
+    ig:     { alcance:['72k','▲ 14%'],  interac:['5.1k','▲ 10%'], eng:['5.8%','▲ 0.2 pts'], seg:['9.8k','▲ 180'] },
+    fb:     { alcance:['31k','▲ 6%'],   interac:['2.0k','▲ 3%'],  eng:['3.9%','▼ 0.1 pts'], seg:['5.4k','▲ 60'] },
+    tiktok: { alcance:['25k','▲ 22%'],  interac:['2.3k','▲ 19%'], eng:['6.6%','▲ 0.7 pts'], seg:['3.4k','▲ 80'] },
+  };
+
+  ranges = {
+    7:  { label:'Últimos 7 días',  axis:['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'], ys:[150,138,144,118,126,92,66],
+         pts:['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'], vals:['1.7k','2.1k','1.9k','2.8k','2.5k','3.6k','4.4k'] },
+    30: { label:'Últimos 30 días', axis:['1 jun','8 jun','15 jun','22 jun','30 jun'], ys:[150,138,132,108,118,84,96,52,40],
+         pts:['1 jun','5 jun','8 jun','12 jun','15 jun','19 jun','22 jun','26 jun','30 jun'], vals:['1.7k','2.1k','2.3k','3.1k','2.8k','4.0k','3.6k','5.1k','5.5k'] },
+    90: { label:'Últimos 90 días', axis:['Abr','May','Jun'], ys:[165,150,156,118,128,86,72,40],
+         pts:['1 abr','12 abr','24 abr','6 may','18 may','30 may','11 jun','23 jun'], vals:['1.2k','1.8k','1.6k','3.0k','2.7k','4.4k','4.9k','5.6k'] },
+  };
+
+  posts = [
+    { title:'Lanzamiento de temporada otoño 2026', net:'ig', netLabel:'IG', type:'Reel', date:'18 jun', d:18, alcance:22400, alcanceStr:'22.4k', interac:1800, interacStr:'1.8k' },
+    { title:'Detrás de escena: nuestro café', net:'tiktok', netLabel:'TikTok', type:'Video', date:'14 jun', d:14, alcance:19100, alcanceStr:'19.1k', interac:1500, interacStr:'1.5k' },
+    { title:'Encuesta de sabores', net:'ig', netLabel:'IG', type:'Story', date:'13 jun', d:13, alcance:8700, alcanceStr:'8.7k', interac:0, interacStr:'—' },
+    { title:'Promo 2x1 fin de semana', net:'fb', netLabel:'FB', type:'Imagen', date:'9 jun', d:9, alcance:14700, alcanceStr:'14.7k', interac:980, interacStr:'980' },
+    { title:'Receta: cold brew de naranja', net:'ig', netLabel:'IG', type:'Carrusel', date:'5 jun', d:5, alcance:12200, alcanceStr:'12.2k', interac:760, interacStr:'760' },
+  ];
+
+  seg(active, accent, opts) {
+    opts = opts || {};
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:opts.pad||'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap', flex: opts.flex||'none' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  trend(str, accent, size) {
+    const up = str.indexOf('▲') === 0;
+    const fs = Math.min(size || 13, 13);
+    return {
+      display:'inline-flex', alignItems:'center', width:'max-content',
+      fontSize: fs + 'px', fontWeight:600, padding:'3px 8px', borderRadius:'7px',
+      lineHeight:'1.2', fontVariantNumeric:'tabular-nums',
+      background: up ? '#EAF2FB' : '#FBEFEC',
+      color: up ? accent : '#B2552F',
+    };
+  }
+
+  buildChart(ys) {
+    const W = 1000, n = ys.length;
+    const pts = ys.map((y, i) => Math.round(i * (W / (n - 1))) + ',' + y).join(' ');
+    return { points: pts, area: '0,200 ' + pts + ' 1000,200' };
+  }
+
+  setSort(key) {
+    this.setState(s => {
+      if (s.sortKey === key) return { sortDir: s.sortDir === 'desc' ? 'asc' : 'desc' };
+      return { sortKey: key, sortDir: key === 'd' ? 'desc' : 'desc' };
+    });
+  }
+
+  go(file){ try{ window.location.href = encodeURI(file); }catch(e){} }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const net = this.state.net;
+    const range = this.state.range;
+    const k = this.kpi[net];
+    const r = this.ranges[range];
+    const chart = this.buildChart(r.ys);
+
+    const netList = [
+      { key:'todas', label:'Todas' }, { key:'ig', label:'IG' },
+      { key:'fb', label:'FB' }, { key:'tiktok', label:'TikTok' },
+    ];
+    const networkList = netList.map(o => ({
+      label: o.label, onClick: () => this.setState({ net: o.key }),
+      style: this.seg(o.key === net, accent),
+      styleMobile: this.seg(o.key === net, accent, { pad:'0 8px', flex:'1' }),
+    }));
+
+    const rangeList = [7, 30, 90].map(v => ({
+      label: v + ' días', onClick: () => this.setRange(v),
+      style: this.seg(v === range, accent),
+      styleMobileWide: this.seg(v === range, accent, { flex:'1' }),
+    }));
+
+    // sortable posts (filtered by network)
+    const sortKey = this.state.sortKey, dir = this.state.sortDir;
+    let posts = this.posts.filter(p => net === 'todas' ? true : p.net === net);
+    posts = posts.slice().sort((a, b) => {
+      const av = a[sortKey], bv = b[sortKey];
+      return dir === 'desc' ? bv - av : av - bv;
+    });
+
+    const arrow = (key) => sortKey === key ? (dir === 'desc' ? '↓' : '↑') : '';
+
+    const ik = this.state.infoKey;
+    const mkEnter = (key) => () => this.setState({ infoKey: key });
+    const mkLeave = (key) => () => this.setState(s => s.infoKey === key ? { infoKey: null } : null);
+
+    return {
+      accent,
+      heroValue: k.alcance[0], heroTrend: k.alcance[1], heroTrendStyle: this.trend(k.alcance[1], accent, 15),
+      interacValue: k.interac[0], interacTrend: k.interac[1], interacTrendStyle: this.trend(k.interac[1], accent, 13), interacTrendStyleSm: this.trend(k.interac[1], accent, 10),
+      engValue: k.eng[0], engTrend: k.eng[1], engTrendStyle: this.trend(k.eng[1], accent, 13), engTrendStyleSm: this.trend(k.eng[1], accent, 10),
+      segValue: k.seg[0], segTrend: k.seg[1], segTrendStyle: this.trend(k.seg[1], accent, 13), segTrendStyleSm: this.trend(k.seg[1], accent, 10),
+      rangeLabel: r.label, axisLabels: r.axis,
+      chartPoints: chart.points, chartArea: chart.area,
+      networkList, rangeList, posts,
+      accountsHint: '3 cuentas · tocá una para ver su detalle',
+      accountRows: [
+        { code:'IG', tint:'linear-gradient(135deg,#FCEFE6,#F6E1EC)', tintInk:'#B5638A', handle:'@cafeaurora', statusLabel:'Conectada', pillStyle:{display:'inline-flex',alignItems:'center',gap:'6px',background:'#E7F4EC',color:'#1F7A50',borderRadius:'7px',padding:'3px 9px',fontSize:'11.5px',fontWeight:500}, onClick:()=>this.go('Detalle de cuenta.dc.html') },
+        { code:'FB', tint:'linear-gradient(135deg,#E7EEFB,#DCE6F7)', tintInk:'#2C5FA8', handle:'Café Aurora', statusLabel:'Conectada', pillStyle:{display:'inline-flex',alignItems:'center',gap:'6px',background:'#E7F4EC',color:'#1F7A50',borderRadius:'7px',padding:'3px 9px',fontSize:'11.5px',fontWeight:500}, onClick:()=>this.go('Detalle de cuenta.dc.html') },
+        { code:'TT', tint:'linear-gradient(135deg,#E6F2F1,#E0EDEC)', tintInk:'#3E7C77', handle:'@cafeaurora', statusLabel:'Error de token', pillStyle:{display:'inline-flex',alignItems:'center',gap:'6px',background:'#FBEFEC',color:'#9A4A30',borderRadius:'7px',padding:'3px 9px',fontSize:'11.5px',fontWeight:500}, onClick:()=>this.go('Detalle de cuenta.dc.html') },
+      ],
+      sortByDate: () => this.setSort('d'), sortByAlcance: () => this.setSort('alcance'), sortByInterac: () => this.setSort('interac'),
+      dateArrow: arrow('d'), alcanceArrow: arrow('alcance'), interacArrow: arrow('interac'),
+      info: { alcance: ik === 'alcance', interac: ik === 'interac', eng: ik === 'eng', seg: ik === 'seg' },
+      infoEnter: { alcance: mkEnter('alcance'), interac: mkEnter('interac'), eng: mkEnter('eng'), seg: mkEnter('seg') },
+      infoLeave: { alcance: mkLeave('alcance'), interac: mkLeave('interac'), eng: mkLeave('eng'), seg: mkLeave('seg') },
+      infoToggle: {
+        alcance: () => this.setState(s => ({ infoKey: s.infoKey === 'alcance' ? null : 'alcance' })),
+        interac: () => this.setState(s => ({ infoKey: s.infoKey === 'interac' ? null : 'interac' })),
+        eng: () => this.setState(s => ({ infoKey: s.infoKey === 'eng' ? null : 'eng' })),
+        seg: () => this.setState(s => ({ infoKey: s.infoKey === 'seg' ? null : 'seg' })),
+      },
+      fadeAnim: (this.state.fadeTick % 2 === 0) ? 'fgFadeA' : 'fgFadeB',
+      onChartMove: (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const frac = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const rr = this.ranges[this.state.range];
+        const i = Math.round(frac * (rr.ys.length - 1));
+        if (!this.state.tip || this.state.tip.i !== i) this.setState({ tip: { i } });
+      },
+      onChartLeave: () => this.setState({ tip: null }),
+      tipShow: !!this.state.tip,
+      tipLeftPct: this.state.tip ? ((this.state.tip.i / (r.ys.length - 1)) * 100) + '%' : '0%',
+      tipTop: this.state.tip ? Math.max(2, r.ys[this.state.tip.i] - 56) + 'px' : '0px',
+      tipLabel: this.state.tip ? r.pts[this.state.tip.i] : '',
+      tipValue: this.state.tip ? r.vals[this.state.tip.i] : '',
+      markerCx: this.state.tip ? Math.round(this.state.tip.i * (1000 / (r.ys.length - 1))) : -30,
+      markerCy: this.state.tip ? r.ys[this.state.tip.i] : -30,
+    };
+  }
+}
+</script>
+</body>
+</html>

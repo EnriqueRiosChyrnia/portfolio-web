@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgSpin { to { transform: rotate(360deg); } }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:920px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Reconexión de token</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Interactivo: reconectá cada cuenta sin salir de la pantalla — el ítem pasa de <span style="color:#3D4757; font-weight:500;">error → reconectando → conectada</span> en el lugar. Probá «Reconectar»: <span style="color:#3D4757; font-weight:500;">@estudiovolta</span> falla el primer intento (mostrá «Reintentar») y conecta al segundo; <span style="color:#3D4757; font-weight:500;">@aurora.deli</span> conecta directo. Al quedar todo conectado, aparece la confirmación.</div>
+  </div>
+
+  <!-- ============ DESKTOP (interactivo) + MÓVIL ============ -->
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- DESKTOP -->
+    <div style="flex:none; width:1060px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:16px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <!-- top bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          </div>
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <!-- body -->
+        <div style="background:#F5F7FA; padding:20px 28px 34px;">
+          <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;">
+            <span style="font-size:15px;">‹</span><span>Café Aurora</span>
+          </div>
+
+          <div style="max-width:680px; margin:18px auto 0;">
+
+            <!-- header: warning OR success -->
+            <sc-if value="{{ allDone }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff; border:1px solid #CFE8DA; border-radius:14px; padding:22px 24px; display:flex; gap:15px; align-items:flex-start;">
+                <div style="width:40px; height:40px; border-radius:11px; background:#E7F4EC; display:flex; align-items:center; justify-content:center; flex:none;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#1F7A50" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:18px; font-weight:600; color:#141921;">Todo reconectado</div>
+                  <div style="font-size:13.5px; color:#647084; line-height:1.55; margin-top:6px;">Volvimos a tener acceso a todas las cuentas. Retomamos la captura de métricas en la próxima corrida del job diario.</div>
+                  <div onClick="{{ goBack }}" style="display:inline-flex; align-items:center; gap:8px; height:42px; padding:0 18px; background:{{ accent }}; color:#fff; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; margin-top:15px; box-shadow:0 4px 12px rgba(30,102,188,.2);">
+                    <span style="font-size:15px;">‹</span> Volver al Dashboard
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ showHeaderError }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="width:42px; height:42px; border-radius:12px; background:#FBEFEC; display:flex; align-items:center; justify-content:center; flex:none;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="#C2603F" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9.5v3.6" stroke="#C2603F" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="16.3" r="1" fill="#C2603F"/></svg>
+                </div>
+                <div>
+                  <div style="font-size:21px; font-weight:600; color:#141921; letter-spacing:-.3px;">Reconectá tus cuentas</div>
+                  <div style="font-size:13.5px; color:#647084; line-height:1.6; margin-top:9px;">Perdimos el acceso a {{ pendingWord }} y dejamos de traer sus métricas. Suele pasar cuando <span style="color:#3D4757;">cambiaron la contraseña</span> o <span style="color:#3D4757;">revocaron el permiso</span> de la app. Reconectá para volver a autorizar el acceso: te llevamos al inicio de sesión oficial de la red y <span style="color:#3D4757;">nunca guardamos tu contraseña</span>.</div>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- list card -->
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; margin-top:18px; overflow:hidden;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:15px 20px; border-bottom:1px solid #F0F3F7;">
+                <span style="font-size:14px; font-weight:600; color:#141921;">{{ listTitle }}</span>
+                <sc-if value="{{ showReconnectAll }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ reconnectAll }}" style="display:flex; align-items:center; gap:7px; height:34px; padding:0 14px; background:#fff; border:1px solid {{ accent }}; color:{{ accent }}; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">Reconectar todas</div>
+                </sc-if>
+              </div>
+
+              <sc-for list="{{ rows }}" as="r" hint-placeholder-count="2">
+                <div style="display:flex; align-items:center; gap:15px; padding:16px 20px; border-bottom:1px solid #F4F6F9;">
+                  <div style="width:44px; height:44px; border-radius:10px; background:{{ r.tint }}; display:flex; align-items:center; justify-content:center; flex:none;">
+                    <span style="font-size:12px; font-weight:700; color:{{ r.tintInk }};">{{ r.code }}</span>
+                  </div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:9px;">
+                      <span style="font-size:15px; font-weight:600; color:#141921;">{{ r.name }}</span>
+                      <span style="font-size:13px; color:#8A95A6;">{{ r.handle }}</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-top:7px;">
+                      <span style="{{ r.pillStyle }}">
+                        <sc-if value="{{ r.spinning }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; width:11px; height:11px; border:1.6px solid currentColor; border-top-color:transparent; border-radius:50%; animation:filgSpin .7s linear infinite;"></span></sc-if>
+                        <sc-if value="{{ r.dot }}" hint-placeholder-val="{{ true }}"><span style="width:7px; height:7px; border-radius:50%; background:currentColor;"></span></sc-if>
+                        {{ r.statusLabel }}
+                      </span>
+                      <sc-if value="{{ r.reason }}" hint-placeholder-val="{{ true }}"><span style="font-size:12.5px; color:#8A95A6;">{{ r.reason }}</span></sc-if>
+                    </div>
+                  </div>
+                  <div style="flex:none;">
+                    <sc-if value="{{ r.showButton }}" hint-placeholder-val="{{ true }}">
+                      <div onClick="{{ r.onClick }}" style="{{ r.btnStyle }}">{{ r.btnLabel }}</div>
+                    </sc-if>
+                    <sc-if value="{{ r.showCheck }}" hint-placeholder-val="{{ false }}">
+                      <div style="width:30px; height:30px; border-radius:50%; background:#E7F4EC; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#1F7A50" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-for>
+
+              <!-- per-row contextual note -->
+              <sc-if value="{{ contextNote }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:13px 20px; background:{{ contextNoteBg }}; font-size:12.5px; color:{{ contextNoteInk }}; line-height:1.5;">{{ contextNote }}</div>
+              </sc-if>
+            </div>
+
+            <div style="font-size:12.5px; color:#9AA4B2; margin-top:13px; text-align:center;">Las demás cuentas siguen conectadas y no se ven afectadas.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÓVIL -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil · estado error</div>
+      <div style="border-radius:16px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:54px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <span style="font-size:13px; color:#8A95A6;">‹ Volver</span>
+          <div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+        <div style="background:#F5F7FA; padding:18px 16px 24px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <div style="width:38px; height:38px; border-radius:11px; background:#FBEFEC; display:flex; align-items:center; justify-content:center; flex:none;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="#C2603F" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9.5v3.6" stroke="#C2603F" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="16.3" r="1" fill="#C2603F"/></svg>
+            </div>
+            <div>
+              <div style="font-size:18px; font-weight:600; color:#141921;">Reconectá tus cuentas</div>
+            </div>
+          </div>
+          <div style="font-size:13px; color:#647084; line-height:1.6; margin-top:11px;">Perdimos el acceso a estas cuentas y dejamos de traer sus métricas. Reconectá para volver a autorizar; nunca guardamos tu contraseña.</div>
+
+          <div style="font-size:11px; font-weight:600; color:#8A95A6; text-transform:uppercase; letter-spacing:.5px; margin:18px 0 10px;">Requieren reconexión · 2</div>
+
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:15px;">
+            <div style="display:flex; align-items:center; gap:11px;">
+              <div style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#E6F2F1,#E0EDEC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:11px; font-weight:700; color:#3E7C77;">TT</span></div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:14px; font-weight:600; color:#141921;">Estudio Volta</div>
+                <div style="font-size:12px; color:#8A95A6;">@estudiovolta</div>
+              </div>
+            </div>
+            <div style="display:inline-flex; align-items:center; gap:7px; background:#FBEFEC; color:#9A4A30; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500; margin-top:11px;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Sin conexión · token expirado</div>
+            <div style="height:42px; border-radius:10px; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:#fff; margin-top:13px;">Reconectar</div>
+          </div>
+
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:15px; margin-top:12px;">
+            <div style="display:flex; align-items:center; gap:11px;">
+              <div style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#FCEFE6,#F6E1EC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:11px; font-weight:700; color:#B5638A;">IG</span></div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:14px; font-weight:600; color:#141921;">Café Aurora</div>
+                <div style="font-size:12px; color:#8A95A6;">@aurora.deli</div>
+              </div>
+            </div>
+            <div style="display:inline-flex; align-items:center; gap:7px; background:#FBEFEC; color:#9A4A30; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500; margin-top:11px;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Sin conexión · permiso revocado</div>
+            <div style="height:42px; border-radius:10px; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:#fff; margin-top:13px;">Reconectar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ ESTADOS DEL ÍTEM (referencia) ============ -->
+  <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin:36px 0 6px;">Estados del ítem de cuenta · referencia</div>
+  <div style="font-size:13px; color:#647084; margin-bottom:14px;">El mismo ítem en los cuatro momentos del flujo.</div>
+  <div style="display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap;">
+
+    <!-- 1 error -->
+    <div style="flex:none; width:480px;">
+      <div style="font-size:12px; font-weight:500; color:#8A95A6; margin-bottom:10px;">1 · Error (reposo)</div>
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; box-shadow:0 2px 8px rgba(20,25,33,.06); padding:16px 18px; display:flex; align-items:center; gap:15px;">
+        <div style="width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,#E6F2F1,#E0EDEC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:12px; font-weight:700; color:#3E7C77;">TT</span></div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; gap:9px;"><span style="font-size:15px; font-weight:600; color:#141921;">Estudio Volta</span><span style="font-size:13px; color:#8A95A6;">@estudiovolta</span></div>
+          <div style="display:inline-flex; align-items:center; gap:7px; background:#FBEFEC; color:#9A4A30; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500; margin-top:7px;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Sin conexión</div>
+        </div>
+        <div style="height:38px; display:flex; align-items:center; padding:0 18px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; flex:none;">Reconectar</div>
+      </div>
+    </div>
+
+    <!-- 2 reconectando -->
+    <div style="flex:none; width:480px;">
+      <div style="font-size:12px; font-weight:500; color:#8A95A6; margin-bottom:10px;">2 · Reconectando (OAuth en curso)</div>
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; box-shadow:0 2px 8px rgba(20,25,33,.06); padding:16px 18px; display:flex; align-items:center; gap:15px;">
+        <div style="width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,#E6F2F1,#E0EDEC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:12px; font-weight:700; color:#3E7C77;">TT</span></div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; gap:9px;"><span style="font-size:15px; font-weight:600; color:#141921;">Estudio Volta</span><span style="font-size:13px; color:#8A95A6;">@estudiovolta</span></div>
+          <div style="display:inline-flex; align-items:center; gap:7px; background:#EAF0FA; color:{{ accent }}; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500; margin-top:7px;"><span style="display:inline-flex; width:11px; height:11px; border:1.6px solid currentColor; border-top-color:transparent; border-radius:50%; animation:filgSpin .7s linear infinite;"></span>Redirigiendo a la red…</div>
+        </div>
+        <div style="height:38px; display:flex; align-items:center; padding:0 18px; background:{{ accentSoft }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; flex:none;">Reconectando…</div>
+      </div>
+    </div>
+
+    <!-- 3 éxito -->
+    <div style="flex:none; width:480px;">
+      <div style="font-size:12px; font-weight:500; color:#8A95A6; margin-bottom:10px;">3 · Éxito (confirmación breve)</div>
+      <div style="background:#fff; border:1px solid #CFE8DA; border-radius:13px; box-shadow:0 2px 8px rgba(20,25,33,.06); padding:16px 18px; display:flex; align-items:center; gap:15px;">
+        <div style="width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,#E6F2F1,#E0EDEC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:12px; font-weight:700; color:#3E7C77;">TT</span></div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; gap:9px;"><span style="font-size:15px; font-weight:600; color:#141921;">Estudio Volta</span><span style="font-size:13px; color:#8A95A6;">@estudiovolta</span></div>
+          <div style="display:inline-flex; align-items:center; gap:7px; background:#E7F4EC; color:#1F7A50; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500; margin-top:7px;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Conectada</div>
+        </div>
+        <div style="width:30px; height:30px; border-radius:50%; background:#E7F4EC; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#1F7A50" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+    <!-- 4 fallida -->
+    <div style="flex:none; width:480px;">
+      <div style="font-size:12px; font-weight:500; color:#8A95A6; margin-bottom:10px;">4 · Reconexión fallida</div>
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; box-shadow:0 2px 8px rgba(20,25,33,.06); overflow:hidden;">
+        <div style="padding:16px 18px; display:flex; align-items:center; gap:15px;">
+          <div style="width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,#E6F2F1,#E0EDEC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:12px; font-weight:700; color:#3E7C77;">TT</span></div>
+          <div style="flex:1; min-width:0;">
+            <div style="display:flex; align-items:center; gap:9px;"><span style="font-size:15px; font-weight:600; color:#141921;">Estudio Volta</span><span style="font-size:13px; color:#8A95A6;">@estudiovolta</span></div>
+            <div style="display:inline-flex; align-items:center; gap:7px; background:#FBEFEC; color:#9A4A30; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500; margin-top:7px;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>No se pudo reconectar</div>
+          </div>
+          <div style="height:38px; display:flex; align-items:center; gap:7px; padding:0 16px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; flex:none;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M12 7a5 5 0 1 1-1.5-3.5M12 1v3H9" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Reintentar</div>
+        </div>
+        <div style="padding:12px 18px; background:#FBEFEC; font-size:12.5px; color:#9A4A30; line-height:1.5;">Puede que se haya cancelado la autorización o que la red la haya rechazado. Probá de nuevo; si sigue, revisá los permisos desde la red.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1320,&quot;height&quot;:760},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  accounts = [
+    { id:'volta', net:'tt', code:'TT', name:'Estudio Volta', handle:'@estudiovolta', reason:'token expirado', flaky:true,  tint:'linear-gradient(135deg,#E6F2F1,#E0EDEC)', tintInk:'#3E7C77' },
+    { id:'aurora', net:'ig', code:'IG', name:'Café Aurora',  handle:'@aurora.deli',  reason:'permiso revocado', flaky:false, tint:'linear-gradient(135deg,#FCEFE6,#F6E1EC)', tintInk:'#B5638A' },
+  ];
+
+  state = { status: { volta:'error', aurora:'error' }, attempts: { volta:0, aurora:0 } };
+
+  reconnect(id) {
+    const acc = this.accounts.find(a => a.id === id);
+    if (this.state.status[id] === 'connecting' || this.state.status[id] === 'success') return;
+    this.setState(s => ({ status: { ...s.status, [id]:'connecting' } }));
+    clearTimeout(this._t[id]);
+    this._t[id] = setTimeout(() => {
+      this.setState(s => {
+        const attempts = s.attempts[id] + 1;
+        const fail = acc.flaky && attempts === 1;
+        return {
+          status: { ...s.status, [id]: fail ? 'failed' : 'success' },
+          attempts: { ...s.attempts, [id]: attempts },
+        };
+      });
+    }, 1500);
+  }
+
+  _t = {};
+  componentWillUnmount() { Object.values(this._t).forEach(clearTimeout); }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state.status;
+
+    const pill = (bg, ink) => ({
+      display:'inline-flex', alignItems:'center', gap:'7px',
+      background:bg, color:ink, borderRadius:'7px', padding:'4px 10px',
+      fontSize:'12px', fontWeight:500,
+    });
+    const primaryBtn = {
+      display:'flex', alignItems:'center', gap:'7px', height:'38px', padding:'0 18px',
+      background:accent, color:'#fff', borderRadius:'9px', fontSize:'13px', fontWeight:600, cursor:'pointer',
+    };
+    const softBtn = { ...primaryBtn, background:this.softer(accent), cursor:'default' };
+
+    const rows = this.accounts.map(a => {
+      const s = st[a.id];
+      const base = { name:a.name, handle:a.handle, code:a.code, tint:a.tint, tintInk:a.tintInk };
+      if (s === 'connecting') return { ...base,
+        statusLabel:'Redirigiendo a la red…', pillStyle:pill('#EAF0FA', accent), spinning:true, dot:false, reason:'',
+        showButton:true, showCheck:false, btnLabel:'Reconectando…', btnStyle:softBtn, onClick:()=>{} };
+      if (s === 'success') return { ...base,
+        statusLabel:'Conectada', pillStyle:pill('#E7F4EC', '#1F7A50'), spinning:false, dot:true, reason:'',
+        showButton:false, showCheck:true, btnLabel:'', btnStyle:primaryBtn, onClick:()=>{} };
+      if (s === 'failed') return { ...base,
+        statusLabel:'No se pudo reconectar', pillStyle:pill('#FBEFEC', '#9A4A30'), spinning:false, dot:true, reason:'',
+        showButton:true, showCheck:false, btnLabel:'Reintentar', btnStyle:primaryBtn, onClick:()=>this.reconnect(a.id) };
+      return { ...base,
+        statusLabel:'Sin conexión', pillStyle:pill('#FBEFEC', '#9A4A30'), spinning:false, dot:true, reason:a.reason,
+        showButton:true, showCheck:false, btnLabel:'Reconectar', btnStyle:primaryBtn, onClick:()=>this.reconnect(a.id) };
+    });
+
+    const statuses = this.accounts.map(a => st[a.id]);
+    const pending = this.accounts.filter(a => st[a.id] !== 'success');
+    const allDone = pending.length === 0;
+    const anyFailed = statuses.includes('failed');
+    const anyConnecting = statuses.includes('connecting');
+
+    const listTitle = allDone ? 'Cuentas reconectadas' : 'Cuentas que requieren reconexión · ' + pending.length;
+    const pendingWord = pending.length > 1 ? (pending.length + ' cuentas') : 'una cuenta';
+
+    let contextNote = '', contextNoteBg = '', contextNoteInk = '';
+    if (anyConnecting) { contextNote = 'Se abrió la página oficial de la red para que autorices el acceso. Al volver, la cuenta queda conectada.'; contextNoteBg = '#F5F8FC'; contextNoteInk = '#647084'; }
+    else if (anyFailed) { contextNote = 'No pudimos completar la reconexión. Es posible que se haya cancelado la autorización; probá «Reintentar».'; contextNoteBg = '#FBEFEC'; contextNoteInk = '#9A4A30'; }
+
+    return {
+      accent, accentSoft: this.softer(accent),
+      rows,
+      allDone, showHeaderError: !allDone,
+      listTitle, pendingWord,
+      showReconnectAll: !allDone && pending.length > 1,
+      reconnectAll: () => this.accounts.forEach(a => st[a.id] !== 'success' && st[a.id] !== 'connecting' && this.reconnect(a.id)),
+      contextNote, contextNoteBg, contextNoteInk,
+      goBack: () => { try { window.location.href = encodeURI('Dashboard.dc.html'); } catch(e) {} },
+    };
+  }
+
+  softer(hex) {
+    const h = hex.replace('#','');
+    const r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+    const mix = (c) => Math.round(c + (255 - c) * 0.42);
+    return 'rgb(' + mix(r) + ',' + mix(g) + ',' + mix(b) + ')';
+  }
+}
+</script>
+</body>
+</html>

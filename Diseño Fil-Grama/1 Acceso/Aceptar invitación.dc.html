@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgSpin { to { transform: rotate(360deg); } }
+    .filg-input { width:100%; height:46px; border-radius:10px; padding:0 14px; font-size:14px; font-family:'Public Sans',sans-serif; color:#141921; background:#fff; outline:none; transition:border-color .12s, box-shadow .12s; }
+    .filg-input::placeholder { color:#AAB2BE; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Aceptar invitación — pantalla pública</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Se llega desde el link del email, sin login. La invitación define todo el contexto: organización, tipo y rol (no se editan). El frame es <span style="color:#3D4757; font-weight:500;">interactivo</span>: completá nombre y contraseña (checklist en vivo), confirmá y mirá el éxito breve que redirige solo. Cambiá la variante para ver fundadora de agencia, autogestionado, miembro, o la invitación vencida.</div>
+  </div>
+
+  <!-- demo variant switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Variante (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="4"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP (interactivo) ============ -->
+    <div style="flex:none; width:1080px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:16px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="min-height:700px; background:radial-gradient(120% 90% at 50% -10%, #EAF0FA 0%, #F4F6FA 46%, #F4F6FA 100%); display:flex; align-items:center; justify-content:center; padding:50px 24px;">
+
+          <!-- ===== INVITACIÓN VENCIDA ===== -->
+          <sc-if value="{{ isVencida }}" hint-placeholder-val="{{ false }}">
+            <div style="width:404px; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); padding:38px 40px 34px; text-align:center;">
+              <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:48px; height:48px; border-radius:13px; display:block; margin:0 auto; box-shadow:0 4px 12px rgba(30,102,188,.28);" />
+              <div style="font-size:22px; font-weight:700; color:#141921; letter-spacing:-.3px; margin-top:11px;">Fil-Grama</div>
+              <div style="width:52px; height:52px; border-radius:50%; background:#FBEFEC; border:1px solid #F1D6CC; display:flex; align-items:center; justify-content:center; margin:24px auto 0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#C2603F" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="#C2603F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="font-size:17px; font-weight:600; color:#141921; margin-top:16px;">Esta invitación ya no sirve</div>
+              <div style="font-size:13.5px; color:#647084; line-height:1.6; margin-top:8px;">Venció o ya fue usada. No pasa nada: pedile a quien te invitó que te la reenvíe — te va a llegar un link nuevo al mismo email.</div>
+              <div style="font-size:12.5px; color:#8A95A6; margin-top:22px;">¿Ya tenés cuenta? <span onClick="{{ goLogin }}" style="color:{{ accent }}; font-weight:500; cursor:pointer;">Iniciar sesión</span></div>
+            </div>
+          </sc-if>
+
+          <!-- ===== ÉXITO ===== -->
+          <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ false }}">
+            <div style="width:404px; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); padding:44px 40px 40px; text-align:center;">
+              <div style="width:56px; height:56px; border-radius:50%; background:#E7F4EC; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1F7A50" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="font-size:20px; font-weight:700; color:#141921; letter-spacing:-.3px; margin-top:16px;">{{ successTitle }}</div>
+              <div style="font-size:13.5px; color:#647084; line-height:1.6; margin-top:8px;">{{ successBody }}</div>
+              <div style="height:5px; background:#EEF1F5; border-radius:3px; margin-top:24px; overflow:hidden;"><div style="{{ successBarStyle }}"></div></div>
+              <div style="font-size:12px; color:#8A95A6; margin-top:10px;">{{ successDest }}</div>
+            </div>
+          </sc-if>
+
+          <!-- ===== FORMULARIO ===== -->
+          <sc-if value="{{ isForm }}" hint-placeholder-val="{{ true }}">
+            <div style="width:404px; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); padding:34px 40px 30px;">
+              <!-- brand -->
+              <div style="display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom:20px;">
+                <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:44px; height:44px; border-radius:12px; display:block; box-shadow:0 4px 12px rgba(30,102,188,.28);" />
+                <div style="font-size:20px; font-weight:700; color:#141921; letter-spacing:-.3px;">Fil-Grama</div>
+              </div>
+
+              <!-- contexto de la invitación -->
+              <div style="background:#EEF3FB; border:1px solid #DCE6F6; border-radius:12px; padding:14px 16px; text-align:center;">
+                <div style="font-size:12.5px; color:#647084;">{{ ctxIntro }}</div>
+                <div style="font-size:16px; font-weight:600; color:#141921; margin-top:3px;">{{ ctxOrg }}</div>
+                <div style="display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid #DCE6F6; border-radius:8px; padding:3px 10px; font-size:11.5px; font-weight:500; color:#3D6FB4; margin-top:8px;">{{ ctxPill }}</div>
+              </div>
+
+              <!-- email fijo -->
+              <div style="margin-top:16px;">
+                <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Email <span style="font-weight:400; color:#8A95A6;">· de la invitación</span></label>
+                <div class="filg-input" style="border:1px solid #E3E8EF; background:#F6F8FB; display:flex; align-items:center; justify-content:space-between; color:#647084;">
+                  <span>{{ email }}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="10.5" width="14" height="9.5" rx="2" stroke="#9AA4B2" stroke-width="1.7"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#9AA4B2" stroke-width="1.7"/></svg>
+                </div>
+              </div>
+
+              <!-- nombre -->
+              <div style="margin-top:13px;">
+                <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Nombre completo</label>
+                <input class="filg-input" placeholder="{{ namePlaceholder }}" value="{{ name }}" onInput="{{ onName }}" style="{{ nameStyle }}" style-focus="{{ inputFocusStyle }}" />
+                <sc-if value="{{ nameErr }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:12px; color:#C2603F; margin-top:6px;">Contanos tu nombre para saludarte como corresponde.</div>
+                </sc-if>
+              </div>
+
+              <!-- contraseña -->
+              <div style="margin-top:13px;">
+                <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Contraseña</label>
+                <div style="position:relative;">
+                  <input class="filg-input" type="{{ pwType }}" placeholder="Elegí una contraseña" value="{{ pw }}" onInput="{{ onPw }}" style="{{ pwStyle }}" style-focus="{{ inputFocusStyle }}" />
+                  <span onClick="{{ toggleShow }}" style="position:absolute; right:13px; top:50%; transform:translateY(-50%); font-size:12.5px; font-weight:500; color:{{ accent }}; cursor:pointer; user-select:none;">{{ showLabel }}</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:4px; margin-top:8px;">
+                  <sc-for list="{{ pwChecks }}" as="c" hint-placeholder-count="2">
+                    <div style="display:flex; align-items:center; gap:7px;">
+                      <span style="{{ c.dotStyle }}">{{ c.glyph }}</span>
+                      <span style="{{ c.textStyle }}">{{ c.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <!-- repetir -->
+              <div style="margin-top:13px;">
+                <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Repetir contraseña</label>
+                <input class="filg-input" type="{{ pwType }}" placeholder="Otra vez, para estar seguros" value="{{ pw2 }}" onInput="{{ onPw2 }}" onBlur="{{ blurPw2 }}" style="{{ pw2Style }}" style-focus="{{ inputFocusStyle }}" />
+                <sc-if value="{{ pw2Err }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:12px; color:#C2603F; margin-top:6px;">Las contraseñas no coinciden todavía.</div>
+                </sc-if>
+              </div>
+
+              <!-- submit -->
+              <button onClick="{{ onSubmit }}" style="{{ submitStyle }}">
+                <sc-if value="{{ submitting }}" hint-placeholder-val="{{ false }}">
+                  <span style="display:inline-flex; width:16px; height:16px; border:2px solid rgba(255,255,255,.45); border-top-color:#fff; border-radius:50%; animation:filgSpin .7s linear infinite; margin-right:9px;"></span>
+                </sc-if>
+                {{ submitLabel }}
+              </button>
+
+              <div style="text-align:center; font-size:11.5px; color:#9AA4B2; line-height:1.55; margin-top:14px;">Al continuar aceptás los <span style="color:#647084; text-decoration:underline; cursor:pointer;">términos</span> y la <span style="color:#647084; text-decoration:underline; cursor:pointer;">política de privacidad</span>.</div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MÓVIL (reposo) ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil · reposo (fundadora)</div>
+      <div style="border-radius:16px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="min-height:640px; background:radial-gradient(130% 80% at 50% -8%, #EAF0FA 0%, #F4F6FA 48%, #F4F6FA 100%); display:flex; flex-direction:column; justify-content:center; padding:28px 22px;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:9px; margin-bottom:18px;">
+            <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:44px; height:44px; border-radius:12px; display:block; box-shadow:0 4px 12px rgba(30,102,188,.28);" />
+            <div style="font-size:20px; font-weight:700; color:#141921; letter-spacing:-.3px;">Fil-Grama</div>
+          </div>
+          <div style="background:#EEF3FB; border:1px solid #DCE6F6; border-radius:12px; padding:12px 14px; text-align:center; margin-bottom:16px;">
+            <div style="font-size:12px; color:#647084;">Te invitaron a crear</div>
+            <div style="font-size:15px; font-weight:600; color:#141921; margin-top:2px;">Agencia Litoral</div>
+            <div style="display:inline-flex; background:#fff; border:1px solid #DCE6F6; border-radius:8px; padding:3px 10px; font-size:11px; font-weight:500; color:#3D6FB4; margin-top:7px;">Organización tipo agencia · vas a ser admin</div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:6px;">Email · de la invitación</label>
+            <div class="filg-input" style="border:1px solid #E3E8EF; background:#F6F8FB; display:flex; align-items:center; color:#647084;">laura@litoral.com</div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:6px;">Nombre completo</label>
+            <div class="filg-input" style="border:1px solid #DCE2EA; display:flex; align-items:center; color:#AAB2BE;">Laura Benítez</div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:6px;">Contraseña</label>
+            <div class="filg-input" style="border:1px solid #DCE2EA; display:flex; align-items:center; justify-content:space-between; color:#AAB2BE;"><span>Elegí una contraseña</span><span style="font-size:12.5px; font-weight:500; color:{{ accent }};">Mostrar</span></div>
+            <div style="font-size:11.5px; color:#8A95A6; margin-top:6px;">○ Al menos 8 caracteres &nbsp; ○ Al menos un número</div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:6px;">Repetir contraseña</label>
+            <div class="filg-input" style="border:1px solid #DCE2EA; display:flex; align-items:center; color:#AAB2BE;">Otra vez, para estar seguros</div>
+          </div>
+          <div style="height:48px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:600; color:#fff; box-shadow:0 4px 12px rgba(30,102,188,.22);">Crear organización y entrar</div>
+          <div style="text-align:center; font-size:11px; color:#9AA4B2; line-height:1.55; margin-top:12px;">Al continuar aceptás los términos y la política de privacidad.</div>
+        </div>
+      </div>
+
+      <!-- notas -->
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Notas</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;">La invitación define organización, tipo y rol — el formulario solo pide lo mínimo (nombre + contraseña). Al confirmar: éxito breve y redirección automática — <span style="color:#3D4757; font-weight:500;">agencia → Home de clientes</span>, <span style="color:#3D4757; font-weight:500;">autogestionado → su dashboard</span>, miembro → bienvenida a la org. La invitación vencida/usada no asusta ni ofrece acciones: pide reenvío y deja salida al login.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = {
+    variant: 'agencia',
+    name: '', pw: '', pw2: '', showPw: false,
+    nameErr: false, pw2Err: false, pwSubmitErr: false,
+    submitting: false, success: false, progress: 0,
+  };
+
+  variants = {
+    agencia: {
+      label: 'Fundadora · agencia', email: 'laura@litoral.com', namePh: 'Laura Benítez',
+      ctxIntro: 'Te invitaron a crear', ctxOrg: 'Agencia Litoral', ctxPill: 'Organización tipo agencia · vas a ser admin',
+      submit: 'Crear organización y entrar',
+      successTitle: (n) => '¡Listo, ' + n + '!',
+      successBody: 'Agencia Litoral ya está creada y tu cuenta también.',
+      successDest: 'Te llevamos a tus clientes…',
+      dest: '../2 Clientes/Lista de clientes.dc.html',
+    },
+    auto: {
+      label: 'Fundadora · autogestionado', email: 'valen@cafeaurora.com', namePh: 'Valentina Sosa',
+      ctxIntro: 'Te invitaron a crear tu espacio', ctxOrg: 'Café Aurora', ctxPill: 'Autogestionado · para gestionar tus propias redes',
+      submit: 'Crear mi espacio y entrar',
+      successTitle: (n) => '¡Listo, ' + n + '!',
+      successBody: 'Tu espacio ya está creado.',
+      successDest: 'Te llevamos a tu dashboard…',
+      dest: '../3 Workspace de cliente/Dashboard.dc.html',
+    },
+    miembro: {
+      label: 'Miembro', email: 'sofia@litoral.com', namePh: 'Sofía Ríos',
+      ctxIntro: 'Martín te invitó a sumarte a', ctxOrg: 'Agencia Litoral', ctxPill: 'Como Empleada',
+      submit: 'Unirme y entrar',
+      successTitle: (n) => '¡Bienvenida, ' + n + '!',
+      successBody: 'Ya sos parte de Agencia Litoral.',
+      successDest: 'Te llevamos a los clientes…',
+      dest: '../2 Clientes/Lista de clientes.dc.html',
+    },
+  };
+
+  setVariant(v) {
+    clearTimeout(this._t); clearInterval(this._p);
+    this.setState({ variant: v, name:'', pw:'', pw2:'', showPw:false, nameErr:false, pw2Err:false, pwSubmitErr:false, submitting:false, success:false, progress:0 });
+  }
+
+  seg(active, accent) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 14px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084' };
+  }
+
+  onSubmit() {
+    const st = this.state;
+    if (st.submitting || st.success) return;
+    const nameOk = st.name.trim().length >= 2;
+    const pwOk = st.pw.length >= 8 && /\d/.test(st.pw);
+    const matchOk = pwOk && st.pw === st.pw2;
+    this.setState({ nameErr: !nameOk, pwSubmitErr: !pwOk, pw2Err: pwOk && !matchOk });
+    if (!nameOk || !pwOk || !matchOk) return;
+    this.setState({ submitting: true });
+    this._t = setTimeout(() => {
+      this.setState({ submitting: false, success: true, progress: 0 });
+      this._p = setInterval(() => {
+        this.setState(s => {
+          const next = Math.min(100, s.progress + 4);
+          if (next >= 100) {
+            clearInterval(this._p);
+            const v = this.variants[s.variant];
+            try { window.location.href = encodeURI(v.dest); } catch(e) {}
+          }
+          return { progress: next };
+        });
+      }, 80);
+    }, 1100);
+  }
+
+  componentWillUnmount() { clearTimeout(this._t); clearInterval(this._p); }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const isVencida = st.variant === 'vencida';
+    const v = this.variants[st.variant] || this.variants.agencia;
+
+    const demoStates = [['agencia','Fundadora · agencia'],['auto','Fundadora · autogestionado'],['miembro','Miembro'],['vencida','Invitación vencida']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setVariant(k), style:this.seg(k===st.variant, accent) }));
+
+    // checklist
+    const lenOk = st.pw.length >= 8;
+    const numOk = /\d/.test(st.pw);
+    const mkCheck = (ok, label) => ({
+      glyph: ok ? '✓' : '○',
+      label,
+      dotStyle: { display:'inline-flex', width:'15px', height:'15px', alignItems:'center', justifyContent:'center', fontSize: ok ? '10px' : '11px', fontWeight:700, borderRadius:'50%', flex:'none', background: ok ? '#E7F4EC' : 'transparent', color: ok ? '#1F7A50' : (st.pwSubmitErr ? '#C2603F' : '#AAB2BE') },
+      textStyle: { fontSize:'12px', color: ok ? '#1F7A50' : (st.pwSubmitErr ? '#C2603F' : '#8A95A6') },
+    });
+    const pwChecks = [mkCheck(lenOk, 'Al menos 8 caracteres'), mkCheck(numOk, 'Al menos un número')];
+
+    const border = (err) => ({ border: '1px solid ' + (err ? '#E0A28C' : '#DCE2EA') });
+    const focus = { border:'1px solid ' + accent, boxShadow:'0 0 0 3px rgba(30,102,188,.12)' };
+
+    const canInteract = !st.submitting;
+    const submitBase = { width:'100%', height:'48px', borderRadius:'11px', border:'none', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'15px', fontWeight:600, fontFamily:'inherit', color:'#fff', cursor:'pointer', marginTop:'20px', boxShadow:'0 4px 12px rgba(30,102,188,.22)', transition:'all .15s' };
+
+    return {
+      accent, demoStates,
+      isVencida,
+      isForm: !isVencida && !st.success,
+      isSuccess: !isVencida && st.success,
+      goLogin: () => { try { window.location.href = encodeURI('Login.dc.html'); } catch(e) {} },
+      // contexto
+      ctxIntro: v.ctxIntro, ctxOrg: v.ctxOrg, ctxPill: v.ctxPill,
+      email: v.email, namePlaceholder: v.namePh,
+      // campos
+      name: st.name, onName: (e) => this.setState({ name: e.target.value, nameErr: false }),
+      nameStyle: border(st.nameErr), inputFocusStyle: focus,
+      pw: st.pw, onPw: (e) => this.setState({ pw: e.target.value, pwSubmitErr: false }),
+      pwStyle: border(st.pwSubmitErr),
+      pwChecks,
+      pw2: st.pw2, onPw2: (e) => this.setState({ pw2: e.target.value, pw2Err: false }),
+      blurPw2: () => this.setState(s => ({ pw2Err: s.pw2.length > 0 && s.pw2 !== s.pw })),
+      pw2Style: border(st.pw2Err),
+      pw2Err: st.pw2Err, nameErr: st.nameErr,
+      pwType: st.showPw ? 'text' : 'password',
+      showLabel: st.showPw ? 'Ocultar' : 'Mostrar',
+      toggleShow: () => this.setState(s => ({ showPw: !s.showPw })),
+      // submit
+      submitting: st.submitting,
+      submitLabel: st.submitting ? 'Creando tu cuenta…' : v.submit,
+      submitStyle: canInteract ? { ...submitBase, background: accent } : { ...submitBase, background:'#7FA8D9', cursor:'default' },
+      onSubmit: () => this.onSubmit(),
+      // éxito
+      successTitle: v.successTitle((st.name.trim().split(' ')[0]) || 'ya está'),
+      successBody: v.successBody,
+      successDest: v.successDest,
+      successBarStyle: { height:'100%', width: st.progress + '%', background: accent, borderRadius:'3px', transition:'width .1s linear' },
+    };
+  }
+}
+</script>
+</body>
+</html>

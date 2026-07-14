@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:900px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Administración — Detalle de usuario</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Editá nombre, rol y estado de un integrante, y gestioná sus <span style="color:#3D4757; font-weight:500;">clientes prioritarios</span> (marca informativa que destaca clientes en su vista; no restringe el acceso). Probá cambiar rol/estado: «Guardar cambios» se habilita. Agregá o quitá prioritarios.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- DESKTOP -->
+    <div style="flex:none; width:1040px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="width:32px; height:32px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff;">LF</div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:22px 28px 34px; min-height:520px;">
+          <div onClick="{{ goUsers }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Usuarios</span></div>
+          <div style="margin-top:14px; margin-bottom:18px;">
+            <h1 style="font-size:23px; font-weight:600; color:#141921; letter-spacing:-.3px; margin:0;">{{ name }}</h1>
+            <div style="font-size:13px; color:#647084; margin-top:4px;">marco@agencia.com · {{ roleLabel }}</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start;">
+            <!-- Datos -->
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px; display:flex; flex-direction:column; gap:16px;">
+              <div style="font-size:15px; font-weight:600; color:#141921;">Datos del usuario</div>
+              <div><div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Nombre completo</div><input value="{{ name }}" onInput="{{ onName }}" style="width:100%; height:40px; border:1px solid #D4DAE3; border-radius:10px; padding:0 13px; font-size:14px; font-family:inherit; color:#141921; outline:none;" /></div>
+              <div><div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Rol</div><div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; width:max-content;"><sc-for list="{{ rolList }}" as="r" hint-placeholder-count="2"><div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div></sc-for></div></div>
+              <div><div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Estado</div><div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; width:max-content;"><sc-for list="{{ estadoList }}" as="e" hint-placeholder-count="2"><div style="{{ e.style }}" onClick="{{ e.onClick }}">{{ e.label }}</div></sc-for></div><div style="font-size:12px; color:#8A95A6; margin-top:8px;">Un usuario inactivo no puede iniciar sesión.</div></div>
+              <div style="display:flex; justify-content:flex-end;"><div onClick="{{ save }}" style="{{ saveStyle }}">{{ saveLabel }}</div></div>
+            </div>
+
+            <!-- Prioritarios -->
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px; display:flex; flex-direction:column; gap:14px;">
+              <div><div style="font-size:15px; font-weight:600; color:#141921;">Clientes prioritarios</div><div style="font-size:12.5px; color:#647084; margin-top:5px; line-height:1.5;">Marca informativa para destacar clientes en la vista del empleado. No restringe el acceso.</div></div>
+              <sc-if value="{{ hasPriority }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <sc-for list="{{ priority }}" as="c" hint-placeholder-count="2"><div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid #EEF1F5;"><span style="font-size:14px; font-weight:500; color:#141921;">{{ c.name }}</span><div onClick="{{ c.onRemove }}" style="height:30px; display:flex; align-items:center; padding:0 11px; font-size:13px; color:#647084; cursor:pointer; border-radius:7px;">Quitar</div></div></sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ noPriority }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px; color:#8A95A6; padding:4px 0;">Este usuario todavía no tiene clientes prioritarios.</div></sc-if>
+              <div>
+                <input value="{{ search }}" onInput="{{ onSearch }}" placeholder="Buscar cliente para agregar" style="width:100%; height:40px; border:1px solid #D4DAE3; border-radius:10px; padding:0 13px; font-size:14px; font-family:inherit; outline:none;" />
+                <div style="margin-top:8px;">
+                  <sc-if value="{{ hasCandidates }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ candidates }}" as="c" hint-placeholder-count="3"><div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid #EEF1F5;"><span style="font-size:14px; color:#141921;">{{ c.name }}</span><div onClick="{{ c.onAdd }}" style="height:30px; display:flex; align-items:center; padding:0 12px; font-size:13px; color:#3D4757; background:#fff; border:1px solid #D4DAE3; border-radius:7px; cursor:pointer;">Agregar</div></div></sc-for></sc-if>
+                  <sc-if value="{{ noCandidates }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px; color:#8A95A6; padding:8px 0;">{{ noCandidatesMsg }}</div></sc-if>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#647084;">← Usuarios</span><div style="width:28px; height:28px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff;">LF</div></div>
+        <div style="background:#F5F7FA; padding:16px;">
+          <div style="font-size:18px; font-weight:600; color:#141921;">{{ name }}</div>
+          <div style="font-size:12px; color:#647084; margin-top:3px;">marco@agencia.com · {{ roleLabel }}</div>
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px; margin-top:14px; display:flex; flex-direction:column; gap:14px;">
+            <div style="font-size:14px; font-weight:600; color:#141921;">Datos del usuario</div>
+            <div><div style="font-size:12px; font-weight:500; color:#3D4757; margin-bottom:6px;">Rol</div><div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;"><sc-for list="{{ rolListM }}" as="r" hint-placeholder-count="2"><div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div></sc-for></div></div>
+            <div><div style="font-size:12px; font-weight:500; color:#3D4757; margin-bottom:6px;">Estado</div><div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;"><sc-for list="{{ estadoListM }}" as="e" hint-placeholder-count="2"><div style="{{ e.style }}" onClick="{{ e.onClick }}">{{ e.label }}</div></sc-for></div></div>
+            <div onClick="{{ save }}" style="{{ saveStyleM }}">{{ saveLabel }}</div>
+          </div>
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px; margin-top:12px;">
+            <div style="font-size:14px; font-weight:600; color:#141921;">Clientes prioritarios</div>
+            <div style="margin-top:10px;"><sc-for list="{{ priority }}" as="c" hint-placeholder-count="2"><div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid #EEF1F5;"><span style="font-size:13.5px; font-weight:500; color:#141921;">{{ c.name }}</span><span onClick="{{ c.onRemove }}" style="font-size:12.5px; color:#647084; cursor:pointer;">Quitar</span></div></sc-for></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:760},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  ORIG = { name:'Marco Díaz', rol:'EMPLEADO', estado:'active' };
+  state = {
+    name:'Marco Díaz', rol:'EMPLEADO', estado:'active', search:'',
+    priority:['Café Aurora', 'Studio Norte'],
+  };
+  allClients = ['Café Aurora','Studio Norte','Verde Market','Panadería La Espiga','Clínica Sonrisa','Gimnasio Pulso','Boutique Lila','Inmobiliaria Sur'];
+
+  seg(active, accent, opts) {
+    opts = opts || {};
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:opts.pad||'0 16px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s', flex:opts.flex||'none' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+                  : { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+
+    const rolDefs = [['EMPLEADO','Empleado'],['ADMIN','Administrador']];
+    const rolList = rolDefs.map(([k,l]) => ({ label:l, onClick:()=>this.setState({ rol:k }), style:this.seg(k===st.rol, accent) }));
+    const rolListM = rolDefs.map(([k,l]) => ({ label:l, onClick:()=>this.setState({ rol:k }), style:this.seg(k===st.rol, accent, { flex:'1' }) }));
+    const estDefs = [['active','Activo'],['inactive','Inactivo']];
+    const estadoList = estDefs.map(([k,l]) => ({ label:l, onClick:()=>this.setState({ estado:k }), style:this.seg(k===st.estado, accent) }));
+    const estadoListM = estDefs.map(([k,l]) => ({ label:l, onClick:()=>this.setState({ estado:k }), style:this.seg(k===st.estado, accent, { flex:'1' }) }));
+
+    const dirty = st.name.trim() !== this.ORIG.name || st.rol !== this.ORIG.rol || st.estado !== this.ORIG.estado;
+    const canSave = dirty && st.name.trim().length > 0;
+    const saveBase = { height:'38px', display:'flex', alignItems:'center', justifyContent:'center', padding:'0 18px', borderRadius:'9px', fontSize:'13.5px', fontWeight:600 };
+    const saveStyle = canSave ? { ...saveBase, background:accent, color:'#fff', cursor:'pointer' } : { ...saveBase, background:'#EEF1F5', color:'#AAB2BE', cursor:'not-allowed' };
+    const saveStyleM = { ...saveStyle, width:'100%' };
+
+    const q = st.search.trim().toLowerCase();
+    const candidates = this.allClients
+      .filter(c => !st.priority.includes(c))
+      .filter(c => q ? c.toLowerCase().includes(q) : true)
+      .slice(0, 6)
+      .map(name => ({ name, onAdd: () => this.setState(s => ({ priority:[...s.priority, name] })) }));
+
+    return {
+      accent,
+      name: st.name, onName: (e)=>this.setState({ name:e.target.value }),
+      roleLabel: st.rol === 'ADMIN' ? 'Administrador' : 'Empleado',
+      rolList, rolListM, estadoList, estadoListM,
+      saveStyle, saveStyleM, save: () => canSave && this.setState({}), saveLabel: dirty ? 'Guardar cambios' : 'Guardado',
+      priority: st.priority.map(name => ({ name, onRemove: () => this.setState(s => ({ priority:s.priority.filter(x => x !== name) })) })),
+      hasPriority: st.priority.length > 0, noPriority: st.priority.length === 0,
+      search: st.search, onSearch: (e)=>this.setState({ search:e.target.value }),
+      candidates, hasCandidates: candidates.length > 0, noCandidates: candidates.length === 0,
+      noCandidatesMsg: q ? 'No hay clientes que coincidan.' : 'No hay más clientes para agregar.',
+      goUsers: () => this.go('Usuarios.dc.html'),
+    };
+  }
+}
+</script>
+</body>
+</html>

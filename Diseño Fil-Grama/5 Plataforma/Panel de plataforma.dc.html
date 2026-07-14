@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgFade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .filg-hov:hover { background:#F7F9FC; }
+    .filg-row:hover { background:#F9FBFD; }
+    a { color:#1E66BC; } a:hover { color:#14529C; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:980px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Panel de plataforma — staff Fil-Grama</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Entrada aparte, por encima de todas las organizaciones. Tres niveles: las <span style="color:#3D4757; font-weight:500;">organizaciones</span> son clientes directos de la plataforma y van con <span style="color:#3D4757; font-weight:500;">nombre real</span>; sus <span style="color:#3D4757; font-weight:500;">clientes</span> (marcas) y <span style="color:#3D4757; font-weight:500;">cuentas</span> pertenecen a terceros y van pseudonimizados («Cliente #7», «IG · cuenta #482»). Nunca métricas de negocio ni contenido. Para ver un handle hay que <span style="color:#3D4757; font-weight:500;">revelar identidad</span> con un motivo, y queda auditado. Navegá las pestañas, entrá a una organización, probá «Revelar identidad», registrá un pago e impersoná. Cambiá el rol para ver lo que Soporte no puede tocar.</div>
+  </div>
+
+  <!-- demo switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Rol (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ rolStates }}" as="d" hint-placeholder-count="2"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+
+        <!-- dark platform bar -->
+        <div style="height:56px; background:#1C2230; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:28px; height:28px; border-radius:8px; display:block;" />
+            <span style="font-size:15px; font-weight:600; color:#fff; letter-spacing:-.2px;">Fil-Grama</span>
+            <span style="font-size:11px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8FA3C4; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:6px; padding:3px 9px;">Plataforma</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:12.5px; color:#AAB6CC;">{{ userLabel }}</span>
+            <div style="width:30px; height:30px; border-radius:50%; background:#33405A; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff;">{{ userInitials }}</div>
+          </div>
+        </div>
+
+        <!-- permanent compliance banner -->
+        <div style="background:#EDEFF4; border-bottom:1px solid #E2E6EE; padding:8px 24px; display:flex; align-items:center; gap:9px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3.4l6.6 2.4v4.7c0 4.2-2.9 7.1-6.6 8.6-3.7-1.5-6.6-4.4-6.6-8.6V5.8L12 3.4z" stroke="#5A6577" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.4 11.6l1.9 1.9 3.5-3.7" stroke="#5A6577" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:12.5px; color:#4A5568;"><span style="font-weight:600;">Panel de plataforma — datos operativos de tenants, acceso auditado.</span> Las organizaciones son clientes directos de la plataforma (nombre visible). Los clientes y cuentas de cada organización pertenecen a terceros: pseudonimizados, identidad solo con revelado auditado.</span>
+        </div>
+
+        <!-- tabs -->
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:0 24px; display:flex; gap:4px;">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3"><div onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</div></sc-for>
+        </div>
+
+        <!-- body -->
+        <div style="background:#F5F7FA; padding:22px 28px 34px; min-height:600px;">
+
+          <!-- ================= OBSERVABILIDAD ================= -->
+          <sc-if value="{{ isObs }}" hint-placeholder-val="{{ true }}">
+            <!-- alertas -->
+            <div style="background:#FBEFEC; border:1px solid #F1D6CC; border-radius:12px; padding:13px 18px; display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="#C2603F" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v4" stroke="#C2603F" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1" fill="#C2603F"/></svg>
+                <span style="font-size:13.5px; font-weight:600; color:#9A4A30;">{{ alertCount }} alertas operativas</span>
+              </div>
+              <sc-for list="{{ alertas }}" as="a" hint-placeholder-count="4">
+                <div onClick="{{ a.onGo }}" style="display:flex; align-items:center; gap:8px; font-size:13px; color:#8A4A30; cursor:pointer; width:max-content;">
+                  <span style="width:5px; height:5px; border-radius:50%; background:{{ a.dotColor }}; flex:none;"></span>
+                  <span>{{ a.texto }}</span>
+                  <span style="font-size:12px; font-weight:500; color:{{ accent }};">ver →</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <!-- tarjetas resumen -->
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:14px; margin-top:16px;">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:17px 18px;">
+                <div style="font-size:12px; color:#647084;">Organizaciones</div>
+                <div style="font-size:30px; font-weight:600; color:#141921; letter-spacing:-.8px; margin-top:5px; font-variant-numeric:tabular-nums;">14</div>
+                <div style="font-size:12px; color:#647084; margin-top:6px; line-height:1.55;">9 agencias · 5 autogestionadas</div>
+                <div style="display:flex; gap:5px; margin-top:8px; flex-wrap:wrap;">
+                  <span style="background:#E7F4EC; color:#1F7A50; border-radius:7px; padding:2px 7px; font-size:10.5px; font-weight:500;">12 activas</span>
+                  <span style="background:#FAF3DE; color:#7A6428; border-radius:7px; padding:2px 7px; font-size:10.5px; font-weight:500;">1 en gracia</span>
+                  <span style="background:#EEF1F5; color:#647084; border-radius:7px; padding:2px 7px; font-size:10.5px; font-weight:500;">1 suspendida</span>
+                </div>
+              </div>
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:17px 18px;">
+                <div style="font-size:12px; color:#647084;">Cuentas conectadas</div>
+                <div style="font-size:30px; font-weight:600; color:#141921; letter-spacing:-.8px; margin-top:5px; font-variant-numeric:tabular-nums;">87</div>
+                <div style="font-size:12px; color:#647084; margin-top:6px;">IG 41 · FB 28 · TikTok 18</div>
+                <div style="margin-top:8px;"><span style="background:#FBEFEC; color:#9A4A30; border-radius:7px; padding:2px 7px; font-size:10.5px; font-weight:500;">6 en ERROR</span></div>
+              </div>
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:17px 18px;">
+                <div style="font-size:12px; color:#647084;">Consumo de API <span style="color:#8A95A6;">· hoy</span></div>
+                <div style="display:flex; flex-direction:column; gap:9px; margin-top:12px;">
+                  <sc-for list="{{ apiRows }}" as="q" hint-placeholder-count="2">
+                    <div>
+                      <div style="display:flex; align-items:baseline; justify-content:space-between;"><span style="font-size:12px; color:#3D4757;">{{ q.label }}</span><span style="font-size:12px; font-weight:600; color:{{ q.ink }}; font-variant-numeric:tabular-nums;">{{ q.pct }}%</span></div>
+                      <div style="height:6px; border-radius:4px; background:#EEF1F5; margin-top:5px; overflow:hidden;"><div style="{{ q.barStyle }}"></div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:17px 18px;">
+                <div style="font-size:12px; color:#647084;">Almacenamiento</div>
+                <div style="font-size:30px; font-weight:600; color:#141921; letter-spacing:-.8px; margin-top:5px; font-variant-numeric:tabular-nums;">214 <span style="font-size:14px; font-weight:400; color:#8A95A6;">GB</span></div>
+                <div style="font-size:12px; color:#647084; margin-top:6px;">de 500 GB · 43%</div>
+                <div style="height:6px; border-radius:4px; background:#EEF1F5; margin-top:9px; overflow:hidden;"><div style="width:43%; height:100%; background:#7C8AA5; border-radius:4px;"></div></div>
+              </div>
+            </div>
+
+            <!-- salud del job por tenant -->
+            <div style="display:flex; align-items:baseline; gap:9px; margin:22px 0 10px;">
+              <span style="font-size:16px; font-weight:600; color:#141921;">Salud del job diario · por tenant</span>
+              <span style="font-size:12px; color:#8A95A6;">peor % de éxito arriba · tocá una fila para abrir la organización</span>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; overflow:hidden;">
+              <div style="display:grid; grid-template-columns:1.7fr .9fr .7fr .9fr 30px; gap:12px; padding:13px 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+                <div>Organización</div><div>Última corrida</div><div>% éxito</div><div>Cuentas en ERROR</div><div></div>
+              </div>
+              <sc-for list="{{ jobRows }}" as="j" hint-placeholder-count="5">
+                <div class="filg-row" onClick="{{ j.onOpen }}" style="{{ j.rowStyle }}">
+                  <div style="display:flex; align-items:center; gap:9px; min-width:0;">
+                    <span style="font-size:13.5px; font-weight:600; color:#141921;">{{ j.code }}</span>
+                    <span style="font-size:11px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:1px 7px;">{{ j.tipo }}</span>
+                    <span style="font-size:12px; color:#8A95A6;">{{ j.cuentas }}</span>
+                    <sc-if value="{{ j.rateFlag }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px; font-weight:600; color:#9A4A30; background:#FBEFEC; border:1px solid #F1D6CC; border-radius:5px; padding:1px 7px;">rate-limit anómalo</span></sc-if>
+                  </div>
+                  <div style="font-size:12.5px; color:#647084;">{{ j.last }}</div>
+                  <div><span style="{{ j.exitoStyle }}">{{ j.exito }}</span></div>
+                  <div style="font-size:12.5px; color:{{ j.errColor }};">{{ j.err }}</div>
+                  <div style="font-size:16px; color:#C4CCD6;">›</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:12px; color:#9AA4B2; margin-top:11px; display:flex; align-items:center; gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M7 10V8a5 5 0 0 1 10 0v2" stroke="#9AA4B2" stroke-width="1.6"/><rect x="5" y="10" width="14" height="9" rx="2" stroke="#9AA4B2" stroke-width="1.6"/></svg>
+              Las organizaciones aparecen con su nombre real (son clientes directos de la plataforma). Sus clientes y cuentas pertenecen a terceros y van pseudonimizados; la identidad se revela por cuenta, con motivo, dentro del detalle de la organización. Nunca métricas de negocio ni contenido.
+            </div>
+          </sc-if>
+
+          <!-- ================= ORGANIZACIONES ================= -->
+          <sc-if value="{{ isOrgs }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:12px;">
+              <span style="font-size:16px; font-weight:600; color:#141921;">Organizaciones</span>
+              <span style="font-size:12px; color:#8A95A6;">14 en total · pseudonimizadas · tocá una para abrir su detalle</span>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; overflow:hidden;">
+              <div style="display:grid; grid-template-columns:1.1fr .8fr 1fr .9fr .9fr 30px; gap:12px; padding:13px 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+                <div>Organización</div><div>Tipo</div><div>Suscripción</div><div>Cuentas</div><div>Usuarios</div><div></div>
+              </div>
+              <sc-for list="{{ orgRows }}" as="o" hint-placeholder-count="5">
+                <div class="filg-row" onClick="{{ o.onOpen }}" style="display:grid; grid-template-columns:1.1fr .8fr 1fr .9fr .9fr 30px; gap:12px; align-items:center; padding:13px 20px; border-bottom:1px solid #F4F6F9; cursor:pointer;">
+                  <div style="font-size:13.5px; font-weight:600; color:#141921;">{{ o.code }}</div>
+                  <div style="font-size:12.5px; color:#647084;">{{ o.tipo }}</div>
+                  <div><span style="{{ o.pillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ o.estadoLabel }}</span></div>
+                  <div style="font-size:12.5px; color:#647084; font-variant-numeric:tabular-nums;">{{ o.cuentas }}</div>
+                  <div style="font-size:12.5px; color:#647084; font-variant-numeric:tabular-nums;">{{ o.usuarios }}</div>
+                  <div style="font-size:16px; color:#C4CCD6;">›</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ================= DETALLE DE ORGANIZACIÓN ================= -->
+          <sc-if value="{{ isOrg }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ goOrgs }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content; margin-bottom:12px;"><span style="font-size:15px;">‹</span><span>Organizaciones</span></div>
+
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+              <div>
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                  <span style="font-size:20px; font-weight:600; color:#141921; letter-spacing:-.3px;">{{ orgCode }}</span>
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">{{ orgTipo }}</span>
+                  <span style="{{ orgPillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ orgEstadoLabel }}</span>
+                </div>
+                <div style="font-size:12.5px; color:#8A95A6; margin-top:5px;">{{ orgMeta }}</div>
+              </div>
+              <div style="display:flex; gap:9px; flex-wrap:wrap;">
+                <div onClick="{{ impersonar }}" class="filg-hov" style="height:36px; display:flex; align-items:center; gap:7px; padding:0 14px; background:#fff; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.2" stroke="#3D4757" stroke-width="1.6"/><path d="M5.5 19.5c.8-3.2 3.3-4.9 6.5-4.9s5.7 1.7 6.5 4.9" stroke="#3D4757" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  Impersonar
+                </div>
+                <div onClick="{{ toggleSuspend }}" title="{{ suspendTip }}" style="{{ suspendBtnStyle }}">{{ suspendLabel }}</div>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#8A95A6; margin-top:6px;">La impersonación abre la vista de la organización como soporte y queda registrada en el audit log con duración. La suspensión bloquea el login y pausa la captura diaria (la historia se conserva).</div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+              <!-- datos y límites -->
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px;">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <span style="font-size:14px; font-weight:600; color:#141921;">Datos y límites del plan</span>
+                  <span onClick="{{ openLimites }}" title="{{ limitesTip }}" style="{{ limitesLinkStyle }}">Editar límites</span>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:9px 20px; margin-top:12px; background:#F5F7FA; border:1px solid #EEF1F5; border-radius:9px; padding:10px 12px;">
+                  <div style="display:flex; align-items:center; gap:7px; font-size:12.5px; color:#3D4757;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#8A95A6" stroke-width="1.6"/><path d="M4 7l8 5.5L20 7" stroke="#8A95A6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {{ orgEmail }}
+                  </div>
+                  <div style="display:flex; align-items:center; gap:7px; font-size:12.5px; color:#3D4757;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.5 4h3l1.5 4-2 1.5a11 11 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16 16 0 0 1 4.5 6.2 2 2 0 0 1 6.5 4Z" stroke="#8A95A6" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    {{ orgTel }}
+                  </div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:13px;">
+                  <sc-for list="{{ limites }}" as="l" hint-placeholder-count="3">
+                    <div style="background:#F5F7FA; border:1px solid #EEF1F5; border-radius:10px; padding:10px 12px;">
+                      <div style="font-size:11px; color:#8A95A6;">{{ l.label }}</div>
+                      <div style="font-size:16px; font-weight:600; color:#141921; margin-top:3px; font-variant-numeric:tabular-nums;">{{ l.uso }} <span style="font-size:12px; font-weight:400; color:#8A95A6;">de {{ l.max }}</span></div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="font-size:11.5px; color:#8A95A6; margin-top:9px;">Límites manuales (etapa B) — sin planes automáticos todavía.</div>
+              </div>
+
+              <!-- usuarios -->
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px;">
+                <div style="font-size:14px; font-weight:600; color:#141921;">Usuarios ({{ orgUsuariosCount }})</div>
+                <div style="font-size:12px; color:#8A95A6; margin-top:3px;">{{ orgUsuariosSubtitle }}</div>
+                <div style="display:flex; flex-direction:column; gap:11px; margin-top:11px;">
+                  <sc-for list="{{ orgUsuarios }}" as="u" hint-placeholder-count="4">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <div style="width:28px; height:28px; border-radius:50%; background:#EEF1F5; display:flex; align-items:center; justify-content:center; flex:none; font-size:10px; font-weight:600; color:#4A5568;">{{ u.ini }}</div>
+                      <div style="flex:1; min-width:0;">
+                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                          <span style="font-size:13px; font-weight:600; color:#141921;">{{ u.nombre }}</span>
+                          <span style="font-size:11px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:1px 7px;">{{ u.rol }}</span>
+                        </div>
+                        <div style="{{ u.emailStyle }}">{{ u.email }}</div>
+                      </div>
+                      <span style="font-size:11.5px; color:#8A95A6; flex:none;">{{ u.ult }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <!-- cuentas conectadas (pseudonimizadas + revelar identidad) -->
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px; margin-top:16px;">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:baseline; gap:9px;">
+                  <span style="font-size:14px; font-weight:600; color:#141921;">Cuentas conectadas</span>
+                  <span style="font-size:12px; color:#8A95A6;">estado técnico · identidad oculta</span>
+                </div>
+                <span style="font-size:12px; color:#8A95A6;">{{ orgCuentasMeta }}</span>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:9px; margin-top:13px;">
+                <sc-for list="{{ orgAccounts }}" as="a" hint-placeholder-count="5">
+                  <div style="display:flex; align-items:center; gap:12px; border:1px solid {{ a.border }}; border-radius:11px; padding:11px 14px;">
+                    <div style="width:34px; height:34px; border-radius:9px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:11px; font-weight:600; color:{{ a.tintInk }};">{{ a.code }}</span></div>
+                    <div style="flex:1; min-width:0;">
+                      <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap;">
+                        <span style="font-size:13.5px; font-weight:600; color:#141921; font-variant-numeric:tabular-nums;">{{ a.primary }}</span>
+                        <sc-if value="{{ a.revealed }}" hint-placeholder-val="{{ false }}">
+                          <span style="display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:600; color:#6B4FA1; background:#F3F0FA; border:1px solid #E4DCF2; border-radius:6px; padding:2px 8px;">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="#6B4FA1" stroke-width="1.6"/><circle cx="12" cy="12" r="2.6" stroke="#6B4FA1" stroke-width="1.6"/></svg>
+                            identidad revelada · auditado
+                          </span>
+                        </sc-if>
+                      </div>
+                      <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+                        <span style="{{ a.pillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ a.statusLabel }}</span>
+                        <sc-if value="{{ a.revealed }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px; color:#8A95A6;">motivo: {{ a.reasonLabel }}</span></sc-if>
+                      </div>
+                    </div>
+                    <sc-if value="{{ a.canReveal }}" hint-placeholder-val="{{ true }}">
+                      <div onClick="{{ a.onReveal }}" class="filg-hov" style="height:32px; display:flex; align-items:center; gap:7px; padding:0 12px; background:#fff; border:1px solid #D4DAE3; border-radius:8px; font-size:12.5px; font-weight:500; color:#3D4757; cursor:pointer; flex:none;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="#3D4757" stroke-width="1.6"/><circle cx="12" cy="12" r="2.6" stroke="#3D4757" stroke-width="1.6"/></svg>
+                        Revelar identidad
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- suscripción (solo owner de plataforma) -->
+            <sc-if value="{{ isOwner }}" hint-placeholder-val="{{ true }}">
+            <div style="{{ subCardStyle }}">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;">
+                  <span style="font-size:14px; font-weight:600; color:#141921;">Suscripción</span>
+                  <span style="font-size:12.5px; color:#647084;">vigente hasta <b style="color:#141921;">{{ orgVence }}</b> · +7 días de gracia</span>
+                </div>
+                <div onClick="{{ openPago }}" style="{{ pagoBtnStyle }}">+ Registrar pago</div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr .6fr 1fr 1.1fr; gap:12px; padding:11px 4px 7px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7; margin-top:8px;">
+                <div>Pagado</div><div>Monto</div><div>Meses</div><div>Cubre hasta</div><div>Registrado por</div>
+              </div>
+              <sc-for list="{{ pagos }}" as="p" hint-placeholder-count="2">
+                <div style="display:grid; grid-template-columns:1fr 1fr .6fr 1fr 1.1fr; gap:12px; align-items:center; padding:10px 4px; border-bottom:1px solid #F4F6F9; font-size:13px; color:#232A36; font-variant-numeric:tabular-nums;">
+                  <div>{{ p.f }}</div><div>{{ p.m }}</div><div>{{ p.meses }}</div><div>{{ p.hasta }}</div>
+                  <div style="color:#647084;">{{ p.por }}</div>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+            <sc-if value="{{ isSupport }}" hint-placeholder-val="{{ false }}">
+              <div title="Requiere platform owner" style="background:#F5F7FA; border:1px dashed #D4DAE3; border-radius:13px; padding:16px 20px; margin-top:16px; display:flex; align-items:center; gap:12px; cursor:not-allowed;">
+                <div style="width:34px; height:34px; border-radius:9px; background:#EEF1F5; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M7 10V8a5 5 0 0 1 10 0v2" stroke="#8A95A6" stroke-width="1.6"/><rect x="5" y="10" width="14" height="9" rx="2" stroke="#8A95A6" stroke-width="1.6"/></svg></div>
+                <div>
+                  <div style="font-size:13.5px; font-weight:600; color:#3D4757;">Pagos y suscripción</div>
+                  <div style="font-size:12.5px; color:#8A95A6; margin-top:2px;">Oculto para soporte — requiere platform owner.</div>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- notas internas -->
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px; margin-top:16px;">
+              <div style="font-size:14px; font-weight:600; color:#141921;">Notas internas <span style="font-size:12px; font-weight:400; color:#8A95A6;">· las ve todo el staff, nunca el tenant</span></div>
+              <div style="display:flex; flex-direction:column; gap:8px; margin-top:11px;">
+                <sc-for list="{{ notas }}" as="n" hint-placeholder-count="1">
+                  <div style="background:#F5F7FA; border:1px solid #EEF1F5; border-radius:10px; padding:10px 13px;">
+                    <div style="font-size:13px; color:#232A36; line-height:1.5;">{{ n.t }}</div>
+                    <div style="font-size:11.5px; color:#8A95A6; margin-top:4px;">{{ n.por }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex; gap:8px; margin-top:11px;">
+                <input value="{{ notaInput }}" onChange="{{ onNotaInput }}" onKeyDown="{{ onNotaKey }}" placeholder="Agregar una nota…" style="flex:1; height:36px; border:1px solid #D4DAE3; border-radius:9px; padding:0 12px; font-size:13px; color:#141921; font-family:inherit; outline:none; background:#fff;" />
+                <div onClick="{{ addNota }}" class="filg-hov" style="height:36px; display:flex; align-items:center; padding:0 14px; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer; background:#fff;">Agregar</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ================= AUDIT LOG ================= -->
+          <sc-if value="{{ isAudit }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:12px;">
+              <div style="display:flex; align-items:baseline; gap:9px;">
+                <span style="font-size:16px; font-weight:600; color:#141921;">Audit log</span>
+                <span style="font-size:12px; color:#8A95A6;">cada acción del staff, sin editar ni borrar</span>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <sc-for list="{{ auditFilters }}" as="f" hint-placeholder-count="3">
+                  <span style="position:relative; display:inline-flex;">
+                    <div onClick="{{ f.onToggle }}" style="{{ f.btnStyle }}">{{ f.label }} <span style="font-size:9px; color:#8A95A6;">▾</span></div>
+                    <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute; top:40px; right:0; width:210px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:6px; z-index:60;">
+                        <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="4">
+                          <div class="filg-hov" onClick="{{ o.onPick }}" style="{{ o.style }}"><span style="flex:1;">{{ o.label }}</span><sc-if value="{{ o.selected }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px; color:{{ accent }};">✓</span></sc-if></div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; overflow:hidden;">
+              <div style="display:grid; grid-template-columns:.85fr 1.6fr 1.1fr 1.1fr .7fr; gap:12px; padding:13px 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+                <div>Quién</div><div>Acción</div><div>Org / Cuenta</div><div>Motivo</div><div>Cuándo</div>
+              </div>
+              <sc-for list="{{ auditRows }}" as="r" hint-placeholder-count="6">
+                <div style="{{ r.rowStyle }}">
+                  <div style="font-size:13px; font-weight:500; color:#141921;">{{ r.quien }}</div>
+                  <div style="display:flex; align-items:center; gap:7px; font-size:13px; color:#232A36;">
+                    <sc-if value="{{ r.tagLabel }}" hint-placeholder-val="{{ false }}"><span style="{{ r.tagStyle }}">{{ r.tagLabel }}</span></sc-if>
+                    <span>{{ r.que }}</span>
+                  </div>
+                  <div style="font-size:12.5px; color:#647084; font-variant-numeric:tabular-nums;">{{ r.org }}</div>
+                  <div style="font-size:12.5px; color:{{ r.motivoColor }};">{{ r.motivo }}</div>
+                  <div style="font-size:12.5px; color:#8A95A6; font-variant-numeric:tabular-nums;">{{ r.cuando }}</div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ auditEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:32px 20px; text-align:center; font-size:13px; color:#8A95A6;">Nada registrado con estos filtros.</div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+        </div>
+
+        <!-- banner de impersonación -->
+        <sc-if value="{{ impBanner }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; bottom:18px; left:50%; transform:translateX(-50%); background:#1C2230; color:#fff; border-radius:12px; padding:11px 18px; font-size:13px; display:flex; align-items:center; gap:14px; box-shadow:0 12px 34px rgba(20,25,33,.35); z-index:90; white-space:nowrap; animation:filgFade .2s ease;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.2" stroke="#8FA3C4" stroke-width="1.6"/><path d="M5.5 19.5c.8-3.2 3.3-4.9 6.5-4.9s5.7 1.7 6.5 4.9" stroke="#8FA3C4" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span>Impersonando <b>{{ impOrgName }}</b> como soporte — queda registrado</span>
+            <span style="color:#8FA3C4;">·</span>
+            <span onClick="{{ impSalir }}" style="font-weight:600; color:#fff; text-decoration:underline; cursor:pointer;">Salir</span>
+          </div>
+        </sc-if>
+
+        <!-- ===== MODAL REVELAR IDENTIDAD ===== -->
+        <sc-if value="{{ revealOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; background:rgba(20,25,33,.42); display:flex; align-items:center; justify-content:center; z-index:110;">
+            <div style="width:460px; max-width:92%; background:#fff; border-radius:16px; box-shadow:0 18px 50px rgba(20,25,33,.3); overflow:hidden; animation:filgFade .18s ease;">
+              <div style="padding:20px 24px 0; display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+                <div style="display:flex; align-items:center; gap:11px;">
+                  <div style="width:38px; height:38px; border-radius:10px; background:#F3F0FA; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="#6B4FA1" stroke-width="1.7"/><circle cx="12" cy="12" r="2.7" stroke="#6B4FA1" stroke-width="1.7"/></svg></div>
+                  <div><div style="font-size:17px; font-weight:600; color:#141921;">Revelar identidad</div><div style="font-size:12.5px; color:#647084; margin-top:2px;">{{ orgCode }} · {{ revealAccLabel }}</div></div>
+                </div>
+                <div onClick="{{ closeReveal }}" style="width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8A95A6; font-size:16px;">✕</div>
+              </div>
+              <div style="padding:14px 24px 4px; display:flex; flex-direction:column; gap:14px;">
+                <div style="display:flex; gap:9px; background:#FBEFEC; border:1px solid #F1D6CC; border-radius:10px; padding:11px 13px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex:none; margin-top:1px;"><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="#C2603F" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v4" stroke="#C2603F" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1" fill="#C2603F"/></svg>
+                  <span style="font-size:12.5px; color:#8A4A30; line-height:1.5;">Vas a ver el handle real de esta cuenta. <b>Esta acción queda registrada en el audit log</b> con tu usuario, la cuenta y el motivo.</span>
+                </div>
+                <div>
+                  <div style="font-size:12.5px; font-weight:600; color:#3D4757; margin-bottom:9px;">Motivo <span style="font-weight:400; color:#8A95A6;">(obligatorio)</span></div>
+                  <div style="display:flex; flex-direction:column; gap:8px;">
+                    <sc-for list="{{ reasonOpts }}" as="r" hint-placeholder-count="3">
+                      <div onClick="{{ r.onPick }}" style="{{ r.rowStyle }}">
+                        <span style="{{ r.radioStyle }}"><sc-if value="{{ r.selected }}" hint-placeholder-val="{{ false }}"><span style="width:8px; height:8px; border-radius:50%; background:#6B4FA1;"></span></sc-if></span>
+                        <span style="font-size:13.5px; color:#232A36;">{{ r.label }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:18px 24px 20px; display:flex; justify-content:flex-end; gap:10px;">
+                <div onClick="{{ closeReveal }}" style="height:38px; display:flex; align-items:center; padding:0 15px; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cancelar</div>
+                <div onClick="{{ confirmReveal }}" style="{{ revealConfirmStyle }}">Revelar y registrar</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== MODAL REGISTRAR PAGO ===== -->
+        <sc-if value="{{ pagoOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; background:rgba(20,25,33,.4); display:flex; align-items:center; justify-content:center; z-index:100;">
+            <div style="width:480px; max-width:92%; background:#fff; border-radius:16px; box-shadow:0 18px 50px rgba(20,25,33,.3); overflow:hidden; animation:filgFade .18s ease;">
+              <div style="padding:20px 24px 0; display:flex; align-items:center; justify-content:space-between;">
+                <div style="font-size:17px; font-weight:600; color:#141921;">Registrar pago · {{ orgCode }}</div>
+                <div onClick="{{ closePago }}" style="width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8A95A6; font-size:16px;">✕</div>
+              </div>
+              <div style="padding:14px 24px 4px; display:flex; flex-direction:column; gap:15px;">
+                <div style="background:#EEF3FB; border:1px solid #DCE6F6; border-radius:10px; padding:9px 12px; font-size:12.5px; color:#3D6FB4; line-height:1.5;">El pago llega por transferencia y el comprobante por WhatsApp — acá solo se registra.</div>
+                <div style="display:flex; gap:18px; flex-wrap:wrap;">
+                  <div>
+                    <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Monto</div>
+                    <div style="display:flex; align-items:center; height:38px; border:1px solid #D4DAE3; border-radius:9px; overflow:hidden; background:#fff;">
+                      <span style="padding:0 11px; font-size:13px; font-weight:600; color:#647084; background:#F5F7FA; height:100%; display:flex; align-items:center; border-right:1px solid #E9EDF2;">Gs.</span>
+                      <input value="{{ pagoMonto }}" onChange="{{ onPagoMonto }}" style="width:130px; border:none; outline:none; padding:0 11px; font-size:14px; font-weight:600; color:#141921; font-family:inherit; font-variant-numeric:tabular-nums;" />
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Meses habilitados</div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <sc-for list="{{ mesesOpts }}" as="m" hint-placeholder-count="4"><div onClick="{{ m.onClick }}" style="{{ m.style }}">{{ m.label }}</div></sc-for>
+                      <input value="{{ pagoOtro }}" onChange="{{ onPagoOtro }}" placeholder="otro" style="{{ otroStyle }}" />
+                    </div>
+                  </div>
+                </div>
+                <div style="background:#F5F7FA; border:1px solid #EEF1F5; border-radius:10px; padding:10px 13px; font-size:12.5px; color:#647084;">Extiende desde el vencimiento actual: cubre hasta <b style="color:#141921;">{{ pagoCubreHasta }}</b>.</div>
+                <div>
+                  <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Nota <span style="font-weight:400; color:#8A95A6;">(opcional)</span></div>
+                  <input value="{{ pagoNota }}" onChange="{{ onPagoNota }}" placeholder="ej: transferencia Itaú, recibo #123" style="width:100%; height:38px; border:1px solid #D4DAE3; border-radius:9px; padding:0 12px; font-size:13px; color:#141921; font-family:inherit; outline:none; background:#fff;" />
+                </div>
+              </div>
+              <div style="padding:18px 24px 20px; display:flex; justify-content:flex-end; gap:10px;">
+                <div onClick="{{ closePago }}" style="height:38px; display:flex; align-items:center; padding:0 15px; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cancelar</div>
+                <div onClick="{{ confirmPago }}" style="height:38px; display:flex; align-items:center; padding:0 17px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">Registrar pago</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== MODAL EDITAR LÍMITES ===== -->
+        <sc-if value="{{ limitesOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; background:rgba(20,25,33,.4); display:flex; align-items:center; justify-content:center; z-index:100;">
+            <div style="width:440px; max-width:92%; background:#fff; border-radius:16px; box-shadow:0 18px 50px rgba(20,25,33,.3); overflow:hidden; animation:filgFade .18s ease;">
+              <div style="padding:20px 24px 0; display:flex; align-items:center; justify-content:space-between;">
+                <div style="font-size:17px; font-weight:600; color:#141921;">Editar límites · {{ orgCode }}</div>
+                <div onClick="{{ closeLimites }}" style="width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8A95A6; font-size:16px;">✕</div>
+              </div>
+              <div style="padding:14px 24px 4px; display:flex; flex-direction:column; gap:14px;">
+                <div style="background:#EEF3FB; border:1px solid #DCE6F6; border-radius:10px; padding:9px 12px; font-size:12.5px; color:#3D6FB4; line-height:1.5;">Límites manuales (etapa B). La organización no puede crear más de lo que su límite permite.</div>
+                <sc-for list="{{ limEditRows }}" as="l" hint-placeholder-count="3">
+                  <div style="display:grid; grid-template-columns:96px 110px 1fr; gap:14px; align-items:center;">
+                    <span style="font-size:13px; font-weight:500; color:#3D4757;">{{ l.label }}</span>
+                    <input value="{{ l.value }}" onChange="{{ l.onChange }}" style="{{ l.inputStyle }}" />
+                    <span style="font-size:12px; color:#8A95A6;">uso actual: <b style="color:#647084;">{{ l.uso }}</b></span>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ limWarn }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex; gap:8px; background:#FAF3DE; border:1px solid #EFE2B8; border-radius:9px; padding:9px 12px;">
+                    <span style="font-size:12.5px; color:#7A6428; line-height:1.5;">{{ limWarnText }}</span>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="padding:18px 24px 20px; display:flex; justify-content:flex-end; gap:10px;">
+                <div onClick="{{ closeLimites }}" style="height:38px; display:flex; align-items:center; padding:0 15px; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cancelar</div>
+                <div onClick="{{ saveLimites }}" style="{{ limSaveStyle }}">Guardar cambios</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE + NOTAS ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil · observabilidad</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#1C2230; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:24px; height:24px; border-radius:7px; display:block;" />
+            <span style="font-size:10.5px; font-weight:600; letter-spacing:.7px; text-transform:uppercase; color:#8FA3C4; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:5px; padding:2px 7px;">Plataforma</span>
+          </div>
+          <div style="width:28px; height:28px; border-radius:50%; background:#33405A; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:600; color:#fff;">{{ userInitials }}</div>
+        </div>
+        <div style="background:#EDEFF4; border-bottom:1px solid #E2E6EE; padding:6px 14px; display:flex; align-items:center; gap:7px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 3.4l6.6 2.4v4.7c0 4.2-2.9 7.1-6.6 8.6-3.7-1.5-6.6-4.4-6.6-8.6V5.8L12 3.4z" stroke="#5A6577" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span style="font-size:10.5px; color:#4A5568;">Datos operativos · acceso auditado</span>
+        </div>
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:0 14px; display:flex; gap:2px;">
+          <div style="padding:10px 11px; font-size:12.5px; font-weight:600; color:#1C2230; border-bottom:2px solid #1C2230; margin-bottom:-1px;">Observabilidad</div>
+          <div style="padding:10px 11px; font-size:12.5px; color:#647084;">Orgs</div>
+          <div style="padding:10px 11px; font-size:12.5px; color:#647084;">Audit</div>
+        </div>
+        <div style="background:#F5F7FA; padding:14px 14px 20px; display:flex; flex-direction:column; gap:10px;">
+          <div style="background:#FBEFEC; border:1px solid #F1D6CC; border-radius:11px; padding:10px 13px;">
+            <div style="font-size:12.5px; font-weight:600; color:#9A4A30;">⚠ 4 alertas operativas</div>
+            <div style="font-size:12px; color:#8A4A30; margin-top:4px; line-height:1.6;">Agencia Kunumi: job falló 2 días · Sur Digital: rate-limit anómalo · Verdulería San Blas: vence en 3 días</div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:11px 13px;">
+              <div style="font-size:11.5px; color:#647084;">Organizaciones</div>
+              <div style="font-size:22px; font-weight:600; color:#141921;">14</div>
+              <div style="font-size:11px; color:#647084;">12 act · 1 gracia · 1 susp</div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:11px 13px;">
+              <div style="font-size:11.5px; color:#647084;">Cuentas</div>
+              <div style="font-size:22px; font-weight:600; color:#141921;">87</div>
+              <div style="font-size:11px; color:#9A4A30;">6 en ERROR</div>
+            </div>
+          </div>
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px 14px;">
+            <div style="font-size:12.5px; font-weight:600; color:#141921;">Salud del job · por tenant</div>
+            <div style="display:flex; flex-direction:column; gap:7px; margin-top:9px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:12px;"><span style="font-weight:600; color:#141921;">Agencia Kunumi <span style="font-weight:400; color:#8A95A6;">· 26 ctas</span></span><span style="background:#FBEFEC; color:#9A4A30; border-radius:6px; padding:1px 7px; font-size:11px; font-weight:600; flex:none;">40%</span></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:12px;"><span style="font-weight:600; color:#141921;">Verdulería San Blas <span style="font-weight:400; color:#8A95A6;">· 3 ctas</span></span><span style="background:#FAF3DE; color:#7A6428; border-radius:6px; padding:1px 7px; font-size:11px; font-weight:600; flex:none;">90%</span></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:12px;"><span style="font-weight:600; color:#141921;">Litoral Media <span style="font-weight:400; color:#8A95A6;">· 22 ctas</span></span><span style="background:#E7F4EC; color:#1F7A50; border-radius:6px; padding:1px 7px; font-size:11px; font-weight:600; flex:none;">100%</span></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:12px; color:#9AA4B2;"><span>Kiosco Doña Rosa · 2 ctas</span><span style="font-style:italic; font-size:11px; flex:none;">pausado</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- notas -->
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Cómo funciona el revelado</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;">En el detalle de una organización, cada cuenta aparece como <span style="color:#3D4757; font-weight:500;">«IG · cuenta #482»</span> con su estado técnico. <span style="color:#3D4757; font-weight:500;">«Revelar identidad»</span> exige elegir un motivo de una lista cerrada (soporte del tenant / incidente de seguridad / requerimiento legal), avisa que queda registrado, y recién ahí muestra el handle con el badge <span style="color:#6B4FA1; font-weight:500;">«identidad revelada · auditado»</span> hasta que cerrás la vista. Soporte puede revelar e impersonar, pero no registrar pagos ni suspender.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = {
+    rol: 'owner', view: 'obs', orgId: 'o12',
+    revealed: {}, revealAcc: null, revealReason: null,
+    pagoOpen: false, pagoMonto: '2.400.000', pagoMeses: 3, pagoOtro: '', pagoNota: '',
+    pagosExtra: {}, venceMap: {}, estadoMap: {}, notasExtra: {}, notaInput: '',
+    limitesOpen: false, limCli: '', limCta: '', limUsr: '', limMap: {},
+    impersonating: null,
+    auditExtra: [], afStaff: 'todos', afAccion: 'todas', afOrg: 'todas', afOpen: null,
+  };
+
+  reasons = {
+    tenant: 'Soporte solicitado por el tenant',
+    seguridad: 'Incidente de seguridad',
+    legal: 'Requerimiento legal',
+  };
+
+  netMeta = {
+    ig: { code:'IG', tint:'linear-gradient(135deg,#FCEFE6,#F6E1EC)', tintInk:'#B5638A' },
+    fb: { code:'FB', tint:'linear-gradient(135deg,#E7EEFB,#DCE6F7)', tintInk:'#2C5FA8' },
+    tt: { code:'TT', tint:'linear-gradient(135deg,#E6F2F1,#E0EDEC)', tintInk:'#3E7C77' },
+  };
+
+  // Organizaciones = clientes directos de la plataforma → nombre real visible.
+  // Sus clientes (marcas) y cuentas pertenecen a terceros → pseudonimizados.
+  orgs = {
+    o12: { name:'Agencia Kunumi', tipo:'Agencia', estado:'porVencer', vence:'2026-07-16', creada:'12 mar 2026', cuentas:26, rate:false,
+      email:'ops@kunumi.com.py', tel:'+595 981 234 567',
+      lim:{ cli:[6,10], cta:[26,30], usr:[4,8] },
+      usuarios:[ ['Nadia Ferreira','Owner','último acceso hoy','nadia@kunumi.com.py'], ['Bruno Torres','Admin','hace 3 días','bruno@kunumi.com.py'], ['Camila López','Empleada','ayer','camila@kunumi.com.py'], ['Diego Vera','Empleado','hace 1 semana','diego@kunumi.com.py'] ],
+      pagos:[ ['16 abr 2026','Gs. 1.350.000','3','16 jul 2026','Enrique (plataforma)'], ['16 ene 2026','Gs. 1.350.000','3','16 abr 2026','Enrique (plataforma)'] ],
+      notas:[ ['«Pidieron subir el límite de cuentas en agosto.»','Enrique · 20 jun'] ],
+      accounts:[
+        ['ig', 482, 'ok', '@cafe.aurora'],
+        ['ig', 517, 'soon', '@aurora.deli'],
+        ['fb', 333, 'ok', 'Aurora Centro'],
+        ['tt', 204, 'error', '@cafeaurora'],
+        ['ig', 490, 'ok', '@aurora.norte'],
+      ] },
+    o07: { name:'Litoral Media', tipo:'Agencia', estado:'vigente', vence:'2026-11-03', creada:'2 nov 2025', cuentas:22, rate:false,
+      email:'hola@litoralmedia.com', tel:'+595 971 555 210',
+      lim:{ cli:[9,15], cta:[22,40], usr:[6,10] },
+      usuarios:[ ['Martín Rojas','Owner','último acceso hoy','martin@litoralmedia.com'], ['Lucía Fernández','Admin','hoy','lucia@litoralmedia.com'], ['Sofía Ríos','Empleada','ayer','sofia@litoralmedia.com'] ],
+      pagos:[ ['3 may 2026','Gs. 2.700.000','6','3 nov 2026','Enrique (plataforma)'] ],
+      notas:[], accounts:[ ['ig',201,'ok','@litoral.mkt'], ['fb',118,'ok','Litoral Agencia'], ['tt',77,'ok','@litoral.social'] ] },
+    o31: { name:'Verdulería San Blas', tipo:'Autogestionada', estado:'gracia', vence:'2026-07-01', creada:'1 abr 2026', cuentas:3, rate:false,
+      email:'sanblas.verdu@gmail.com', tel:'+595 991 402 118',
+      lim:{ cli:[1,1], cta:[3,4], usr:[1,1] },
+      usuarios:[ ['Ramón Ayala','Owner autogest.','hace 2 días','sanblas.verdu@gmail.com'] ],
+      pagos:[ ['1 abr 2026','Gs. 450.000','3','1 jul 2026','Enrique (plataforma)'] ],
+      notas:[ ['«Avisado por WhatsApp del vencimiento el 29 jun.»','Caro · 29 jun'] ],
+      accounts:[ ['ig',612,'ok','@sanblasverdu'], ['fb',401,'soon','Verdulería San Blas'], ['tt',333,'ok','@sanblas.tok'] ] },
+    o19: { name:'Sur Digital', tipo:'Agencia', estado:'vigente', vence:'2026-09-20', creada:'20 sep 2025', cuentas:18, rate:true,
+      email:'cuentas@surdigital.com', tel:'+595 985 660 240',
+      lim:{ cli:[7,12], cta:[18,30], usr:[5,8] },
+      usuarios:[ ['Elena Duarte','Owner','hoy','elena@surdigital.com'], ['Pablo Sosa','Admin','hoy','pablo@surdigital.com'], ['Marta Giménez','Empleada','ayer','marta@surdigital.com'], ['Iván Núñez','Empleado','hace 2 días','ivan@surdigital.com'] ],
+      pagos:[ ['20 jun 2026','Gs. 1.800.000','3','20 sep 2026','Enrique (plataforma)'] ],
+      notas:[ ['«Pico de eventos rate-limit el 6 jul entre 14:00 y 15:00 — se avisó al equipo técnico.»','Enrique · 6 jul'] ],
+      accounts:[ ['ig',844,'ok','@surdigital'], ['ig',851,'ok','@sur.contenidos'], ['fb',520,'ok','Sur Digital'], ['tt',290,'ok','@surdigital.ok'] ] },
+    o04: { name:'Kiosco Doña Rosa', tipo:'Autogestionada', estado:'suspendida', vence:'2026-06-14', creada:'14 feb 2026', cuentas:2, rate:false,
+      email:'rosa.kiosco@gmail.com', tel:'+595 983 777 654',
+      lim:{ cli:[1,1], cta:[2,3], usr:[1,1] },
+      usuarios:[ ['Rosa Duarte','Owner autogest.','hace 3 semanas','rosa.kiosco@gmail.com'] ],
+      pagos:[ ['14 mar 2026','Gs. 450.000','3','14 jun 2026','Enrique (plataforma)'] ],
+      notas:[ ['«Suspendida por impago tras la gracia; dice que paga la semana que viene.»','Enrique · 28 jun'] ],
+      accounts:[ ['ig',702,'error','@kioscorosa'], ['fb',388,'error','Kiosco Doña Rosa'] ] },
+  };
+
+  auditBase = [
+    { quien:'Caro (soporte)', que:'Reveló identidad de IG · cuenta #482', tag:'REVELADO', org:'Agencia Kunumi', motivo:'Soporte solicitado por el tenant', cuando:'hoy 11:52', accion:'revelado', staff:'caro' },
+    { quien:'Caro (soporte)', que:'Impersonó la organización · 22 min', tag:'IMPERSONACIÓN', org:'Litoral Media', motivo:'—', cuando:'hoy 11:40', accion:'impersonacion', staff:'caro' },
+    { quien:'Caro (soporte)', que:'Disparó re-sync de TT · cuenta #204', org:'Agencia Kunumi', motivo:'—', cuando:'ayer 17:15', accion:'sync', staff:'caro' },
+    { quien:'Enrique', que:'Editó límites: cuentas 20 → 30', org:'Agencia Kunumi', motivo:'—', cuando:'ayer 10:02', accion:'limites', staff:'enrique' },
+    { quien:'Enrique', que:'Suspendió la organización', org:'Kiosco Doña Rosa', motivo:'Impago tras la gracia', cuando:'28 jun', accion:'suspension', staff:'enrique' },
+    { quien:'Enrique', que:'Registró pago Gs. 2.700.000 · 6 meses', org:'Litoral Media', motivo:'—', cuando:'3 may', accion:'pago', staff:'enrique' },
+  ];
+
+  meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  fmtDate(d) { return d.getDate() + ' ' + this.meses[d.getMonth()] + ' ' + d.getFullYear(); }
+  addMonths(iso, m) { const p = iso.split('-').map(Number); const d = new Date(p[0], p[1]-1, p[2]); d.setMonth(d.getMonth()+m); return d; }
+  toIso(d) { const mm = String(d.getMonth()+1).padStart(2,'0'); const dd = String(d.getDate()).padStart(2,'0'); return d.getFullYear()+'-'+mm+'-'+dd; }
+
+  seg(active) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084' };
+  }
+  pill(kind) {
+    const base = { display:'inline-flex', alignItems:'center', gap:'6px', borderRadius:'7px', padding:'3px 9px', fontSize:'11.5px', fontWeight:500, whiteSpace:'nowrap' };
+    if (kind === 'vigente') return { ...base, background:'#E7F4EC', color:'#1F7A50' };
+    if (kind === 'porVencer') return { ...base, background:'#FAF3DE', color:'#7A6428' };
+    if (kind === 'gracia') return { ...base, background:'#FBEFEC', color:'#9A4A30' };
+    return { ...base, background:'#EEF1F5', color:'#647084' };
+  }
+  estadoLabel(kind) {
+    if (kind === 'vigente') return 'Vigente';
+    if (kind === 'porVencer') return 'Por vencer';
+    if (kind === 'gracia') return 'En gracia';
+    return 'Suspendida';
+  }
+  statusMeta(s) {
+    if (s === 'ok') return { label:'OK', bg:'#E7F4EC', ink:'#1F7A50', border:'#E9EDF2' };
+    if (s === 'error') return { label:'ERROR', bg:'#FBEFEC', ink:'#9A4A30', border:'#F0D7CD' };
+    return { label:'Token por vencer', bg:'#FAF3DE', ink:'#7A6428', border:'#EFE2B8' };
+  }
+
+  audit(entry) {
+    this.setState(s => ({ auditExtra: [{ motivo:'—', ...entry, cuando:'recién', staff: s.rol === 'owner' ? 'enrique' : 'caro', quien: s.rol === 'owner' ? 'Enrique' : 'Caro (soporte)' }].concat(s.auditExtra) }));
+  }
+
+  // navigation clears revealed identities (they only last while the org view is open)
+  navTo(patch) { this.setState({ revealed:{}, revealAcc:null, afOpen:null, pagoOpen:false, limitesOpen:false, ...patch }); }
+
+  addNotaFn() {
+    const st = this.state;
+    const v = (st.notaInput || '').trim();
+    if (!v) return;
+    const quien = st.rol === 'owner' ? 'Enrique' : 'Caro';
+    this.setState(s => ({
+      notasExtra: { ...s.notasExtra, [s.orgId]: [['«'+v+'»', quien+' · recién']].concat(s.notasExtra[s.orgId] || []) },
+      notaInput:'',
+    }));
+    this.audit({ que:'Dejó una nota interna', org:this.orgs[st.orgId].name, accion:'nota' });
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const isOwner = st.rol === 'owner';
+
+    const rolStates = [['owner','Owner (Enrique)'],['support','Soporte (Caro)']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ rol:k, pagoOpen:false, limitesOpen:false }), style:this.seg(k===st.rol) }));
+
+    const tabDefs = [['obs','Observabilidad'],['orgs','Organizaciones'],['audit','Audit log']];
+    const activeTab = st.view === 'org' ? 'orgs' : st.view;
+    const tabs = tabDefs.map(([k,l]) => ({
+      label:l, onClick:() => this.navTo({ view:k }),
+      style: { padding:'12px 16px', fontSize:'13.5px', cursor:'pointer', whiteSpace:'nowrap', borderBottom: k === activeTab ? '2px solid #1C2230' : '2px solid transparent', marginBottom:'-1px', color: k === activeTab ? '#141921' : '#647084', fontWeight: k === activeTab ? 600 : 400 },
+    }));
+
+    const estadoDe = (id) => st.estadoMap[id] || this.orgs[id].estado;
+    const venceDe = (id) => st.venceMap[id] || this.orgs[id].vence;
+
+    // ---------- observabilidad ----------
+    const alertas = [
+      { texto:'Agencia Kunumi · el job diario falló 2 días seguidos — 3 cuentas en ERROR', go:'o12', dot:'#C2603F' },
+      { texto:'Sur Digital · eventos de rate-limit anómalos en la última hora', go:'o19', dot:'#C2603F' },
+      { texto:'Verdulería San Blas · suscripción vence en 3 días (en gracia)', go:'o31', dot:'#C89A2B' },
+      { texto:'Litoral Media · consumo de API Meta al 88% del cupo diario', go:'o07', dot:'#C89A2B' },
+    ].map(a => ({ texto:a.texto, dotColor:a.dot, onGo:() => this.navTo({ view:'org', orgId:a.go }) }));
+
+    const apiRows = [
+      { label:'Meta (IG + FB)', pct:68 },
+      { label:'TikTok', pct:41 },
+    ].map(q => ({ label:q.label, pct:q.pct, ink: q.pct >= 85 ? '#9A4A30' : '#3D4757',
+      barStyle:{ width:q.pct+'%', height:'100%', borderRadius:'4px', background: q.pct >= 85 ? '#C2603F' : accent } }));
+
+    const jobData = [
+      { id:'o12', last:'hoy 03:00', exito:40, err:'3', susp:false },
+      { id:'o31', last:'hoy 03:00', exito:90, err:'1 · token por vencer', susp:false },
+      { id:'o19', last:'hoy 03:00', exito:100, err:'0', susp:false },
+      { id:'o07', last:'hoy 03:00', exito:100, err:'0', susp:false },
+      { id:'o04', last:'—', exito:null, err:'—', susp:true },
+    ];
+    const exStyle = (v) => ({ display:'inline-flex', borderRadius:'6px', padding:'2px 8px', fontSize:'12px', fontWeight:600, fontVariantNumeric:'tabular-nums',
+      background: v >= 99 ? '#E7F4EC' : v >= 70 ? '#FAF3DE' : '#FBEFEC',
+      color: v >= 99 ? '#1F7A50' : v >= 70 ? '#7A6428' : '#9A4A30' });
+    const jobRows = jobData.map(j => {
+      const o = this.orgs[j.id];
+      const susp = j.susp || estadoDe(j.id) === 'suspendida';
+      return {
+        code:o.name, tipo:o.tipo, cuentas:o.cuentas + ' cuentas', rateFlag:o.rate,
+        last: susp ? 'pausado (suspendida)' : j.last,
+        exito: susp ? '—' : j.exito + '%',
+        exitoStyle: susp ? { fontSize:'12px', color:'#9AA4B2' } : exStyle(j.exito),
+        err: susp ? '—' : j.err,
+        errColor: (!susp && j.err !== '0') ? '#9A4A30' : '#C4CCD6',
+        rowStyle: { display:'grid', gridTemplateColumns:'1.7fr .9fr .7fr .9fr 30px', gap:'12px', alignItems:'center', padding:'12px 20px', borderBottom:'1px solid #F4F6F9', cursor:'pointer', background: (!susp && j.exito !== null && j.exito < 70) ? '#FDFAF8' : '#fff', opacity: susp ? .65 : 1 },
+        onOpen: () => this.navTo({ view:'org', orgId:j.id }),
+      };
+    });
+
+    // ---------- organizaciones ----------
+    const orgRows = ['o12','o07','o31','o19','o04'].map(id => {
+      const o = this.orgs[id];
+      const est = estadoDe(id);
+      return {
+        code:o.name, tipo:o.tipo, cuentas:o.cuentas + ' cuentas', usuarios:o.usuarios.length + (o.usuarios.length === 1 ? ' usuario' : ' usuarios'),
+        estadoLabel:this.estadoLabel(est), pillStyle:this.pill(est),
+        onOpen: () => this.navTo({ view:'org', orgId:id }),
+      };
+    });
+
+    // ---------- detalle ----------
+    const org = this.orgs[st.orgId];
+    const orgEst = estadoDe(st.orgId);
+    const suspended = orgEst === 'suspendida';
+    const pagos = (st.pagosExtra[st.orgId] || []).concat(org.pagos).map(p => ({ f:p[0], m:p[1], meses:p[2], hasta:p[3], por:p[4] }));
+    const notas = (st.notasExtra[st.orgId] || []).concat(org.notas).map(n => ({ t:n[0], por:n[1] }));
+    const limOv = st.limMap[st.orgId] || {};
+    const limMax = { cli: limOv.cli != null ? limOv.cli : org.lim.cli[1], cta: limOv.cta != null ? limOv.cta : org.lim.cta[1], usr: limOv.usr != null ? limOv.usr : org.lim.usr[1] };
+    const limites = [
+      { label:'Clientes', uso:org.lim.cli[0], max:limMax.cli },
+      { label:'Cuentas', uso:org.lim.cta[0], max:limMax.cta },
+      { label:'Usuarios', uso:org.lim.usr[0], max:limMax.usr },
+    ];
+    const orgUsuarios = org.usuarios.map(([nombre, rol, ult, email]) => ({
+      nombre, ini: nombre.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase(), rol, ult,
+      email: isOwner ? email : 'correo oculto · requiere platform owner', showEmail: isOwner,
+      emailStyle: { fontSize:'11.5px', marginTop:'2px', color: isOwner ? '#8A95A6' : '#B4BDCA', fontStyle: isOwner ? 'normal' : 'italic' },
+    }));
+
+    // connected accounts (pseudonymized + reveal)
+    const orgAccounts = org.accounts.map((a, i) => {
+      const [net, num, status, handle] = a;
+      const m = this.netMeta[net];
+      const sm = this.statusMeta(status);
+      const key = st.orgId + ':' + i;
+      const revealed = st.revealed[key];
+      return {
+        code:m.code, tint:m.tint, tintInk:m.tintInk, border:sm.border,
+        primary: revealed ? handle : (m.code + ' · cuenta #' + num),
+        statusLabel: sm.label, pillStyle:{ display:'inline-flex', alignItems:'center', gap:'6px', background:sm.bg, color:sm.ink, borderRadius:'7px', padding:'3px 9px', fontSize:'11.5px', fontWeight:500 },
+        revealed: !!revealed, reasonLabel: revealed || '',
+        canReveal: !revealed,
+        onReveal: () => this.setState({ revealAcc:{ i, label: m.code + ' · cuenta #' + num }, revealReason:null }),
+      };
+    });
+    const errN = org.accounts.filter(a => a[2] === 'error').length;
+    const orgCuentasMeta = org.cuentas + ' conectadas' + (org.cuentas > org.accounts.length ? ' · mostrando ' + org.accounts.length : '') + (errN ? ' · ' + errN + ' en ERROR' : '');
+
+    // reveal modal
+    const revealOpen = !!st.revealAcc;
+    const reasonOpts = Object.keys(this.reasons).map(k => {
+      const sel = st.revealReason === k;
+      return { label:this.reasons[k], selected:sel,
+        onPick: () => this.setState({ revealReason:k }),
+        rowStyle:{ display:'flex', alignItems:'center', gap:'11px', border:'1px solid ' + (sel ? '#C9B8E4' : '#E0E5EC'), borderRadius:'10px', padding:'11px 13px', cursor:'pointer', background: sel ? '#F8F5FD' : '#fff' },
+        radioStyle:{ width:'18px', height:'18px', borderRadius:'50%', flex:'none', display:'flex', alignItems:'center', justifyContent:'center', border:'1.5px solid ' + (sel ? '#6B4FA1' : '#C9D1DB') } };
+    });
+    const canReveal = !!st.revealReason;
+    const revealConfirmBase = { height:'38px', display:'flex', alignItems:'center', padding:'0 17px', borderRadius:'9px', fontSize:'13px', fontWeight:600 };
+    const confirmReveal = () => {
+      if (!st.revealReason || !st.revealAcc) return;
+      const acc = st.revealAcc;
+      const key = st.orgId + ':' + acc.i;
+      const reasonLabel = this.reasons[st.revealReason];
+      this.setState(s => ({ revealed: { ...s.revealed, [key]: reasonLabel }, revealAcc:null, revealReason:null }));
+      this.audit({ que:'Reveló identidad de ' + acc.label, tag:'REVELADO', org:org.name, motivo:reasonLabel, accion:'revelado' });
+    };
+
+    // limites edit
+    const limDefs = [ { sKey:'limCli', key:'cli', label:'Clientes', uso:org.lim.cli[0] }, { sKey:'limCta', key:'cta', label:'Cuentas', uso:org.lim.cta[0] }, { sKey:'limUsr', key:'usr', label:'Usuarios', uso:org.lim.usr[0] } ];
+    const limParsed = limDefs.map(d => { const raw = (st[d.sKey] || '').trim(); const v = parseInt(raw, 10); const bad = raw === '' || isNaN(v) || v < d.uso; return { ...d, v, bad }; });
+    const limAnyBad = limParsed.some(p => p.bad);
+    const limBadNames = limParsed.filter(p => p.bad).map(p => p.label.toLowerCase()).join(' y ');
+    const limEditRows = limParsed.map(p => ({
+      label: p.label, value: st[p.sKey], uso: p.uso,
+      onChange: (e) => this.setState({ [p.sKey]: e.target.value }),
+      inputStyle: { width:'100%', height:'38px', border:'1px solid ' + (p.bad && st[p.sKey] !== '' ? '#E0A28C' : '#D4DAE3'), borderRadius:'9px', padding:'0 12px', fontSize:'14px', fontWeight:600, color:'#141921', fontFamily:'inherit', fontVariantNumeric:'tabular-nums', outline:'none', background:'#fff' },
+    }));
+    const limSaveBase = { height:'38px', display:'flex', alignItems:'center', padding:'0 17px', borderRadius:'9px', fontSize:'13px', fontWeight:600, cursor:'pointer', transition:'all .15s' };
+
+    // registrar pago
+    const mesesVals = [1,3,6,12];
+    const otroActive = st.pagoOtro !== '' && !isNaN(parseInt(st.pagoOtro, 10));
+    const mesesOpts = mesesVals.map(v => {
+      const on = !otroActive && st.pagoMeses === v;
+      return { label:String(v), onClick:() => this.setState({ pagoMeses:v, pagoOtro:'' }),
+        style:{ width:'36px', height:'34px', display:'flex', alignItems:'center', justifyContent:'center', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', transition:'all .15s', background: on ? '#EAF2FB' : '#fff', border: on ? '1px solid #C9DCF3' : '1px solid #D4DAE3', color: on ? accent : '#647084', fontVariantNumeric:'tabular-nums' } };
+    });
+    const effMeses = otroActive ? Math.max(1, parseInt(st.pagoOtro, 10)) : st.pagoMeses;
+    const cubreDate = this.addMonths(venceDe(st.orgId), effMeses);
+    const pagoCubreHasta = this.fmtDate(cubreDate) + ' (' + effMeses + (effMeses === 1 ? ' mes' : ' meses') + ')';
+
+    // audit
+    const allAudit = st.auditExtra.concat(this.auditBase);
+    let auditFiltered = allAudit;
+    if (st.afStaff !== 'todos') auditFiltered = auditFiltered.filter(r => r.staff === st.afStaff);
+    if (st.afAccion !== 'todas') auditFiltered = auditFiltered.filter(r => r.accion === st.afAccion);
+    if (st.afOrg !== 'todas') auditFiltered = auditFiltered.filter(r => r.org === st.afOrg);
+    const tagStyleFor = (accion) => accion === 'revelado'
+      ? { fontSize:'10.5px', fontWeight:600, color:'#6B4FA1', background:'#F3F0FA', border:'1px solid #E4DCF2', borderRadius:'5px', padding:'1px 6px', flex:'none' }
+      : { fontSize:'10.5px', fontWeight:600, color:'#3D6FB4', background:'#EEF3FB', border:'1px solid #DCE6F6', borderRadius:'5px', padding:'1px 6px', flex:'none' };
+    const auditRows = auditFiltered.map(r => ({
+      quien:r.quien, que:r.que, org:r.org, cuando:r.cuando,
+      motivo: r.motivo || '—', motivoColor: (r.motivo && r.motivo !== '—') ? '#647084' : '#C4CCD6',
+      tagLabel: r.tag || '', tagStyle: tagStyleFor(r.accion),
+      rowStyle: { display:'grid', gridTemplateColumns:'.85fr 1.6fr 1.1fr 1.1fr .7fr', gap:'12px', alignItems:'center', padding:'12px 20px', borderBottom:'1px solid #F4F6F9', background: r.accion === 'revelado' ? '#FBFAFE' : '#fff' },
+    }));
+
+    const optRow = (sel) => ({ display:'flex', alignItems:'center', gap:'8px', padding:'7px 10px', borderRadius:'8px', fontSize:'13px', color:'#232A36', cursor:'pointer', background: sel ? '#F3F6FA' : 'transparent' });
+    const filterBtn = (active) => ({ height:'34px', display:'flex', alignItems:'center', gap:'7px', padding:'0 12px', background:'#fff', border:'1px solid ' + (active ? accent : '#D4DAE3'), borderRadius:'9px', fontSize:'12.5px', fontWeight:500, color:'#3D4757', cursor:'pointer', whiteSpace:'nowrap' });
+    const mkFilter = (key, label, cur, opts, setKey) => ({
+      label: (cur === 'todos' || cur === 'todas') ? label : opts.find(o => o[0] === cur)[1],
+      open: st.afOpen === key, btnStyle: filterBtn(cur !== 'todos' && cur !== 'todas'),
+      onToggle: () => this.setState(s => ({ afOpen: s.afOpen === key ? null : key })),
+      options: opts.map(([v, l]) => ({ label:l, selected: cur === v, style: optRow(cur === v), onPick: () => this.setState({ [setKey]: v, afOpen:null }) })),
+    });
+    const auditFilters = [
+      mkFilter('staff', 'Actor: todos', st.afStaff, [['todos','Todo el staff'],['enrique','Enrique (owner)'],['caro','Caro (soporte)']], 'afStaff'),
+      mkFilter('accion', 'Acción: todas', st.afAccion, [['todas','Todas las acciones'],['impersonacion','Impersonación'],['revelado','Revelado de identidad'],['pago','Pago'],['suspension','Suspensión'],['sync','Re-sync'],['limites','Límites'],['nota','Notas']], 'afAccion'),
+      mkFilter('org', 'Org: todas', st.afOrg, [['todas','Todas las orgs'],['Agencia Kunumi','Agencia Kunumi'],['Litoral Media','Litoral Media'],['Verdulería San Blas','Verdulería San Blas'],['Sur Digital','Sur Digital'],['Kiosco Doña Rosa','Kiosco Doña Rosa']], 'afOrg'),
+    ];
+
+    // owner-gated buttons
+    const suspendBase = { height:'36px', display:'flex', alignItems:'center', gap:'7px', padding:'0 14px', borderRadius:'9px', fontSize:'13px', fontWeight:500 };
+    let suspendBtnStyle, suspendTip = '';
+    if (!isOwner) { suspendBtnStyle = { ...suspendBase, background:'#F5F7FA', border:'1px solid #E4E8EE', color:'#AAB2BE', cursor:'not-allowed' }; suspendTip = 'Requiere platform owner'; }
+    else if (suspended) suspendBtnStyle = { ...suspendBase, background:'#E7F4EC', border:'1px solid #CFE8DA', color:'#1F7A50', cursor:'pointer' };
+    else suspendBtnStyle = { ...suspendBase, background:'#fff', border:'1px solid #E4B8A6', color:'#B2552F', cursor:'pointer' };
+
+    const pagoBtnBase = { height:'34px', display:'flex', alignItems:'center', gap:'7px', padding:'0 15px', borderRadius:'9px', fontSize:'13px', fontWeight:600 };
+    const pagoBtnStyle = isOwner ? { ...pagoBtnBase, background:accent, color:'#fff', cursor:'pointer' } : { ...pagoBtnBase, background:'#EEF1F5', color:'#AAB2BE', cursor:'not-allowed' };
+    const pagoTip = isOwner ? '' : 'Requiere platform owner';
+
+    const limitesLinkStyle = isOwner ? { fontSize:'12.5px', fontWeight:500, color:accent, cursor:'pointer' } : { fontSize:'12.5px', fontWeight:500, color:'#AAB2BE', cursor:'not-allowed' };
+    const limitesTip = isOwner ? '' : 'Requiere platform owner';
+
+    return {
+      accent, rolStates, tabs,
+      userLabel: isOwner ? 'Enrique · owner' : 'Caro · soporte',
+      userInitials: isOwner ? 'EN' : 'CA',
+      isOwner, isSupport: !isOwner,
+      isObs: st.view === 'obs', isOrgs: st.view === 'orgs', isOrg: st.view === 'org', isAudit: st.view === 'audit',
+      goOrgs: () => this.navTo({ view:'orgs' }),
+      alertCount: alertas.length, alertas, apiRows, jobRows,
+      orgRows,
+      orgCode: org.name, orgTipo: org.tipo,
+      orgEstadoLabel: this.estadoLabel(orgEst), orgPillStyle: this.pill(orgEst),
+      orgMeta: 'creada el ' + org.creada + ' · ' + org.usuarios.length + ' usuarios · ' + org.cuentas + ' cuentas conectadas',
+      orgEmail: org.email, orgTel: org.tel,
+      orgUsuariosSubtitle: isOwner ? 'Usuarios de tu sistema · correos visibles para el owner de plataforma' : 'Usuarios de tu sistema · correos ocultos para soporte',
+      limites, orgUsuarios, orgUsuariosCount: org.usuarios.length,
+      orgAccounts, orgCuentasMeta,
+      // reveal
+      revealOpen, revealAccLabel: st.revealAcc ? st.revealAcc.label : '', reasonOpts,
+      closeReveal: () => this.setState({ revealAcc:null, revealReason:null }),
+      confirmReveal,
+      revealConfirmStyle: canReveal ? { ...revealConfirmBase, background:'#6B4FA1', color:'#fff', cursor:'pointer' } : { ...revealConfirmBase, background:'#EEE9F5', color:'#B7A9CE', cursor:'default' },
+      // limites
+      limitesOpen: st.limitesOpen && isOwner,
+      openLimites: () => { if (!isOwner) return; this.setState({ limitesOpen:true, limCli:String(limMax.cli), limCta:String(limMax.cta), limUsr:String(limMax.usr) }); },
+      closeLimites: () => this.setState({ limitesOpen:false }),
+      limEditRows, limitesLinkStyle, limitesTip,
+      limWarn: limAnyBad && (st.limCli !== '' || st.limCta !== '' || st.limUsr !== ''),
+      limWarnText: 'Un límite no puede quedar por debajo del uso actual — revisá ' + (limBadNames || 'los valores') + '.',
+      limSaveStyle: limAnyBad ? { ...limSaveBase, background:'#EEF1F5', color:'#9AA4B2', cursor:'default' } : { ...limSaveBase, background:accent, color:'#fff' },
+      saveLimites: () => {
+        if (limAnyBad) return;
+        const cambios = limParsed.filter(p => p.v !== limMax[p.key]).map(p => p.label.toLowerCase() + ' ' + limMax[p.key] + ' → ' + p.v);
+        this.setState(s => ({ limMap: { ...s.limMap, [st.orgId]: { cli: limParsed[0].v, cta: limParsed[1].v, usr: limParsed[2].v } }, limitesOpen:false }));
+        if (cambios.length) this.audit({ que:'Editó límites: ' + cambios.join(', '), org: org.name, accion:'limites' });
+      },
+      // suscripción
+      subCardStyle: { background:'#fff', border:'1px solid #E9EDF2', borderRadius:'13px', padding:'18px 20px', marginTop:'16px' },
+      orgVence: this.fmtDate(this.addMonths(venceDe(st.orgId), 0)),
+      pagos, pagoBtnStyle, pagoTip,
+      // notas
+      notas, notaInput: st.notaInput,
+      onNotaInput: (e) => this.setState({ notaInput: e.target.value }),
+      onNotaKey: (e) => { if (e.key === 'Enter') this.addNotaFn(); },
+      addNota: () => this.addNotaFn(),
+      // suspend
+      suspendLabel: suspended ? '▶ Reactivar' : '⏸ Suspender', suspendBtnStyle, suspendTip,
+      toggleSuspend: () => {
+        if (!isOwner) return;
+        const next = suspended ? (this.orgs[st.orgId].estado === 'suspendida' ? 'vigente' : this.orgs[st.orgId].estado) : 'suspendida';
+        this.setState(s => ({ estadoMap: { ...s.estadoMap, [st.orgId]: next } }));
+        this.audit({ que: suspended ? 'Reactivó la organización' : 'Suspendió la organización', org: org.name, motivo: suspended ? '—' : 'Impago', accion:'suspension' });
+      },
+      // impersonación
+      impersonar: () => { this.setState({ impersonating: st.orgId }); this.audit({ que:'Impersonó la organización', tag:'IMPERSONACIÓN', org: org.name, accion:'impersonacion' }); },
+      impBanner: !!st.impersonating,
+      impOrgName: st.impersonating ? this.orgs[st.impersonating].name : '',
+      impSalir: () => this.setState({ impersonating: null }),
+      // pago modal
+      pagoOpen: st.pagoOpen && isOwner,
+      openPago: () => { if (isOwner) this.setState({ pagoOpen:true }); },
+      closePago: () => this.setState({ pagoOpen:false }),
+      pagoMonto: st.pagoMonto, onPagoMonto: (e) => this.setState({ pagoMonto: e.target.value }),
+      pagoOtro: st.pagoOtro, onPagoOtro: (e) => this.setState({ pagoOtro: e.target.value }),
+      otroStyle: { width:'58px', height:'34px', border: otroActive ? '1px solid ' + accent : '1px dashed #C7D0DB', borderRadius:'8px', textAlign:'center', fontSize:'13px', fontWeight:600, color: otroActive ? accent : '#647084', fontFamily:'inherit', outline:'none', background:'#fff' },
+      mesesOpts, pagoCubreHasta,
+      pagoNota: st.pagoNota, onPagoNota: (e) => this.setState({ pagoNota: e.target.value }),
+      confirmPago: () => {
+        const nuevo = ['hoy', 'Gs. ' + st.pagoMonto, String(effMeses), this.fmtDate(cubreDate), isOwner ? 'Enrique (plataforma)' : 'Caro'];
+        this.setState(s => ({
+          pagosExtra: { ...s.pagosExtra, [st.orgId]: [nuevo].concat(s.pagosExtra[st.orgId] || []) },
+          venceMap: { ...s.venceMap, [st.orgId]: this.toIso(cubreDate) },
+          estadoMap: { ...s.estadoMap, [st.orgId]: 'vigente' },
+          pagoOpen:false, pagoNota:'',
+        }));
+        this.audit({ que:'Registró pago Gs. ' + st.pagoMonto + ' · ' + effMeses + ' meses', org: org.name, accion:'pago' });
+      },
+      // audit
+      auditFilters, auditRows, auditEmpty: auditRows.length === 0,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgSpin { to { transform: rotate(360deg); } }
+    @keyframes filgSlide { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+    @keyframes filgFade { from { opacity: 0; } to { opacity: 1; } }
+    .filg-row:hover { background:#F7F9FC; }
+    .filg-scroll::-webkit-scrollbar { width: 9px; }
+    .filg-scroll::-webkit-scrollbar-thumb { background:#DCE1E9; border-radius:6px; border:2px solid #fff; }
+  </style>
+</helmet>
+
+<!--
+  ============================================================================
+  ALCANCE: pantalla exclusiva del tier Organización (admin de agencia).
+  NO reutilizar este patrón (lista de clientes por nombre + handle) para el
+  futuro Panel de plataforma / tier Sistema — ver spec/11 §12. El tier Sistema
+  solo ve agregados por tenant, nunca clientes nombrados; el detalle puntual de
+  un cliente específico solo se ve vía impersonación auditada.
+  (Nota de diseño — no forma parte de la UI final.)
+  ============================================================================
+-->
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Administración — Sincronización</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Historial de corridas del job de métricas. Cuando una corrida falla, el detalle <span style="color:#3D4757; font-weight:500;">clasifica cada fallo por causa</span> en lenguaje claro: las que <span style="color:#3D4757; font-weight:500;">requieren acción</span> (reconectar una cuenta) se separan de las <span style="color:#3D4757; font-weight:500;">transitorias</span> que se resuelven solas. Abrí <span style="color:#3D4757; font-weight:500;">JOB-1045</span> (18 errores) para ver la vista agrupada, o <span style="color:#3D4757; font-weight:500;">JOB-1047</span> para el detalle por cuenta.</div>
+  </div>
+
+  <!-- rate-limit demo switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Límite de sincronizaciones manuales (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ rateStates }}" as="d" hint-placeholder-count="3"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="position:relative; display:inline-flex;">
+              <div onClick="{{ toggleBell }}" style="{{ bellStyle }}">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z" stroke="#4A5568" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 19a2 2 0 0 0 4 0" stroke="#4A5568" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <sc-if value="{{ bellDot }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:5px; right:5px; width:8px; height:8px; border-radius:50%; background:#C2603F; border:2px solid #fff;"></span></sc-if>
+              </div>
+              <sc-if value="{{ bellOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:44px; right:0; width:326px; background:#fff; border:1px solid #E5E9EF; border-radius:13px; box-shadow:0 14px 40px rgba(20,25,33,.16); z-index:80; overflow:hidden;">
+                  <div style="padding:12px 15px; border-bottom:1px solid #F0F3F7; font-size:13px; font-weight:600; color:#141921;">Notificaciones</div>
+                  <sc-for list="{{ bellItems }}" as="b" hint-placeholder-count="1">
+                    <div style="padding:12px 15px; border-bottom:1px solid #F4F6F9; display:flex; gap:10px;">
+                      <span style="{{ b.dotStyle }}"></span>
+                      <div><div style="font-size:13px; font-weight:600; color:#141921;">{{ b.title }}</div><div style="font-size:12px; color:#647084; line-height:1.5; margin-top:3px;">{{ b.body }}</div></div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ bellEmpty }}" hint-placeholder-val="{{ true }}">
+                    <div style="padding:22px 15px; text-align:center; font-size:12.5px; color:#8A95A6;">Sin novedades</div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </span>
+            <span style="font-size:13px; color:#647084;">Admin</span>
+            <div style="width:32px; height:32px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff;">LF</div>
+          </div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:24px 28px 36px; min-height:700px;">
+          <div onClick="{{ goAdmin }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content; margin-bottom:14px;"><span style="font-size:15px;">‹</span><span>Administración</span></div>
+
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+            <div>
+              <h1 style="font-size:24px; font-weight:600; color:#141921; letter-spacing:-.3px; margin:0;">Sincronización</h1>
+              <div style="display:flex; align-items:center; gap:9px; margin-top:8px; flex-wrap:wrap;">
+                <span style="display:inline-flex; align-items:center; gap:7px; height:25px; padding:0 10px; border-radius:7px; background:#EEF3F9; border:1px solid #DFE9F4; font-size:12px; color:#3D4757;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="#3B6FA8" stroke-width="1.7"/><path d="M8 20v-3.2a4 4 0 0 1 8 0V20" stroke="#3B6FA8" stroke-width="1.7"/></svg>Organización: <span style="font-weight:600;">Fil-Grama</span></span>
+                <span style="font-size:11.5px; color:#8A95A6;">Vista de una sola organización, nunca un agregado de varias</span>
+              </div>
+              <div style="font-size:13px; color:#647084; margin-top:8px; max-width:520px;">Estado técnico del job de sincronización: qué cuentas capturaron métricas, cuáles fallaron y por qué.</div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:7px;">
+              <div onClick="{{ onRunClick }}" title="{{ runTip }}" style="{{ runBtnStyle }}">
+                <sc-if value="{{ running }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; width:13px; height:13px; border:2px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:filgSpin .7s linear infinite;"></span></sc-if>
+                <sc-if value="{{ runReached }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.4" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v4.2l2.6 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></sc-if>
+                {{ runLabel }}
+              </div>
+              <sc-if value="{{ rateNote }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ rateNoteStyle }}">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none;"><circle cx="12" cy="12" r="8.6" stroke="currentColor" stroke-width="1.6"/><path d="M12 8.2v4.4M12 15.6h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                  <span>{{ rateNoteText }}</span>
+                </div>
+              </sc-if>
+              <div style="font-size:11.5px; color:#8A95A6; text-align:right; max-width:280px; line-height:1.45;">{{ runHint }}</div>
+            </div>
+          </div>
+
+          <!-- SUMMARY CARDS -->
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px;">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:15px 16px;">
+              <div style="display:flex; align-items:center; justify-content:space-between;"><span style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6;">Última sync global</span><span style="{{ lastGlobalPill }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ lastGlobalStatus }}</span></div>
+              <div style="font-size:20px; font-weight:600; color:#141921; margin-top:11px; font-variant-numeric:tabular-nums;">{{ lastGlobalWhen }}</div>
+              <div style="font-size:12px; color:#647084; margin-top:3px;">{{ lastGlobalSub }}</div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:15px 16px;">
+              <div style="display:flex; align-items:center; justify-content:space-between;"><span style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6;">Próximo job automático</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.4" stroke="#B4BDCA" stroke-width="1.6"/><path d="M12 8v4.2l2.6 1.6" stroke="#B4BDCA" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+              <div style="font-size:20px; font-weight:600; color:#141921; margin-top:11px; font-variant-numeric:tabular-nums;">Mañana · 03:00</div>
+              <div style="font-size:12px; color:#647084; margin-top:3px;">Corre diariamente</div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:15px 16px;">
+              <div style="display:flex; align-items:center; justify-content:space-between;"><span style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6;">Cuentas sincronizadas</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#7FB79A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div style="font-size:20px; font-weight:600; color:#141921; margin-top:11px; font-variant-numeric:tabular-nums;">{{ okCount }} / {{ okTotal }}</div>
+              <div style="font-size:12px; color:#647084; margin-top:3px;">en la última corrida global</div>
+            </div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:15px 16px;">
+              <div style="display:flex; align-items:center; justify-content:space-between;"><span style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6;">Requieren acción</span><span style="{{ errDotStyle }}"></span></div>
+              <div style="font-size:20px; font-weight:600; color:{{ errCountColor }}; margin-top:11px;">{{ errCount }}</div>
+              <div style="font-size:12px; color:#647084; margin-top:3px;">{{ errSub }}</div>
+            </div>
+          </div>
+
+          <!-- ACTIONABLE ADVISORY -->
+          <sc-if value="{{ showAdvisory }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex; align-items:flex-start; gap:12px; background:#fff; border:1px solid #F1D6CC; border-radius:12px; padding:14px 16px; margin-top:16px; box-shadow:0 1px 3px rgba(154,74,48,.06);">
+              <div style="width:9px; height:9px; border-radius:50%; background:#C9553A; flex:none; margin-top:6px;"></div>
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;"><span style="font-size:13.5px; font-weight:600; color:#141921;">Café Aurora · TikTok necesita reconectarse</span><span style="display:inline-flex; align-items:center; height:20px; padding:0 8px; border-radius:6px; font-size:11px; font-weight:600; background:#FBEFEC; color:#9A4A30;">Requiere acción</span></div>
+                <div style="font-size:12.5px; color:#647084; margin-top:4px; line-height:1.5;">La autorización de <span style="font-weight:500; color:#3D4757;">@cafe.aurora</span> venció hace 3 corridas. Pedile al cliente que reconecte la cuenta; hasta entonces no se capturan sus métricas. El resto de las cuentas sincroniza con normalidad.</div>
+              </div>
+              <div onClick="{{ openAdvisory }}" style="height:32px; display:flex; align-items:center; padding:0 13px; background:#fff; border:1px solid #D4DAE3; border-radius:8px; font-size:12.5px; font-weight:500; color:#3D4757; cursor:pointer; flex:none;">Ver detalle</div>
+            </div>
+          </sc-if>
+
+          <!-- TABS -->
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:22px; flex-wrap:wrap;">
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+              <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3"><div style="{{ t.style }}" onClick="{{ t.onClick }}">{{ t.label }}</div></sc-for>
+            </div>
+            <span style="font-size:12.5px; color:#8A95A6;">{{ tabHint }}</span>
+          </div>
+
+          <sc-if value="{{ isIndividual }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12.5px; color:#647084; background:#EEF3F9; border:1px solid #DFE9F4; border-radius:10px; padding:10px 13px; margin-top:12px; line-height:1.5;">Eventos individuales generados al conectar o resincronizar una cuenta específica. Un resultado 1/1 acá es puntual — no es una corrida global incompleta.</div>
+          </sc-if>
+
+          <!-- TABLE -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:14px; overflow:hidden;">
+            <div style="display:grid; grid-template-columns:{{ gridCols }}; gap:12px; padding:13px 20px 10px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+              <div>Inicio</div><div>Tipo</div><div>Alcance</div><div>Estado</div><div style="text-align:right;">Resultado</div><div style="text-align:right;">Errores</div><div style="text-align:right;">Duración</div><div></div>
+            </div>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+              <div class="filg-row" onClick="{{ r.onClick }}" style="display:grid; grid-template-columns:{{ gridCols }}; gap:12px; align-items:center; padding:13px 20px; border-bottom:1px solid #F4F6F9; cursor:pointer; transition:background .12s;">
+                <div><div style="font-size:13px; color:#141921; font-variant-numeric:tabular-nums;">{{ r.started }}</div><div style="font-size:11.5px; color:#8A95A6;">{{ r.startedSub }}</div></div>
+                <div><span style="{{ r.typeStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ r.typeLabel }}</span></div>
+                <div style="display:flex; align-items:center; gap:9px; min-width:0;">
+                  <div style="width:26px; height:26px; border-radius:7px; background:{{ r.scopeTint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:9.5px; font-weight:600; color:{{ r.scopeInk }};">{{ r.scopeCode }}</span></div>
+                  <div style="min-width:0;"><div style="font-size:13px; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ r.scopeMain }}</div><div style="font-size:11.5px; color:#8A95A6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ r.scopeSub }}</div></div>
+                </div>
+                <div><span style="{{ r.statusStyle }}"><sc-if value="{{ r.spin }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; width:9px; height:9px; border:1.6px solid currentColor; border-top-color:transparent; border-radius:50%; animation:filgSpin .7s linear infinite;"></span></sc-if><sc-if value="{{ r.showDot }}" hint-placeholder-val="{{ true }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span></sc-if>{{ r.statusLabel }}</span></div>
+                <div style="text-align:right; font-size:13px; color:#141921; font-variant-numeric:tabular-nums;">{{ r.result }}</div>
+                <div style="text-align:right; font-size:13px; color:{{ r.errColor }}; font-variant-numeric:tabular-nums;">{{ r.errLabel }}</div>
+                <div style="text-align:right; font-size:13px; color:#647084; font-variant-numeric:tabular-nums;">{{ r.dur }}</div>
+                <div style="text-align:right;"><span style="font-size:12.5px; font-weight:500; color:{{ accent }};">Ver detalle ›</span></div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:44px 20px; text-align:center; font-size:13px; color:#8A95A6;">No hay corridas en esta solapa todavía.</div>
+            </sc-if>
+          </div>
+          <div style="font-size:12px; color:#8A95A6; margin-top:11px;">{{ footerLabel }}</div>
+        </div>
+
+        <!-- DETAIL DRAWER -->
+        <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeDrawer }}" style="position:absolute; inset:0; background:rgba(20,25,33,.42); z-index:50; animation:filgFade .16s ease;"></div>
+          <div class="filg-scroll" style="position:absolute; top:0; right:0; bottom:0; width:486px; max-width:100%; background:#F7F9FC; z-index:60; overflow-y:auto; box-shadow:-14px 0 40px rgba(20,25,33,.16); animation:filgSlide .22s cubic-bezier(.22,.61,.36,1);">
+            <div style="position:sticky; top:0; background:#fff; border-bottom:1px solid #EEF1F5; padding:18px 22px 16px; z-index:2;">
+              <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+                <div>
+                  <div style="font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:#8A95A6;">Detalle de corrida</div>
+                  <div style="font-size:17px; font-weight:600; color:#141921; margin-top:4px; font-variant-numeric:tabular-nums;">{{ dRef }}</div>
+                </div>
+                <div onClick="{{ closeDrawer }}" style="width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px; color:#A7B0BD; cursor:pointer; line-height:1;">×</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-top:12px; flex-wrap:wrap;">
+                <span style="{{ dTypeStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ dTypeLabel }}</span>
+                <span style="{{ dStatusStyle }}"><sc-if value="{{ dSpin }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; width:9px; height:9px; border:1.6px solid currentColor; border-top-color:transparent; border-radius:50%; animation:filgSpin .7s linear infinite;"></span></sc-if><sc-if value="{{ dDot }}" hint-placeholder-val="{{ true }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span></sc-if>{{ dStatusLabel }}</span>
+              </div>
+            </div>
+
+            <div style="padding:18px 22px 24px;">
+              <div style="background:#fff; border:1px solid #EEF1F5; border-radius:12px; padding:15px 16px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:13px 16px;">
+                  <div><div style="font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#8A95A6;">Inicio</div><div style="font-size:13px; color:#232A36; margin-top:3px; font-variant-numeric:tabular-nums;">{{ dStarted }}</div></div>
+                  <div><div style="font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#8A95A6;">Fin</div><div style="font-size:13px; color:#232A36; margin-top:3px; font-variant-numeric:tabular-nums;">{{ dFinished }}</div></div>
+                  <div><div style="font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#8A95A6;">Duración</div><div style="font-size:13px; color:#232A36; margin-top:3px; font-variant-numeric:tabular-nums;">{{ dDur }}</div></div>
+                  <div><div style="font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#8A95A6;">Disparada por</div><div style="font-size:13px; color:#232A36; margin-top:3px;">{{ dTrigger }}</div></div>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px;">
+                <div style="background:#fff; border:1px solid #EEF1F5; border-radius:11px; padding:12px 13px; text-align:center;"><div style="font-size:19px; font-weight:600; color:#232A36;">{{ dTotal }}</div><div style="font-size:11px; color:#8A95A6; margin-top:2px;">Procesadas</div></div>
+                <div style="background:#F2F9F4; border:1px solid #DCEFE2; border-radius:11px; padding:12px 13px; text-align:center;"><div style="font-size:19px; font-weight:600; color:#1F7A50;">{{ dOk }}</div><div style="font-size:11px; color:#4B8467; margin-top:2px;">OK</div></div>
+                <div style="{{ dErrCardStyle }}"><div style="font-size:19px; font-weight:600; color:{{ dErrInk }};">{{ dErr }}</div><div style="font-size:11px; color:{{ dErrSubInk }}; margin-top:2px;">Con error</div></div>
+              </div>
+
+              <!-- RUNNING -->
+              <sc-if value="{{ dRunning }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:10px; background:#EAF2FB; border:1px solid #D5E4F5; border-radius:11px; padding:13px 15px; margin-top:16px;"><span style="display:inline-flex; width:14px; height:14px; border:2px solid #9BBEE6; border-top-color:#1E66BC; border-radius:50%; animation:filgSpin .7s linear infinite;"></span><span style="font-size:13px; color:#2C5FA8;">Sincronizando {{ dTotal }} cuentas… el detalle aparece al terminar.</span></div>
+              </sc-if>
+
+              <!-- SUCCESS -->
+              <sc-if value="{{ dSuccess }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:10px; background:#F2F9F4; border:1px solid #DCEFE2; border-radius:11px; padding:13px 15px; margin-top:16px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1F7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:13px; color:#1F7A50;">Todas las cuentas sincronizaron sin errores.</span></div>
+              </sc-if>
+
+              <!-- ACTION REQUIRED GROUPS -->
+              <sc-if value="{{ dHasAction }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:8px; margin:20px 0 11px;"><span style="width:8px; height:8px; border-radius:50%; background:#C9553A;"></span><span style="font-size:12px; font-weight:600; color:#9A4A30; text-transform:uppercase; letter-spacing:.4px;">Requiere acción</span><span style="font-size:12px; color:#8A95A6;">· {{ dActionCount }}</span></div>
+                <sc-for list="{{ dGroupsAction }}" as="g" hint-placeholder-count="1">
+                  <div style="{{ g.cardStyle }}">
+                    <div onClick="{{ g.toggle }}" style="display:flex; align-items:flex-start; gap:11px; cursor:pointer;">
+                      <span style="{{ g.dotStyle }}"></span>
+                      <div style="flex:1; min-width:0;">
+                        <div style="font-size:13.5px; font-weight:600; color:{{ g.titleColor }};">{{ g.title }}</div>
+                        <div style="font-size:12px; color:{{ g.msgColor }}; margin-top:4px; line-height:1.5;">{{ g.msg }}</div>
+                      </div>
+                      <span style="font-size:11px; color:#A7B0BD; flex:none; margin-top:3px;">{{ g.chevron }}</span>
+                    </div>
+                    <sc-if value="{{ g.hasAction }}" hint-placeholder-val="{{ true }}"><div onClick="{{ g.onAction }}" style="{{ g.actionStyle }}">{{ g.actionLabel }}</div></sc-if>
+                    <sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:12px; padding-top:11px; border-top:1px solid {{ g.sepColor }}; display:flex; flex-direction:column; gap:10px;">
+                        <sc-for list="{{ g.accounts }}" as="a" hint-placeholder-count="3">
+                          <div style="display:flex; align-items:center; gap:9px;"><div style="width:26px; height:26px; border-radius:7px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:9.5px; font-weight:600; color:{{ a.ink }};">{{ a.code }}</span></div><div style="min-width:0;"><div style="font-size:13px; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div><div style="font-size:11.5px; color:#8A95A6;">{{ a.platform }} · {{ a.cli }}</div></div></div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </sc-if>
+
+              <!-- NON-ACTIONABLE GROUPS -->
+              <sc-if value="{{ dHasCalm }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:8px; margin:20px 0 11px;"><span style="width:8px; height:8px; border-radius:50%; background:#B4BDCA;"></span><span style="font-size:12px; font-weight:600; color:#647084; text-transform:uppercase; letter-spacing:.4px;">No requiere acción inmediata</span><span style="font-size:12px; color:#8A95A6;">· {{ dCalmCount }}</span></div>
+                <sc-for list="{{ dGroupsCalm }}" as="g" hint-placeholder-count="1">
+                  <div style="{{ g.cardStyle }}">
+                    <div onClick="{{ g.toggle }}" style="display:flex; align-items:flex-start; gap:11px; cursor:pointer;">
+                      <span style="{{ g.dotStyle }}"></span>
+                      <div style="flex:1; min-width:0;">
+                        <div style="font-size:13.5px; font-weight:600; color:{{ g.titleColor }};">{{ g.title }}</div>
+                        <div style="font-size:12px; color:{{ g.msgColor }}; margin-top:4px; line-height:1.5;">{{ g.msg }}</div>
+                      </div>
+                      <span style="font-size:11px; color:#A7B0BD; flex:none; margin-top:3px;">{{ g.chevron }}</span>
+                    </div>
+                    <sc-if value="{{ g.hasAction }}" hint-placeholder-val="{{ false }}"><div onClick="{{ g.onAction }}" style="{{ g.actionStyle }}">{{ g.actionLabel }}</div></sc-if>
+                    <sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:12px; padding-top:11px; border-top:1px solid {{ g.sepColor }}; display:flex; flex-direction:column; gap:10px;">
+                        <sc-for list="{{ g.accounts }}" as="a" hint-placeholder-count="3">
+                          <div style="display:flex; align-items:center; gap:9px;"><div style="width:26px; height:26px; border-radius:7px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:9.5px; font-weight:600; color:{{ a.ink }};">{{ a.code }}</span></div><div style="min-width:0;"><div style="font-size:13px; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div><div style="font-size:11.5px; color:#8A95A6;">{{ a.platform }} · {{ a.cli }}</div></div></div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </sc-if>
+
+              <!-- OK ACCOUNTS (collapsible) -->
+              <sc-if value="{{ dHasOk }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleOk }}" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:#fff; border:1px solid #EEF1F5; border-radius:11px; padding:12px 15px; margin-top:16px; cursor:pointer;">
+                  <div style="display:flex; align-items:center; gap:9px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#7FB79A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:13px; font-weight:500; color:#3D4757;">{{ dOkTitle }}</span></div>
+                  <span style="font-size:11px; color:#A7B0BD;">{{ dOkChevron }}</span>
+                </div>
+                <sc-if value="{{ showOk }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:10px;">
+                    <sc-for list="{{ dOkAccounts }}" as="a" hint-placeholder-count="4">
+                      <div style="background:#fff; border:1px solid #EEF1F5; border-radius:12px; padding:12px 13px; margin-bottom:9px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                          <div style="width:30px; height:30px; border-radius:8px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10px; font-weight:600; color:{{ a.ink }};">{{ a.code }}</span></div>
+                          <div style="flex:1; min-width:0;"><div style="font-size:13.5px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div><div style="font-size:11.5px; color:#8A95A6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.platform }} · {{ a.cli }}</div></div>
+                          <span style="{{ a.pillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>OK</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px 12px; margin-top:12px; padding-top:11px; border-top:1px solid #F4F6F9;">
+                          <sc-for list="{{ a.metrics }}" as="m" hint-placeholder-count="6">
+                            <div><div style="font-size:10px; text-transform:uppercase; letter-spacing:.3px; color:#9AA3B2;">{{ m.k }}</div><div style="font-size:13px; font-weight:600; color:#232A36; margin-top:2px; font-variant-numeric:tabular-nums;">{{ m.v }}</div></div>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </sc-if>
+
+              <sc-if value="{{ dHasError }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ closeDrawer }}" style="height:38px; display:flex; align-items:center; justify-content:center; gap:8px; background:#fff; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer; margin-top:14px;">Reintentar cuentas con error</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#8A95A6;">‹ Administración</span><div style="width:30px; height:30px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff;">LF</div></div>
+        <div style="background:#F5F7FA; padding:16px 16px 24px; min-height:560px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;"><span style="font-size:18px; font-weight:600; color:#141921;">Sincronización</span><div onClick="{{ onRunClick }}" title="{{ runTip }}" style="{{ runBtnStyleMobile }}"><sc-if value="{{ running }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; width:11px; height:11px; border:2px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:filgSpin .7s linear infinite;"></span></sc-if>{{ runLabelMobile }}</div></div>
+          <div style="font-size:11.5px; color:#8A95A6; margin-top:5px;">Organización: <span style="font-weight:600; color:#3D4757;">Fil-Grama</span> · vista de una sola organización</div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px 13px;"><div style="font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#8A95A6;">Última global</div><div style="font-size:15px; font-weight:600; color:#141921; margin-top:6px; font-variant-numeric:tabular-nums;">{{ lastGlobalWhen }}</div><div style="margin-top:5px;"><span style="{{ lastGlobalPill }}"><span style="width:5px; height:5px; border-radius:50%; background:currentColor;"></span>{{ lastGlobalStatus }}</span></div></div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px 13px;"><div style="font-size:10.5px; text-transform:uppercase; letter-spacing:.4px; color:#8A95A6;">Requieren acción</div><div style="font-size:15px; font-weight:600; color:{{ errCountColor }}; margin-top:6px;">{{ errCount }}</div><div style="font-size:11px; color:#647084; margin-top:5px;">{{ errSub }}</div></div>
+          </div>
+
+          <sc-if value="{{ showAdvisory }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex; align-items:flex-start; gap:9px; background:#fff; border:1px solid #F1D6CC; border-radius:11px; padding:11px 12px; margin-top:11px;">
+              <div style="width:7px; height:7px; border-radius:50%; background:#C9553A; flex:none; margin-top:5px;"></div>
+              <div style="font-size:11.5px; color:#647084; line-height:1.5;"><span style="font-weight:600; color:#141921;">@cafe.aurora (TikTok)</span> necesita reconectarse — la autorización venció hace 3 corridas.</div>
+            </div>
+          </sc-if>
+
+          <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; margin-top:14px;">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3"><div style="{{ t.styleMobile }}" onClick="{{ t.onClick }}">{{ t.labelShort }}</div></sc-for>
+          </div>
+
+          <sc-if value="{{ isIndividual }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:11.5px; color:#647084; margin-top:10px; line-height:1.5;">Eventos generados al conectar o resincronizar una cuenta específica.</div>
+          </sc-if>
+
+          <div style="display:flex; flex-direction:column; gap:9px; margin-top:12px;">
+            <sc-for list="{{ rowsMobile }}" as="r" hint-placeholder-count="4">
+              <div onClick="{{ r.onClick }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px 13px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                  <span style="{{ r.typeStyle }}"><span style="width:5px; height:5px; border-radius:50%; background:currentColor;"></span>{{ r.typeLabel }}</span>
+                  <span style="{{ r.statusStyle }}"><sc-if value="{{ r.spin }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; width:8px; height:8px; border:1.5px solid currentColor; border-top-color:transparent; border-radius:50%; animation:filgSpin .7s linear infinite;"></span></sc-if><sc-if value="{{ r.showDot }}" hint-placeholder-val="{{ true }}"><span style="width:5px; height:5px; border-radius:50%; background:currentColor;"></span></sc-if>{{ r.statusLabel }}</span>
+                </div>
+                <div style="font-size:13px; font-weight:600; color:#141921; margin-top:9px; font-variant-numeric:tabular-nums;">{{ r.started }}</div>
+                <div style="font-size:11.5px; color:#647084; margin-top:3px;">{{ r.scopeMain }} · {{ r.result }} OK{{ r.errSuffix }} · {{ r.dur }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}"><div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:28px 14px; text-align:center; font-size:12.5px; color:#8A95A6;">No hay corridas en esta solapa.</div></sc-if>
+          </div>
+        </div>
+
+        <!-- mobile detail full screen -->
+        <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+          <div class="filg-scroll" style="position:absolute; inset:0; background:#F7F9FC; z-index:40; overflow-y:auto; animation:filgFade .18s ease;">
+            <div style="position:sticky; top:0; background:#fff; border-bottom:1px solid #EEF1F5; padding:0 14px; height:50px; display:flex; align-items:center; justify-content:space-between; z-index:2;">
+              <span onClick="{{ closeDrawer }}" style="font-size:13px; color:#8A95A6; cursor:pointer;">‹ Volver</span>
+              <span style="font-size:13.5px; font-weight:600; color:#141921; font-variant-numeric:tabular-nums;">{{ dRef }}</span>
+              <span style="width:44px;"></span>
+            </div>
+            <div style="padding:14px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;"><span style="{{ dTypeStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ dTypeLabel }}</span><span style="{{ dStatusStyle }}"><sc-if value="{{ dDot }}" hint-placeholder-val="{{ true }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span></sc-if>{{ dStatusLabel }}</span></div>
+              <div style="background:#fff; border:1px solid #EEF1F5; border-radius:12px; padding:13px 14px; margin-top:12px; font-size:12.5px; color:#647084; line-height:1.7;">{{ dStarted }} → {{ dFinished }} · {{ dDur }}<br>{{ dTotal }} procesadas · {{ dOk }} OK · {{ dErr }} con error</div>
+
+              <sc-if value="{{ dHasAction }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:8px; margin:16px 0 10px;"><span style="width:8px; height:8px; border-radius:50%; background:#C9553A;"></span><span style="font-size:11.5px; font-weight:600; color:#9A4A30; text-transform:uppercase; letter-spacing:.4px;">Requiere acción · {{ dActionCount }}</span></div>
+                <sc-for list="{{ dGroupsAction }}" as="g" hint-placeholder-count="1">
+                  <div style="{{ g.cardStyleMobile }}">
+                    <div onClick="{{ g.toggle }}" style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;"><span style="{{ g.dotStyle }}"></span><div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:600; color:{{ g.titleColor }};">{{ g.title }}</div><div style="font-size:11.5px; color:{{ g.msgColor }}; margin-top:4px; line-height:1.5;">{{ g.msg }}</div></div><span style="font-size:11px; color:#A7B0BD; margin-top:2px;">{{ g.chevron }}</span></div>
+                    <sc-if value="{{ g.hasAction }}" hint-placeholder-val="{{ true }}"><div onClick="{{ g.onAction }}" style="{{ g.actionStyleMobile }}">{{ g.actionLabel }}</div></sc-if>
+                    <sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px; padding-top:10px; border-top:1px solid {{ g.sepColor }}; display:flex; flex-direction:column; gap:8px;"><sc-for list="{{ g.accounts }}" as="a" hint-placeholder-count="3"><div style="display:flex; align-items:center; gap:8px;"><div style="width:24px; height:24px; border-radius:6px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:9px; font-weight:600; color:{{ a.ink }};">{{ a.code }}</span></div><div style="min-width:0;"><div style="font-size:12.5px; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div><div style="font-size:11px; color:#8A95A6;">{{ a.platform }} · {{ a.cli }}</div></div></div></sc-for></div></sc-if>
+                  </div>
+                </sc-for>
+              </sc-if>
+
+              <sc-if value="{{ dHasCalm }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:8px; margin:16px 0 10px;"><span style="width:8px; height:8px; border-radius:50%; background:#B4BDCA;"></span><span style="font-size:11.5px; font-weight:600; color:#647084; text-transform:uppercase; letter-spacing:.4px;">No requiere acción · {{ dCalmCount }}</span></div>
+                <sc-for list="{{ dGroupsCalm }}" as="g" hint-placeholder-count="1">
+                  <div style="{{ g.cardStyleMobile }}">
+                    <div onClick="{{ g.toggle }}" style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;"><span style="{{ g.dotStyle }}"></span><div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:600; color:{{ g.titleColor }};">{{ g.title }}</div><div style="font-size:11.5px; color:{{ g.msgColor }}; margin-top:4px; line-height:1.5;">{{ g.msg }}</div></div><span style="font-size:11px; color:#A7B0BD; margin-top:2px;">{{ g.chevron }}</span></div>
+                    <sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px; padding-top:10px; border-top:1px solid {{ g.sepColor }}; display:flex; flex-direction:column; gap:8px;"><sc-for list="{{ g.accounts }}" as="a" hint-placeholder-count="3"><div style="display:flex; align-items:center; gap:8px;"><div style="width:24px; height:24px; border-radius:6px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:9px; font-weight:600; color:{{ a.ink }};">{{ a.code }}</span></div><div style="min-width:0;"><div style="font-size:12.5px; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div><div style="font-size:11px; color:#8A95A6;">{{ a.platform }} · {{ a.cli }}</div></div></div></sc-for></div></sc-if>
+                  </div>
+                </sc-for>
+              </sc-if>
+
+              <sc-if value="{{ dSuccess }}" hint-placeholder-val="{{ false }}"><div style="display:flex; align-items:center; gap:9px; background:#F2F9F4; border:1px solid #DCEFE2; border-radius:11px; padding:12px 14px; margin-top:14px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1F7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:12.5px; color:#1F7A50;">Todas las cuentas sincronizaron sin errores.</span></div></sc-if>
+
+              <sc-if value="{{ dHasOk }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ toggleOk }}" style="display:flex; align-items:center; justify-content:space-between; background:#fff; border:1px solid #EEF1F5; border-radius:11px; padding:12px 14px; margin-top:14px; cursor:pointer;"><span style="font-size:12.5px; font-weight:500; color:#3D4757;">{{ dOkTitle }}</span><span style="font-size:11px; color:#A7B0BD;">{{ dOkChevron }}</span></div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1000},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  netMeta = {
+    ig: { code:'IG', tint:'#FBEFE9', ink:'#C56A3E', platform:'Instagram' },
+    fb: { code:'FB', tint:'#E9F0FB', ink:'#2C5FA8', platform:'Facebook' },
+    tt: { code:'TT', tint:'#EDEFF2', ink:'#4A5568', platform:'TikTok' },
+  };
+
+  clients = [
+    ['Café Aurora', ['ig','fb','tt']],
+    ['Molinos Don Alexis', ['ig','fb']],
+    ['Vera Estudio', ['ig','tt']],
+    ['Verde Market', ['fb','ig']],
+    ['Bahía Norte', ['ig','fb']],
+    ['Lumina Joyas', ['ig','tt']],
+    ['Pastas Rossi', ['fb','ig']],
+    ['Clínica Sur', ['fb','ig']],
+    ['Óptica Real', ['ig']],
+    ['Gimnasio Vértice', ['ig','tt']],
+    ['Delta Viajes', ['fb','ig']],
+    ['Kloster Hogar', ['fb','ig']],
+    ['Nube Café', ['ig','tt']],
+  ];
+
+  // Causas categorizadas. Accionables primero.
+  causeOrder = ['token','permission','unknown','rate'];
+  causeMeta = {
+    token: {
+      actionable:true,
+      pill:'Autorización vencida',
+      title:(n)=> n===1 ? '1 cuenta necesita reconectarse' : n+' cuentas necesitan reconectarse',
+      msg:'El acceso que autorizó el cliente venció. Pedile que reconecte su cuenta para reanudar la captura de métricas.',
+      action:'Reconectar cuenta',
+    },
+    permission: {
+      actionable:true,
+      pill:'Permiso revocado',
+      title:(n)=> n===1 ? '1 cuenta revocó permisos' : n+' cuentas revocaron permisos',
+      msg:'El cliente quitó los permisos de lectura de métricas. Hay que volver a solicitarlos reconectando la cuenta.',
+      action:'Reconectar cuenta',
+    },
+    unknown: {
+      actionable:false, review:true,
+      pill:'Sin categorizar',
+      title:(n)=> n===1 ? '1 cuenta con un error inesperado' : n+' cuentas con un error inesperado',
+      msg:'No pudimos identificar la causa. Reintentá la corrida; si vuelve a fallar, avisá al equipo técnico.',
+      action:'Reintentar',
+    },
+    rate: {
+      actionable:false,
+      pill:'Límite temporal',
+      title:(n)=> n===1 ? '1 cuenta con límite temporal de la red' : n+' cuentas con límite temporal de la red',
+      msg:'La red respondió con un límite de solicitudes momentáneo. Se reintentan solas en la próxima corrida — no requiere ninguna acción.',
+      action:null,
+    },
+  };
+
+  baseGlobal = [
+    { id:'JOB-1048', type:'auto',   started:'6 jul · 03:00', sub:'hoy',        finished:'6 jul · 03:04', dur:'4 m 12 s', failed:0 },
+    { id:'RUN-2207', type:'manual', started:'5 jul · 16:22', sub:'ayer',       finished:'5 jul · 16:27', dur:'5 m 04 s', failed:1, by:'Lucía Fernández', failSpec:{ token:1 } },
+    { id:'JOB-1047', type:'auto',   started:'5 jul · 03:00', sub:'ayer',       finished:'5 jul · 03:06', dur:'6 m 21 s', failed:3, failSpec:{ token:1, rate:2 } },
+    { id:'JOB-1046', type:'auto',   started:'4 jul · 03:00', sub:'hace 2 días',finished:'4 jul · 03:03', dur:'3 m 48 s', failed:0 },
+    { id:'JOB-1045', type:'auto',   started:'3 jul · 03:00', sub:'hace 3 días',finished:'3 jul · 03:09', dur:'9 m 02 s', failed:18, failSpec:{ token:3, permission:1, rate:14 } },
+    { id:'JOB-1044', type:'auto',   started:'2 jul · 03:00', sub:'hace 4 días',finished:'2 jul · 03:04', dur:'4 m 02 s', failed:0 },
+  ];
+  baseIndividual = [
+    { id:'CONN-5521', type:'individual', net:'ig', accName:'@vera.estudio', cli:'Vera Estudio', started:'6 jul · 10:19', sub:'hoy', finished:'6 jul · 10:19', dur:'11 s', failed:0, trigger:'Conexión de cuenta' },
+    { id:'CONN-5520', type:'individual', net:'tt', accName:'@cafe.aurora', cli:'Café Aurora', started:'5 jul · 14:03', sub:'ayer', finished:'5 jul · 14:03', dur:'3 s', failed:1, trigger:'Reconexión de cuenta', cause:'token' },
+    { id:'CONN-5519', type:'individual', net:'fb', accName:'Molinos Don Alexis', cli:'Molinos Don Alexis', started:'4 jul · 09:41', sub:'hace 2 días', finished:'4 jul · 09:42', dur:'18 s', failed:0, trigger:'Conexión de cuenta' },
+  ];
+
+  state = { tab:'globales', openId:null, running:false, extra:[], expanded:{}, showOk:false, rate:'normal', bellOpen:false };
+
+  // ---- data helpers ----
+  genMetrics(i, code) {
+    const k = (n)=> n>=1000 ? (n/1000).toFixed(1)+'k' : String(n);
+    const followers = k(2200 + (i*811 % 22000));
+    const reach     = k(6100 + (i*1303 % 82000));
+    const impr      = k(9300 + (i*1777 % 120000));
+    const eng       = (1 + (i*7 % 55)/10).toFixed(1) + '%';
+    const posts     = String(4 + (i*3 % 22));
+    const last      = String(1 + (i*5 % 24));
+    return [followers, reach, impr, eng, posts, last];
+  }
+  buildBase() {
+    if (this._base) return this._base;
+    const out = []; let i = 0;
+    for (const [cli, nets] of this.clients) {
+      for (const net of nets) {
+        const nm = this.netMeta[net];
+        const handle = net === 'fb' ? cli : '@' + cli.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'');
+        out.push({ idx:i, net, cli, name:handle, m:this.genMetrics(i, nm.code) });
+        i++;
+      }
+    }
+    this._base = out;
+    return out;
+  }
+  totalOf(run) { return run.type === 'individual' ? 1 : this.buildBase().length; }
+  failPriority() {
+    if (this._pri) return this._pri;
+    const base = this.buildBase();
+    const find = (cli, net) => { const a = base.find(x => x.cli === cli && x.net === net); return a ? a.idx : -1; };
+    const seed = [ find('Café Aurora','tt'), find('Vera Estudio','tt'), find('Molinos Don Alexis','ig'), find('Bahía Norte','fb'), find('Lumina Joyas','tt') ].filter(x => x >= 0);
+    const rest = base.map(a => a.idx).filter(i => seed.indexOf(i) < 0);
+    this._pri = [...seed, ...rest];
+    return this._pri;
+  }
+  causeAssign(run) {
+    const spec = run.failSpec || {};
+    const pri = this.failPriority();
+    const map = {}; let p = 0;
+    for (const c of this.causeOrder) {
+      const n = spec[c] || 0;
+      for (let j = 0; j < n && p < pri.length; j++) { map[pri[p]] = c; p++; }
+    }
+    return map;
+  }
+
+  // ---- status / style helpers ----
+  statusOf(run) {
+    if (run.status === 'RUNNING') return 'RUNNING';
+    const total = this.totalOf(run), failed = run.failed || 0;
+    if (failed === 0) return 'SUCCESS';
+    if (failed >= total) return 'FAILED';
+    return 'PARTIAL';
+  }
+  statusMeta(s) {
+    switch (s) {
+      case 'SUCCESS': return { label:'Completada', bg:'#E7F4EC', fg:'#1F7A50' };
+      case 'PARTIAL': return { label:'Parcial',    bg:'#FEF3C7', fg:'#92600A' };
+      case 'FAILED':  return { label:'Fallida',    bg:'#FBEFEC', fg:'#9A4A30' };
+      case 'RUNNING': return { label:'En progreso',bg:'#EAF2FB', fg:'#1E66BC' };
+      default:        return { label:s, bg:'#E9EDF2', fg:'#4A5568' };
+    }
+  }
+  typeMeta(t) {
+    if (t === 'auto')   return { label:'Automático', short:'Auto',  bg:'#EEF1F5', fg:'#4A5568' };
+    if (t === 'manual') return { label:'Manual',     short:'Manual',bg:'#EDE9FA', fg:'#6B4B9E' };
+    return { label:'Cuenta individual', short:'Indiv.', bg:'#E6F0FA', fg:'#3B6FA8' };
+  }
+  pill(bg, fg, small) {
+    return { display:'inline-flex', alignItems:'center', gap: small?'5px':'6px', height: small?'20px':'22px', padding: small?'0 8px':'0 9px', borderRadius:'7px', fontSize: small?'11px':'11.5px', fontWeight:500, whiteSpace:'nowrap', flex:'none', background:bg, color:fg };
+  }
+  seg(active, opts) {
+    opts = opts || {};
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding: opts.pad||'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap', flex: opts.flex||'none' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' } : { ...base, background:'transparent', color:'#647084' };
+  }
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  // ---- interactions ----
+  openRunById(id) {
+    const run = [...this.state.extra, ...this.baseGlobal, ...this.baseIndividual].find(r => r.id === id);
+    const tf = run ? (run.failed || 0) : 0;
+    const def = tf <= 4;
+    this.setState({ openId:id, expanded:{ token:def, permission:def, unknown:def, rate:def }, showOk:false });
+  }
+  toggleGroup(cause) { this.setState(s => ({ expanded: { ...s.expanded, [cause]: !s.expanded[cause] } })); }
+  runNow() {
+    if (this.state.running || this.state.rate === 'reached') return;
+    const run = { id:'RUN-2208', type:'manual', started:'hoy · 11:24', sub:'ahora', finished:null, dur:'—', failed:0, status:'RUNNING', by:'Lucía Fernández' };
+    this.setState(s => ({ running:true, extra:[run], tab:'globales' }));
+    clearTimeout(this._t);
+    this._t = setTimeout(() => {
+      this.setState({ running:false, extra:[{ ...run, finished:'hoy · 11:28', dur:'4 m 06 s', status:undefined, failed:0 }] });
+    }, 5200);
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+
+  // ---- accounts for a run ----
+  buildAccounts(run) {
+    const s = this.statusOf(run);
+    if (run.type === 'individual') {
+      const nm = this.netMeta[run.net];
+      const isErr = (run.failed || 0) > 0;
+      return [{ idx:0, code:nm.code, tint:nm.tint, ink:nm.ink, platform:nm.platform, name:run.accName, cli:run.cli,
+        ok:!isErr, isError:isErr, cause: isErr ? (run.cause || 'unknown') : null,
+        metrics: isErr ? [] : this.metricsFrom(this.buildBase().find(x=>x.name===run.accName) || { m:this.genMetrics(1,nm.code) }, nm) }];
+    }
+    if (s === 'RUNNING') return [];
+    const map = this.causeAssign(run);
+    return this.buildBase().map(a => {
+      const nm = this.netMeta[a.net];
+      const cause = map[a.idx] || null;
+      const isErr = !!cause;
+      return { idx:a.idx, code:nm.code, tint:nm.tint, ink:nm.ink, platform:nm.platform, name:a.name, cli:a.cli,
+        ok:!isErr, isError:isErr, cause, metrics: isErr ? [] : this.metricsFrom(a, nm) };
+    });
+  }
+  metricsFrom(a, nm) {
+    const last = nm.code === 'TT' ? 'Videos' : 'Reels/St.';
+    const keys = ['Seguidores','Alcance','Impresiones','Engagement','Publicac.', last];
+    return keys.map((k, i) => ({ k, v: (a.m && a.m[i]) || '—' }));
+  }
+
+  // ---- grouping of failures by cause ----
+  buildGroups(failing, totalFailed, accent) {
+    const st = this.state;
+    const byCause = {};
+    failing.forEach(a => { (byCause[a.cause] = byCause[a.cause] || []).push(a); });
+    const mk = (cause) => {
+      const list = byCause[cause];
+      if (!list || !list.length) return null;
+      const meta = this.causeMeta[cause];
+      const n = list.length;
+      const expanded = (cause in st.expanded) ? st.expanded[cause] : (totalFailed <= 4);
+      const danger = meta.actionable;
+      const cardBase = { background:'#fff', borderRadius:'12px', padding:'14px 15px', marginBottom:'10px' };
+      const cardStyle = { ...cardBase, border: danger ? '1px solid #F1D6CC' : '1px solid #E9EDF2', boxShadow: danger ? '0 1px 3px rgba(154,74,48,.05)' : 'none' };
+      const filled = { display:'inline-flex', alignItems:'center', justifyContent:'center', height:'34px', padding:'0 15px', borderRadius:'8px', background:accent, color:'#fff', fontSize:'12.5px', fontWeight:500, cursor:'pointer', marginTop:'12px', width:'max-content' };
+      const outline = { display:'inline-flex', alignItems:'center', justifyContent:'center', height:'34px', padding:'0 15px', borderRadius:'8px', background:'#fff', color:'#3D4757', border:'1px solid #D4DAE3', fontSize:'12.5px', fontWeight:500, cursor:'pointer', marginTop:'12px', width:'max-content' };
+      return {
+        cause, hasAction: !!meta.action, actionLabel: meta.action || '',
+        actionStyle: meta.actionable ? filled : outline,
+        actionStyleMobile: meta.actionable ? { ...filled, height:'32px', fontSize:'12px', width:'100%' } : { ...outline, height:'32px', fontSize:'12px', width:'100%' },
+        onAction: () => this.setState({ openId:null }),
+        title: meta.title(n), msg: meta.msg, count: n,
+        titleColor: danger ? '#9A4A30' : '#232A36',
+        msgColor: danger ? '#7A4634' : '#647084',
+        dotStyle: { width:'9px', height:'9px', borderRadius:'50%', flex:'none', marginTop:'5px', background: danger ? '#C9553A' : (meta.review ? '#8A95A6' : '#B4BDCA') },
+        sepColor: danger ? '#F6E3DC' : '#F0F3F7',
+        cardStyle,
+        cardStyleMobile: { ...cardStyle, padding:'12px 13px' },
+        chevron: expanded ? '▾' : '▸',
+        expanded,
+        toggle: () => this.toggleGroup(cause),
+        accounts: list.map(a => ({ code:a.code, tint:a.tint, ink:a.ink, name:a.name, platform:a.platform, cli:a.cli })),
+      };
+    };
+    const action = ['token','permission'].map(mk).filter(Boolean);
+    const calm = ['unknown','rate'].map(mk).filter(Boolean);
+    return { action, calm };
+  }
+
+  mkRow(run, small) {
+    const s = this.statusOf(run);
+    const sm = this.statusMeta(s);
+    const tm = this.typeMeta(run.type);
+    const total = this.totalOf(run);
+    const ok = total - (run.failed || 0);
+    let scopeCode, scopeMain, scopeSub, scopeTint, scopeInk;
+    if (run.type === 'individual') {
+      const nm = this.netMeta[run.net];
+      scopeCode = nm.code; scopeTint = nm.tint; scopeInk = nm.ink;
+      scopeMain = run.accName; scopeSub = nm.platform;
+    } else {
+      scopeCode = String(total); scopeTint = '#EEF1F5'; scopeInk = '#4A5568';
+      scopeMain = 'Todas las cuentas'; scopeSub = total + ' conectadas';
+    }
+    return {
+      id: run.id, started: run.started, startedSub: (run.type === 'manual' && run.by) ? (run.sub + ' · por ' + run.by) : run.sub,
+      typeLabel: tm.label, typeStyle: this.pill(tm.bg, tm.fg, small),
+      scopeCode, scopeMain, scopeSub, scopeTint, scopeInk,
+      statusLabel: sm.label, statusStyle: this.pill(sm.bg, sm.fg, small), spin: s === 'RUNNING', showDot: s !== 'RUNNING',
+      result: (s === 'RUNNING') ? '—' : (ok + ' / ' + total),
+      errLabel: (s === 'RUNNING') ? '—' : ((run.failed || 0) > 0 ? String(run.failed) : '—'),
+      errColor: (run.failed || 0) > 0 && s !== 'RUNNING' ? '#9A4A30' : '#B4BDCA',
+      errSuffix: (run.failed || 0) > 0 ? (' · ' + run.failed + ' error') : '',
+      dur: run.dur,
+      onClick: () => this.openRunById(run.id),
+    };
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const baseLen = this.buildBase().length;
+
+    const globalRuns = [...st.extra, ...this.baseGlobal];
+    const individualRuns = this.baseIndividual;
+    const allRuns = [...globalRuns, ...individualRuns];
+
+    const lastGlobal = globalRuns.find(r => this.statusOf(r) !== 'RUNNING') || globalRuns[0];
+    const lgMeta = this.statusMeta(this.statusOf(lastGlobal));
+    const lgOk = this.totalOf(lastGlobal) - (lastGlobal.failed || 0);
+
+    const tabDefs = [['globales','Globales','Globales'],['individuales','Individuales','Indiv.'],['todas','Todas','Todas']];
+    const tabs = tabDefs.map(([k,l,ls]) => ({
+      label: l, labelShort: ls,
+      style: this.seg(k === st.tab), styleMobile: this.seg(k === st.tab, { flex:'1', pad:'0 8px' }),
+      onClick: () => this.setState({ tab:k }),
+    }));
+
+    let list;
+    if (st.tab === 'globales') list = globalRuns;
+    else if (st.tab === 'individuales') list = individualRuns;
+    else list = allRuns;
+
+    const rows = list.map(r => this.mkRow(r, false));
+    const rowsMobile = list.slice(0, 6).map(r => this.mkRow(r, true));
+
+    const tabHintMap = {
+      globales: globalRuns.length + ' corridas · automáticas y manuales',
+      individuales: individualRuns.length + ' eventos de una sola cuenta',
+      todas: allRuns.length + ' corridas en total',
+    };
+
+    // ---- drawer ----
+    const openRun = allRuns.find(r => r.id === st.openId) || null;
+    let d = {};
+    if (openRun) {
+      const s = this.statusOf(openRun);
+      const sm = this.statusMeta(s);
+      const tm = this.typeMeta(openRun.type);
+      const total = this.totalOf(openRun);
+      const failed = openRun.failed || 0;
+      const ok = total - failed;
+      const running = s === 'RUNNING';
+      const trigger = openRun.type === 'manual' ? (openRun.by || 'Admin')
+        : openRun.type === 'auto' ? 'Sistema · job diario'
+        : (openRun.trigger || 'Conexión de cuenta');
+
+      const accounts = this.buildAccounts(openRun);
+      const failing = accounts.filter(a => a.isError);
+      const okAccounts = accounts.filter(a => a.ok);
+      const groups = this.buildGroups(failing, failed, accent);
+      const actionCount = groups.action.reduce((n, g) => n + g.count, 0);
+      const calmCount = groups.calm.reduce((n, g) => n + g.count, 0);
+
+      d = {
+        dRef: openRun.id,
+        dTypeLabel: tm.label, dTypeStyle: this.pill(tm.bg, tm.fg, false),
+        dStatusLabel: sm.label, dStatusStyle: this.pill(sm.bg, sm.fg, false), dSpin: running, dDot: !running,
+        dStarted: openRun.started, dFinished: openRun.finished || 'En curso…', dDur: openRun.dur, dTrigger: trigger,
+        dTotal: total, dOk: running ? 0 : ok, dErr: running ? 0 : failed,
+        dErrCardStyle: (failed > 0 && !running)
+          ? { background:'#FCF0EC', border:'1px solid #F1DDD4', borderRadius:'11px', padding:'12px 13px', textAlign:'center' }
+          : { background:'#fff', border:'1px solid #EEF1F5', borderRadius:'11px', padding:'12px 13px', textAlign:'center' },
+        dErrInk: (failed > 0 && !running) ? '#9A4A30' : '#B4BDCA',
+        dErrSubInk: (failed > 0 && !running) ? '#9A4A30' : '#8A95A6',
+        dRunning: running,
+        dSuccess: !running && failed === 0,
+        dHasError: !running && failed > 0,
+        dGroupsAction: groups.action, dGroupsCalm: groups.calm,
+        dHasAction: !running && groups.action.length > 0, dActionCount: actionCount + (actionCount === 1 ? ' cuenta' : ' cuentas'),
+        dHasCalm: !running && groups.calm.length > 0, dCalmCount: calmCount + (calmCount === 1 ? ' cuenta' : ' cuentas'),
+        dHasOk: !running && okAccounts.length > 0,
+        dOkAccounts: okAccounts.map(a => ({ code:a.code, tint:a.tint, ink:a.ink, name:a.name, platform:a.platform, cli:a.cli, pillStyle:this.pill('#E7F4EC','#1F7A50'), metrics:a.metrics })),
+        dOkTitle: st.showOk ? 'Ocultar cuentas sincronizadas' : (okAccounts.length + (okAccounts.length === 1 ? ' cuenta sincronizada correctamente' : ' cuentas sincronizadas correctamente')),
+        dOkChevron: st.showOk ? '▾' : '▸',
+      };
+    }
+
+    const rate = st.rate || 'normal';
+    const reached = rate === 'reached';
+    const rateLeft = 3, rateMins = 12;
+    const rateStates = [['normal','Normal'],['near','Cerca del límite'],['reached','Alcanzado']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ rate:k, bellOpen:false }), style:this.seg(k===rate) }));
+
+    const runBase = { height:'38px', display:'flex', alignItems:'center', gap:'8px', padding:'0 16px', borderRadius:'9px', fontSize:'13.5px', fontWeight:500, cursor:'pointer', whiteSpace:'nowrap' };
+    const runBtnStyle = st.running ? { ...runBase, background:'#EAF2FB', color:'#5A87BE', cursor:'not-allowed', border:'1px solid #D5E4F5' }
+      : reached ? { ...runBase, background:'#F5F7FA', color:'#AAB2BE', border:'1px solid #E4E8EE', cursor:'not-allowed' }
+      : { ...runBase, background:accent, color:'#fff' };
+    const runBaseM = { height:'32px', display:'flex', alignItems:'center', gap:'6px', padding:'0 12px', borderRadius:'8px', fontSize:'12.5px', fontWeight:500, cursor:'pointer', whiteSpace:'nowrap' };
+    const runBtnStyleMobile = st.running ? { ...runBaseM, background:'#EAF2FB', color:'#5A87BE' }
+      : reached ? { ...runBaseM, background:'#F5F7FA', color:'#AAB2BE', border:'1px solid #E4E8EE', cursor:'not-allowed' }
+      : { ...runBaseM, background:accent, color:'#fff' };
+
+    const rateNoteStyle = { display:'flex', alignItems:'center', gap:'6px', maxWidth:'280px', fontSize:'11.5px', lineHeight:'1.4', fontWeight:500, padding:'5px 10px', borderRadius:'8px', textAlign:'left',
+      background: reached ? '#FBEFEC' : '#FBF4EC', border:'1px solid ' + (reached ? '#F1D6CC' : '#F0E2CC'), color: reached ? '#9A4A30' : '#8A6A3C' };
+    const bellItems = reached
+      ? [{ title:'Límite de sincronizaciones alcanzado', body:'Llegaste al máximo de sincronizaciones manuales de esta hora. Es un límite de protección del servicio; se restablece solo. Disponible en '+rateMins+' min.', dotStyle:{ width:'8px', height:'8px', borderRadius:'50%', background:'#C2603F', flex:'none', marginTop:'5px' } }]
+      : rate === 'near'
+      ? [{ title:'Pocas sincronizaciones disponibles', body:'Te quedan '+rateLeft+' ejecuciones manuales en esta hora. Es un límite de protección del servicio.', dotStyle:{ width:'8px', height:'8px', borderRadius:'50%', background:'#C89A2B', flex:'none', marginTop:'5px' } }]
+      : [];
+
+    return {
+      accent,
+      runNow: () => this.runNow(),
+      onRunClick: () => { if (reached) return; this.runNow(); },
+      running: st.running,
+      runLabel: st.running ? 'Sincronización en curso…' : (reached ? ('Disponible en ' + rateMins + ' min') : 'Ejecutar ahora'),
+      runLabelMobile: st.running ? 'En curso…' : (reached ? (rateMins + ' min') : 'Ejecutar'),
+      runReached: reached && !st.running,
+      runTip: reached ? 'Es un límite de protección del servicio para no saturar las redes. Se restablece solo; volvé a intentar en unos minutos.' : '',
+      runBtnStyle, runBtnStyleMobile,
+      runHint: st.running ? 'Esto puede tardar unos minutos. No hace falta esperar en esta pantalla.' : (reached ? 'Límite de protección del servicio alcanzado. Se restablece solo.' : 'Ejecuta una sincronización global de todas las cuentas conectadas.'),
+      // rate-limit + bell
+      rateStates,
+      toggleBell: () => this.setState(s => ({ bellOpen: !s.bellOpen })),
+      bellOpen: st.bellOpen,
+      bellStyle: { position:'relative', width:'36px', height:'36px', borderRadius:'9px', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', border:'1px solid ' + (st.bellOpen ? '#D4DAE3' : 'transparent'), background: st.bellOpen ? '#F5F7FA' : 'transparent' },
+      bellDot: rate !== 'normal', bellItems, bellEmpty: bellItems.length === 0,
+      rateNote: rate !== 'normal', rateNoteStyle,
+      rateNoteText: reached ? ('Alcanzaste el límite de esta hora — disponible en ' + rateMins + ' min.') : ('Te quedan ' + rateLeft + ' sincronizaciones manuales en esta hora.'),
+
+      lastGlobalWhen: lastGlobal.started,
+      lastGlobalStatus: lgMeta.label, lastGlobalPill: this.pill(lgMeta.bg, lgMeta.fg, true),
+      lastGlobalSub: (lastGlobal.type === 'manual' ? 'Manual' : 'Automática') + ' · ' + lastGlobal.dur,
+      okCount: lgOk, okTotal: baseLen,
+      errCount: '1 cuenta', errCountColor: '#9A4A30', errSub: 'requiere reconexión hace 3 corridas',
+      errDotStyle: { width:'9px', height:'9px', borderRadius:'50%', background:'#C9553A' },
+
+      showAdvisory: true,
+      openAdvisory: () => this.openRunById('JOB-1047'),
+
+      tabs, tabHint: tabHintMap[st.tab] || '',
+      isIndividual: st.tab === 'individuales',
+      gridCols: 'minmax(120px,1fr) 138px minmax(160px,1.35fr) 128px 90px 78px 86px 96px',
+      rows, rowsMobile, noRows: rows.length === 0,
+      // NOTA (pendiente de producto): "se conservan 90 días" es un valor de EJEMPLO, todavía no confirmado como política de retención definitiva.
+      footerLabel: (st.tab === 'individuales' ? individualRuns.length + ' eventos individuales' : (st.tab === 'todas' ? allRuns.length + ' corridas' : globalRuns.length + ' corridas globales')) + ' · se conservan 90 días',
+
+      drawerOpen: !!openRun,
+      closeDrawer: () => this.setState({ openId:null }),
+      toggleOk: () => this.setState(s => ({ showOk: !s.showOk })),
+      showOk: st.showOk,
+      ...d,
+
+      goAdmin: () => this.go('Administración.dc.html'),
+    };
+  }
+}
+</script>
+</body>
+</html>

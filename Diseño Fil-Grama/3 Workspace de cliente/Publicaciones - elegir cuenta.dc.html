@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    .filg-card { transition:box-shadow .14s, transform .14s, border-color .14s; }
+    .filg-card:hover { box-shadow:0 6px 18px rgba(20,25,33,.10); transform:translateY(-1px); }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:920px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Publicaciones — elegir cuenta</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Pestaña <span style="color:#3D4757; font-weight:500;">Publicaciones</span> del workspace. Las publicaciones son por cuenta: primero se elige la red, después la cuenta → lleva a la grilla «Todas las publicaciones». Si el cliente tiene una sola cuenta, esta pantalla se saltea y va directo a su grilla.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · cliente con varias cuentas</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:16px 28px 0;">
+          <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Clientes</span></div>
+          <div style="display:flex; align-items:center; gap:13px; margin-top:12px;">
+            <div style="width:44px; height:44px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div><div style="font-size:21px; font-weight:600; color:#141921; letter-spacing:-.3px;">Café Aurora</div>
+              <div style="display:flex; align-items:center; gap:6px; margin-top:6px;"><span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">IG</span><span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">FB</span><span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">TikTok</span></div>
+            </div>
+          </div>
+          <div style="display:flex; gap:4px; margin-top:16px;">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5"><div style="{{ t.style }}">{{ t.label }}</div></sc-for>
+          </div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:24px 28px 36px; min-height:500px;">
+          <h2 style="font-size:16px; font-weight:600; color:#141921; margin:0;">Elegí una cuenta</h2>
+          <div style="font-size:13px; color:#647084; margin-top:4px; line-height:1.5; max-width:560px;">Las publicaciones son por cuenta. Elegí cuál querés ver; primero la red, después la cuenta.</div>
+
+          <div style="display:flex; flex-direction:column; gap:18px; margin-top:20px;">
+            <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+              <div>
+                <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:9px;">{{ g.label }}</div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px;">
+                  <sc-for list="{{ g.accounts }}" as="a" hint-placeholder-count="2">
+                    <div class="filg-card" onClick="{{ a.onClick }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:14px; cursor:pointer; display:flex; align-items:center; gap:11px;">
+                      <div style="width:38px; height:38px; border-radius:9px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:11px; font-weight:600; color:{{ a.tintInk }};">{{ a.code }}</span></div>
+                      <div style="flex:1; min-width:0;"><div style="font-size:14px; font-weight:500; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div><div style="font-size:11.5px; color:#8A95A6; margin-top:2px;">Ver publicaciones</div></div>
+                      <span style="font-size:17px; color:#C4CCD6;">›</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SIDE: mobile + single-account note ============ -->
+    <div style="flex:none; width:390px; display:flex; flex-direction:column; gap:28px;">
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+        <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+          <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#8A95A6;">‹ Café Aurora</span><div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div></div>
+          <div style="display:flex; gap:2px; padding:0 12px; background:#fff; border-bottom:1px solid #E9EDF2; overflow:hidden;">
+            <sc-for list="{{ tabsMobile }}" as="t" hint-placeholder-count="5"><div style="{{ t.style }}">{{ t.label }}</div></sc-for>
+          </div>
+          <div style="background:#F5F7FA; padding:16px;">
+            <div style="font-size:15px; font-weight:600; color:#141921;">Elegí una cuenta</div>
+            <div style="font-size:12px; color:#647084; margin-top:4px; line-height:1.5;">Primero la red, después la cuenta.</div>
+            <div style="display:flex; flex-direction:column; gap:14px; margin-top:14px;">
+              <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+                <div>
+                  <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:7px;">{{ g.label }}</div>
+                  <div style="display:flex; flex-direction:column; gap:8px;">
+                    <sc-for list="{{ g.accounts }}" as="a" hint-placeholder-count="2">
+                      <div onClick="{{ a.onClick }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:11px; display:flex; align-items:center; gap:10px; cursor:pointer;"><div style="width:32px; height:32px; border-radius:8px; background:{{ a.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10px; font-weight:600; color:{{ a.tintInk }};">{{ a.code }}</span></div><div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:500; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.name }}</div></div><span style="font-size:16px; color:#C4CCD6;">›</span></div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Atajo · una sola cuenta</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;">Si el cliente tiene <span style="color:#3D4757; font-weight:500;">una sola cuenta</span>, este paso no aparece: la pestaña Publicaciones abre directo la grilla de esa cuenta. El selector solo tiene sentido con varias.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  netMeta = {
+    ig: { label:'Instagram', code:'IG', tint:'linear-gradient(135deg,#FCEFE6,#F6E1EC)', tintInk:'#B5638A' },
+    fb: { label:'Facebook',  code:'FB', tint:'linear-gradient(135deg,#E7EEFB,#DCE6F7)', tintInk:'#2C5FA8' },
+    tt: { label:'TikTok',    code:'TT', tint:'linear-gradient(135deg,#E6F2F1,#E0EDEC)', tintInk:'#3E7C77' },
+  };
+
+  data = {
+    ig: ['@cafeaurora', '@aurora.deli'],
+    fb: ['Café Aurora — Centro'],
+    tt: ['@cafeaurora'],
+  };
+
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  tab(active, accent, opts) {
+    opts = opts || {};
+    const base = { padding:opts.pad||'11px 15px', fontSize:opts.fs||'13.5px', whiteSpace:'nowrap', borderBottom:'2px solid transparent', marginBottom:'-1px', cursor:'pointer' };
+    return active ? { ...base, color:accent, fontWeight:600, borderBottomColor:accent } : { ...base, color:'#647084' };
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const open = () => this.go('Todas las publicaciones.dc.html');
+
+    const tabDefs = ['Dashboard','Publicaciones','Comparar','Audiencia','Reporte','Cuentas'];
+    const tabs = tabDefs.map(l => ({ label:l, style:this.tab(l==='Publicaciones', accent) }));
+    const tabsMobile = tabDefs.map(l => ({ label:l, style:this.tab(l==='Publicaciones', accent, { pad:'10px 9px', fs:'12px' }) }));
+
+    const groups = ['ig','fb','tt'].map(net => {
+      const m = this.netMeta[net];
+      return { label:m.label, accounts:this.data[net].map(name => ({ name, code:m.code, tint:m.tint, tintInk:m.tintInk, onClick:open })) };
+    });
+
+    return { accent, tabs, tabsMobile, groups };
+  }
+}
+</script>
+</body>
+</html>

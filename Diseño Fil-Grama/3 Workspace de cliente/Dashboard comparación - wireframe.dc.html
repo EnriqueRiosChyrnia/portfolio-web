@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Dashboard · comparación vs período anterior — solo las zonas que cambian</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Toggle DENTRO de la card del gráfico (arriba a la derecha) · lo que se compara vive junto a lo comparado</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1a desktop -->
+        <div class="dv-card" style="width:760px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · zona de controles + hero (el resto del Dashboard no cambia)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:14px;">
+
+            <!-- controles -->
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px;">
+              <div style="display:flex; border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; font-size:13px; background:#fff;">
+                <span style="padding:5px 12px; background:#e8e8e8; font-weight:600;">Todas</span>
+                <span style="padding:5px 12px; border-left:1.5px solid #3a3a3a;">IG</span>
+                <span style="padding:5px 12px; border-left:1.5px solid #3a3a3a;">FB</span>
+                <span style="padding:5px 12px; border-left:1.5px solid #3a3a3a;">TikTok</span>
+              </div>
+              <div style="text-align:right;">
+                <div style="display:inline-flex; align-items:center; gap:8px; border:1.5px solid #3a3a3a; border-radius:6px; padding:6px 12px; font-size:13px; background:#fff;">▦ Últimos 30 días <span style="color:#888;">▾</span></div>
+                <div style="font-size:11.5px; color:#888; margin-top:4px;">se compara con <b style="color:#555;">1–30 may</b></div>
+                <div style="font-size:11px; color:#2a78d6;">← NUEVO: texto secundario bajo el dropdown estándar</div>
+              </div>
+            </div>
+
+            <!-- hero -->
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:14px 16px;">
+              <div style="display:flex; align-items:flex-start; justify-content:space-between;">
+                <div>
+                  <div style="font-size:13px; color:#666;">Alcance ⓘ</div>
+                  <div style="display:flex; align-items:baseline; gap:10px; margin-top:4px;">
+                    <span style="font-size:30px; font-weight:600;">128k</span>
+                    <span style="position:relative; border:1.5px solid #2a78d6; color:#2a78d6; border-radius:6px; padding:1px 8px; font-size:13px; font-weight:600;">▲ 12%
+                      <span style="position:absolute; top:26px; left:0; background:#3a3a3a; color:#fff; border-radius:5px; padding:3px 9px; font-size:11px; white-space:nowrap;">vs 1–30 may</span>
+                    </span>
+                    <span style="font-size:11px; color:#2a78d6; margin-left:60px;">← tooltip al pasar por el chip (igual en cada KPI)</span>
+                  </div>
+                </div>
+                <!-- toggle dentro de la card -->
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:12px; color:#666;">Comparar con período anterior</span>
+                  <span style="display:inline-flex; width:34px; height:18px; border:1.5px solid #3a3a3a; border-radius:10px; background:#e8e8e8; position:relative;"><span style="position:absolute; right:1px; top:1px; width:13px; height:13px; border-radius:50%; background:#3a3a3a;"></span></span>
+                </div>
+              </div>
+              <svg width="100%" height="120" viewBox="0 0 700 120" preserveAspectRatio="none" style="margin-top:10px;">
+                <line x1="0" y1="35" x2="700" y2="35" stroke="#e5e5e5" stroke-width="1.5"/>
+                <line x1="0" y1="80" x2="700" y2="80" stroke="#e5e5e5" stroke-width="1.5"/>
+                <polyline points="0,96 90,88 180,92 270,72 360,78 450,52 540,60 630,32 700,26" fill="none" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round"/>
+                <polyline points="0,104 90,100 180,96 270,92 360,88 450,80 540,84 630,70 700,66" fill="none" stroke="#b5b5b5" stroke-width="2" stroke-dasharray="6 5"/>
+              </svg>
+              <div style="display:flex; align-items:center; gap:14px; font-size:11.5px; color:#666; margin-top:6px;">
+                <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:16px; height:0; border-top:2.5px solid #2a78d6;"></span>1–30 jun</span>
+                <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:16px; height:0; border-top:2px dashed #b5b5b5;"></span>1–30 may</span>
+                <span style="font-size:11px; color:#2a78d6;">← serie previa gris punteada; tooltip del gráfico muestra ambos valores</span>
+              </div>
+            </div>
+
+            <!-- KPI row -->
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:10px;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                <div style="font-size:11.5px; color:#666;">Interacciones ⓘ</div>
+                <div style="display:flex; align-items:baseline; gap:8px; margin-top:3px;"><span style="font-size:20px; font-weight:600;">9.4k</span><span style="border:1.5px solid #2a78d6; color:#2a78d6; border-radius:5px; padding:0 6px; font-size:11px; font-weight:600;">▲ 8%</span></div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                <div style="font-size:11.5px; color:#666;">Engagement ⓘ</div>
+                <div style="display:flex; align-items:baseline; gap:8px; margin-top:3px;"><span style="font-size:20px; font-weight:600;">5.2%</span><span style="border:1.5px solid #c07a55; color:#c07a55; border-radius:5px; padding:0 6px; font-size:11px; font-weight:600;">▼ 0.3</span></div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                <div style="font-size:11.5px; color:#666;">Seguidores ⓘ</div>
+                <div style="display:flex; align-items:baseline; gap:8px; margin-top:3px;"><span style="font-size:20px; font-weight:600;">18.6k</span><span style="border:1.5px solid #2a78d6; color:#2a78d6; border-radius:5px; padding:0 6px; font-size:11px; font-weight:600;">▲ 320</span></div>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#2a78d6; margin-top:6px;">↑ chips como hoy (secundarios al valor); cada uno con tooltip "vs 1–30 may"</div>
+          </div>
+        </div>
+
+        <!-- 1a mobile -->
+        <div class="dv-card" style="width:290px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · mismo toggle en la card del gráfico</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fafafa; padding:10px; display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 8px; font-size:11px; background:#fff;">Todas ▾</div>
+              <div style="text-align:right;">
+                <div style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 8px; font-size:11px; background:#fff;">▦ 30 días ▾</div>
+              </div>
+            </div>
+            <div style="font-size:10px; color:#888; text-align:right; margin-top:-4px;">se compara con <b style="color:#555;">1–30 may</b></div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px;">
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <div style="font-size:10.5px; color:#666;">Alcance</div>
+                <span style="display:inline-flex; width:28px; height:15px; border:1.5px solid #3a3a3a; border-radius:9px; background:#e8e8e8; position:relative;"><span style="position:absolute; right:1px; top:1px; width:10px; height:10px; border-radius:50%; background:#3a3a3a;"></span></span>
+              </div>
+              <div style="font-size:20px; font-weight:600;">128k <span style="font-size:11px; color:#2a78d6; font-weight:600;">▲ 12%</span></div>
+              <svg width="100%" height="52" viewBox="0 0 240 52" preserveAspectRatio="none" style="margin-top:4px;">
+                <polyline points="0,42 40,38 80,40 120,28 160,32 200,16 240,10" fill="none" stroke="#2a78d6" stroke-width="2"/>
+                <polyline points="0,46 40,44 80,42 120,40 160,37 200,32 240,28" fill="none" stroke="#b5b5b5" stroke-width="1.6" stroke-dasharray="4 4"/>
+              </svg>
+              <div style="display:flex; gap:10px; font-size:9px; color:#666; margin-top:3px;">
+                <span>— 1–30 jun</span><span style="color:#999;">- - 1–30 may</span>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px;"><div style="font-size:9.5px; color:#666;">Interacciones</div><div style="font-size:15px; font-weight:600;">9.4k <span style="font-size:9px; color:#2a78d6;">▲ 8%</span></div></div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px;"><div style="font-size:9.5px; color:#666;">Engagement</div><div style="font-size:15px; font-weight:600;">5.2% <span style="font-size:9px; color:#c07a55;">▼ 0.3</span></div></div>
+            </div>
+            <div style="font-size:10px; color:#888;">En móvil el tooltip del chip = tap sostenido / tap en el chip</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Toggle JUNTO AL SELECTOR de rango · la comparación es un modo de toda la pantalla, no solo del gráfico</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1b desktop -->
+        <div class="dv-card" style="width:760px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · el toggle vive en la fila de controles, a la izquierda del rango</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:14px;">
+
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px;">
+              <div style="display:flex; border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; font-size:13px; background:#fff;">
+                <span style="padding:5px 12px; background:#e8e8e8; font-weight:600;">Todas</span>
+                <span style="padding:5px 12px; border-left:1.5px solid #3a3a3a;">IG</span>
+                <span style="padding:5px 12px; border-left:1.5px solid #3a3a3a;">FB</span>
+                <span style="padding:5px 12px; border-left:1.5px solid #3a3a3a;">TikTok</span>
+              </div>
+              <div style="display:flex; align-items:flex-start; gap:12px;">
+                <div style="display:flex; align-items:center; gap:8px; padding-top:7px;">
+                  <span style="font-size:12px; color:#666;">Comparar</span>
+                  <span style="display:inline-flex; width:34px; height:18px; border:1.5px solid #3a3a3a; border-radius:10px; background:#e8e8e8; position:relative;"><span style="position:absolute; right:1px; top:1px; width:13px; height:13px; border-radius:50%; background:#3a3a3a;"></span></span>
+                </div>
+                <div style="text-align:right;">
+                  <div style="display:inline-flex; align-items:center; gap:8px; border:1.5px solid #3a3a3a; border-radius:6px; padding:6px 12px; font-size:13px; background:#fff;">▦ Últimos 30 días <span style="color:#888;">▾</span></div>
+                  <div style="font-size:11.5px; color:#888; margin-top:4px;">se compara con <b style="color:#555;">1–30 may</b></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:14px 16px;">
+              <div style="font-size:13px; color:#666;">Alcance ⓘ</div>
+              <div style="display:flex; align-items:baseline; gap:10px; margin-top:4px;">
+                <span style="font-size:30px; font-weight:600;">128k</span>
+                <span style="border:1.5px solid #2a78d6; color:#2a78d6; border-radius:6px; padding:1px 8px; font-size:13px; font-weight:600;">▲ 12%</span>
+              </div>
+              <svg width="100%" height="110" viewBox="0 0 700 110" preserveAspectRatio="none" style="margin-top:8px;">
+                <polyline points="0,88 90,80 180,84 270,64 360,70 450,46 540,54 630,28 700,22" fill="none" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round"/>
+                <polyline points="0,96 90,92 180,88 270,84 360,80 450,72 540,76 630,62 700,58" fill="none" stroke="#b5b5b5" stroke-width="2" stroke-dasharray="6 5"/>
+              </svg>
+              <div style="display:flex; align-items:center; gap:14px; font-size:11.5px; color:#666; margin-top:6px;">
+                <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:16px; height:0; border-top:2.5px solid #2a78d6;"></span>1–30 jun</span>
+                <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:16px; height:0; border-top:2px dashed #b5b5b5;"></span>1–30 may</span>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#2a78d6; margin-top:8px;">↑ Ventaja: un solo lugar manda sobre toda la pantalla. Costo: fila de controles más cargada; el toggle queda lejos del gráfico que modifica.</div>
+          </div>
+        </div>
+
+        <!-- 1b mobile -->
+        <div class="dv-card" style="width:290px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · toggle como fila propia bajo los controles</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fafafa; padding:10px; display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 8px; font-size:11px; background:#fff;">Todas ▾</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 8px; font-size:11px; background:#fff;">▦ 30 días ▾</div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:7px 10px;">
+              <span style="font-size:11px; color:#666;">Comparar con período anterior <span style="color:#999;">(vs 1–30 may)</span></span>
+              <span style="display:inline-flex; width:28px; height:15px; border:1.5px solid #3a3a3a; border-radius:9px; background:#e8e8e8; position:relative;"><span style="position:absolute; right:1px; top:1px; width:10px; height:10px; border-radius:50%; background:#3a3a3a;"></span></span>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px;">
+              <div style="font-size:10.5px; color:#666;">Alcance</div>
+              <div style="font-size:20px; font-weight:600;">128k <span style="font-size:11px; color:#2a78d6; font-weight:600;">▲ 12%</span></div>
+              <svg width="100%" height="52" viewBox="0 0 240 52" preserveAspectRatio="none" style="margin-top:4px;">
+                <polyline points="0,42 40,38 80,40 120,28 160,32 200,16 240,10" fill="none" stroke="#2a78d6" stroke-width="2"/>
+                <polyline points="0,46 40,44 80,42 120,40 160,37 200,32 240,28" fill="none" stroke="#b5b5b5" stroke-width="1.6" stroke-dasharray="4 4"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c estados sin datos ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Cuenta nueva sin período anterior — dos tratamientos del chip (elegí uno)</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- variante chip ausente -->
+        <div class="dv-card" style="width:360px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Variante A · el chip simplemente no aparece</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px; display:flex; flex-direction:column; gap:8px;">
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+              <div style="font-size:11.5px; color:#666;">Interacciones ⓘ</div>
+              <div style="font-size:20px; font-weight:600; margin-top:3px;">312</div>
+            </div>
+            <div style="font-size:11.5px; color:#666; line-height:1.4;">Lo más liviano. Riesgo: no se explica por qué unos KPIs tienen chip y otros no (cuenta conectada hace 10 días con rango de 30).</div>
+            <div style="font-size:11.5px; color:#666;">El toggle del gráfico queda deshabilitado con nota: <span style="border:1.2px dashed #999; border-radius:4px; padding:0 6px; font-size:10.5px;">Comparar (sin datos del período anterior) 🔒</span></div>
+          </div>
+        </div>
+
+        <!-- variante texto -->
+        <div class="dv-card" style="width:360px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Variante B · texto gris discreto en lugar del chip</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px; display:flex; flex-direction:column; gap:8px;">
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+              <div style="font-size:11.5px; color:#666;">Interacciones ⓘ</div>
+              <div style="display:flex; align-items:baseline; gap:8px; margin-top:3px;">
+                <span style="font-size:20px; font-weight:600;">312</span>
+                <span style="font-size:11px; color:#999;">sin datos previos</span>
+              </div>
+            </div>
+            <div style="font-size:11.5px; color:#666; line-height:1.4;">Explica la ausencia sin alarmar y sin inventar un 0. Su tooltip aclara: «La cuenta se conectó el 22 jun; todavía no hay un período anterior completo para comparar».</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Decisiones incluidas: tooltip del gráfico muestra ambos valores cuando la serie previa está activa; el hero de Alcance recibe el mismo tooltip con fechas en su chip (se unifica). Probá: "avanzá con <a class="dv-oid" href="#1a">1a</a> + variante B" · "el toggle de <a class="dv-oid" href="#1b">1b</a> pero sin el texto entre paréntesis".</p>
+</section>
+</x-dc>
+</body>
+</html>

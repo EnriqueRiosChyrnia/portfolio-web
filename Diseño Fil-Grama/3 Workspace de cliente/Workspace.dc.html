@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    .filg-row:hover { background:#F7F9FC; }
+    .filg-tab-scroll { scrollbar-width:none; }
+    .filg-tab-scroll::-webkit-scrollbar { display:none; }
+    /* crossfade de contenido al cambiar rango (dos nombres idénticos para re-disparar) */
+    @keyframes fgFadeA { from { opacity:.35; } to { opacity:1; } }
+    @keyframes fgFadeB { from { opacity:.35; } to { opacity:1; } }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Workspace de cliente — pestañas</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Encabezado de cliente persistente + barra de pestañas (Dashboard · Publicaciones · Comparar · Reporte). Cambiá de pestaña; en Dashboard la lista de <span style="color:#3D4757; font-weight:500;">cuentas conectadas</span> es clickeable y entra al Detalle de cuenta. En Publicaciones, elegí una cuenta (cascada red → cuenta) para ver su grilla.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <!-- top bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <span style="position:relative; display:inline-flex;">
+            <div onClick="{{ onAvatarToggle }}" style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568; cursor:pointer;">LF</div>
+            <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:40px; right:0; width:216px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:60;">
+                <div style="padding:8px 11px 9px; border-bottom:1px solid #F0F3F7; margin-bottom:5px;">
+                  <div style="font-size:13px; font-weight:600; color:#141921;">Lucía Ferreira</div>
+                  <div style="font-size:11.5px; color:#8A95A6; margin-top:1px;">Admin · lucia@agencia.com</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer;" style-hover="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer; background:#F5F7FA;">Administración</div>
+                <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer;" style-hover="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer; background:#F5F7FA;">Cerrar sesión</div>
+              </div>
+            </sc-if>
+          </span>
+        </div>
+
+        <div style="background:#F5F7FA;">
+
+          <!-- ===== persistent client header ===== -->
+          <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:18px 28px 0;">
+            <div onClick="{{ goClients }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Clientes</span></div>
+
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-top:13px;">
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:46px; height:46px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;">
+                  <svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <div style="font-size:22px; font-weight:600; color:#141921; letter-spacing:-.3px;">Café Aurora</div>
+                  <div style="display:flex; align-items:center; gap:7px; margin-top:7px;">
+                    <sc-for list="{{ headerChips }}" as="c" hint-placeholder-count="4">
+                      <span style="display:flex; align-items:center; font-size:11px; font-weight:500; color:{{ c.textColor }}; background:{{ c.bg }}; border:1px solid {{ c.border }}; border-radius:6px; padding:3px 9px;">{{ c.label }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+              <sc-if value="{{ hasError }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ goReconnect }}" style="display:flex; align-items:center; gap:8px; height:38px; padding:0 15px; background:#FBEFEC; border:1px solid #F0D7CD; border-radius:9px; font-size:13px; font-weight:500; color:#B2552F; cursor:pointer;">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7a5 5 0 1 1-1.5-3.5M12 1v3H9" stroke="#B2552F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Reconectar TikTok
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- tabs -->
+            <div class="filg-tab-scroll" style="display:flex; gap:4px; margin-top:18px; overflow-x:auto;">
+              <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+                <div onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- ===== TAB BODY ===== -->
+          <div style="padding:22px 28px 30px; min-height:520px;">
+
+            <!-- ---------- WORKSPACE (tab content) ---------- -->
+            <sc-if value="{{ showWorkspace }}" hint-placeholder-val="{{ true }}">
+              <div>
+
+                <!-- ===== DASHBOARD ===== -->
+                <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+                  <div style="animation:{{ fadeAnim }} .2s ease;">
+                    <div style="display:flex; align-items:center; justify-content:flex-end; margin-bottom:16px;">
+                      <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+                        <sc-for list="{{ rangeList }}" as="r" hint-placeholder-count="3">
+                          <div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div>
+                        </sc-for>
+                      </div>
+                    </div>
+
+                    <!-- hero -->
+                    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px;">
+                      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+                        <div>
+                          <div style="display:flex; align-items:center; gap:7px;">
+                            <span style="font-size:13px; color:#647084;">Alcance · todas las cuentas</span>
+                            <span onClick="{{ heroInfoToggle }}" onMouseEnter="{{ heroInfoEnter }}" onMouseLeave="{{ heroInfoLeave }}" style="position:relative; display:inline-flex;">
+                              <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                              <sc-if value="{{ heroInfoOpen }}" hint-placeholder-val="{{ false }}">
+                                <span style="position:absolute; top:25px; left:-10px; width:248px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                                  <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Alcance</span>
+                                  <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Cuántas personas distintas vieron el contenido en el período, sumando todas las cuentas.</span>
+                                </span>
+                              </sc-if>
+                            </span>
+                          </div>
+                          <div style="display:flex; align-items:baseline; gap:13px; margin-top:9px;">
+                            <span style="font-size:44px; font-weight:600; color:#141921; letter-spacing:-1.2px; line-height:1; font-variant-numeric:tabular-nums;">{{ heroValue }}</span>
+                            <span style="{{ heroTrendStyle }}">{{ heroTrend }}</span>
+                          </div>
+                          <div style="font-size:12px; color:#8A95A6; margin-top:7px;">vs. período anterior</div>
+                        </div>
+                        <div style="font-size:12px; color:#8A95A6;">{{ rangeLabel }}</div>
+                      </div>
+                      <svg width="100%" height="170" viewBox="0 0 1000 170" preserveAspectRatio="none" style="margin-top:16px;">
+                        <line x1="0" y1="40" x2="1000" y2="40" stroke="#F0F3F7" stroke-width="1"/>
+                        <line x1="0" y1="100" x2="1000" y2="100" stroke="#F0F3F7" stroke-width="1"/>
+                        <polygon points="{{ chartArea }}" fill="{{ accent }}" fill-opacity="0.06"/>
+                        <polyline points="{{ chartPoints }}" fill="none" stroke="{{ accent }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+
+                    <!-- secondary KPIs -->
+                    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:16px;">
+                      <sc-for list="{{ coreKpis }}" as="k" hint-placeholder-count="3">
+                        <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px;">
+                          <div style="display:flex; align-items:center; gap:7px;">
+                            <span style="font-size:13px; color:#647084;">{{ k.label }}</span>
+                            <span onClick="{{ k.onToggle }}" onMouseEnter="{{ k.onEnter }}" onMouseLeave="{{ k.onLeave }}" style="position:relative; display:inline-flex;">
+                              <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                              <sc-if value="{{ k.showInfo }}" hint-placeholder-val="{{ false }}">
+                                <span style="position:absolute; top:25px; left:-10px; width:240px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                                  <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">{{ k.label }}</span>
+                                  <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">{{ k.info }}</span>
+                                </span>
+                              </sc-if>
+                            </span>
+                          </div>
+                          <div style="display:flex; align-items:baseline; gap:10px; margin-top:11px;">
+                            <span style="font-size:28px; font-weight:600; color:#141921; letter-spacing:-.6px; font-variant-numeric:tabular-nums;">{{ k.value }}</span>
+                            <span style="{{ k.trendStyle }}">{{ k.trend }}</span>
+                          </div>
+                        </div>
+                      </sc-for>
+                    </div>
+
+                    <!-- cuentas conectadas (clickeable) -->
+                    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:16px; overflow:hidden;">
+                      <div style="display:flex; align-items:center; justify-content:space-between; padding:17px 20px 13px;">
+                        <span style="font-size:16px; font-weight:600; color:#141921;">Cuentas conectadas</span>
+                        <span style="font-size:12px; color:#8A95A6;">{{ accountCount }} cuentas · tocá una para ver su detalle</span>
+                      </div>
+                      <sc-for list="{{ accountRows }}" as="a" hint-placeholder-count="4">
+                        <div class="filg-row" onClick="{{ a.onOpen }}" style="display:grid; grid-template-columns:1.6fr .9fr .9fr .9fr 24px; gap:14px; align-items:center; padding:13px 20px; border-top:1px solid #F4F6F9; cursor:pointer; transition:background .12s;">
+                          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                            <span style="width:34px; height:34px; border-radius:9px; background:{{ a.netBg }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:{{ a.netColor }}; flex:none;">{{ a.code }}</span>
+                            <div style="min-width:0;">
+                              <div style="font-size:14px; font-weight:500; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.handle }}</div>
+                              <div style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:6px; height:6px; border-radius:50%; background:{{ a.statusDot }};"></span><span style="font-size:11px; color:{{ a.statusColor }};">{{ a.statusLabel }}</span></div>
+                            </div>
+                          </div>
+                          <div><div style="font-size:14px; color:#232A36; font-variant-numeric:tabular-nums;">{{ a.alcance }}</div><div style="font-size:10px; color:#8A95A6;">alcance</div></div>
+                          <div><div style="font-size:14px; color:#232A36; font-variant-numeric:tabular-nums;">{{ a.interac }}</div><div style="font-size:10px; color:#8A95A6;">interac.</div></div>
+                          <div><div style="font-size:14px; color:#232A36; font-variant-numeric:tabular-nums;">{{ a.seg }}</div><div style="font-size:10px; color:#8A95A6;">seguid.</div></div>
+                          <div style="font-size:17px; color:#C4CCD6; text-align:center;">›</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- ===== PUBLICACIONES ===== -->
+                <sc-if value="{{ isPublicaciones }}" hint-placeholder-val="{{ false }}">
+                  <div>
+                    <!-- step 1: pick account -->
+                    <sc-if value="{{ pubPickMode }}" hint-placeholder-val="{{ true }}">
+                      <div>
+                        <div style="font-size:16px; font-weight:600; color:#141921;">Elegí una cuenta</div>
+                        <div style="font-size:13px; color:#647084; margin-top:4px; line-height:1.5; max-width:560px;">Las publicaciones son por cuenta. Elegí cuál querés ver; primero la red, después la cuenta.</div>
+                        <div style="display:flex; flex-direction:column; gap:18px; margin-top:18px;">
+                          <sc-for list="{{ pubGroups }}" as="g" hint-placeholder-count="3">
+                            <div>
+                              <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:9px;">{{ g.net }}</div>
+                              <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
+                                <sc-for list="{{ g.items }}" as="a" hint-placeholder-count="2">
+                                  <div class="filg-row" onClick="{{ a.onPick }}" style="display:flex; align-items:center; gap:11px; background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:14px; cursor:pointer; transition:background .12s;">
+                                    <span style="width:36px; height:36px; border-radius:9px; background:{{ a.netBg }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:{{ a.netColor }}; flex:none;">{{ a.code }}</span>
+                                    <div style="flex:1; min-width:0;">
+                                      <div style="font-size:14px; font-weight:500; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.handle }}</div>
+                                      <div style="font-size:11px; color:#8A95A6; margin-top:2px;">{{ a.postCount }} publicaciones</div>
+                                    </div>
+                                    <span style="font-size:17px; color:#C4CCD6;">›</span>
+                                  </div>
+                                </sc-for>
+                              </div>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+
+                    <!-- step 2: grid for selected account -->
+                    <sc-if value="{{ pubGridMode }}" hint-placeholder-val="{{ false }}">
+                      <div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+                          <div style="display:flex; align-items:center; gap:11px;">
+                            <span onClick="{{ pubBack }}" style="font-size:13px; color:#8A95A6; cursor:pointer;">‹ Cuentas</span>
+                            <span style="color:#D4DAE3;">·</span>
+                            <span style="width:30px; height:30px; border-radius:8px; background:{{ pubAccBg }}; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:600; color:{{ pubAccColor }};">{{ pubAccCode }}</span>
+                            <span style="font-size:16px; font-weight:600; color:#141921;">{{ pubAccHandle }}</span>
+                            <span style="font-size:13px; color:#8A95A6;">· {{ pubGridCount }} publicaciones</span>
+                          </div>
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:12px; color:#8A95A6;">Ordenar:</span>
+                            <sc-for list="{{ pubSortList }}" as="s" hint-placeholder-count="3">
+                              <div onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</div>
+                            </sc-for>
+                          </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-top:18px;">
+                          <sc-for list="{{ pubGrid }}" as="p" hint-placeholder-count="8">
+                            <div class="filg-row" onClick="{{ p.onOpen }}" style="border:1px solid #E9EDF2; border-radius:12px; overflow:hidden; cursor:pointer; background:#fff; transition:background .12s;">
+                              <div style="aspect-ratio:1/1; background:{{ p.thumbBg }}; display:flex; align-items:center; justify-content:center; position:relative;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                                <span style="position:absolute; top:8px; left:8px; font-size:10px; font-weight:500; color:#353D4D; background:#fff; border:1px solid #E9EDF2; border-radius:5px; padding:2px 7px;">{{ p.type }}</span>
+                              </div>
+                              <div style="padding:11px 12px;">
+                                <div style="font-size:12.5px; color:#232A36; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.title }}</div>
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+                                  <span style="font-size:11px; color:#8A95A6;">{{ p.date }}</span>
+                                  <span style="font-size:13px; font-weight:600; color:#141921; font-variant-numeric:tabular-nums;">{{ p.metric }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+
+                <!-- ===== COMPARAR ===== -->
+                <sc-if value="{{ isComparar }}" hint-placeholder-val="{{ false }}">
+                  <div>
+                    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
+                      <div>
+                        <div style="font-size:16px; font-weight:600; color:#141921;">Comparar cuentas</div>
+                        <div style="font-size:13px; color:#647084; margin-top:4px;">Solo métricas comparables · totales de los últimos 30 días.</div>
+                      </div>
+                      <div onClick="{{ openComparador }}" style="height:36px; display:flex; align-items:center; gap:7px; padding:0 14px; background:#fff; border:1px solid #E0E5EC; border-radius:9px; font-size:13px; color:#3D4757; cursor:pointer;">Comparador completo →</div>
+                    </div>
+                    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; overflow:hidden; margin-top:16px;">
+                      <div style="display:grid; grid-template-columns:1.7fr 1fr 1fr 1fr 1fr; gap:12px; padding:13px 20px; border-bottom:1px solid #F0F3F7; background:#FBFCFD; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6;">
+                        <div>Cuenta</div><div>Alcance</div><div>Seguidores</div><div>Interac.</div><div>Engagement</div>
+                      </div>
+                      <sc-for list="{{ compareRows }}" as="r" hint-placeholder-count="4">
+                        <div style="display:grid; grid-template-columns:1.7fr 1fr 1fr 1fr 1fr; gap:12px; padding:15px 20px; border-bottom:1px solid #F4F6F9; align-items:center;">
+                          <div style="display:flex; align-items:center; gap:9px;">
+                            <span style="width:9px; height:9px; border-radius:50%; background:{{ r.color }};"></span>
+                            <span style="font-size:10px; font-weight:600; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">{{ r.code }}</span>
+                            <span style="font-size:13px; font-weight:500; color:#232A36;">{{ r.handle }}</span>
+                          </div>
+                          <div style="{{ r.alcanceStyle }}">{{ r.alcance }}<sc-if value="{{ r.alcanceNc }}" hint-placeholder-val="{{ false }}"><span style="display:block; font-size:10px; color:#9AA4B2;">no comparable</span></sc-if></div>
+                          <div style="font-size:14px; color:#232A36; font-variant-numeric:tabular-nums;">{{ r.seg }}</div>
+                          <div style="font-size:14px; color:#232A36; font-variant-numeric:tabular-nums;">{{ r.interac }}</div>
+                          <div style="font-size:14px; color:#232A36; font-variant-numeric:tabular-nums;">{{ r.eng }}</div>
+                        </div>
+                      </sc-for>
+                      <div style="display:flex; align-items:flex-start; gap:8px; padding:13px 20px; background:#F5F8FC;">
+                        <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; flex:none; margin-top:1px;">i</span>
+                        <span style="font-size:12.5px; color:#647084; line-height:1.5;">El alcance de TikTok va «—» porque la red reporta reproducciones de video, no personas alcanzadas.</span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- ===== REPORTE ===== -->
+                <sc-if value="{{ isReporte }}" hint-placeholder-val="{{ false }}">
+                  <div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+                          <sc-for list="{{ repModeList }}" as="m" hint-placeholder-count="2"><div style="{{ m.style }}" onClick="{{ m.onClick }}">{{ m.label }}</div></sc-for>
+                        </div>
+                        <div style="height:34px; display:flex; align-items:center; padding:0 4px; font-size:13px; color:#647084;">Junio 2026 · el período se elige en el Reporte completo</div>
+                      </div>
+                      <div onClick="{{ openReporte }}" style="height:36px; display:flex; align-items:center; gap:7px; padding:0 15px; background:{{ accent }}; border-radius:9px; font-size:13px; font-weight:500; color:#fff; cursor:pointer;">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 12h10" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Reporte completo
+                      </div>
+                    </div>
+
+                    <!-- live doc preview -->
+                    <div style="background:#EDF0F4; border:1px solid #E9EDF2; border-radius:13px; padding:22px; margin-top:16px;">
+                      <div style="max-width:740px; margin:0 auto; background:#fff; border:1px solid #E9EDF2; border-radius:6px; box-shadow:0 4px 18px rgba(20,25,33,.07); overflow:hidden;">
+                        <div style="padding:26px 32px 22px; border-bottom:1px solid #F0F3F7;">
+                          <div style="display:flex; align-items:center; gap:9px;"><img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:22px; height:22px; border-radius:6px; display:block;" /><span style="font-size:13px; font-weight:600; color:#141921;">Fil-Grama</span></div>
+                          <div style="font-size:26px; font-weight:600; color:#141921; margin-top:14px; letter-spacing:-.4px;">Café Aurora</div>
+                          <div style="font-size:13px; color:#647084; margin-top:5px;">Junio 2026 · 1–30 jun · {{ repModeLabel }}</div>
+                        </div>
+                        <div style="padding:22px 32px 0;">
+                          <div style="font-size:11px; text-transform:uppercase; letter-spacing:.7px; color:#8A95A6; margin-bottom:12px;">KPIs del mes</div>
+                          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;">
+                            <sc-for list="{{ repKpis }}" as="k" hint-placeholder-count="4">
+                              <div style="border:1px solid #E9EDF2; border-radius:10px; padding:13px;"><div style="font-size:11px; color:#647084;">{{ k.label }}</div><div style="font-size:22px; font-weight:600; color:#141921; margin-top:6px;">{{ k.value }}</div><div style="{{ k.trendStyle }}">{{ k.trend }}</div></div>
+                            </sc-for>
+                          </div>
+                        </div>
+                        <div style="padding:22px 32px 28px;">
+                          <div style="font-size:11px; text-transform:uppercase; letter-spacing:.7px; color:#8A95A6; margin-bottom:12px;">Evolución del alcance</div>
+                          <div style="border:1px solid #E9EDF2; border-radius:10px; padding:16px;">
+                            <svg width="100%" height="120" viewBox="0 0 680 120" preserveAspectRatio="none">
+                              <line x1="0" y1="40" x2="680" y2="40" stroke="#F0F3F7" stroke-width="1"/>
+                              <line x1="0" y1="80" x2="680" y2="80" stroke="#F0F3F7" stroke-width="1"/>
+                              <polygon points="0,120 0,96 113,90 226,72 340,80 453,54 566,40 680,22 680,120" fill="{{ accent }}" fill-opacity="0.06"/>
+                              <polyline points="0,96 113,90 226,72 340,80 453,54 566,40 680,22" fill="none" stroke="{{ accent }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </div>
+                          <div style="font-size:12px; color:#8A95A6; margin-top:14px; text-align:center;">Vista completa, controles y exportar en la pantalla de Reporte →</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- ===== CUENTAS (tab real; pantalla completa = Gestionar redes) ===== -->
+                <sc-if value="{{ isCuentas }}" hint-placeholder-val="{{ false }}">
+                  <div>
+                    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
+                      <div>
+                        <div style="font-size:16px; font-weight:600; color:#141921;">Cuentas conectadas</div>
+                        <div style="font-size:13px; color:#647084; margin-top:4px;">Conectar, reconectar o quitar cuentas de este cliente.</div>
+                      </div>
+                      <div style="display:flex; gap:9px;">
+                        <div onClick="{{ goGestionar }}" style="height:36px; display:flex; align-items:center; gap:7px; padding:0 14px; background:#fff; border:1px solid #E0E5EC; border-radius:9px; font-size:13px; color:#3D4757; cursor:pointer;">Generar link</div>
+                        <div onClick="{{ goGestionar }}" style="height:36px; display:flex; align-items:center; gap:8px; padding:0 15px; background:{{ accent }}; border-radius:9px; font-size:13px; font-weight:500; color:#fff; cursor:pointer;">＋ Conectar red</div>
+                      </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:18px; margin-top:18px;">
+                      <sc-for list="{{ cuentasGroups }}" as="g" hint-placeholder-count="3">
+                        <div>
+                          <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:9px;">{{ g.net }}</div>
+                          <div style="display:flex; flex-direction:column; gap:9px;">
+                            <sc-for list="{{ g.items }}" as="a" hint-placeholder-count="2">
+                              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:13px 16px; display:flex; align-items:center; gap:13px;">
+                                <span style="width:38px; height:38px; border-radius:9px; background:{{ a.netBg }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:{{ a.netColor }}; flex:none;">{{ a.code }}</span>
+                                <div style="flex:1; min-width:0;">
+                                  <div style="font-size:14px; font-weight:500; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.handle }}</div>
+                                  <div style="margin-top:5px;"><span style="{{ a.pillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ a.statusLabel }}</span></div>
+                                </div>
+                                <div onClick="{{ a.onAction }}" style="{{ a.actionStyle }}">{{ a.actionLabel }}</div>
+                              </div>
+                            </sc-for>
+                          </div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="font-size:12px; color:#9AA4B2; margin-top:14px;">Flujo completo (link QR, eliminar, estados de carga) en <span onClick="{{ goGestionar }}" style="color:{{ accent }}; cursor:pointer; font-weight:500;">Gestionar redes →</span></div>
+                  </div>
+                </sc-if>
+
+              </div>
+            </sc-if>
+
+            <!-- ---------- ACCOUNT DETAIL ---------- -->
+            <sc-if value="{{ showAccount }}" hint-placeholder-val="{{ false }}">
+              <div>
+                <div onClick="{{ acctBack }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Café Aurora · Dashboard</span></div>
+
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-top:14px;">
+                  <div style="display:flex; align-items:center; gap:13px;">
+                    <span style="width:46px; height:46px; border-radius:11px; background:{{ acctBg }}; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:{{ acctColor }};">{{ acctCode }}</span>
+                    <div>
+                      <div style="font-size:21px; font-weight:600; color:#141921;">{{ acctHandle }}</div>
+                      <div style="display:flex; align-items:center; gap:5px; margin-top:5px;"><span style="width:6px; height:6px; border-radius:50%; background:{{ acctStatusDot }};"></span><span style="font-size:12px; color:{{ acctStatusColor }};">{{ acctStatusLabel }} · {{ acctNetName }}</span></div>
+                    </div>
+                  </div>
+                  <div onClick="{{ acctAllPosts }}" style="height:38px; display:flex; align-items:center; gap:8px; padding:0 15px; background:{{ accent }}; border-radius:9px; font-size:13px; font-weight:500; color:#fff; cursor:pointer;">
+                    Todas las publicaciones de esta cuenta →
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-top:20px;">
+                  <sc-for list="{{ acctKpis }}" as="k" hint-placeholder-count="4">
+                    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:17px;">
+                      <div style="font-size:12px; color:#647084;">{{ k.label }}</div>
+                      <div style="display:flex; align-items:baseline; gap:9px; margin-top:9px;"><span style="font-size:26px; font-weight:600; color:#141921; letter-spacing:-.5px;">{{ k.value }}</span><span style="{{ k.trendStyle }}">{{ k.trend }}</span></div>
+                    </div>
+                  </sc-for>
+                </div>
+
+                <div style="font-size:15px; font-weight:600; color:#141921; margin:22px 0 12px;">Publicaciones recientes</div>
+                <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;">
+                  <sc-for list="{{ acctGrid }}" as="p" hint-placeholder-count="4">
+                    <div class="filg-row" onClick="{{ p.onOpen }}" style="border:1px solid #E9EDF2; border-radius:12px; overflow:hidden; cursor:pointer; background:#fff;">
+                      <div style="aspect-ratio:1/1; background:{{ p.thumbBg }}; display:flex; align-items:center; justify-content:center; position:relative;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg><span style="position:absolute; top:8px; left:8px; font-size:10px; font-weight:500; color:#353D4D; background:#fff; border:1px solid #E9EDF2; border-radius:5px; padding:2px 7px;">{{ p.type }}</span></div>
+                      <div style="padding:11px 12px;"><div style="font-size:12.5px; color:#232A36; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.title }}</div><div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;"><span style="font-size:11px; color:#8A95A6;">{{ p.date }}</span><span style="font-size:13px; font-weight:600; color:#141921;">{{ p.metric }}</span></div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil · tabs con scroll horizontal</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:54px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <span style="font-size:13px; color:#8A95A6;">‹ Clientes</span>
+          <div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:14px 16px 0;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <div style="width:40px; height:40px; border-radius:10px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div>
+              <div style="font-size:18px; font-weight:600; color:#141921;">Café Aurora</div>
+              <div style="display:flex; gap:5px; margin-top:4px;"><span style="font-size:10px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">IG ×2</span><span style="font-size:10px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">FB</span><span style="font-size:10px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">TikTok</span></div>
+            </div>
+          </div>
+          <div class="filg-tab-scroll" style="display:flex; gap:4px; margin-top:14px; overflow-x:auto;">
+            <div style="flex:none; padding:9px 13px; font-size:13px; font-weight:600; color:#141921; border-bottom:2px solid {{ accent }};">Dashboard</div>
+            <div style="flex:none; padding:9px 13px; font-size:13px; color:#647084;">Publicaciones</div>
+            <div style="flex:none; padding:9px 13px; font-size:13px; color:#647084;">Comparar</div>
+            <div style="flex:none; padding:9px 13px; font-size:13px; color:#647084;">Reporte</div>
+          </div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:14px 16px 22px;">
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:15px;">
+            <span style="font-size:12px; color:#647084;">Alcance · 30 días</span>
+            <div style="display:flex; align-items:baseline; gap:9px; margin-top:6px;"><span style="font-size:32px; font-weight:600; color:#141921; letter-spacing:-.8px; line-height:1;">128k</span><span style="color:{{ accent }}; font-size:14px; font-weight:500;">▲ 12%</span></div>
+            <svg width="100%" height="80" viewBox="0 0 320 80" preserveAspectRatio="none" style="margin-top:10px;">
+              <polygon points="0,80 0,58 64,52 128,40 192,46 256,26 320,16 320,80" fill="{{ accent }}" fill-opacity="0.06"/>
+              <polyline points="0,58 64,52 128,40 192,46 256,26 320,16" fill="none" stroke="{{ accent }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div style="font-size:14px; font-weight:600; color:#141921; margin:16px 0 9px;">Cuentas conectadas</div>
+          <div style="display:flex; flex-direction:column; gap:9px;">
+            <sc-for list="{{ accountRows }}" as="a" hint-placeholder-count="4">
+              <div style="display:flex; align-items:center; gap:11px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:11px;">
+                <span style="width:32px; height:32px; border-radius:8px; background:{{ a.netBg }}; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:600; color:{{ a.netColor }}; flex:none;">{{ a.code }}</span>
+                <div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:500; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ a.handle }}</div><div style="display:flex; align-items:center; gap:5px; margin-top:2px;"><span style="width:5px; height:5px; border-radius:50%; background:{{ a.statusDot }};"></span><span style="font-size:11px; color:{{ a.statusColor }};">{{ a.statusLabel }}</span></div></div>
+                <span style="text-align:right; flex:none;"><span style="display:block; font-size:14px; font-weight:600; color:#141921;">{{ a.alcance }}</span><span style="display:block; font-size:10px; color:#8A95A6;">alcance</span></span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1340,&quot;height&quot;:960},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { tab:'dashboard', view:'workspace', acct:null,
+    range: (() => { try { const v = parseInt(localStorage.getItem('fg-range'), 10); return [7,30,90].indexOf(v) >= 0 ? v : 30; } catch(e) { return 30; } })(),
+    pubAccount:null, pubSort:'date', repMode:'resumen', infoKey:null, menuOpen:false, fadeTick:0 };
+
+  setRange(v) {
+    try { localStorage.setItem('fg-range', String(v)); } catch(e) {}
+    this.setState(s => ({ range:v, fadeTick:s.fadeTick + 1 }));
+  }
+
+  deltaChip(str) {
+    const up = str.indexOf('▲') === 0;
+    return {
+      display:'inline-flex', alignItems:'center', fontSize:'12px', fontWeight:600,
+      padding:'3px 8px', borderRadius:'7px', lineHeight:'1.2', fontVariantNumeric:'tabular-nums',
+      background: up ? '#EAF2FB' : '#FBEFEC',
+      color: up ? (this.props.accent || '#1E66BC') : '#B2552F',
+    };
+  }
+
+  accounts = [
+    { id:'ig1', net:'ig', code:'IG', netName:'Instagram', handle:'@cafeaurora',  color:'#1E66BC', status:'ok',    alcance:72400, interac:5100, seg:9800, eng:5.8 },
+    { id:'ig2', net:'ig', code:'IG', netName:'Instagram', handle:'@aurora.deli', color:'#5B8FD6', status:'ok',    alcance:28100, interac:1900, seg:3200, eng:6.1 },
+    { id:'fb',  net:'fb', code:'FB', netName:'Facebook',  handle:'Café Aurora',  color:'#B4BDCA', status:'ok',    alcance:31000, interac:2000, seg:5400, eng:3.9 },
+    { id:'tt',  net:'tt', code:'TT', netName:'TikTok',    handle:'@cafeaurora',  color:'#8A95A6', status:'error', alcance:null,  interac:2300, seg:3400, eng:6.6 },
+  ];
+
+  netMeta = {
+    ig: { name:'Instagram', bg:'#FBEFE9', color:'#C56A3E' },
+    fb: { name:'Facebook',  bg:'#E9F0FB', color:'#2C5FA8' },
+    tt: { name:'TikTok',    bg:'#EDEFF2', color:'#4A5568' },
+  };
+
+  posts = [
+    { id:1, acc:'ig1', type:'Reel',     title:'Lanzamiento otoño 2026',       date:'18 jun', d:18, alcance:22400, interac:1800, kind:'post' },
+    { id:2, acc:'tt',  type:'Video',    title:'Detrás de escena: el café',    date:'14 jun', d:14, alcance:19100, interac:1500, kind:'post' },
+    { id:3, acc:'ig1', type:'Story',    title:'Encuesta de sabores',          date:'13 jun', d:13, alcance:8700,  interac:null, kind:'story' },
+    { id:4, acc:'fb',  type:'Imagen',   title:'Promo 2x1 fin de semana',      date:'9 jun',  d:9,  alcance:14700, interac:980,  kind:'post' },
+    { id:5, acc:'ig1', type:'Carrusel', title:'Receta: cold brew naranja',    date:'5 jun',  d:5,  alcance:12200, interac:760,  kind:'post' },
+    { id:6, acc:'ig1', type:'Feed',     title:'Tips para tu espresso',        date:'28 may', d:28, alcance:9900,  interac:540,  kind:'post' },
+    { id:7, acc:'ig2', type:'Carrusel', title:'Granos de origen',             date:'12 may', d:41, alcance:10400, interac:610,  kind:'post' },
+    { id:8, acc:'ig2', type:'Reel',     title:'Tour por el local',            date:'8 may',  d:46, alcance:7600,  interac:430,  kind:'post' },
+    { id:9, acc:'fb',  type:'Imagen',   title:'Nuevo horario',                date:'2 may',  d:52, alcance:6100,  interac:340,  kind:'post' },
+    { id:10,acc:'tt',  type:'Video',    title:'Detrás del mostrador (2)',     date:'24 abr', d:60, alcance:15300, interac:1200, kind:'post' },
+  ];
+
+  typeIcon = { Reel:'🎬', Feed:'🖼️', Story:'⭕', Video:'▶️', Imagen:'🖼️', Carrusel:'🎠' };
+
+  ranges = {
+    /* ys = VALORES (buildChart normaliza): ascendentes para coincidir con ▲ 12% */
+    7:  { label:'Últimos 7 días',  ys:[46,62,96,88,114,108,120] },
+    30: { label:'Últimos 30 días', ys:[28,38,70,60,92,82,102,108,120] },
+    90: { label:'Últimos 90 días', ys:[28,52,64,102,92,130,124,140] },
+  };
+
+  fmt(n) {
+    if (n == null) return '—';
+    if (n >= 1000) { const v = n/1000; return (v >= 10 ? v.toFixed(0) : v.toFixed(1)).replace('.0','') + 'k'; }
+    return String(n);
+  }
+
+  trend(str, accent, size) {
+    const up = str.indexOf('▲') === 0;
+    return { color: up ? accent : '#8A95A6', fontSize:(size||13)+'px', fontWeight:500 };
+  }
+
+  seg(active) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+                  : { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  chipSeg(active, accent) {
+    const base = { display:'flex', alignItems:'center', height:'28px', padding:'0 11px', fontSize:'12px', borderRadius:'7px', cursor:'pointer', border:'1px solid', whiteSpace:'nowrap' };
+    return active ? { ...base, borderColor:accent, color:accent, background:'#fff', fontWeight:500 }
+                  : { ...base, borderColor:'#E0E5EC', color:'#647084', background:'#fff' };
+  }
+
+  buildChart(ys, w, h) {
+    const W = w || 1000, max = Math.max(...ys), min = Math.min(...ys);
+    const span = (max - min) || 1, H = h || 170, pad = 18;
+    const n = ys.length;
+    const pts = ys.map((y,i) => Math.round(i*(W/(n-1))) + ',' + Math.round(pad + (1-(y-min)/span)*(H-2*pad))).join(' ');
+    return { points: pts, area: '0,'+H+' ' + pts + ' '+W+','+H };
+  }
+
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const accById = {}; this.accounts.forEach(a => accById[a.id] = a);
+
+    // ---- header chips ----
+    /* Chips del header: SOLO red + handle. El estado vive en el botón Reconectar
+       (señal global) y en la pestaña Cuentas (detalle) — no se repite acá. */
+    const headerChips = this.accounts.map(a => ({
+      label: (a.code === 'TT' ? 'TikTok' : a.code) + ' ' + a.handle,
+      bg: '#fff', border: '#E9EDF2', textColor: '#647084',
+    }));
+    const hasError = this.accounts.some(a => a.status === 'error');
+
+    // ---- tabs ----
+    const tabDefs = [['dashboard','Dashboard'],['publicaciones','Publicaciones'],['comparar','Comparar'],['audiencia','Audiencia'],['reporte','Reporte'],['cuentas','Cuentas']];
+    const activeTab = st.view === 'workspace' ? st.tab : st.tab; // detail keeps tab highlight
+    const tabBase = { flex:'none', padding:'11px 16px', fontSize:'14px', cursor:'pointer', whiteSpace:'nowrap', transition:'all .15s', borderBottom:'2px solid transparent', marginBottom:'-1px' };
+    const tabs = tabDefs.map(([key,label]) => ({
+      label,
+      onClick: () => key === 'audiencia' ? this.go('Audiencia.dc.html') : this.setState({ tab:key, view:'workspace', pubAccount:null }),
+      style: (key === st.tab)
+        ? { ...tabBase, color:accent, fontWeight:600, borderBottomColor:accent }
+        : { ...tabBase, color:'#647084', fontWeight:400 },
+    }));
+
+    // ---- dashboard ----
+    const r = this.ranges[st.range];
+    const chart = this.buildChart(r.ys, 1000, 170);
+    const rangeList = [7,30,90].map(v => ({ label:v+' días', onClick:() => this.setRange(v), style:this.seg(v===st.range) }));
+    const mkEnterK = (key) => () => this.setState({ infoKey:key });
+    const mkLeaveK = (key) => () => this.setState(s => s.infoKey === key ? { infoKey:null } : null);
+    const mkToggleK = (key) => () => this.setState(s => ({ infoKey: s.infoKey === key ? null : key }));
+    const coreKpis = [
+      { key:'interac', label:'Interacciones', value:'9.4k', trend:'▲ 8%', info:'Me gusta, comentarios y otras reacciones, sumados.' },
+      { key:'eng', label:'Engagement',    value:'5.2%', trend:'▼ 0.3 pts', info:'Qué porcentaje de quienes vieron el contenido interactuó.' },
+      { key:'seg', label:'Seguidores',    value:'18.6k', trend:'▲ 320', info:'Total de seguidores y cuánto creció en el período.' },
+    ].map(k => ({ ...k, trendStyle:this.deltaChip(k.trend),
+      showInfo: st.infoKey === k.key, onEnter: mkEnterK(k.key), onLeave: mkLeaveK(k.key), onToggle: mkToggleK(k.key) }));
+
+    const accountRows = this.accounts.map(a => {
+      const m = this.netMeta[a.net]; const err = a.status === 'error';
+      return {
+        code: a.code, handle: a.handle, netBg: m.bg, netColor: m.color,
+        statusDot: err ? '#C2603F' : '#6BBE8E',
+        statusColor: err ? '#B2552F' : '#8A95A6',
+        statusLabel: err ? 'Error de token · reconectar' : 'Conectada',
+        alcance: this.fmt(a.alcance), interac: this.fmt(a.interac), seg: this.fmt(a.seg),
+        onOpen: () => this.setState({ view:'account', acct:a.id }),
+      };
+    });
+
+    // ---- publicaciones ----
+    const pubGroups = ['ig','fb','tt'].map(net => ({
+      net: this.netMeta[net].name,
+      items: this.accounts.filter(a => a.net === net).map(a => {
+        const m = this.netMeta[a.net];
+        return { code:a.code, handle:a.handle, netBg:m.bg, netColor:m.color,
+          postCount: this.posts.filter(p => p.acc === a.id).length,
+          onPick: () => this.setState({ pubAccount:a.id }) };
+      }),
+    }));
+    const pubPickMode = st.tab === 'publicaciones' && !st.pubAccount;
+    const pubGridMode = st.tab === 'publicaciones' && !!st.pubAccount;
+    const pubAcc = st.pubAccount ? accById[st.pubAccount] : null;
+    const pubMeta = pubAcc ? this.netMeta[pubAcc.net] : { bg:'#EEF1F5', color:'#647084' };
+    let pubList = pubAcc ? this.posts.filter(p => p.acc === pubAcc.id) : [];
+    const pubSortKey = st.pubSort;
+    pubList = pubList.slice().sort((a,b) => {
+      if (pubSortKey === 'date') return a.d - b.d;
+      return (b[pubSortKey]||0) - (a[pubSortKey]||0);
+    });
+    const thumbBg = (net) => net==='ig' ? 'linear-gradient(135deg,#FCEFE6,#F6E1EC)' : net==='fb' ? 'linear-gradient(135deg,#E7EEFB,#DCE6F7)' : 'linear-gradient(135deg,#E6F2F1,#E0EDEC)';
+    const mkGridItem = (p) => ({
+      title:p.title, type:p.type, date:p.date,
+      thumbBg: thumbBg(accById[p.acc].net),
+      metric: pubSortKey === 'interac' ? this.fmt(p.interac) : this.fmt(p.alcance),
+      onOpen: () => this.go(p.kind === 'story' ? 'Detalle de story.dc.html' : 'Detalle de publicación.dc.html'),
+    });
+    const pubGrid = pubList.map(mkGridItem);
+    const pubSortList = [['date','Recientes'],['alcance','Alcance'],['interac','Interac.']].map(([k,l]) => ({
+      label:l, onClick:() => this.setState({ pubSort:k }), style:this.chipSeg(k===pubSortKey, accent),
+    }));
+
+    // ---- comparar ----
+    const compareRows = this.accounts.map(a => ({
+      code:a.code, handle:a.handle, color:a.color,
+      alcance: this.fmt(a.alcance), alcanceNc: a.alcance == null,
+      alcanceStyle: { fontSize:'14px', fontVariantNumeric:'tabular-nums', color: a.alcance==null ? '#AAB2BE' : '#232A36' },
+      seg: this.fmt(a.seg), interac: this.fmt(a.interac), eng: a.eng + '%',
+    }));
+
+    // ---- reporte ----
+    const repModeList = [['resumen','Resumen'],['extendido','Extendido']].map(([k,l]) => ({
+      label:l, onClick:() => this.setState({ repMode:k }), style:this.seg(k===st.repMode),
+    }));
+    const repKpis = [['Alcance','128k','▲ 12%'],['Interac.','9.4k','▲ 8%'],['Engagement','5.2%','▼ 0.3 pts'],['Seguidores','18.6k','▲ 320']]
+      .map(k => ({ label:k[0], value:k[1], trend:k[2], trendStyle:{ ...this.trend(k[2],accent,12), marginTop:'3px' } }));
+
+    // ---- account detail ----
+    const acct = st.acct ? accById[st.acct] : this.accounts[0];
+    const acctMeta = this.netMeta[acct.net]; const acctErr = acct.status === 'error';
+    const acctKpis = [
+      ['Alcance', this.fmt(acct.alcance), acct.alcance==null?'—':'▲ 14%'],
+      ['Interacciones', this.fmt(acct.interac), '▲ 10%'],
+      ['Engagement', acct.eng+'%', '▲ 0.2 pts'],
+      ['Seguidores', this.fmt(acct.seg), '▲ 180'],
+    ].map(k => ({ label:k[0], value:k[1], trend:k[2], trendStyle: k[2] === '—' ? { color:'#8A95A6', fontSize:'13px' } : this.deltaChip(k[2]) }));
+    const acctGrid = this.posts.filter(p => p.acc === acct.id).slice(0,4).map(mkGridItem);
+
+    // ---- cuentas (tab real; pantalla completa en Gestionar redes.dc.html) ----
+    const cuentasGroups = ['ig','fb','tt'].map(net => ({
+      net: this.netMeta[net].name,
+      items: this.accounts.filter(a => a.net === net).map(a => {
+        const m = this.netMeta[a.net]; const err = a.status === 'error';
+        return {
+          code:a.code, handle:a.handle, netBg:m.bg, netColor:m.color,
+          pillStyle: { display:'inline-flex', alignItems:'center', gap:'6px', borderRadius:'7px', padding:'3px 9px', fontSize:'11.5px', fontWeight:500,
+            background: err ? '#FBEFEC' : '#E7F4EC', color: err ? '#B2552F' : '#1F7A50' },
+          statusLabel: err ? 'Error de token' : 'Conectada',
+          actionLabel: err ? 'Reconectar' : 'Desconectar',
+          actionStyle: err
+            ? { height:'32px', display:'flex', alignItems:'center', padding:'0 13px', fontSize:'12.5px', fontWeight:600, color:'#fff', background:accent, borderRadius:'8px', cursor:'pointer', flex:'none' }
+            : { height:'32px', display:'flex', alignItems:'center', padding:'0 13px', fontSize:'12.5px', color:'#647084', border:'1px solid #E0E5EC', background:'#fff', borderRadius:'8px', cursor:'pointer', flex:'none' },
+          onAction: () => err ? this.go('Reconectar cuentas.dc.html') : null,
+        };
+      }),
+    }));
+
+    return {
+      accent, headerChips, hasError, tabs,
+      goClients: () => this.go('../2 Clientes/Lista de clientes.dc.html'),
+      goReconnect: () => this.go('Reconectar cuentas.dc.html'),
+      showWorkspace: st.view === 'workspace',
+      showAccount: st.view === 'account',
+      menuOpen: st.menuOpen,
+      onAvatarToggle: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      fadeAnim: (st.fadeTick % 2 === 0) ? 'fgFadeA' : 'fgFadeB',
+      heroTrendStyle: this.deltaChip('▲ 12%'),
+      heroInfoOpen: st.infoKey === 'hero',
+      heroInfoEnter: mkEnterK('hero'), heroInfoLeave: mkLeaveK('hero'), heroInfoToggle: mkToggleK('hero'),
+      isCuentas: st.tab === 'cuentas',
+      cuentasGroups,
+      goGestionar: () => this.go('Gestionar redes.dc.html'),
+      isDashboard: st.tab === 'dashboard',
+      isPublicaciones: st.tab === 'publicaciones',
+      isComparar: st.tab === 'comparar',
+      isReporte: st.tab === 'reporte',
+      // dashboard
+      rangeList, rangeLabel: r.label, heroValue:'128k', heroTrend:'▲ 12%',
+      chartPoints: chart.points, chartArea: chart.area,
+      coreKpis, accountRows, accountCount: this.accounts.length,
+      // publicaciones
+      pubPickMode, pubGridMode, pubGroups, pubGrid,
+      pubBack: () => this.setState({ pubAccount:null }),
+      pubAccHandle: pubAcc ? pubAcc.handle : '', pubAccCode: pubAcc ? pubAcc.code : '',
+      pubAccBg: pubMeta.bg, pubAccColor: pubMeta.color, pubGridCount: pubList.length,
+      pubSortList,
+      // comparar
+      compareRows,
+      openComparador: () => this.go('Comparar cuentas.dc.html'),
+      // reporte
+      repModeList, repModeLabel: st.repMode === 'resumen' ? 'Resumen' : 'Extendido', repKpis,
+      openReporte: () => this.go('Reporte.dc.html'),
+      // account detail
+      acctBack: () => this.setState({ view:'workspace', tab:'dashboard' }),
+      acctCode: acct.code, acctHandle: acct.handle, acctBg: acctMeta.bg, acctColor: acctMeta.color,
+      acctNetName: acct.netName,
+      acctStatusDot: acctErr ? '#C2603F' : '#6BBE8E',
+      acctStatusColor: acctErr ? '#B2552F' : '#8A95A6',
+      acctStatusLabel: acctErr ? 'Error de token' : 'Conectada',
+      acctKpis, acctGrid,
+      acctAllPosts: () => this.go('Todas las publicaciones.dc.html'),
+    };
+  }
+}
+</script>
+</body>
+</html>

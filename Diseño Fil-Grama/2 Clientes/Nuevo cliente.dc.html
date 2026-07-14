@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    input::placeholder { color: #8A95A6; }
+    input:focus { outline: none; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:900px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Agregar cliente — wizard interactivo</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Navegable: avanzá con «Continuar», elegí redes en el paso 1, y abrí el sub-paso de selección de Meta desde «Agregar otra cuenta». El <span style="color:#353D4D; font-weight:500;">ítem de cuenta</span> (handle + estado + Reintentar) es el componente reutilizable que también va en Administración.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:760px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · paso {{ stepNum }} de 3</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          </div>
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:18px 30px 28px;">
+          <div style="font-size:13px; color:#8A95A6; cursor:pointer;">‹ Clientes</div>
+
+          <!-- progress -->
+          <div style="display:flex; align-items:center; gap:8px; margin-top:16px;">
+            <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="{{ s.circleStyle }}">{{ s.num }}</span>
+                <span style="{{ s.textStyle }}">{{ s.label }}</span>
+              </div>
+              <span style="{{ s.barStyle }}"></span>
+            </sc-for>
+          </div>
+
+          <!-- ===== STEP 1 ===== -->
+          <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:24px;">
+              <div style="font-size:20px; font-weight:600; color:#141921;">Nuevo cliente</div>
+              <div style="font-size:13px; color:#647084; margin-top:4px; margin-bottom:20px;">Datos básicos y qué redes vas a conectar.</div>
+
+              <div style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:flex; gap:14px; align-items:flex-start;">
+                  <!-- logo del cliente -->
+                  <div style="flex:none;">
+                    <div style="font-size:13px; color:#353D4D; margin-bottom:6px;">Logo <span style="color:#A7B0BD;">(opcional)</span></div>
+                    <label style="position:relative; display:flex; width:84px; height:84px; border-radius:14px; overflow:hidden; cursor:pointer; align-items:center; justify-content:center; border:{{ logoBorder }}; background:{{ logoBg }};">
+                      <input type="file" accept="image/png,image/jpeg,image/svg+xml" onChange="{{ onLogoPick }}" style="position:absolute; inset:0; opacity:0; cursor:pointer;"/>
+                      <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ false }}">
+                        <div role="img" aria-label="Logo del cliente" style="{{ logoImgStyle }}"></div>
+                      </sc-if>
+                      <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}">
+                        <span style="display:flex; flex-direction:column; align-items:center; gap:5px; color:#8A95A6;">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                          <span style="font-size:10px; font-weight:500;">Subir</span>
+                        </span>
+                      </sc-if>
+                    </label>
+                    <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ onLogoClear }}" style="font-size:11px; color:#B2552F; cursor:pointer; text-align:center; margin-top:5px;">Quitar</div>
+                    </sc-if>
+                  </div>
+                  <!-- nombre + spec del logo -->
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-size:13px; color:#353D4D; margin-bottom:6px;">Nombre del cliente</div>
+                    <input value="{{ clientName }}" onInput="{{ onName }}" placeholder="Ej. Café Aurora" style="width:100%; height:42px; border:1px solid #D4DAE3; border-radius:9px; padding:0 13px; font-family:inherit; font-size:14px; color:#141921; background:#fff;"/>
+                    <div style="font-size:12px; color:#8A95A6; line-height:1.55; margin-top:8px;">Logo: <b style="font-weight:600; color:#647084;">cuadrado, mínimo 256 × 256 px</b> (ideal 512 × 512) · PNG, JPG o SVG · hasta 1 MB. Se muestra a 36 × 36 px en las tarjetas y 44 × 44 px en el workspace; sin logo, van las iniciales.</div>
+                    <sc-if value="{{ logoWarn }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex; align-items:center; gap:6px; margin-top:7px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#C2603F" stroke-width="1.8"/><path d="M12 7.5v5.5" stroke="#C2603F" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1" fill="#C2603F"/></svg>
+                        <span style="font-size:12px; color:#C2603F;">{{ logoWarn }}</span>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+                  <div>
+                    <div style="font-size:13px; color:#353D4D; margin-bottom:6px;">Plan <span style="color:#A7B0BD;">(etiqueta libre)</span></div>
+                    <input placeholder="Ej. Mensual" style="width:100%; height:42px; border:1px solid #D4DAE3; border-radius:9px; padding:0 13px; font-family:inherit; font-size:14px; color:#141921; background:#fff;"/>
+                  </div>
+                  <div>
+                    <div style="font-size:13px; color:#353D4D; margin-bottom:6px;">Zona horaria</div>
+                    <div style="position:relative;">
+                      <div onClick="{{ tzToggle }}" style="height:42px; border:1px solid #D4DAE3; border-radius:9px; display:flex; align-items:center; justify-content:space-between; padding:0 13px; font-size:14px; color:#353D4D; background:#fff; cursor:pointer; user-select:none;">{{ tzLabel }} <span style="color:#8A95A6;">▾</span></div>
+                      <sc-if value="{{ tzOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute; top:48px; left:0; right:0; border:1px solid #E5E9EF; border-radius:12px; background:#fff; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:30;">
+                          <sc-for list="{{ tzOptions }}" as="t" hint-placeholder-count="3">
+                            <div onClick="{{ t.onClick }}" style="{{ t.rowStyle }}">
+                              <span style="font-size:13px; color:#232A36;">{{ t.label }}</span>
+                              <sc-if value="{{ t.selected }}" hint-placeholder-val="{{ false }}"><span style="color:{{ accent }};">✓</span></sc-if>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="font-size:13px; color:#353D4D; margin-bottom:6px;">Notas <span style="color:#A7B0BD;">(opcional)</span></div>
+                  <textarea rows="3" placeholder="Contexto interno del cliente." style="width:100%; border:1px solid #D4DAE3; border-radius:9px; padding:11px 13px; font-family:inherit; font-size:14px; color:#141921; background:#fff; resize:vertical; outline:none;"></textarea>
+                </div>
+
+                <div>
+                  <div style="font-size:13px; color:#353D4D; margin-bottom:3px;">Redes a conectar <span style="color:#A7B0BD;">(al menos una)</span></div>
+                  <div style="font-size:12px; color:#8A95A6; margin-bottom:9px;">Después vas a poder sumar varias cuentas de cada red.</div>
+                  <div style="display:flex; gap:10px;">
+                    <sc-for list="{{ netOptions }}" as="n" hint-placeholder-count="3">
+                      <div onClick="{{ n.onClick }}" style="{{ n.style }}">
+                        <span style="{{ n.boxStyle }}">{{ n.check }}</span>
+                        <span style="font-size:13px; color:#232A36;">{{ n.label }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== STEP 2 ===== -->
+          <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:24px;">
+              <!-- meta selection sub-step -->
+              <sc-if value="{{ metaSelect }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="font-size:13px; color:#8A95A6; cursor:pointer; margin-bottom:12px;" onClick="{{ closeMeta }}">‹ Volver a conectar cuentas</div>
+                  <div style="font-size:20px; font-weight:600; color:#141921;">Elegí qué cuentas dar de alta</div>
+                  <div style="font-size:13px; color:#647084; margin-top:4px; line-height:1.5;">Tu autorización en Meta nos dio acceso a varias páginas e Instagram. Marcá las que querés seguir en Fil-Grama.</div>
+                  <div style="display:flex; flex-direction:column; gap:9px; margin-top:18px;">
+                    <sc-for list="{{ metaAccounts }}" as="a" hint-placeholder-count="4">
+                      <div style="{{ a.rowStyle }}">
+                        <span style="{{ a.boxStyle }}">{{ a.check }}</span>
+                        <div style="width:34px; height:34px; border-radius:8px; background:#EEF1F5; flex:none;"></div>
+                        <div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36;">{{ a.handle }}</div><div style="font-size:11px; color:#8A95A6;">{{ a.net }}</div></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:12px; color:#8A95A6; margin-top:13px;">{{ metaCount }} de 4 seleccionadas</div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-top:20px; padding-top:18px; border-top:1px solid #E9EDF2;">
+                    <span style="font-size:13px; color:#647084; cursor:pointer;" onClick="{{ closeMeta }}">Cancelar</span>
+                    <span onClick="{{ closeMeta }}" style="font-size:14px; font-weight:500; color:#fff; background:{{ accent }}; border-radius:9px; padding:10px 20px; cursor:pointer;">Dar de alta 2 cuentas</span>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- normal step 2 -->
+              <sc-if value="{{ notMetaSelect }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <div style="font-size:20px; font-weight:600; color:#141921;">Conectar las cuentas</div>
+                  <div style="font-size:13px; color:#647084; margin-top:4px; line-height:1.5;">Te llevamos a la pantalla oficial de cada red. <span style="color:#353D4D;">La contraseña se escribe ahí, nunca en Fil-Grama.</span> Podés sumar varias cuentas por red.</div>
+
+                  <!-- IG group -->
+                  <div style="margin-top:20px;">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:9px;"><span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">Instagram</span><span style="font-size:12px; color:#8A95A6;">2 cuentas</span></div>
+                    <div style="display:flex; flex-direction:column; gap:9px;">
+                      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:10px; padding:12px 14px; display:flex; align-items:center; gap:12px;">
+                        <div style="width:34px; height:34px; border-radius:8px; background:#EEF1F5; flex:none;"></div>
+                        <div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36;">@cafeaurora</div><div style="font-size:11px; color:#8A95A6; margin-top:1px;">Cuenta principal</div></div>
+                        <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:500; color:#1F7A50; background:#E7F4EC; border-radius:7px; padding:3px 9px;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Conectada</span>
+                      </div>
+                      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:10px; padding:12px 14px; display:flex; align-items:center; gap:12px;">
+                        <div style="width:34px; height:34px; border-radius:8px; background:#EEF1F5; flex:none;"></div>
+                        <div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36;">@aurora.deli</div><div style="font-size:11px; color:#8A95A6; margin-top:1px;">Sucursal centro</div></div>
+                        <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:500; color:#1F7A50; background:#E7F4EC; border-radius:7px; padding:3px 9px;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Conectada</span>
+                      </div>
+                      <div onClick="{{ openMeta }}" style="background:#fff; border:1px dashed #C9D1DB; border-radius:10px; padding:11px 14px; display:flex; align-items:center; gap:8px; color:#647084; font-size:13px; cursor:pointer;"><span style="font-size:15px;">+</span> Agregar otra cuenta de Instagram</div>
+                    </div>
+                  </div>
+
+                  <!-- FB group (error) -->
+                  <div style="margin-top:18px;">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:9px;"><span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">Facebook</span><span style="font-size:12px; color:#8A95A6;">1 cuenta</span></div>
+                    <div style="display:flex; flex-direction:column; gap:9px;">
+                      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:10px; padding:12px 14px; display:flex; align-items:center; gap:12px;">
+                        <div style="width:34px; height:34px; border-radius:8px; background:#EEF1F5; flex:none;"></div>
+                        <div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36;">Café Aurora</div><div style="font-size:11px; color:#647084; margin-top:1px;">No pudimos completar la autorización</div></div>
+                        <span style="display:flex; align-items:center; gap:9px;">
+                          <span style="display:flex; align-items:center; gap:6px; font-size:12px; color:#647084;"><span style="width:7px; height:7px; border-radius:50%; border:1.5px solid #8A95A6;"></span>Error</span>
+                          <span style="font-size:12px; font-weight:500; color:#353D4D; border:1px solid #D4DAE3; border-radius:7px; padding:6px 11px; cursor:pointer;">↻ Reintentar</span>
+                        </span>
+                      </div>
+                      <div onClick="{{ openMeta }}" style="background:#fff; border:1px dashed #C9D1DB; border-radius:10px; padding:11px 14px; display:flex; align-items:center; gap:8px; color:#647084; font-size:13px; cursor:pointer;"><span style="font-size:15px;">+</span> Agregar otra cuenta de Facebook</div>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <!-- ===== STEP 3 ===== -->
+          <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:24px;">
+              <div style="font-size:20px; font-weight:600; color:#141921;">Todo listo</div>
+              <div style="font-size:13px; color:#647084; margin-top:4px; margin-bottom:18px;">Revisá el cliente y sus cuentas antes de finalizar.</div>
+
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; overflow:hidden;">
+                <div style="display:flex; align-items:center; gap:14px; padding:18px 20px; border-bottom:1px solid #F0F3F7;">
+                  <div style="width:46px; height:46px; border-radius:11px; background:#EEF1F5; flex:none;"></div>
+                  <div><div style="font-size:17px; font-weight:600; color:#141921;">{{ confirmName }}</div><div style="font-size:13px; color:#647084; margin-top:3px;">Plan mensual · GMT−03 Buenos Aires · 4 cuentas</div></div>
+                </div>
+                <div style="padding:14px 20px 8px;">
+                  <div style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:8px;">Instagram · 2</div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #F4F6F9;"><span style="font-size:13px; color:#232A36;">@cafeaurora</span><span style="display:flex; align-items:center; gap:6px; font-size:13px; color:#353D4D;"><span style="width:8px; height:8px; border-radius:50%; background:{{ accent }};"></span>Conectada</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0;"><span style="font-size:13px; color:#232A36;">@aurora.deli</span><span style="display:flex; align-items:center; gap:6px; font-size:13px; color:#353D4D;"><span style="width:8px; height:8px; border-radius:50%; background:{{ accent }};"></span>Conectada</span></div>
+                </div>
+                <div style="padding:10px 20px 8px; border-top:1px solid #F4F6F9;">
+                  <div style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:8px;">Facebook · 1</div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0;"><span style="font-size:13px; color:#232A36;">Café Aurora — Página</span><span style="display:flex; align-items:center; gap:6px; font-size:13px; color:#353D4D;"><span style="width:8px; height:8px; border-radius:50%; background:{{ accent }};"></span>Conectada</span></div>
+                </div>
+                <div style="padding:10px 20px 14px; border-top:1px solid #F4F6F9;">
+                  <div style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:8px;">TikTok · 1</div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0;"><span style="font-size:13px; color:#232A36;">@cafeaurora</span><span style="display:flex; align-items:center; gap:6px; font-size:13px; color:#353D4D;"><span style="width:8px; height:8px; border-radius:50%; background:{{ accent }};"></span>Conectada</span></div>
+                </div>
+              </div>
+              <div style="font-size:12px; color:#8A95A6; margin-top:14px; line-height:1.5;">La primera captura corre en la próxima ejecución del job diario (mañana 06:00).</div>
+            </div>
+          </sc-if>
+
+          <!-- nav footer -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:24px; padding-top:18px; border-top:1px solid #E9EDF2;">
+            <span onClick="{{ onBack }}" style="{{ backStyle }}">{{ backLabel }}</span>
+            <span onClick="{{ onNext }}" style="font-size:14px; font-weight:500; color:#fff; background:{{ accent }}; border-radius:9px; padding:10px 20px; cursor:pointer;">{{ nextLabel }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil · paso 2</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:54px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <span style="font-size:13px; color:#8A95A6;">‹ Clientes</span>
+          <div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+        <div style="background:#F5F7FA; padding:16px 16px 22px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+            <span style="font-size:12px; color:#647084;">Paso 2 de 3</span>
+            <div style="flex:1; display:flex; gap:4px;"><div style="flex:1; height:4px; background:{{ accent }}; border-radius:2px;"></div><div style="flex:1; height:4px; background:{{ accent }}; border-radius:2px;"></div><div style="flex:1; height:4px; background:#E3E6EA; border-radius:2px;"></div></div>
+          </div>
+          <div style="font-size:18px; font-weight:600; color:#141921;">Conectar las cuentas</div>
+          <div style="font-size:12px; color:#647084; margin-top:4px; line-height:1.5;">Podés sumar varias cuentas por red. La contraseña se escribe en la red, nunca acá.</div>
+
+          <div style="margin-top:16px;">
+            <div style="display:flex; align-items:center; gap:7px; margin-bottom:8px;"><span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:2px 7px;">Instagram</span><span style="font-size:11px; color:#8A95A6;">2 cuentas</span></div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:10px; padding:11px;"><div style="display:flex; align-items:center; gap:10px;"><div style="width:32px; height:32px; border-radius:8px; background:#EEF1F5; flex:none;"></div><div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36;">@cafeaurora</div><div style="font-size:11px; color:#8A95A6;">Principal</div></div><span style="display:flex; align-items:center; gap:5px; font-size:11px; color:#353D4D;"><span style="width:7px; height:7px; border-radius:50%; background:{{ accent }};"></span>✓</span></div></div>
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:10px; padding:11px;"><div style="display:flex; align-items:center; gap:10px;"><div style="width:32px; height:32px; border-radius:8px; background:#EEF1F5; flex:none;"></div><div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36;">@aurora.deli</div><div style="font-size:11px; color:#8A95A6;">Sucursal centro</div></div><span style="display:flex; align-items:center; gap:5px; font-size:11px; color:#353D4D;"><span style="width:7px; height:7px; border-radius:50%; background:{{ accent }};"></span>✓</span></div></div>
+              <div style="background:#fff; border:1px dashed #C9D1DB; border-radius:10px; padding:10px 12px; display:flex; align-items:center; gap:7px; color:#647084; font-size:12px;"><span style="font-size:14px;">+</span> Agregar otra cuenta de Instagram</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;">
+            <div style="display:flex; align-items:center; gap:7px; margin-bottom:8px;"><span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:2px 7px;">Facebook</span><span style="font-size:11px; color:#8A95A6;">1 cuenta</span></div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:10px; padding:11px;"><div style="display:flex; align-items:center; gap:10px;"><div style="width:32px; height:32px; border-radius:8px; background:#EEF1F5; flex:none;"></div><div style="flex:1; min-width:0;"><div style="font-size:13px; color:#232A36;">Café Aurora</div><div style="font-size:11px; color:#647084;">Error de token</div></div><span style="font-size:11px; font-weight:500; color:#353D4D; border:1px solid #D4DAE3; border-radius:7px; padding:5px 10px;">↻</span></div></div>
+          </div>
+
+          <div style="height:44px; background:{{ accent }}; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:500; color:#fff; margin-top:20px;">Continuar →</div>
+          <div style="text-align:center; margin-top:12px;"><span style="font-size:13px; color:#647084;">← Volver</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:840,&quot;height&quot;:720},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { step: 1, networks: { ig: true, fb: true, tiktok: false }, metaSelect: false, name: '', tz: 'asu', tzOpen: false, logoUrl: null, logoWarn: '' };
+
+  onLogoPick(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (file.size > 1024 * 1024) {
+      this.setState({ logoWarn: 'El archivo pesa más de 1 MB. Probá con una versión más liviana.' });
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      let warn = '';
+      if (img.width !== img.height) warn = 'La imagen no es cuadrada (' + img.width + ' × ' + img.height + ' px): se va a recortar al centro.';
+      else if (img.width < 256) warn = 'La imagen es de ' + img.width + ' × ' + img.height + ' px — menor al mínimo de 256 × 256. Puede verse pixelada.';
+      this.setState({ logoUrl: url, logoWarn: warn });
+    };
+    img.onerror = () => this.setState({ logoUrl: url, logoWarn: '' });
+    img.src = url;
+  }
+
+  timezones = {
+    asu: 'GMT−03 · Asunción',
+    bue: 'GMT−03 · Buenos Aires',
+    scl: 'GMT−04 · Santiago',
+  };
+
+  circle(kind, accent) {
+    const base = { width:'22px', height:'22px', borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'12px', flex:'none' };
+    if (kind === 'active') return { ...base, background:accent, color:'#fff', fontWeight:500 };
+    if (kind === 'done') return { ...base, background:'#EEF1F5', border:'1px solid #B4BDCA', color:'#647084' };
+    return { ...base, border:'1px solid #C9D1DB', color:'#8A95A6' };
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const step = this.state.step;
+    const meta = this.state.metaSelect;
+
+    const stepDefs = [ [1,'Datos y redes'], [2,'Conectar'], [3,'Confirmar'] ];
+    const steps = stepDefs.map((d, i) => {
+      const kind = step > d[0] ? 'done' : (step === d[0] ? 'active' : 'future');
+      return {
+        num: kind === 'done' ? '✓' : String(d[0]),
+        label: d[1],
+        circleStyle: this.circle(kind, accent),
+        textStyle: { fontSize:'13px', color: step === d[0] ? '#141921' : '#8A95A6', fontWeight: step === d[0] ? 500 : 400 },
+        barStyle: { flex:'1', height:'1px', background:'#E3E6EA', display: i === 2 ? 'none' : 'block' },
+      };
+    });
+
+    const netDefs = [ ['ig','Instagram'], ['fb','Facebook'], ['tiktok','TikTok'] ];
+    const netOptions = netDefs.map(d => {
+      const on = this.state.networks[d[0]];
+      return {
+        label: d[1],
+        onClick: () => this.setState(s => ({ networks: { ...s.networks, [d[0]]: !s.networks[d[0]] } })),
+        style: { flex:'1', border:'1.5px solid ' + (on ? '#B9C0C9' : '#D4DAE3'), borderRadius:'9px', padding:'13px', display:'flex', alignItems:'center', gap:'10px', cursor:'pointer', background:'#fff' },
+        boxStyle: { width:'18px', height:'18px', borderRadius:'5px', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'11px', border: '1.5px solid ' + (on ? '#7A818B' : '#C9D1DB'), background: on ? accent : 'transparent', color:'#fff' },
+        check: on ? '✓' : '',
+      };
+    });
+
+    const metaDefs = [ ['@cafeaurora','Instagram',true], ['@aurora.deli','Instagram',true], ['Café Aurora — Página','Facebook',false], ['Aurora Eventos','Facebook · no la usás para este cliente',false] ];
+    const metaAccounts = metaDefs.map(d => ({
+      handle: d[0], net: d[1], check: d[2] ? '✓' : '',
+      rowStyle: { border:'1.5px solid ' + (d[2] ? '#B9C0C9' : '#D4DAE3'), borderRadius:'10px', padding:'12px 14px', display:'flex', alignItems:'center', gap:'12px', background:'#fff' },
+      boxStyle: { width:'18px', height:'18px', borderRadius:'5px', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'11px', flex:'none', border:'1.5px solid ' + (d[2] ? '#7A818B' : '#C9D1DB'), background: d[2] ? accent : 'transparent', color:'#fff' },
+    }));
+
+    const onNext = () => {
+      if (this.state.metaSelect) { this.setState({ metaSelect: false }); return; }
+      this.setState(s => ({ step: Math.min(3, s.step + 1) }));
+    };
+    const onBack = () => {
+      if (this.state.metaSelect) { this.setState({ metaSelect: false }); return; }
+      this.setState(s => ({ step: Math.max(1, s.step - 1) }));
+    };
+
+    return {
+      accent, stepNum: step, steps, netOptions, metaAccounts,
+      hasLogo: !!this.state.logoUrl,
+      noLogo: !this.state.logoUrl,
+      logoImgStyle: { width:'100%', height:'100%', backgroundImage: this.state.logoUrl ? 'url(' + this.state.logoUrl + ')' : 'none', backgroundSize:'cover', backgroundPosition:'center' },
+      logoWarn: this.state.logoWarn,
+      logoBorder: this.state.logoUrl ? '1px solid #D4DAE3' : '1.5px dashed #C9D1DB',
+      logoBg: this.state.logoUrl ? '#fff' : '#F5F7FA',
+      onLogoPick: (e) => this.onLogoPick(e),
+      onLogoClear: () => this.setState({ logoUrl: null, logoWarn: '' }),
+      tzLabel: this.timezones[this.state.tz],
+      tzOpen: this.state.tzOpen,
+      tzToggle: () => this.setState(s => ({ tzOpen: !s.tzOpen })),
+      tzOptions: Object.keys(this.timezones).map(k => ({
+        label: this.timezones[k], selected: k === this.state.tz,
+        rowStyle: { display:'flex', alignItems:'center', justifyContent:'space-between', padding:'9px 11px', borderRadius:'8px', cursor:'pointer', background: k === this.state.tz ? '#F3F6FA' : 'transparent' },
+        onClick: () => this.setState({ tz: k, tzOpen: false }),
+      })),
+      isStep1: step === 1, isStep2: step === 2, isStep3: step === 3,
+      metaSelect: meta, notMetaSelect: !meta, metaCount: 2,
+      clientName: this.state.name || '', confirmName: this.state.name || 'Café Aurora',
+      onName: (e) => this.setState({ name: e.target.value }),
+      openMeta: () => this.setState({ metaSelect: true }),
+      closeMeta: () => this.setState({ metaSelect: false }),
+      onNext, onBack,
+      nextLabel: step === 3 ? 'Finalizar y ver cliente' : 'Continuar →',
+      backLabel: step === 1 ? 'Cancelar' : '← Volver',
+      backStyle: { fontSize:'13px', color:'#647084', cursor:'pointer' },
+    };
+  }
+}
+</script>
+</body>
+</html>

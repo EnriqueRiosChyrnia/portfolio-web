@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+    .tag{border:1.2px solid #7a5ea8;color:#7a5ea8;border-radius:10px;padding:0 8px;font-size:10px;white-space:nowrap}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Etiquetas de campaña (Publicaciones) + Metas (Dashboard) — lenguaje humano, opt-in</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Etiquetas visibles en la fila (chips bajo el título) + metas como cards con barra y frase</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1a lista -->
+        <div class="dv-card" style="width:700px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Todas las publicaciones · chips en fila, asignador desde la fila (⌗) o el Detalle</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px;">
+            <!-- filtros -->
+            <div style="display:flex; gap:6px; margin-bottom:10px; font-size:12px;">
+              <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; background:#fff;">IG · @cafeaurora ▾</span>
+              <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; background:#fff;">Todos los tipos ▾</span>
+              <span style="border:1.5px solid #7a5ea8; color:#7a5ea8; border-radius:6px; padding:4px 10px; background:#fff; font-weight:600;">⌗ Etiqueta: todas ▾</span>
+              <span style="font-size:11px; color:#2a78d6; align-self:center;">← filtro nuevo, mismo patrón que Tipo</span>
+            </div>
+            <!-- tabla -->
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; overflow:visible;">
+              <div style="display:grid; grid-template-columns:36px 2fr .8fr .8fr .7fr 30px; gap:8px; padding:6px 12px; font-size:10px; color:#888; border-bottom:1.5px solid #3a3a3a; text-transform:uppercase;">
+                <span></span><span>Publicación</span><span>Tipo</span><span>Fecha</span><span>Alcance</span><span></span>
+              </div>
+              <div style="display:grid; grid-template-columns:36px 2fr .8fr .8fr .7fr 30px; gap:8px; padding:8px 12px; font-size:12px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                <div style="width:30px; height:30px; border:1.2px solid #999; border-radius:6px;"></div>
+                <div>
+                  <div>Lanzamiento otoño: nueva carta</div>
+                  <div style="display:flex; gap:4px; margin-top:3px;"><span class="tag">⌗ Lanzamiento junio</span><span class="tag">⌗ Reels</span></div>
+                </div>
+                <span>Reel</span><span>18 jun</span><span>22.4k</span>
+                <span style="color:#888;">⌗+</span>
+              </div>
+              <div style="display:grid; grid-template-columns:36px 2fr .8fr .8fr .7fr 30px; gap:8px; padding:8px 12px; font-size:12px; align-items:center; position:relative;">
+                <div style="width:30px; height:30px; border:1.2px solid #999; border-radius:6px;"></div>
+                <div>Encuesta de sabores <span style="font-size:10px; color:#bbb;">(sin etiquetas — no se muestra nada)</span></div>
+                <span>Story</span><span>13 jun</span><span>8.7k</span>
+                <span style="border:1.5px solid #7a5ea8; color:#7a5ea8; border-radius:5px; padding:0 5px; font-weight:600;">⌗+</span>
+                <!-- asignador -->
+                <div style="position:absolute; right:-6px; top:38px; width:210px; border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; box-shadow:3px 3px 0 rgba(0,0,0,.1); z-index:5; padding:8px;">
+                  <div style="border:1.2px solid #999; border-radius:5px; padding:3px 8px; font-size:11px; color:#999;">buscar o crear…  «lanz»</div>
+                  <div style="font-size:11.5px; margin-top:6px; line-height:1.9;">
+                    <div>☑ ⌗ <b>Lanz</b>amiento junio</div>
+                    <div>☐ ⌗ Promos</div>
+                    <div style="color:#7a5ea8; border-top:1.2px dashed #ccc; padding-top:4px;">+ Crear «lanz»</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:11.5px; color:#2a78d6; margin-top:52px;">cualquier miembro crea al vuelo; el asignador es el mismo acá y en el Detalle</div>
+          </div>
+        </div>
+
+        <!-- 1a metas -->
+        <div class="dv-card" style="width:560px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Dashboard · sección «Metas» debajo de los KPIs (máx. 3 cards)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px;">
+            <div style="font-size:11px; color:#888; margin-bottom:6px;">…KPIs del dashboard arriba…</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:13.5px; font-weight:600;">Metas</span>
+              <span style="font-size:11px; color:#888;">+ Nueva meta <span style="color:#2a78d6;">(solo admin)</span></span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                <div style="font-size:12px; font-weight:600;">5.000 seguidores en IG</div>
+                <div style="font-size:10.5px; color:#888;">para el 30 sep</div>
+                <div style="height:8px; border:1.2px solid #3a3a3a; border-radius:4px; margin-top:8px; overflow:hidden;"><div style="height:100%; width:64%; background:#4a8a5f;"></div></div>
+                <div style="display:flex; justify-content:space-between; font-size:10.5px; margin-top:4px;"><span>3.204 de 5.000</span><span style="color:#4a8a5f; font-weight:600;">✓ va camino a llegar</span></div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                <div style="font-size:12px; font-weight:600;">150k de alcance mensual</div>
+                <div style="font-size:10.5px; color:#888;">para julio · todas las redes</div>
+                <div style="height:8px; border:1.2px solid #3a3a3a; border-radius:4px; margin-top:8px; overflow:hidden;"><div style="height:100%; width:34%; background:#c8a415;"></div></div>
+                <div style="display:flex; justify-content:space-between; font-size:10.5px; margin-top:4px;"><span>51k de 150k</span><span style="color:#a2830f; font-weight:600;">viene lento — faltan 99k</span></div>
+              </div>
+            </div>
+            <div style="font-size:11.5px; color:#2a78d6; margin-top:8px;">barra + frase humana según el ritmo (a esta altura del plazo, ¿está donde debería?)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Columna «Etiqueta» propia en la tabla + metas como lista compacta (una debajo de otra)</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1b lista -->
+        <div class="dv-card" style="width:700px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">La etiqueta como columna: escaneable, pero roba ancho y trunca con 2+ etiquetas</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px;">
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff;">
+              <div style="display:grid; grid-template-columns:36px 1.6fr .9fr .6fr .6fr .6fr; gap:8px; padding:6px 12px; font-size:10px; color:#888; border-bottom:1.5px solid #3a3a3a; text-transform:uppercase;">
+                <span></span><span>Publicación</span><span>Etiqueta</span><span>Tipo</span><span>Fecha</span><span>Alcance</span>
+              </div>
+              <div style="display:grid; grid-template-columns:36px 1.6fr .9fr .6fr .6fr .6fr; gap:8px; padding:8px 12px; font-size:12px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                <div style="width:30px; height:30px; border:1.2px solid #999; border-radius:6px;"></div>
+                <span>Lanzamiento otoño: nueva carta</span>
+                <span class="tag" style="overflow:hidden; text-overflow:ellipsis;">⌗ Lanzamiento ju… +1</span>
+                <span>Reel</span><span>18 jun</span><span>22.4k</span>
+              </div>
+              <div style="display:grid; grid-template-columns:36px 1.6fr .9fr .6fr .6fr .6fr; gap:8px; padding:8px 12px; font-size:12px; align-items:center;">
+                <div style="width:30px; height:30px; border:1.2px solid #999; border-radius:6px;"></div>
+                <span>Encuesta de sabores</span>
+                <span style="color:#bbb; font-size:11px;">—</span>
+                <span>Story</span><span>13 jun</span><span>8.7k</span>
+              </div>
+            </div>
+            <div style="font-size:11.5px; color:#2a78d6; margin-top:8px;">la asignación vive solo en el Detalle de publicación (fila más limpia, un paso más)</div>
+          </div>
+        </div>
+
+        <!-- 1b metas -->
+        <div class="dv-card" style="width:480px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Metas como lista compacta con barra fina — menos protagonismo</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px;">
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px; display:flex; flex-direction:column; gap:10px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px;"><b>5.000 seguidores en IG · 30 sep</b><span style="color:#4a8a5f;">✓ en ritmo</span></div>
+                <div style="height:5px; background:#eee; border-radius:3px; margin-top:5px;"><div style="height:100%; width:64%; background:#4a8a5f; border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px;"><b>150k alcance · julio</b><span style="color:#a2830f;">viene lento</span></div>
+                <div style="height:5px; background:#eee; border-radius:3px; margin-top:5px;"><div style="height:100%; width:34%; background:#c8a415; border-radius:3px;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Compartido: banda resumen al filtrar por etiqueta · Detalle de publicación · estados vacíos · móvil</div>
+      <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
+
+        <!-- banda resumen -->
+        <div class="dv-card" style="width:540px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Al filtrar por «⌗ Lanzamiento junio»: banda resumen arriba de la lista</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px;">
+            <div style="border:1.5px solid #7a5ea8; border-radius:8px; background:#faf7ff; padding:10px 14px; display:flex; align-items:center; gap:20px;">
+              <span class="tag" style="font-size:11px; font-weight:600;">⌗ Lanzamiento junio</span>
+              <span style="font-size:12px;"><b>8</b> publicaciones</span>
+              <span style="font-size:12px;"><b>96k</b> alcance sumado</span>
+              <span style="font-size:12px;"><b>7.1k</b> interacciones</span>
+              <span style="margin-left:auto; font-size:11px; color:#888;">✕ quitar filtro</span>
+            </div>
+            <div style="font-size:11px; color:#888; margin-top:6px;">…debajo, la lista ya filtrada…</div>
+          </div>
+        </div>
+
+        <!-- detalle -->
+        <div class="dv-card" style="width:340px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Detalle de publicación · sección Etiquetas</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px;">
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+              <div style="font-size:12px; font-weight:600;">Etiquetas de campaña</div>
+              <div style="display:flex; gap:5px; margin-top:7px; flex-wrap:wrap;">
+                <span class="tag">⌗ Lanzamiento junio ✕</span>
+                <span class="tag">⌗ Reels ✕</span>
+                <span style="border:1.2px dashed #999; color:#888; border-radius:10px; padding:0 8px; font-size:10px;">+ agregar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- vacíos -->
+        <div class="dv-card" style="width:380px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Estados vacíos (lenguaje humano)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px; display:flex; flex-direction:column; gap:8px;">
+            <div style="border:1.5px dashed #999; border-radius:8px; background:#fff; padding:10px 12px; font-size:11.5px; color:#666;">
+              <b>Sin etiquetas aún:</b> el filtro ⌗ muestra «Todavía no usaron etiquetas. Sirven para agrupar posts de una campaña y ver cómo rindió en conjunto.» — sin banda, sin columna extra.
+            </div>
+            <div style="border:1.5px dashed #999; border-radius:8px; background:#fff; padding:10px 12px; font-size:11.5px; color:#666;">
+              <b>Sin metas:</b> el admin ve una card punteada «＋ Definir la primera meta de Café Aurora». El empleado <b>no ve la sección</b> (nada vacío que no pueda accionar).
+            </div>
+            <div style="border:1.5px dashed #999; border-radius:8px; background:#fff; padding:10px 12px; font-size:11.5px; color:#666;">
+              <b>Meta cumplida:</b> barra llena + «🎉 Meta cumplida el 12 sep» — queda visible hasta que el admin la archive.
+            </div>
+          </div>
+        </div>
+
+        <!-- móvil -->
+        <div class="dv-card" style="width:270px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fafafa; padding:10px; display:flex; flex-direction:column; gap:8px;">
+            <div style="border:1.5px solid #7a5ea8; border-radius:8px; background:#faf7ff; padding:8px 10px; font-size:10.5px;">
+              <b>⌗ Lanzamiento junio</b> · 8 posts · 96k alcance · 7.1k interac.
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px;">
+              <div style="font-size:11.5px;">Lanzamiento otoño: nueva carta</div>
+              <div style="display:flex; gap:4px; margin-top:3px;"><span class="tag">⌗ Lanzamiento junio</span></div>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px;">
+              <div style="font-size:11px; font-weight:600;">Metas (Dashboard)</div>
+              <div style="font-size:10.5px; margin-top:5px;">5.000 seguidores IG · 30 sep</div>
+              <div style="height:5px; background:#eee; border-radius:3px; margin-top:4px;"><div style="height:100%; width:64%; background:#4a8a5f; border-radius:3px;"></div></div>
+              <div style="font-size:10px; color:#4a8a5f; margin-top:3px;">✓ va camino a llegar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Decisiones: asignación desde la fila (⌗+) y desde el Detalle (multi-selección queda para después); metas sobre seguidores/alcance/interacciones, por red o total, debajo de los KPIs; ritmo con frase humana + color. Probá: "aprobado <a class="dv-oid" href="#1a">1a</a>" · "<a class="dv-oid" href="#1a">1a</a> pero con las metas compactas de <a class="dv-oid" href="#1b">1b</a>".</p>
+</section>
+</x-dc>
+</body>
+</html>

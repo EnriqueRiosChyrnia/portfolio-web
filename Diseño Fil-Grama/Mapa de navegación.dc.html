@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; }
+    * { box-sizing:border-box; }
+    .map-node { transition:box-shadow .14s, transform .14s, border-color .14s; }
+    .map-node:hover { box-shadow:0 8px 22px rgba(20,25,33,.12); transform:translateY(-1px); border-color:#9CC4ED !important; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="./navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-height:100vh; background:#EAEDF1; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif; padding:48px 24px 90px;">
+  <div style="max-width:1060px; margin:0 auto;">
+
+    <!-- header -->
+    <div style="display:flex; align-items:center; gap:13px;">
+      <img src="uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:40px; height:40px; border-radius:11px; display:block;" />
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Sistema</div>
+        <div style="font-size:27px; font-weight:600; color:#141921; letter-spacing:-.4px; margin-top:2px;">Mapa de navegación</div>
+      </div>
+    </div>
+    <div style="font-size:14px; color:#647084; margin-top:12px; max-width:700px; line-height:1.6;">Cómo se llega de una pantalla a otra, ordenado por los nueve recorridos reales de uso. <b style="font-weight:600; color:#3D4757;">Cada nodo es clickeable</b> y abre esa pantalla; el texto sobre cada flecha es la acción que te lleva ahí. Para volver o saltar, usá el navegador flotante de abajo a la izquierda.</div>
+
+    <!-- jerarquía general -->
+    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px; margin-top:26px;">
+      <div style="font-size:14px; font-weight:600; color:#141921; margin-bottom:4px;">Estructura general — 3 niveles</div>
+      <div style="font-size:12.5px; color:#647084; line-height:1.55; margin-bottom:14px;">Divulgación progresiva: vistazo (Home) → detalle (workspace del cliente) → avanzado (detalles y exportar). Sin menú lateral: todo cuelga de la Home y de las pestañas del cliente.</div>
+      <div style="display:flex; align-items:stretch; gap:0; flex-wrap:wrap;">
+        <sc-for list="{{ levels }}" as="lv" hint-placeholder-count="3">
+          <div style="display:flex; align-items:center;">
+            <div style="background:{{ lv.bg }}; border:1px solid {{ lv.border }}; border-radius:12px; padding:13px 16px; min-width:220px;">
+              <div style="font-size:10.5px; font-weight:700; letter-spacing:.7px; text-transform:uppercase; color:{{ lv.ink }};">{{ lv.kicker }}</div>
+              <div style="font-size:14px; font-weight:600; color:#141921; margin-top:4px;">{{ lv.title }}</div>
+              <div style="font-size:12px; color:#647084; line-height:1.5; margin-top:3px;">{{ lv.desc }}</div>
+            </div>
+            <sc-if value="{{ lv.arrow }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:18px; color:#B4BDCA; padding:0 12px;">→</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- caminos -->
+    <div style="display:flex; flex-direction:column; gap:16px; margin-top:26px;">
+      <sc-for list="{{ journeys }}" as="j" hint-placeholder-count="5">
+        <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="width:24px; height:24px; border-radius:7px; background:#1E66BC; color:#fff; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center; flex:none;">{{ j.num }}</span>
+            <span style="font-size:15px; font-weight:600; color:#141921;">{{ j.title }}</span>
+          </div>
+          <div style="font-size:12.5px; color:#647084; margin-top:5px; line-height:1.5;">{{ j.desc }}</div>
+
+          <div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px 0; margin-top:15px;">
+            <sc-for list="{{ j.steps }}" as="st" hint-placeholder-count="5">
+              <div style="display:flex; align-items:center;">
+                <sc-if value="{{ st.hasArrow }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex; flex-direction:column; align-items:center; gap:2px; padding:0 10px; max-width:150px;">
+                    <span style="font-size:10.5px; color:#8A95A6; line-height:1.3; text-align:center;">{{ st.trigger }}</span>
+                    <span style="font-size:16px; color:#9CC4ED; line-height:1;">→</span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ st.external }}" hint-placeholder-val="{{ false }}">
+                  <div style="border:1.5px dashed #C9D1DB; border-radius:11px; padding:10px 14px; background:#F5F7FA;">
+                    <div style="font-size:12.5px; font-weight:500; color:#8A95A6;">{{ st.name }}</div>
+                    <div style="font-size:10.5px; color:#AAB2BE; margin-top:1px;">fuera de Fil-Grama</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ st.internal }}" hint-placeholder-val="{{ true }}">
+                  <div class="map-node" onClick="{{ st.onClick }}" style="border:1px solid #E5E9EF; border-radius:11px; padding:10px 14px; background:#fff; cursor:pointer;">
+                    <div style="display:flex; align-items:center; gap:7px;">
+                      <span style="width:7px; height:7px; border-radius:50%; background:{{ st.dot }}; flex:none;"></span>
+                      <span style="font-size:13px; font-weight:600; color:#141921; white-space:nowrap;">{{ st.name }}</span>
+                    </div>
+                    <sc-if value="{{ st.sub }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:10.5px; color:#8A95A6; margin-top:2px;">{{ st.sub }}</div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ j.note }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; gap:8px; align-items:flex-start; margin-top:13px; background:#F5F8FC; border-radius:10px; padding:10px 13px;">
+              <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; flex:none; margin-top:1px;">i</span>
+              <span style="font-size:12px; color:#647084; line-height:1.5;">{{ j.note }}</span>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- leyenda -->
+    <div style="display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-top:20px; padding:0 4px;">
+      <span style="display:flex; align-items:center; gap:8px; font-size:12px; color:#647084;"><span style="width:7px; height:7px; border-radius:50%; background:#1E66BC;"></span>dentro del workspace del cliente</span>
+      <span style="display:flex; align-items:center; gap:8px; font-size:12px; color:#647084;"><span style="width:7px; height:7px; border-radius:50%; background:#6BBE8E;"></span>nivel raíz (Home / acceso)</span>
+      <span style="display:flex; align-items:center; gap:8px; font-size:12px; color:#647084;"><span style="width:7px; height:7px; border-radius:50%; background:#8A95A6;"></span>administración</span>
+      <span style="display:flex; align-items:center; gap:8px; font-size:12px; color:#647084;"><span style="width:7px; height:7px; border-radius:50%; background:#1C2230;"></span>plataforma (staff)</span>
+      <span style="display:flex; align-items:center; gap:8px; font-size:12px; color:#647084;"><span style="width:22px; height:14px; border:1.5px dashed #C9D1DB; border-radius:4px;"></span>pantalla externa (Meta/TikTok)</span>
+    </div>
+
+    <div style="font-size:12px; color:#9AA4B2; text-align:center; margin-top:36px;">Mapa de navegación · los nodos abren cada pantalla · el navegador flotante te acompaña en todas</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:1150}}">
+class Component extends DCLogic {
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  ROOT = '#6BBE8E'; WS = '#1E66BC'; ADM = '#8A95A6'; PLAT = '#1C2230';
+
+  renderVals() {
+    const mk = (steps) => steps.map((s, i) => ({
+      hasArrow: i > 0,
+      trigger: s.t || '',
+      name: s.n,
+      sub: s.sub || '',
+      dot: s.dot || this.WS,
+      external: !!s.ext,
+      internal: !s.ext,
+      onClick: s.f ? () => this.go(s.f) : () => {},
+    }));
+
+    const journeys = [
+      {
+        num: 1, title: 'Entrar y revisar un cliente (el camino diario)',
+        desc: 'De abrir la app a la métrica de una publicación puntual: vistazo → detalle → avanzado.',
+        steps: mk([
+          { n:'Login', f:'1 Acceso/Login.dc.html', dot:this.ROOT },
+          { t:'sesión iniciada', n:'Home · Lista de clientes', f:'2 Clientes/Lista de clientes.dc.html', dot:this.ROOT },
+          { t:'tocás la tarjeta del cliente', n:'Workspace · Dashboard', f:'3 Workspace de cliente/Workspace.dc.html', sub:'pestañas del cliente' },
+          { t:'tocás una fila de «Cuentas conectadas»', n:'Detalle de cuenta', f:'3 Workspace de cliente/Detalle de cuenta.dc.html' },
+          { t:'«Ver todas las publicaciones»', n:'Todas las publicaciones', f:'3 Workspace de cliente/Todas las publicaciones.dc.html' },
+          { t:'tocás una fila', n:'Detalle de publicación', f:'3 Workspace de cliente/Detalle de publicación.dc.html', sub:'o Detalle de story' },
+        ]),
+        note: 'Las stories abren su propio detalle (métricas finales, sin evolución): mismo camino, última parada distinta. El rango elegido (7/30/90) te sigue por todo el recorrido.',
+      },
+      {
+        num: 2, title: 'Dar de alta un cliente y conectar sus redes (OAuth)',
+        desc: 'El único momento donde participa el cliente final: autoriza en la pantalla oficial de la red.',
+        steps: mk([
+          { n:'Home', f:'2 Clientes/Lista de clientes.dc.html', dot:this.ROOT },
+          { t:'tarjeta «＋ Agregar cliente»', n:'Nuevo cliente', f:'2 Clientes/Nuevo cliente.dc.html', sub:'wizard 3 pasos', dot:this.ROOT },
+          { t:'paso 2 · «Conectar» una red de Meta', n:'Prerrequisitos de Meta', f:'1 Acceso/Prerrequisitos de Meta.dc.html', dot:this.ROOT },
+          { t:'«Continuar a Meta»', n:'Login oficial de Meta / TikTok', ext:true },
+          { t:'autorizado', n:'Elegí qué cuentas conectar', f:'1 Acceso/Elegí qué cuentas conectar.dc.html', dot:this.ROOT },
+          { t:'confirmás la selección', n:'Resultado de conexión', f:'1 Acceso/Resultado de conexión.dc.html', dot:this.ROOT },
+          { t:'«Ir al cliente»', n:'Dashboard sin datos', f:'3 Workspace de cliente/Dashboard sin datos.dc.html', sub:'hasta la 1ª captura' },
+        ]),
+        note: 'Si el token vence o el resultado es «cuenta personal», Resultado de conexión explica el porqué y ofrece reintentar — ningún error es un callejón sin salida.',
+      },
+      {
+        num: 3, title: 'Mantener las cuentas conectadas',
+        desc: 'Sumar, reconectar o quitar cuentas de un cliente que ya existe.',
+        steps: mk([
+          { n:'Workspace', f:'3 Workspace de cliente/Workspace.dc.html' },
+          { t:'pestaña «Cuentas»', n:'Gestionar redes', f:'3 Workspace de cliente/Gestionar redes.dc.html', sub:'conectar · QR · eliminar' },
+          { t:'botón rojo «Reconectar» del header', n:'Reconectar cuentas', f:'3 Workspace de cliente/Reconectar cuentas.dc.html', sub:'solo las caídas' },
+        ]),
+        note: 'El botón «Reconectar TikTok» aparece en el header del workspace cuando alguna cuenta pierde el token — es la única señal global; el detalle vive en Cuentas.',
+      },
+      {
+        num: 4, title: 'Comparar y reportar',
+        desc: 'Las otras dos pestañas del workspace: análisis comparativo y el reporte exportable para el cliente.',
+        steps: mk([
+          { n:'Workspace', f:'3 Workspace de cliente/Workspace.dc.html' },
+          { t:'pestaña «Comparar»', n:'Comparar cuentas', f:'3 Workspace de cliente/Comparar cuentas.dc.html', sub:'tabla o barras · hasta 4' },
+          { t:'pestaña «Audiencia»', n:'Audiencia', f:'3 Workspace de cliente/Audiencia.dc.html', sub:'seguidores + demografía' },
+          { t:'pestaña «Reporte»', n:'Reporte', f:'3 Workspace de cliente/Reporte.dc.html', sub:'historial + programación' },
+          { t:'«Generar reporte»', n:'Reporte · generar', f:'3 Workspace de cliente/Reporte - generar.dc.html', sub:'controles · vista · exportar' },
+        ]),
+        note: 'Ambas pestañas muestran una vista embebida; el botón «completo →» abre la pantalla dedicada con todos los controles y estados.',
+      },
+      {
+        num: 5, title: 'Administración (solo admin)',
+        desc: 'Fuera del uso diario: se entra por el menú del avatar, nunca por la navegación principal.',
+        steps: mk([
+          { n:'Cualquier pantalla', f:'2 Clientes/Lista de clientes.dc.html', dot:this.ROOT, sub:'menú del avatar' },
+          { t:'avatar → «Administración»', n:'Administración (hub)', f:'4 Administración/Administración.dc.html', dot:this.ADM },
+          { t:'tarjeta «Organización»', n:'Organización', f:'4 Administración/Organización.dc.html', dot:this.ADM, sub:'datos · usuarios · suscripción' },
+          { t:'tarjeta «Salud de cuentas»', n:'Salud de cuentas', f:'4 Administración/Salud de cuentas.dc.html', dot:this.ADM, sub:'con campana 🔔 en el top bar' },
+        ]),
+        note: 'La tercera tarjeta lleva a Sincronización (historial del job diario + «Ejecutar ahora»). Organización absorbe a Usuarios (que sigue accesible con Detalle de usuario); la campana de notificaciones vive en la barra superior de todas las pantallas y desemboca en Salud de cuentas.',
+      },
+      {
+        num: 6, title: 'Sumarse por invitación (multi-organización)',
+        desc: 'Nadie se registra solo: fundadora (crea la organización) o miembro (se une con un rol).',
+        steps: mk([
+          { n:'Email de invitación', ext:true },
+          { t:'link del email (7 días, un uso)', n:'Aceptar invitación', f:'1 Acceso/Aceptar invitación.dc.html', dot:this.ROOT, sub:'fundadora · miembro · vencida' },
+          { t:'cuenta creada → redirige sola', n:'Home · Lista de clientes', f:'2 Clientes/Lista de clientes.dc.html', dot:this.ROOT, sub:'agencia; autogestionado → su dashboard' },
+        ]),
+        note: 'La invitación define organización, tipo y rol; el formulario solo pide nombre y contraseña. Vencida o usada: mensaje amable y salida al login.',
+      },
+      {
+        num: 7, title: 'Recuperar contraseña (self-service)',
+        desc: 'Desde «Olvidé mi contraseña» del Login; nunca revela si el email existe.',
+        steps: mk([
+          { n:'Login', f:'1 Acceso/Login.dc.html', dot:this.ROOT },
+          { t:'«Olvidé mi contraseña»', n:'Recuperar contraseña', f:'1 Acceso/Recuperar contraseña.dc.html', dot:this.ROOT, sub:'respuesta neutra + email' },
+          { t:'enlace del email (60 min, un uso)', n:'Nueva contraseña', f:'1 Acceso/Recuperar contraseña.dc.html', dot:this.ROOT, sub:'checklist · vencido con reintento' },
+          { t:'contraseña actualizada', n:'Login', f:'1 Acceso/Login.dc.html', dot:this.ROOT },
+        ]),
+      },
+      {
+        num: 8, title: 'Autogestionado: su marca, sin cartera',
+        desc: 'Organización de un solo cliente: entra directo a su dashboard, sin Home ni administración de usuarios.',
+        steps: mk([
+          { n:'Aceptar invitación', f:'1 Acceso/Aceptar invitación.dc.html', dot:this.ROOT },
+          { t:'primera vez, sin redes', n:'Primera vez', f:'6 Autogestionado/Primera vez.dc.html', sub:'bienvenida guiada' },
+          { t:'red conectada + 1er sync', n:'Dashboard (mi marca)', f:'6 Autogestionado/Dashboard (mi marca).dc.html', sub:'pestañas: Comparar redes · Redes' },
+          { t:'avatar → «Mi cuenta y suscripción»', n:'Mi cuenta y suscripción', f:'6 Autogestionado/Mi cuenta y suscripción.dc.html', sub:'datos + renovar' },
+        ]),
+      },
+      {
+        num: 9, title: 'Panel de plataforma (staff Fil-Grama)',
+        desc: 'Entrada aparte con login propio, por encima de todas las organizaciones. Barra oscura = ámbito plataforma.',
+        steps: mk([
+          { n:'Panel de plataforma', f:'5 Plataforma/Panel de plataforma.dc.html', dot:this.PLAT, sub:'Observabilidad · Organizaciones · Audit log' },
+          { t:'«Entrar como soporte» (auditado)', n:'Workspace del tenant', f:'3 Workspace de cliente/Workspace.dc.html', sub:'banner flotante de impersonación' },
+        ]),
+        note: 'El dueño registra pagos (Gs., meses, comprobante), edita límites y suspende; soporte no ve pagos ni suspende. Todo cae al audit log append-only.',
+      },
+    ];
+
+    const levels = [
+      { kicker:'Nivel 1 · Vistazo', title:'Home — Lista de clientes', desc:'Un hero por cliente, buscador, prioritarios.', bg:'#EFF7F1', border:'#CFE8DA', ink:'#1F7A50', arrow:true },
+      { kicker:'Nivel 2 · Detalle', title:'Workspace del cliente', desc:'Pestañas: Dashboard · Publicaciones · Comparar · Audiencia · Reporte · Cuentas.', bg:'#EAF2FB', border:'#CADFF5', ink:'#14529C', arrow:true },
+      { kicker:'Nivel 3 · Avanzado', title:'Detalles y exportar', desc:'Cuenta → publicaciones → publicación/story · reporte PDF/MD.', bg:'#F5F7FA', border:'#E9EDF2', ink:'#647084', arrow:false },
+    ];
+
+    return { journeys, levels };
+  }
+}
+</script>
+</body>
+</html>

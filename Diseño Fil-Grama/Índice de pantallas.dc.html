@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    .nav-card { transition:box-shadow .14s, transform .14s, border-color .14s; }
+    .nav-card:hover { box-shadow:0 8px 22px rgba(20,25,33,.10); transform:translateY(-2px); border-color:#CADFF5 !important; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="./navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-height:100vh; box-sizing:border-box; padding:48px 56px 64px; background:#EAEDF1; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="max-width:1180px; margin:0 auto;">
+    <!-- header -->
+    <div style="display:flex; align-items:center; gap:13px;">
+      <div style="width:40px; height:40px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="22" height="22" viewBox="0 0 15 15" fill="none"><polyline points="1,11 5,7 8,9 14,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+        <div style="font-size:26px; font-weight:600; color:#141921; letter-spacing:-.4px; margin-top:2px;">Índice de pantallas</div>
+      </div>
+    </div>
+    <div style="font-size:14px; color:#647084; margin-top:12px; max-width:620px; line-height:1.55;">Tocá cualquier pantalla para abrirla. Dentro de cada una, los botones y listas también navegan entre sí. Volvés acá con el botón «atrás» del navegador.</div>
+
+    <!-- sections -->
+    <div style="display:flex; flex-direction:column; gap:34px; margin-top:38px;">
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="4">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <span style="width:24px; height:24px; border-radius:7px; background:{{ accent }}; color:#fff; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center;">{{ s.num }}</span>
+            <span style="font-size:16px; font-weight:600; color:#232A36;">{{ s.label }}</span>
+            <span style="font-size:12.5px; color:#9AA4B2;">{{ s.count }}</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(266px, 1fr)); gap:12px;">
+            <sc-for list="{{ s.screens }}" as="p" hint-placeholder-count="4">
+              <div class="nav-card" onClick="{{ p.onClick }}" style="background:#fff; border:1px solid #E5E9EF; border-radius:12px; padding:15px 16px; cursor:pointer; display:flex; align-items:flex-start; gap:12px;">
+                <div style="width:34px; height:34px; border-radius:9px; background:#EAF2FB; display:flex; align-items:center; justify-content:center; flex:none; margin-top:1px;">{{ p.icon }}</div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:14px; font-weight:600; color:#141921;">{{ p.name }}</div>
+                  <div style="font-size:12px; color:#647084; line-height:1.45; margin-top:3px;">{{ p.desc }}</div>
+                </div>
+                <span style="font-size:17px; color:#C4CCD6; margin-top:2px;">›</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="font-size:12px; color:#9AA4B2; text-align:center; margin-top:44px;">34 pantallas + sistema y documentación · Fil-Grama — de herramienta interna a plataforma multi-organización</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  // ícono de línea por tipo (decorativo)
+  icon(kind, accent) {
+    const p = (d, extra) => React.createElement('path', { d, stroke:accent, strokeWidth:'1.7', strokeLinecap:'round', strokeLinejoin:'round', fill:'none', ...(extra||{}) });
+    const c = (cx, cy, r) => React.createElement('circle', { cx, cy, r, stroke:accent, strokeWidth:'1.7', fill:'none' });
+    const kids = {
+      lock: [p('M7 10V8a5 5 0 0 1 10 0v2'), React.createElement('rect',{x:5,y:10,width:14,height:9,rx:2,stroke:accent,strokeWidth:'1.7',fill:'none'})],
+      check: [c(12,12,9), p('M8.5 12.2l2.4 2.3 4.6-4.8')],
+      grid: [React.createElement('rect',{x:4,y:4,width:7,height:7,rx:1.5,stroke:accent,strokeWidth:'1.7',fill:'none'}),React.createElement('rect',{x:13,y:4,width:7,height:7,rx:1.5,stroke:accent,strokeWidth:'1.7',fill:'none'}),React.createElement('rect',{x:4,y:13,width:7,height:7,rx:1.5,stroke:accent,strokeWidth:'1.7',fill:'none'}),React.createElement('rect',{x:13,y:13,width:7,height:7,rx:1.5,stroke:accent,strokeWidth:'1.7',fill:'none'})],
+      plus: [c(12,12,9), p('M12 8.5v7M8.5 12h7')],
+      tabs: [React.createElement('rect',{x:4,y:5,width:16,height:14,rx:2,stroke:accent,strokeWidth:'1.7',fill:'none'}), p('M4 9h16')],
+      chart: [p('M5 19V5'), p('M5 19h14'), p('M8 15l3-4 3 2 3-5')],
+      hourglass: [p('M7 4h10M7 20h10M8 4c0 4 8 4 8 12M16 4c0 4-8 4-8 12')],
+      account: [c(12,9,3.2), p('M6 19c0-3 2.7-4.6 6-4.6s6 1.6 6 4.6')],
+      network: [c(6,12,2.2), c(17,6,2.2), c(17,18,2.2), p('M8 11l7-4M8 13l7 4')],
+      refresh: [p('M20 11a8 8 0 0 0-13.4-4.3L4 9'), p('M4 5v4h4'), p('M4 13a8 8 0 0 0 13.4 4.3L20 15'), p('M20 19v-4h-4')],
+      list: [p('M8 7h11M8 12h11M8 17h11'), c(4.5,7,.4), c(4.5,12,.4), c(4.5,17,.4)],
+      image: [React.createElement('rect',{x:4,y:5,width:16,height:14,rx:2,stroke:accent,strokeWidth:'1.7',fill:'none'}), c(9,10,1.4), p('M5 17l4.5-4 3 2.5L16 12l3 3.3')],
+      story: [c(12,12,8), p('M12 4v3M12 17v3M4 12h3M17 12h3')],
+      compare: [p('M9 4v16M15 4v16'), p('M4 9h6M14 15h6')],
+      report: [React.createElement('rect',{x:5,y:3,width:14,height:18,rx:2,stroke:accent,strokeWidth:'1.7',fill:'none'}), p('M8 8h8M8 12h8M8 16h5')],
+      gear: [c(12,12,3), p('M12 4v2M12 18v2M4 12h2M18 12h2M6 6l1.5 1.5M16.5 16.5L18 18M18 6l-1.5 1.5M7.5 16.5L6 18')],
+      users: [c(9,9,3), p('M3 19c0-3 2.4-4.5 6-4.5'), p('M15 7.5a3 3 0 0 1 0 5.6M14 19c0-2.6 1.8-4.2 4.5-4.4')],
+      checklist: [React.createElement('rect',{x:4,y:4,width:16,height:16,rx:3,stroke:accent,strokeWidth:'1.7',fill:'none'}), p('M8 11.7l2.3 2.3 4.3-4.6')],
+      shield: [p('M12 3.4l6.6 2.4v4.7c0 4.2-2.9 7.1-6.6 8.6-3.7-1.5-6.6-4.4-6.6-8.6V5.8L12 3.4z'), p('M9.2 11.6l1.9 1.9 3.9-4.1')],
+      trash: [p('M5 7h14'), p('M9 7V5.6A1.6 1.6 0 0 1 10.6 4h2.8A1.6 1.6 0 0 1 15 5.6V7'), p('M7.2 7l.9 12.3a1.6 1.6 0 0 0 1.6 1.5h4.6a1.6 1.6 0 0 0 1.6-1.5L16.8 7'), p('M10.5 11v5M13.5 11v5')],
+    };
+    return React.createElement('svg', { width:18, height:18, viewBox:'0 0 24 24', fill:'none' }, ...(kids[kind] || kids.grid));
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const I = (k) => this.icon(k, accent);
+    const raw = [
+      { label:'Sistema y documentación', screens:[
+        ['Mapa de navegación','Cómo se conectan las pantallas: 9 recorridos clickeables','Mapa de navegación.dc.html','network'],
+        ['Auditoría de diseño','Hallazgos, código real y registro de lo implementado','Auditoría de diseño.dc.html','report'],
+        ['Guía de componentes','Los 10 patrones canónicos + tokens','Guía de componentes.dc.html','grid'],
+      ]},
+      { label:'Acceso', screens:[
+        ['Login','Acceso del equipo · con «Olvidé mi contraseña»','1 Acceso/Login.dc.html','lock'],
+        ['Aceptar invitación','Fundadora o miembro crea su cuenta · pública','1 Acceso/Aceptar invitación.dc.html','plus'],
+        ['Recuperar contraseña','Self-service: pedir enlace → nueva contraseña','1 Acceso/Recuperar contraseña.dc.html','refresh'],
+        ['Elegí qué cuentas conectar','Selección múltiple tras autorizar en Meta','1 Acceso/Elegí qué cuentas conectar.dc.html','checklist'],
+        ['Prerrequisitos de Meta','Aviso previo al conectar Instagram o Facebook','1 Acceso/Prerrequisitos de Meta.dc.html','shield'],
+        ['Resultado de conexión','Vuelta del OAuth: éxito, personal, vencido, otra cuenta','1 Acceso/Resultado de conexión.dc.html','check'],
+        ['Estado de borrado de datos','Página pública del pedido de borrado · App Review','1 Acceso/Estado de borrado de datos.dc.html','trash'],
+      ]},
+      { label:'Clientes', screens:[
+        ['Lista de clientes','Home: grilla de clientes + selector de métrica','2 Clientes/Lista de clientes.dc.html','grid'],
+        ['Nuevo cliente','Alta en 3 pasos: datos → redes → listo','2 Clientes/Nuevo cliente.dc.html','plus'],
+      ]},
+      { label:'Workspace de cliente', screens:[
+        ['Workspace','Encabezado persistente + pestañas del cliente','3 Workspace de cliente/Workspace.dc.html','tabs'],
+        ['Dashboard','KPIs, tendencia y cuentas conectadas','3 Workspace de cliente/Dashboard.dc.html','chart'],
+        ['Dashboard sin datos','Estados: sin redes / esperando captura','3 Workspace de cliente/Dashboard sin datos.dc.html','hourglass'],
+        ['Detalle de cuenta','Métricas y mejores publicaciones de una cuenta','3 Workspace de cliente/Detalle de cuenta.dc.html','account'],
+        ['Gestionar redes','Conectar, reconectar, link QR, eliminar','3 Workspace de cliente/Gestionar redes.dc.html','network'],
+        ['Marca','Logo, colores y tipografías del reporte del cliente','3 Workspace de cliente/Marca.dc.html','image'],
+        ['Reconectar cuentas','Reautorizar las cuentas caídas','3 Workspace de cliente/Reconectar cuentas.dc.html','refresh'],
+        ['Publicaciones','Elegir cuenta (cascada red → cuenta)','3 Workspace de cliente/Publicaciones - elegir cuenta.dc.html','list'],
+        ['Todas las publicaciones','Grilla completa con filtros y orden','3 Workspace de cliente/Todas las publicaciones.dc.html','image'],
+        ['Detalle de publicación','Métricas + crecimiento del alcance','3 Workspace de cliente/Detalle de publicación.dc.html','image'],
+        ['Detalle de story','Métricas finales (contenido efímero)','3 Workspace de cliente/Detalle de story.dc.html','story'],
+        ['Comparar cuentas','Comparativa entre cuentas del cliente','3 Workspace de cliente/Comparar cuentas.dc.html','compare'],
+        ['Audiencia','Evolución de seguidores + demografía por cuenta','3 Workspace de cliente/Audiencia.dc.html','users'],
+        ['Reporte','Historial de generados + programación automática','3 Workspace de cliente/Reporte.dc.html','report'],
+        ['Reporte · generar','El flujo de controles + vista + exportar','3 Workspace de cliente/Reporte - generar.dc.html','report'],
+      ]},
+      { label:'Administración', screens:[
+        ['Administración','Hub interno (solo admin)','4 Administración/Administración.dc.html','gear'],
+        ['Organización','Datos, usuarios e invitaciones, suscripción','4 Administración/Organización.dc.html','users'],
+        ['Usuarios','Lista heredada · rol, estado y prioritarios','4 Administración/Usuarios.dc.html','users'],
+        ['Detalle de usuario','Editar usuario + clientes prioritarios','4 Administración/Detalle de usuario.dc.html','account'],
+        ['Sincronización','Historial del job + disparo manual','4 Administración/Sincronización.dc.html','refresh'],
+        ['Salud de cuentas','Todas las cuentas por gravedad + campana','4 Administración/Salud de cuentas.dc.html','shield'],
+      ]},
+      { label:'Plataforma (staff Fil-Grama)', screens:[
+        ['Panel de plataforma','Observabilidad · organizaciones · pagos · audit log','5 Plataforma/Panel de plataforma.dc.html','gear'],
+      ]},
+      { label:'Autogestionado', screens:[
+        ['Dashboard (mi marca)','Navegación sin cartera: aterriza acá al loguearse','6 Autogestionado/Dashboard (mi marca).dc.html','chart'],
+        ['Primera vez','Bienvenida guiada: conectar la primera red','6 Autogestionado/Primera vez.dc.html','plus'],
+        ['Mi cuenta y suscripción','Datos + suscripción, sin usuarios','6 Autogestionado/Mi cuenta y suscripción.dc.html','account'],
+      ]},
+    ];
+
+    const sections = raw.map((sec, i) => ({
+      num: i + 1, label: sec.label,
+      count: sec.screens.length + (sec.screens.length === 1 ? ' pantalla' : ' pantallas'),
+      screens: sec.screens.map(([name, desc, path, icon]) => ({
+        name, desc, icon: I(icon), onClick: () => this.go(path),
+      })),
+    }));
+
+    return { accent, sections };
+  }
+}
+</script>
+</body>
+</html>

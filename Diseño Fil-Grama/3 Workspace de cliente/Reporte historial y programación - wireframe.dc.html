@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Reporte · historial + programación — al entrar se ve el historial; programar es avanzado y no compite con «Generar reporte»</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Dos pestañas internas: Historial (default) · Programación — cada cosa en su lugar</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1a desktop: historial -->
+        <div class="dv-card" style="width:760px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · al entrar: pestaña Historial</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <div style="padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:13px; color:#888;">top bar + «‹ Café Aurora» + tabs del workspace (Reporte activa)</div>
+            <div style="padding:14px 16px; background:#fafafa;">
+
+              <!-- header: título + acción primaria -->
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                <div style="display:flex; border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; font-size:13px; background:#fff;">
+                  <span style="padding:5px 14px; background:#e8e8e8; font-weight:600;">Historial</span>
+                  <span style="padding:5px 14px; border-left:1.5px solid #3a3a3a;">Programación <span style="border:1.2px solid #999; border-radius:8px; padding:0 5px; font-size:10px; color:#666;">2</span></span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="font-size:11px; color:#2a78d6;">acción primaria → flujo actual (controles + vista + exportar)</span>
+                  <div style="background:#3a3a3a; color:#fff; border-radius:6px; padding:7px 14px; font-size:13px; font-weight:600;">+ Generar reporte</div>
+                </div>
+              </div>
+
+              <!-- lista historial -->
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; overflow:hidden;">
+                <div style="display:grid; grid-template-columns:1.1fr .8fr 1.1fr .6fr 1fr .7fr; gap:8px; padding:7px 12px; font-size:11px; color:#888; border-bottom:1.5px solid #3a3a3a; text-transform:uppercase;">
+                  <span>Fecha</span><span>Tipo</span><span>Rango</span><span>Formato</span><span>Generado por</span><span></span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.1fr .8fr 1.1fr .6fr 1fr .7fr; gap:8px; padding:9px 12px; font-size:12.5px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                  <span>1 jul 2026, 08:00</span><span>Resumen</span><span>Junio 2026</span><span>PDF</span><span style="color:#666;">⟳ Automático <span style="font-size:10px; color:#999;">(mensual)</span></span><span style="color:#2a78d6; text-decoration:underline;">↓ Descargar</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.1fr .8fr 1.1fr .6fr 1fr .7fr; gap:8px; padding:9px 12px; font-size:12.5px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                  <span>18 jun 2026, 15:22</span><span>Extendido</span><span>1–15 jun</span><span>PDF</span><span style="color:#666;">Lucía F.</span><span style="color:#2a78d6; text-decoration:underline;">↓ Descargar</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.1fr .8fr 1.1fr .6fr 1fr .7fr; gap:8px; padding:9px 12px; font-size:12.5px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                  <span>2 jun 2026, 10:05</span><span>Resumen</span><span>Mayo 2026</span><span>MD</span><span style="color:#666;">Martín R.</span><span style="color:#2a78d6; text-decoration:underline;">↓ Descargar</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.1fr .8fr 1.1fr .6fr 1fr .7fr; gap:8px; padding:9px 12px; font-size:12.5px; align-items:center;">
+                  <span>1 jun 2026, 08:00</span><span>Resumen</span><span>Mayo 2026</span><span>PDF</span><span style="color:#666;">⟳ Automático</span><span style="color:#2a78d6; text-decoration:underline;">↓ Descargar</span>
+                </div>
+              </div>
+              <div style="font-size:12px; color:#2a78d6; margin-top:6px;">↑ re-descarga directa por fila; los automáticos se distinguen con ⟳</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1a desktop: programación -->
+        <div class="dv-card" style="width:640px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · pestaña Programación</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <div style="padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:13px; color:#888;">…mismo encabezado…</div>
+            <div style="padding:14px 16px; background:#fafafa;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                <div style="display:flex; border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; font-size:13px; background:#fff;">
+                  <span style="padding:5px 14px;">Historial</span>
+                  <span style="padding:5px 14px; border-left:1.5px solid #3a3a3a; background:#e8e8e8; font-weight:600;">Programación</span>
+                </div>
+                <div style="border:1.5px solid #3a3a3a; background:#fff; border-radius:6px; padding:7px 14px; font-size:13px;">+ Nueva programación</div>
+              </div>
+
+              <!-- tarjetas de programación -->
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:12px 14px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <div style="font-size:14px; font-weight:600;">Resumen mensual · día 1 · 08:00</div>
+                    <div style="display:flex; gap:8px; font-size:12px;">
+                      <span style="border:1.2px solid #999; border-radius:5px; padding:1px 8px;">⏸ Pausar</span>
+                      <span style="border:1.2px solid #999; border-radius:5px; padding:1px 8px; color:#888;">🗑</span>
+                    </div>
+                  </div>
+                  <div style="font-size:12px; color:#666; margin-top:4px;">PDF · Todas las redes · envía a <b>clientes@aurora.com</b> +1</div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+                    <span style="border:1.5px solid #4a8a5f; color:#4a8a5f; border-radius:10px; padding:1px 9px; font-size:11px;">● Activa</span>
+                    <span style="font-size:11.5px; color:#888;">último: 1 jul ✓ · próximo: 1 ago</span>
+                  </div>
+                </div>
+                <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:12px 14px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <div style="font-size:14px; font-weight:600;">Extendido mensual · día 2 · 09:00</div>
+                    <div style="display:flex; gap:8px; font-size:12px;">
+                      <span style="border:1.2px solid #999; border-radius:5px; padding:1px 8px;">▶ Reanudar</span>
+                      <span style="border:1.2px solid #999; border-radius:5px; padding:1px 8px; color:#888;">🗑</span>
+                    </div>
+                  </div>
+                  <div style="font-size:12px; color:#666; margin-top:4px;">PDF · Solo IG · sin destinatarios (queda en el historial)</div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+                    <span style="border:1.5px solid #999; color:#888; border-radius:10px; padding:1px 9px; font-size:11px;">⏸ Pausada</span>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:12px; color:#2a78d6; margin-top:8px;">↑ pill de estado existente (Activa / Pausada / Envío fallido); «+ Nueva programación» abre modal (ver <a class="dv-oid" href="#1c">1c</a>)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1a mobile -->
+        <div class="dv-card" style="width:290px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · historial como cards</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fafafa; padding:10px; display:flex; flex-direction:column; gap:8px;">
+            <div style="background:#3a3a3a; color:#fff; border-radius:6px; padding:8px 0; font-size:12px; font-weight:600; text-align:center;">+ Generar reporte</div>
+            <div style="display:flex; border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; font-size:11px; background:#fff;">
+              <span style="flex:1; padding:5px 0; text-align:center; background:#e8e8e8; font-weight:600;">Historial</span>
+              <span style="flex:1; padding:5px 0; text-align:center; border-left:1.5px solid #3a3a3a;">Programación (2)</span>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:9px 10px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px;"><b>Resumen · Junio 2026</b><span style="color:#2a78d6;">↓</span></div>
+              <div style="font-size:10.5px; color:#666; margin-top:2px;">1 jul, 08:00 · PDF · ⟳ Automático</div>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:9px 10px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px;"><b>Extendido · 1–15 jun</b><span style="color:#2a78d6;">↓</span></div>
+              <div style="font-size:10.5px; color:#666; margin-top:2px;">18 jun, 15:22 · PDF · Lucía F.</div>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:9px 10px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px;"><b>Resumen · Mayo 2026</b><span style="color:#2a78d6;">↓</span></div>
+              <div style="font-size:10.5px; color:#666; margin-top:2px;">2 jun, 10:05 · MD · Martín R.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Una sola vista: historial protagonista + banda compacta de programaciones abajo (sin pestañas)</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1b desktop -->
+        <div class="dv-card" style="width:760px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · todo visible de un vistazo, programación al final</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <div style="padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:13px; color:#888;">top bar + «‹ Café Aurora» + tabs del workspace</div>
+            <div style="padding:14px 16px; background:#fafafa;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                <div style="font-size:15px; font-weight:600;">Reportes generados</div>
+                <div style="background:#3a3a3a; color:#fff; border-radius:6px; padding:7px 14px; font-size:13px; font-weight:600;">+ Generar reporte</div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; overflow:hidden;">
+                <div style="display:grid; grid-template-columns:1.1fr .8fr 1.1fr .6fr 1fr .7fr; gap:8px; padding:9px 12px; font-size:12.5px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                  <span>1 jul, 08:00</span><span>Resumen</span><span>Junio 2026</span><span>PDF</span><span style="color:#666;">⟳ Automático</span><span style="color:#2a78d6; text-decoration:underline;">↓ Descargar</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.1fr .8fr 1.1fr .6fr 1fr .7fr; gap:8px; padding:9px 12px; font-size:12.5px; align-items:center;">
+                  <span>18 jun, 15:22</span><span>Extendido</span><span>1–15 jun</span><span>PDF</span><span style="color:#666;">Lucía F.</span><span style="color:#2a78d6; text-decoration:underline;">↓ Descargar</span>
+                </div>
+              </div>
+
+              <!-- banda programación -->
+              <div style="display:flex; align-items:center; justify-content:space-between; margin:16px 0 8px;">
+                <div style="font-size:14px; font-weight:600;">Programación automática <span style="font-size:11px; color:#888; font-weight:400;">· avanzado</span></div>
+                <div style="border:1.5px solid #3a3a3a; background:#fff; border-radius:6px; padding:5px 12px; font-size:12px;">+ Nueva</div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <div style="flex:1; border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                  <div style="font-size:12.5px; font-weight:600;">Resumen mensual · día 1</div>
+                  <div style="font-size:11px; color:#666; margin-top:3px;">PDF · Todas · clientes@aurora.com +1</div>
+                  <div style="display:flex; align-items:center; gap:6px; margin-top:5px;"><span style="border:1.5px solid #4a8a5f; color:#4a8a5f; border-radius:10px; padding:0 8px; font-size:10.5px;">● Activa</span><span style="font-size:10.5px; color:#888;">⏸ · 🗑</span></div>
+                </div>
+                <div style="flex:1; border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                  <div style="font-size:12.5px; font-weight:600;">Extendido mensual · día 2</div>
+                  <div style="font-size:11px; color:#666; margin-top:3px;">PDF · Solo IG · sin destinatarios</div>
+                  <div style="display:flex; align-items:center; gap:6px; margin-top:5px;"><span style="border:1.5px solid #999; color:#888; border-radius:10px; padding:0 8px; font-size:10.5px;">⏸ Pausada</span><span style="font-size:10.5px; color:#888;">▶ · 🗑</span></div>
+                </div>
+              </div>
+              <div style="font-size:12px; color:#2a78d6; margin-top:8px;">↑ Ventaja: sin navegación extra. Costo: la pantalla es más larga y lo avanzado siempre está a la vista.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1b mobile -->
+        <div class="dv-card" style="width:290px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · programación colapsada al final</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fafafa; padding:10px; display:flex; flex-direction:column; gap:8px;">
+            <div style="background:#3a3a3a; color:#fff; border-radius:6px; padding:8px 0; font-size:12px; font-weight:600; text-align:center;">+ Generar reporte</div>
+            <div style="font-size:12px; font-weight:600;">Reportes generados</div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:9px 10px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px;"><b>Resumen · Junio 2026</b><span style="color:#2a78d6;">↓</span></div>
+              <div style="font-size:10.5px; color:#666; margin-top:2px;">1 jul · PDF · ⟳ Automático</div>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:9px 10px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px;"><b>Extendido · 1–15 jun</b><span style="color:#2a78d6;">↓</span></div>
+              <div style="font-size:10.5px; color:#666; margin-top:2px;">18 jun · PDF · Lucía F.</div>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:9px 10px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; font-weight:600;">Programación automática (2)</span><span style="color:#888;">▸</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Compartido: modal «Nueva programación» · historial vacío · envío fallido con reintentar</div>
+      <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
+
+        <!-- modal -->
+        <div class="dv-card" style="width:340px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Modal «Nueva programación»</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:10px; background:#fff; padding:14px; display:flex; flex-direction:column; gap:10px;">
+            <div style="font-size:15px; font-weight:600;">Nueva programación</div>
+            <div>
+              <div style="font-size:11px; color:#888;">Frecuencia</div>
+              <div style="display:flex; gap:6px; margin-top:3px; align-items:center;">
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px; background:#e8e8e8; font-weight:600;">Mensual</span>
+                <span style="font-size:12px;">el día</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px;">1 ▾</span>
+                <span style="font-size:12px;">a las</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px;">08:00 ▾</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#888;">Tipo · Formato</div>
+              <div style="display:flex; gap:6px; margin-top:3px;">
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px; background:#e8e8e8; font-weight:600;">Resumen</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px;">Extendido</span>
+                <span style="margin-left:10px; border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px; background:#e8e8e8; font-weight:600;">PDF</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px;">MD</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#888;">Redes</div>
+              <div style="display:flex; gap:6px; margin-top:3px;">
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px; background:#e8e8e8; font-weight:600;">Todas</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px;">IG</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px;">FB</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; font-size:12px;">TT</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#888;">Enviar por email (opcional)</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:6px; padding:6px 10px; font-size:12px; color:#999; margin-top:3px;">agregar destinatarios…</div>
+              <div style="font-size:10.5px; color:#888; margin-top:3px;">Sin destinatarios, el reporte igual queda en el historial.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:4px;">
+              <span style="border:1.5px solid #999; border-radius:6px; padding:5px 12px; font-size:12px;">Cancelar</span>
+              <span style="background:#3a3a3a; color:#fff; border-radius:6px; padding:5px 14px; font-size:12px; font-weight:600;">Crear</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- historial vacío -->
+        <div class="dv-card" style="width:380px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Historial vacío (cliente nuevo)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:14px;">
+            <div style="border:1.5px dashed #999; border-radius:8px; background:#fff; padding:26px 20px; text-align:center;">
+              <div style="width:38px; height:38px; border:1.5px solid #999; border-radius:8px; margin:0 auto; display:flex; align-items:center; justify-content:center; color:#999;">▤</div>
+              <div style="font-size:14px; font-weight:600; margin-top:9px;">Todavía no generaste reportes</div>
+              <div style="font-size:12px; color:#666; margin-top:5px; line-height:1.5;">Generá el primero con el botón de arriba, o programá uno mensual para que salga solo.</div>
+              <div style="display:flex; justify-content:center; gap:8px; margin-top:12px;">
+                <span style="background:#3a3a3a; color:#fff; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600;">+ Generar reporte</span>
+                <span style="border:1.5px solid #999; border-radius:6px; padding:5px 12px; font-size:12px;">Programar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- envío fallido -->
+        <div class="dv-card" style="width:420px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Programación con último envío fallido</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:14px;">
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:12px 14px;">
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <div style="font-size:14px; font-weight:600;">Resumen mensual · día 1 · 08:00</div>
+                <div style="display:flex; gap:8px; font-size:12px;"><span style="border:1.2px solid #999; border-radius:5px; padding:1px 8px;">⏸</span><span style="border:1.2px solid #999; border-radius:5px; padding:1px 8px; color:#888;">🗑</span></div>
+              </div>
+              <div style="font-size:12px; color:#666; margin-top:4px;">PDF · Todas · clientes@aurora.com +1</div>
+              <div style="display:flex; align-items:center; gap:8px; margin-top:6px; flex-wrap:wrap;">
+                <span style="border:1.5px solid #c07a55; color:#c07a55; border-radius:10px; padding:1px 9px; font-size:11px;">⚠ Envío fallido</span>
+                <span style="font-size:11.5px; color:#888;">el reporte se generó y está en el historial; falló el email (1 jul)</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:2px 10px; font-size:11.5px; font-weight:600;">↻ Reintentar envío</span>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#2a78d6; margin-top:8px;">↑ pill de estado existente en variante warning; reintentar solo reenvía el email, no regenera</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Decisiones: varias programaciones por cliente; solo mensual (día X + hora); «quién» = nombre del miembro o ⟳ Automático; «Generar reporte» abre el flujo actual. Probá: "aprobado <a class="dv-oid" href="#1a">1a</a>" · "<a class="dv-oid" href="#1b">1b</a> pero con la programación colapsada también en escritorio".</p>
+</section>
+</x-dc>
+</body>
+</html>

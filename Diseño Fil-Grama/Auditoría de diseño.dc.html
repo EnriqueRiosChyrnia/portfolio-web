@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; }
+    * { box-sizing:border-box; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="./navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-height:100vh; background:#EAEDF1; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif; padding:48px 24px 80px;">
+  <div style="max-width:980px; margin:0 auto;">
+
+    <!-- header -->
+    <div style="display:flex; align-items:center; gap:13px;">
+      <img src="uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:40px; height:40px; border-radius:11px; display:block;" />
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Revisión de diseño</div>
+        <div style="font-size:27px; font-weight:600; color:#141921; letter-spacing:-.4px; margin-top:2px;">Auditoría de las 23 pantallas</div>
+      </div>
+    </div>
+    <div style="font-size:14px; color:#647084; margin-top:12px; max-width:720px; line-height:1.6;">Revisión a fondo del código de cada pantalla y su render, contra la spec (capa 07 — principios UX) y prácticas actuales de interfaces analíticas. Objetivo: diseño lindo y rápido, sin información duplicada, con el detalle correcto en el lugar correcto.</div>
+
+    <!-- lo que está bien -->
+    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:22px 26px; margin-top:28px;">
+      <div style="font-size:15px; font-weight:600; color:#141921;">Lo que ya está fuerte — no tocar</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; margin-top:14px;">
+        <div style="font-size:13px; color:#3D4757; line-height:1.55;">· <b style="font-weight:600;">Estados vacío / carga / error</b> ejemplares (Detalle de cuenta, Gestionar redes, Reporte, Dashboard sin datos): skeletons, copy cálido y siempre una salida.</div>
+        <div style="font-size:13px; color:#3D4757; line-height:1.55;">· <b style="font-weight:600;">Lenguaje humano</b> consistente, popovers ⓘ con glosario, honestidad con TikTok («no comparable»).</div>
+        <div style="font-size:13px; color:#3D4757; line-height:1.55;">· <b style="font-weight:600;">Jerarquía tipográfica</b>: hero grande + tendencia + calma visual; la paleta azul/gris se respeta.</div>
+        <div style="font-size:13px; color:#3D4757; line-height:1.55;">· <b style="font-weight:600;">Flujos difíciles bien resueltos</b>: OAuth con prerrequisitos, resultado multi-estado con remediación, reconexión con «Reconectar todas».</div>
+      </div>
+    </div>
+
+    <!-- los 3 problemas de fondo -->
+    <div style="font-size:18px; font-weight:600; color:#141921; margin:34px 0 6px; letter-spacing:-.2px;">Los tres problemas de fondo</div>
+    <div style="font-size:13px; color:#647084; margin-bottom:16px;">Todo lo demás son síntomas de estos tres. Resolverlos primero ordena el resto.</div>
+
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="width:26px; height:26px; border-radius:8px; background:#1E66BC; color:#fff; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center;">1</span>
+          <span style="font-size:15px; font-weight:600; color:#141921;">Dos verdades de la misma pantalla: Workspace con pestañas vs. pantallas sueltas</span>
+        </div>
+        <div style="font-size:13.5px; color:#3D4757; line-height:1.65; margin-top:11px;"><b style="font-weight:600;">Workspace.dc.html</b> reconstruye adentro de sus pestañas un Dashboard, un mini-Publicaciones, un mini-Comparar, un mini-Reporte y un Detalle de cuenta — y a la vez existen <b style="font-weight:600;">Dashboard.dc.html, Publicaciones-elegir cuenta, Comparar cuentas, Reporte y Detalle de cuenta</b> como archivos aparte. Ya divergieron: el Dashboard suelto tiene selector de red y tabla de mejores publicaciones; el del Workspace no tiene selector pero sus filas de cuentas sí muestran métricas; los chips del header llevan estado en uno y no en el otro; «Todas las publicaciones» y «Reconectar» viven fuera del chrome de pestañas y su breadcrumb vuelve al Dashboard suelto, no al Workspace.</div>
+        <div style="background:#EAF2FB; border-radius:10px; padding:12px 15px; font-size:13px; color:#14529C; line-height:1.6; margin-top:12px;"><b style="font-weight:600;">Decisión propuesta:</b> el Workspace con pestañas es la única verdad del cliente. Dashboard, Publicaciones, Comparar, Reporte, Cuentas y los detalles viven <i>adentro</i> de ese chrome (mismas pestañas visibles siempre). Las pantallas sueltas quedan como specs de cada pestaña, alineadas 1:1 con lo que muestra el Workspace — hoy no lo están.</div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="width:26px; height:26px; border-radius:8px; background:#1E66BC; color:#fff; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center;">2</span>
+          <span style="font-size:15px; font-weight:600; color:#141921;">El estado de las cuentas se repite en cinco lugares</span>
+        </div>
+        <div style="font-size:13.5px; color:#3D4757; line-height:1.65; margin-top:11px;">«Conectada / Error de token» aparece en: chips del header del cliente, lista «Cuentas conectadas» del Dashboard, header del Detalle de cuenta, Gestionar redes y Reconectar cuentas. Es la duplicación de información más visible del producto, y cada copia usa un estilo distinto de pill. Además Reconectar cuentas solapa casi por completo con Gestionar redes.</div>
+        <div style="background:#EAF2FB; border-radius:10px; padding:12px 15px; font-size:13px; color:#14529C; line-height:1.6; margin-top:12px;"><b style="font-weight:600;">Decisión propuesta:</b> un lugar canónico (pestaña Cuentas = Gestionar redes, que absorbe Reconectar como su estado «hay caídas») + una sola señal global: el botón «Reconectar TikTok» del header. Los chips del header vuelven a ser solo redes (IG ×2 · FB · TikTok) sin estado; la lista del Dashboard mantiene su dot de estado pero sin pill con texto.</div>
+      </div>
+
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="width:26px; height:26px; border-radius:8px; background:#1E66BC; color:#fff; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center;">3</span>
+          <span style="font-size:15px; font-weight:600; color:#141921;">El sistema visual existe pero no está fijado — y ya se está desviando</span>
+        </div>
+        <div style="font-size:13.5px; color:#3D4757; line-height:1.65; margin-top:11px;">Dos barras superiores (logo SVG horizontal vs. logo dibujado + wordmark) · dos verdes de éxito (#1F7A50 y #1F8A5B, a veces en el mismo badge) · cuatro variantes de pill de estado (7px, 999px, dot azul, dot verde) · tints de red flat en unas pantallas y con gradiente en otras · «TT» vs «TikTok» · métrica como segmented en Home pero &lt;select&gt; en Detalle de cuenta · tres sets de rango distintos (7/30/90, 30/90/6m/12m, fijo 7). Nada de esto está en filgrama-colors.css, que solo define azules y grises.</div>
+        <div style="background:#EAF2FB; border-radius:10px; padding:12px 15px; font-size:13px; color:#14529C; line-height:1.6; margin-top:12px;"><b style="font-weight:600;">Decisión propuesta:</b> extender la paleta con tokens semánticos (éxito, error, aviso, tints IG/FB/TT) y fijar 6 componentes canónicos: topbar, pill de estado, segmented, dropdown de filtro, tarjeta KPI, popover ⓘ. Una sola versión de cada uno, copiada igual en todas las pantallas.</div>
+      </div>
+    </div>
+
+    <!-- hallazgos -->
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin:36px 0 14px;">
+      <div>
+        <div style="font-size:18px; font-weight:600; color:#141921; letter-spacing:-.2px;">Hallazgos puntuales</div>
+        <div style="font-size:13px; color:#647084; margin-top:4px;">{{ countLabel }} · ordenados por severidad</div>
+      </div>
+      <div style="display:flex; background:#E1E5EB; border-radius:9px; padding:3px; gap:2px;">
+        <sc-for list="{{ sevFilters }}" as="f" hint-placeholder-count="4">
+          <div style="{{ f.style }}" onClick="{{ f.onClick }}">{{ f.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <sc-for list="{{ findings }}" as="h" hint-placeholder-count="8">
+        <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px 20px;">
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <span style="{{ h.sevStyle }}">{{ h.sevLabel }}</span>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:14px; font-weight:600; color:#141921; line-height:1.4;">{{ h.title }}</div>
+              <div style="font-size:13px; color:#3D4757; line-height:1.6; margin-top:5px;">{{ h.detail }}</div>
+              <div style="display:flex; align-items:baseline; gap:8px; margin-top:9px; flex-wrap:wrap;">
+                <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6;">Fix</span>
+                <span style="font-size:13px; color:#14529C; line-height:1.55; flex:1; min-width:240px;">{{ h.fix }}</span>
+              </div>
+              <div style="font-size:11.5px; color:#9AA4B2; margin-top:8px;">{{ h.where }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- quick wins -->
+    <div style="font-size:18px; font-weight:600; color:#141921; margin:36px 0 14px; letter-spacing:-.2px;">Quick wins — una pasada de una tarde</div>
+    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px 28px;">
+        <sc-for list="{{ quickWins }}" as="q" hint-placeholder-count="8">
+          <div style="display:flex; gap:9px; align-items:flex-start; font-size:13px; color:#3D4757; line-height:1.55;">
+            <span style="width:16px; height:16px; border-radius:5px; background:#EAF2FB; color:#1E66BC; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none; margin-top:2px;">{{ q.n }}</span>
+            <span>{{ q.text }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- prácticas modernas -->
+    <div style="font-size:18px; font-weight:600; color:#141921; margin:36px 0 6px; letter-spacing:-.2px;">Prácticas modernas que suman (sin romper la calma)</div>
+    <div style="font-size:13px; color:#647084; margin-bottom:14px;">Seleccionadas por encajar con «divulgación progresiva» y una herramienta interna chica — nada de features por moda.</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <sc-for list="{{ practices }}" as="p" hint-placeholder-count="6">
+        <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px 18px;">
+          <div style="font-size:13.5px; font-weight:600; color:#141921;">{{ p.title }}</div>
+          <div style="font-size:12.5px; color:#647084; line-height:1.6; margin-top:5px;">{{ p.detail }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- ===== PARTE 2: CÓDIGO REAL ===== -->
+    <div style="display:flex; align-items:center; gap:10px; margin:44px 0 6px;">
+      <span style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#fff; background:#1E66BC; border-radius:6px; padding:4px 9px;">Parte 2</span>
+      <span style="font-size:18px; font-weight:600; color:#141921; letter-spacing:-.2px;">El código real del frontend (carpeta «filgrama»)</span>
+    </div>
+    <div style="font-size:13px; color:#647084; margin-bottom:16px; max-width:760px; line-height:1.6;">React + Vite + TS, API tipada generada (orval), e2e con Playwright. Sorpresa positiva: <b style="font-weight:600; color:#3D4757;">el código va adelante de los mockups</b> en varias decisiones de sistema — la sincronización pendiente es en ambas direcciones.</div>
+
+    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+      <div style="font-size:14px; font-weight:600; color:#1F7A50;">Lo que el código ya resolvió (y los mockups todavía no)</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; margin-top:13px;">
+        <sc-for list="{{ codeFixed }}" as="c" hint-placeholder-count="7">
+          <div style="font-size:12.5px; color:#3D4757; line-height:1.6;">· <b style="font-weight:600;">{{ c.t }}</b> — {{ c.d }}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="font-size:15px; font-weight:600; color:#141921; margin:22px 0 10px;">Hallazgos del código</div>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <sc-for list="{{ codeFindingsView }}" as="h" hint-placeholder-count="8">
+        <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px 20px;">
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <span style="{{ h.sevStyle }}">{{ h.sevLabel }}</span>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:14px; font-weight:600; color:#141921; line-height:1.4;">{{ h.title }}</div>
+              <div style="font-size:13px; color:#3D4757; line-height:1.6; margin-top:5px;">{{ h.detail }}</div>
+              <div style="display:flex; align-items:baseline; gap:8px; margin-top:9px; flex-wrap:wrap;">
+                <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6;">Fix</span>
+                <span style="font-size:13px; color:#14529C; line-height:1.55; flex:1; min-width:240px;">{{ h.fix }}</span>
+              </div>
+              <div style="font-size:11.5px; color:#9AA4B2; margin-top:8px;">{{ h.where }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- registro de implementación -->
+    <div style="font-size:18px; font-weight:600; color:#141921; margin:36px 0 6px; letter-spacing:-.2px;">Registro de implementación — 1 jul 2026</div>
+    <div style="font-size:13px; color:#647084; margin-bottom:14px; max-width:760px; line-height:1.6;">Todos los hallazgos de diseño, los 10 quick wins y las prácticas modernas quedaron aplicados sobre las pantallas de este proyecto. Los hallazgos de código no se pueden escribir desde acá (la carpeta local es solo-lectura): quedaron como parches listos para pegar en <b style="font-weight:600; color:#3D4757;">handoff-frontend/PATCHES.md</b>.</div>
+    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px 26px;">
+        <sc-for list="{{ implemented }}" as="i" hint-placeholder-count="10">
+          <div style="display:flex; gap:9px; align-items:flex-start; font-size:12.5px; color:#3D4757; line-height:1.55;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex:none; margin-top:2px;"><circle cx="12" cy="12" r="10" fill="#E7F4EC"/><path d="M8 12.3l2.6 2.5 5-5.2" stroke="#1F7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>{{ i }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- registro de evolución -->
+    <div style="font-size:18px; font-weight:600; color:#141921; margin:36px 0 6px; letter-spacing:-.2px;">Registro de evolución — 2 jul 2026</div>
+    <div style="font-size:13px; color:#647084; margin-bottom:14px; max-width:760px; line-height:1.6;">Nuevas pantallas y evoluciones diseñadas sobre la base auditada (todas con wireframe aprobado antes de la alta fidelidad, mismos patrones canónicos de la guía):</div>
+    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px 26px;">
+        <sc-for list="{{ evolucion }}" as="e" hint-placeholder-count="12">
+          <div style="display:flex; gap:9px; align-items:flex-start; font-size:12.5px; color:#3D4757; line-height:1.55;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex:none; margin-top:2px;"><circle cx="12" cy="12" r="10" fill="#EAF2FB"/><path d="M8 12.3l2.6 2.5 5-5.2" stroke="#1E66BC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>{{ e }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="font-size:12px; color:#9AA4B2; text-align:center; margin-top:40px;">Auditoría · 1–2 jul 2026 · basada en el código DC de las 34 pantallas + spec capas 01/07/11 + render en vivo</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1400}}">
+class Component extends DCLogic {
+  state = { sev: 'todas' };
+
+  data = [
+    { sev:'alta', title:'El gráfico del Workspace contradice su propio número: dice «▲ 12%» pero la curva baja',
+      detail:'En Workspace.dc.html, buildChart() normaliza los valores e invierte la serie: los datos de ejemplo terminan dibujando una tendencia descendente junto a un badge de +12%. En Dashboard.dc.html la misma serie se usa como coordenadas crudas y sube. Para un cliente, un gráfico que baja con un número que sube destruye confianza.',
+      fix:'Una sola función de chart compartida entre pantallas, y datos de ejemplo cuya forma coincida con el signo de la tendencia.',
+      where:'Workspace.dc.html (hero Dashboard) vs Dashboard.dc.html' },
+    { sev:'alta', title:'En móvil no se puede cambiar la métrica hero de la Home',
+      detail:'En escritorio el selector Alcance/Seguidores/Interacciones/Engagement es un segmented; en móvil el chip «Alcance ⓘ» solo abre el popover explicativo. La función principal de la Home (elegir qué hero ver) desaparece en pantallas chicas.',
+      fix:'El chip abre un bottom sheet con las 4 métricas (radio list) + su explicación; el ⓘ vive adentro del sheet.',
+      where:'Lista de clientes.dc.html (frame móvil)' },
+    { sev:'alta', title:'Popovers ⓘ solo por hover: no funcionan con teclado ni touch',
+      detail:'Casi todos los ⓘ usan onMouseEnter/Leave. En tablet/móvil no abren (salvo la Home, que usa tap), y con teclado no hay foco. La spec convierte los tooltips en requisito, así que su accesibilidad también lo es.',
+      fix:'Patrón único: abre con click/tap Y hover, cierra con Esc/click afuera; el ícono es focusable. Un solo componente popover reutilizado.',
+      where:'Todas las pantallas con métricas' },
+    { sev:'alta', title:'Dropdowns que no despliegan: el rango de fechas es decorativo en 4 pantallas',
+      detail:'«Últimos 7 días ▾» (Home), «Junio 2026 ▾» (Reporte y tab Reporte), «Últimos 30 días ▾» (Comparar), «GMT−03 ▾» (Nuevo cliente) muestran chevron pero no abren nada. En la Home además contradice la spec: el rango ahí es fijo de 7 días.',
+      fix:'Home: quitar el chevron y dejar «Últimos 7 días» como etiqueta. Resto: diseñar el menú del selector de período una vez (mismo patrón que los filtros de Todas las publicaciones) y reusarlo.',
+      where:'Home · Reporte · Comparar cuentas · Nuevo cliente' },
+    { sev:'alta', title:'Tres sets de rangos distintos para la misma pregunta («¿de qué período hablamos?»)',
+      detail:'Dashboard: 7/30/90 días. Detalle de cuenta: 30/90 días/6/12 meses (default 90). Reporte: por mes. Al pasar de la vista cliente al detalle de una cuenta, el período cambia solo — los números dejan de ser comparables sin que el usuario lo pida.',
+      fix:'Un set estándar (7/30/90 + «12 meses» donde aplique) y el rango elegido viaja con la navegación dentro del workspace (estado compartido / URL).',
+      where:'Dashboard · Detalle de cuenta · Reporte' },
+    { sev:'media', title:'La pestaña «Cuentas» es un link disfrazado de tab',
+      detail:'Cuatro tabs cambian contenido in-place; «Cuentas» navega a otra página (Gestionar redes) con otro chrome. Rompe el modelo mental de las pestañas.',
+      fix:'Cuentas se renderiza como quinta pestaña real dentro del workspace (el contenido de Gestionar redes ya está diseñado; es moverlo adentro).',
+      where:'Workspace.dc.html · Gestionar redes.dc.html' },
+    { sev:'media', title:'Dos breadcrumbs simultáneos en Detalle de cuenta',
+      detail:'Arriba «‹ Clientes» y en el cuerpo «‹ Volver al cliente»: dos flechas de volver con destinos distintos en la misma vista. Además otros breadcrumbs nombran la página actual («‹ Café Aurora · Reporte») en vez del destino.',
+      fix:'Regla única: el breadcrumb nombra SIEMPRE el destino («‹ Café Aurora»), hay uno solo por vista, y vive en el mismo lugar (arriba del header).',
+      where:'Detalle de cuenta · Reporte · Detalle de story · Todas las publicaciones' },
+    { sev:'media', title:'Emojis como miniaturas de publicaciones (🎬 ⭕ 🎠)',
+      detail:'Workspace, Todas las publicaciones y Reporte usan emojis de placeholder; Detalle de cuenta usa un SVG neutro de imagen. El emoji varía por sistema operativo y baja el tono profesional de un reporte exportable.',
+      fix:'Placeholder único: tint de red + ícono SVG de tipo de contenido (los del Índice ya sirven) + label del tipo. Nunca emoji.',
+      where:'Workspace · Todas las publicaciones · Reporte' },
+    { sev:'media', title:'La caída se muestra en gris: «▼ 6%» parece un dato neutro',
+      detail:'Subas en azul de marca, bajadas en gris secundario. En una herramienta de analítica la dirección del cambio es información primaria; en gris se pierde entre los labels. (Elegir no usar rojo es válido — pero entonces el tratamiento debe distinguirse de otro modo.)',
+      fix:'Delta como chip con fondo suave: suba = azul sobre #EAF2FB, caída = ámbar/rojizo suave (#B2552F sobre #FBEFEC, ya existe en el sistema) — o mantener gris pero con flecha rellena y peso 600. Documentar la decisión.',
+      where:'Todas las tarjetas KPI y tendencias' },
+    { sev:'media', title:'KPI «Seguidores» sin ⓘ, y ningún KPI del Workspace tiene popover',
+      detail:'La spec exige ⓘ en toda métrica visible. En Dashboard.dc.html Seguidores no lo tiene; en el tab Dashboard del Workspace los tres KPI secundarios y el hero muestran el ícono estático o nada.',
+      fix:'Pasada de consistencia: toda métrica con su popover del glosario (los textos ya existen en la capa 07).',
+      where:'Dashboard · Workspace' },
+    { sev:'media', title:'Mismo concepto, control distinto: la métrica es segmented en Home y <select> en Detalle de cuenta',
+      detail:'El usuario aprende un control y encuentra otro. El <select> nativo además no muestra la explicación de cada métrica.',
+      fix:'Segmented cuando hay ≤4 opciones visibles; dropdown propio (como los filtros de Todas las publicaciones) cuando hay más. Nunca <select> nativo.',
+      where:'Lista de clientes · Detalle de cuenta' },
+    { sev:'media', title:'Abreviaciones no humanas en móvil: «Engmt.», «Interac.», «Seguid.»',
+      detail:'Contradice el principio rector de lenguaje humano justo donde el espacio ya obliga a leer rápido.',
+      fix:'KPIs móviles en grilla 2×2 con la palabra completa («Engagement» entra en 165px) — el patrón 2×2 ya existe en Detalle de cuenta móvil.',
+      where:'Dashboard móvil · Workspace móvil' },
+    { sev:'media', title:'Ordenamiento duplicado en Todas las publicaciones',
+      detail:'Dropdown «Ordenar: Más recientes» Y headers de columna clickeables hacen lo mismo con dos UIs. Doble mantenimiento y posible desincronización visual.',
+      fix:'Escritorio: solo headers clickeables (patrón tabla). El dropdown queda para móvil, donde no hay headers.',
+      where:'Todas las publicaciones.dc.html' },
+    { sev:'media', title:'Datos de ejemplo incoherentes entre pantallas',
+      detail:'El cliente suma 128k de alcance con su mejor cuenta en 72.4k, pero el Detalle de esa cuenta muestra 128k; Comparar usa otros tints para las mismas redes. En revisión con stakeholders estos saltos generan preguntas que no son de diseño.',
+      fix:'Un dataset de ejemplo canónico (Café Aurora con sus 4 cuentas y ~12 posts) en un data.js compartido por todas las pantallas.',
+      where:'Workspace · Detalle de cuenta · Comparar · Reporte' },
+    { sev:'baja', title:'Grilla secundaria del Detalle de publicación queda con fila huérfana',
+      detail:'5 métricas en grilla de 3 columnas = una fila de 2 con hueco. Además el post no muestra Interacciones totales ni Engagement, las dos métricas con las que se lo rankeó en la pantalla anterior.',
+      fix:'Fila de 4 (Visualizaciones · Me gusta · Comentarios · Guardados) + Compartidos y Engagement del post: 6 tarjetas en 3×2, y el número por el que llegaste siempre visible.',
+      where:'Detalle de publicación.dc.html' },
+    { sev:'baja', title:'Paginación numérica en escritorio, «Cargar más» en móvil',
+      detail:'Dos paradigmas para la misma lista. Con <10 clientes y pocas decenas de posts por rango, los números de página son ceremonia.',
+      fix:'«Cargar más» + contador («Mostrando 12 de 48») en ambos. Menos UI, misma función.',
+      where:'Todas las publicaciones.dc.html' },
+    { sev:'baja', title:'Breadcrumb del admin a la derecha, pegado al avatar',
+      detail:'En Sincronización y Usuarios el «‹ Administración» está en el extremo derecho de la topbar; en todo el resto del producto la vuelta va arriba a la izquierda.',
+      fix:'Mover el breadcrumb al patrón estándar (izquierda, bajo la topbar).',
+      where:'Sincronización · Usuarios · Detalle de usuario' },
+    { sev:'baja', title:'El menú del avatar no está diseñado en ninguna pantalla',
+      detail:'La navegación acordada dice: avatar → menú con «Administración» (solo admin) y «Cerrar sesión». Ese menú no existe en ningún frame; Admin queda inalcanzable en el prototipo.',
+      fix:'Diseñar el popover del avatar una vez (nombre, rol, Administración, Cerrar sesión) y sumarlo al Workspace y a la Home.',
+      where:'Todas las pantallas con topbar' },
+  ];
+
+  codeFixed = [
+    { t:'Arquitectura consolidada (problema de fondo nº 1)', d:'ClientWorkspace es un layout con <Outlet/>: pestañas = rutas URL-driven (Dashboard · Publicaciones · Comparar · Reporte · Cuentas), header persistente que no se re-monta, detalle de cuenta conserva la pestaña activa. «Cuentas» es una ruta real, no un link disfrazado.' },
+    { t:'Tokens semánticos (problema de fondo nº 3, parcial)', d:'styles/tokens.css ya define éxito/peligro/aviso, sombras, radios y bg-muted — un solo verde (#1F7A50). Los componentes usan var(--fg-*), no hex sueltos.' },
+    { t:'Componentes canónicos', d:'KpiCard, InfoTooltip, SegmentedControl, DateRangeControl, NetworkChip + networks.ts, StatusPill, Skeleton/Empty/Error/Loading — una sola implementación de cada patrón que en los mockups divergía.' },
+    { t:'Rangos estandarizados', d:'DateRangeControl: 7/30/90 por defecto, WIDE_RANGES (1 año/Todo) donde aplica, Home fija en 7 días sin chevron falso. Exactamente lo que pedía el hallazgo.' },
+    { t:'Tooltips accesibles y gráficos consultables', d:'InfoTooltip abre con hover Y foco (button + aria-label); TrendChart (Recharts) trae tooltip de fecha+valor y activeDot — la práctica moderna ya está.' },
+    { t:'Home con paridad total', d:'Selector de métrica hero persistido en localStorage, buscador, Todos/Prioritarios, sparkline por tarjeta, ⓘ en todas las métricas (incluida Seguidores).' },
+    { t:'Higiene técnica', d:'Rutas lazy por feature, focus-visible global, API tipada generada con orval, e2e con Playwright, RBAC en Topbar.' },
+  ];
+
+  codeFindings = [
+    { sev:'alta', title:'Home hace ~3 requests por tarjeta de cliente (N+1)',
+      detail:'Cada ClientCard resuelve su propio summary, sus cuentas y la serie del sparkline. Con 10 clientes son ~31 requests al abrir la app — la pantalla que más «rápida» tiene que sentirse. El backend ya expone POST /metrics:batchReport pensado para esto.',
+      fix:'Un solo batchReport para los heroes + sparklines de todos los clientes visibles (o un endpoint /clients/summary agregado). Mantener react-query como caché.',
+      where:'ClientsHomePage.tsx · endpoints.ts' },
+    { sev:'alta', title:'Los KPIs del Dashboard perdieron la comparación vs. período anterior',
+      detail:'KpiCard soporta trend, pero el Dashboard no se lo pasa: Alcance/Interacciones/Engagement/Seguidores se muestran sin ▲▼. En los mockups la variación es parte del valor central de la pantalla («¿cómo viene?» exige un contra qué).',
+      fix:'Calcular delta vs. el período anterior (el backend guarda snapshots diarios; es una segunda query con el rango corrido) y pasarla a KpiCard. Aplica también a Detalle de cuenta.',
+      where:'ClientDashboardPage.tsx · AccountDetailPage.tsx' },
+    { sev:'media', title:'Todas las publicaciones quedó por debajo del diseño aprobado',
+      detail:'El código tiene grilla + orden (select nativo) + rango, pero falta el filtro por tipo (Reel/Story/Imagen…), los chips de filtros activos y el «Limpiar todo» que el mockup define. El select nativo tampoco es el dropdown del sistema.',
+      fix:'Portar del mockup: filtro de tipo, chips de filtros activos, dropdown propio. El estado de filtros va en la URL (compartible).',
+      where:'AllPostsPage.tsx' },
+    { sev:'media', title:'El estado por cuenta sigue duplicado en los chips del header (igual que en los mockups)',
+      detail:'HeaderChip pinta dot verde/rojo + tinte de peligro por cuenta, y además existen el botón «Reconectar», la lista del Dashboard con StatusPill y la pestaña Cuentas. El problema de fondo nº 2 pasó del diseño al código.',
+      fix:'Chips del header solo con red + handle; el estado vive en el botón Reconectar (global) y en Cuentas (detalle).',
+      where:'ClientWorkspace.tsx (HeaderChip)' },
+    { sev:'media', title:'Responsive fiado a auto-fit: nadie diseñó el quiebre móvil real',
+      detail:'Las grillas usan minmax() (bien), pero solo CompareAccountsPage escucha matchMedia. Tablas (Admin, Sync), la barra de pestañas y los controles del Reporte no tienen tratamiento móvil — los mockups móviles diseñados (KPIs 2×2, cards en vez de filas) no están implementados.',
+      fix:'Definir 1 breakpoint (~720px) con un hook useIsMobile compartido y aplicar los layouts móviles ya diseñados donde hay tabla.',
+      where:'Table.tsx · SyncPage · UsersListPage · ReportPage' },
+    { sev:'media', title:'La caída sigue en gris también en el código',
+      detail:'TrendLabel: up = azul primario, down = text-tertiary. Mismo hallazgo que en los mockups — la dirección del cambio es información primaria y hoy una caída parece un label deshabilitado.',
+      fix:'Decidir la semántica una vez (chip con fondo suave, flecha rellena) y aplicarla en TrendLabel — un solo lugar, efecto global.',
+      where:'components/ui/KpiCard.tsx (TrendLabel)' },
+    { sev:'baja', title:'Drift chico de colores fuera de tokens',
+      detail:'#3D4757 repetido como color de label en 4 formularios (no existe como token), y adminConstants re-declara el warning (#FEF3C7/#92600A) que tokens.css ya define. Los colores de red en qrStyle son deliberados (marcas oficiales), esos están bien.',
+      fix:'Agregar --fg-text-strong y usar var(--fg-warning-*) en adminConstants.',
+      where:'Input.tsx · NewClientPage · UserDetailPage · adminConstants.ts' },
+    { sev:'baja', title:'Dos fuentes de verdad de la marca en el repo',
+      detail:'design/filgrama-colors.css conserva el bloque dark-mode que tokens.css eliminó a propósito, y conviven logo.svg, marca_horizontal.png e isotipo.png sueltos en la raíz junto a design/ y frontend/public/brand.',
+      fix:'design/ como única fuente (los PNG sueltos se archivan) y una nota en filgrama-colors.css apuntando a tokens.css como copia vendorizada.',
+      where:'design/ · raíz del repo' },
+  ];
+
+  practices = [
+    { title:'Tokens semánticos y de red en filgrama-colors.css', detail:'--fg-success / --fg-danger / --fg-warning + tints IG/FB/TT con su ink. Hoy cada pantalla inventa sus hex (dos verdes distintos conviven). Es la base para que el hi-fi no se siga desviando — y deja listo el modo oscuro que el CSS ya esboza.' },
+    { title:'Tooltip de datos en los gráficos', detail:'Hover/tap sobre la curva muestra fecha + valor (y el valor del período anterior en línea punteada). Es el estándar en analítica: el gráfico pasa de decorativo a consultable sin agregar densidad visual.' },
+    { title:'tabular-nums en todo número', detail:'Ya se usa en algunas tablas; falta en KPIs y tarjetas. Evita que los números «bailen» al cambiar rango o métrica, y alinea columnas sin esfuerzo.' },
+    { title:'Rango persistente y compartido (URL)', detail:'El período elegido se conserva al navegar Dashboard → Detalle de cuenta → Publicaciones y al recargar (query param). Patrón de Metricool/GA: el contexto temporal es parte de la navegación.' },
+    { title:'Transiciones de contenido, no de layout', detail:'Al cambiar red o rango, números y curva hacen crossfade de ~150ms manteniendo el layout fijo (min-height ya está en varios). Comunica «se actualizó» sin saltos. Nada de animaciones decorativas.' },
+    { title:'Header de tabla sticky', detail:'En Todas las publicaciones con 20+ filas, el header de columnas se pega arriba al scrollear. Costo cero, orientación permanente.' },
+  ];
+
+  quickWins = [
+    'Unificar el verde de éxito en un token (hoy #1F7A50 y #1F8A5B conviven, a veces en el mismo badge).',
+    'Una sola topbar: logo horizontal SVG en todas las pantallas (hoy hay dos versiones).',
+    'Quitar el chevron «▾» del rango en la Home (el rango ahí es fijo por spec).',
+    'Chips de red con una sola nomenclatura: IG · FB · TikTok (nunca «TT» en UI visible).',
+    'Reemplazar los emojis de miniatura por el placeholder SVG de Detalle de cuenta.',
+    'Agregar ⓘ a Seguidores y a los KPIs del Workspace (textos ya escritos en la spec).',
+    'Un solo radio de pill de estado (7px) y un solo formato de delta.',
+    'Corregir la curva descendente del hero del Workspace (▲ 12%).',
+    'Breadcrumbs que nombran el destino, nunca la página actual.',
+    'Renombrar la carpeta local y «guia-feedback-diseño.md» sin tildes/ñ para poder auditarlas.',
+  ].map((text, i) => ({ text, n: i + 1 }));
+
+  sevMeta = {
+    alta:  { label:'Alta',  bg:'#FBEFEC', ink:'#B2552F' },
+    media: { label:'Media', bg:'#FBF4E8', ink:'#9A7B30' },
+    baja:  { label:'Baja',  bg:'#EEF1F5', ink:'#647084' },
+  };
+
+  renderVals() {
+    const sev = this.state.sev;
+    const list = this.data.filter(h => sev === 'todas' ? true : h.sev === sev);
+
+    const findings = list.map(h => ({
+      ...h,
+      sevLabel: this.sevMeta[h.sev].label,
+      sevStyle: {
+        flex:'none', marginTop:'1px', display:'inline-flex', alignItems:'center',
+        height:'22px', padding:'0 9px', borderRadius:'7px', fontSize:'11.5px', fontWeight:600,
+        background:this.sevMeta[h.sev].bg, color:this.sevMeta[h.sev].ink,
+      },
+    }));
+
+    const segBase = { display:'flex', alignItems:'center', padding:'0 13px', height:'28px', fontSize:'12.5px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s' };
+    const sevFilters = [['todas','Todos'],['alta','Alta'],['media','Media'],['baja','Baja']].map(([k,l]) => ({
+      label:l, onClick:() => this.setState({ sev:k }),
+      style: k === sev ? { ...segBase, background:'#fff', color:'#141921', fontWeight:600, boxShadow:'0 1px 2px rgba(20,25,33,.1)' } : { ...segBase, color:'#647084' },
+    }));
+
+    const sevStyleFor = (s) => ({
+      flex:'none', marginTop:'1px', display:'inline-flex', alignItems:'center',
+      height:'22px', padding:'0 9px', borderRadius:'7px', fontSize:'11.5px', fontWeight:600,
+      background:this.sevMeta[s].bg, color:this.sevMeta[s].ink,
+    });
+    const codeFindingsView = this.codeFindings.map(h => ({
+      ...h, sevLabel: this.sevMeta[h.sev].label, sevStyle: sevStyleFor(h.sev),
+    }));
+
+    const n = list.length;
+    return {
+      findings, sevFilters,
+      countLabel: n + (n === 1 ? ' hallazgo' : ' hallazgos'),
+      practices: this.practices,
+      quickWins: this.quickWins,
+      codeFixed: this.codeFixed,
+      codeFindingsView,
+      evolucion: [
+        'Audiencia: nueva pestaña del workspace — evolución de seguidores + demografía (edad/género, ciudades/países), estado «sin datos suficientes» y TikTok con menos desglose.',
+        'Dashboard: comparación vs período anterior — dropdown de rango estándar, toggle con serie previa punteada, tooltips «vs fechas», y «sin datos previos» para cuentas nuevas.',
+        'Reporte: historial de generados (re-descarga) + programación automática mensual con pausar/eliminar y reintento de envío fallido; el flujo de generar quedó en pantalla propia.',
+        'Marca (en Cuentas): logo, colores como metadata (legible por MCP) y tipografías por rol con fuente propia; preview en vivo y fallback amable ante fuente inválida.',
+        'Campana de notificaciones transversal + Salud de cuentas en Administración, ordenada por gravedad con acción rápida.',
+        'Home: resumen de agencia colapsable (totales, movimientos por métrica, atención) que recuerda tu elección.',
+        'Publicaciones: etiquetas de campaña (asignador ⌗+, filtro y banda resumen) · Dashboard: metas con multi-cuenta, ritmo humano y sin tope.',
+        'Multi-organización: Aceptar invitación (fundadora/miembro/vencida), Recuperar contraseña self-service (respuesta neutra, 60 min, email diseñado) y «Olvidé mi contraseña» en el Login.',
+        'Organización (reemplaza a Usuarios en el hub): datos + zona horaria, invitar por email, pendientes con reenviar/cancelar, suscripción solo-lectura con wa.me.',
+        'Panel de plataforma (staff): barra ink, observabilidad, detalle de organización con pagos en Gs./límites/suspender por rol, audit log en vivo y banner de impersonación.',
+        'Autogestionado: aterriza en su dashboard (sin Home), pestañas «Comparar redes»/«Redes», bienvenida guiada de primera vez y «Mi cuenta y suscripción».',
+        'Consistencia: pestaña Audiencia agregada a Workspace, Gestionar redes, Publicaciones y Detalle de cuenta; hub de Administración a 3+ tarjetas.',
+      ],
+      implemented: [
+        'Workspace: curva del hero corregida (ya sube con ▲ 12%) y pestaña Cuentas real, con lista de cuentas y acciones adentro del chrome.',
+        'Chips del header del cliente sin estado por cuenta (solo red + handle); la señal vive en «Reconectar» y en Cuentas.',
+        'Deltas como chips con fondo: suba azul, caída rojiza — en Home, Dashboard, Workspace, Detalle de cuenta y Reporte. Tokens nuevos en filgrama-colors.css.',
+        'ⓘ en TODA métrica (Seguidores incluido) y popovers que abren también con click/tap, en las 8 pantallas con métricas.',
+        'Home móvil: bottom sheet para elegir la métrica hero (con explicación por opción); Home desktop sin chevron falso en el rango.',
+        'Menú del avatar diseñado (nombre, rol, Administración, Cerrar sesión) en Home y Workspace.',
+        'Rangos estandarizados 7/30/90 (+12 meses en Detalle de cuenta) y persistentes entre pantallas (localStorage fg-range).',
+        'Dashboard: tooltip de datos sobre la curva (fecha + valor + marcador) y crossfade de contenido al cambiar rango.',
+        'Todas las publicaciones: un solo mecanismo de orden (headers), «Cargar más» en vez de paginación numérica, header sticky.',
+        'Detalle de publicación: grilla 3×2 con Engagement del post (sin fila huérfana); breadcrumbs que nombran el destino en 7 pantallas.',
+        'Emojis de miniatura reemplazados por el placeholder SVG neutro (Workspace, Todas las publicaciones, Reporte).',
+        'Una sola topbar (logo horizontal SVG) en las 8 pantallas que usaban el logo dibujado; verde de éxito unificado en #1F7A50; pills de estado a 7px; «TikTok» nunca «TT» en chips visibles.',
+        'Detalle de cuenta: un solo breadcrumb, métrica como segmented (no <select>), datos coherentes con la fila del Workspace (72.4k).',
+        'Reporte y Comparar: selectores de período reales (mes / 7-30-90) que abren menú; Nuevo cliente: zona horaria funcional y pill «Conectada» verde estándar.',
+        'tabular-nums en heroes, KPIs y tablas de todas las pantallas tocadas.',
+        'Admin ×3: breadcrumb estándar arriba a la izquierda y topbar unificada.',
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

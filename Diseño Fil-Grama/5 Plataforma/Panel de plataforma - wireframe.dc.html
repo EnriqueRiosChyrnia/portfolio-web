@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+    .pill{border-radius:10px;padding:0 8px;font-size:10px;white-space:nowrap;display:inline-block}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Panel de plataforma (staff Fil-Grama) — entrada aparte con login propio · tabs: Observabilidad · Organizaciones · Audit log</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a chrome ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Señal visual «estás en plataforma» — dos opciones de chrome (elegí una)</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:400px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Opción A · barra superior oscura (ink) — inconfundible</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden;">
+            <div style="background:#1c2230; color:#fff; padding:8px 14px; display:flex; align-items:center; justify-content:space-between;">
+              <span style="font-size:13px;">▣ Fil-Grama · <b>Plataforma</b></span>
+              <span style="font-size:11px; color:#9aa;">Enrique (dueño) ◯</span>
+            </div>
+            <div style="display:flex; gap:14px; padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:12px; background:#fff;">
+              <b style="border-bottom:2.5px solid #1c2230; padding-bottom:3px;">Observabilidad</b><span style="color:#888;">Organizaciones</span><span style="color:#888;">Audit log</span>
+            </div>
+            <div style="height:40px; background:#fafafa;"></div>
+          </div>
+        </div>
+        <div class="dv-card" style="width:400px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Opción B · header claro + franja violeta fina arriba</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden;">
+            <div style="height:5px; background:#6B4FA1;"></div>
+            <div style="background:#fff; padding:8px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom:1.5px solid #3a3a3a;">
+              <span style="font-size:13px;">▣ Fil-Grama <span class="pill" style="border:1.2px solid #6B4FA1; color:#6B4FA1;">Plataforma</span></span>
+              <span style="font-size:11px; color:#888;">Enrique ◯</span>
+            </div>
+            <div style="height:40px; background:#fafafa;"></div>
+          </div>
+          <div style="font-size:11.5px; color:#666; margin-top:8px;">Menos contraste con las pantallas de org; la franja puede pasar desapercibida.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b observabilidad ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Vista 1 · Observabilidad (home): alertas arriba → tarjetas resumen → salud del job por organización</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:760px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio (chrome oscuro de ejemplo)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; background:#fff;">
+            <div style="background:#1c2230; color:#fff; padding:7px 14px; font-size:12px;">▣ Fil-Grama · <b>Plataforma</b></div>
+            <div style="display:flex; gap:14px; padding:7px 14px; border-bottom:1.5px solid #3a3a3a; font-size:12px;"><b style="border-bottom:2.5px solid #1c2230;">Observabilidad</b><span style="color:#888;">Organizaciones</span><span style="color:#888;">Audit log</span></div>
+            <div style="padding:12px 14px; background:#fafafa;">
+
+              <!-- alertas -->
+              <div style="border:1.5px solid #c07a55; border-radius:8px; background:#fdf6f4; padding:8px 12px; margin-bottom:10px; font-size:11.5px; line-height:1.7;">
+                <b>⚠ 3 alertas</b> · Estudio Nima: job falló 2 días seguidos → <span style="color:#2a78d6; text-decoration:underline;">ver</span> · Kiosco Doña Rosa: suscripción vence en 3 días · Agencia Sur: 5 cuentas con token vencido
+              </div>
+
+              <!-- tarjetas resumen -->
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+                <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                  <div style="font-size:10.5px; color:#888; text-transform:uppercase;">Organizaciones</div>
+                  <div style="font-size:22px; font-weight:600;">14</div>
+                  <div style="font-size:10.5px; color:#666; line-height:1.6;">9 agencias · 5 autogestionadas<br/>12 activas · <span style="color:#c07a55;">1 en gracia</span> · 1 suspendida</div>
+                </div>
+                <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                  <div style="font-size:10.5px; color:#888; text-transform:uppercase;">Cuentas conectadas</div>
+                  <div style="font-size:22px; font-weight:600;">87</div>
+                  <div style="font-size:10.5px; color:#666; line-height:1.6;">IG 41 · FB 28 · TikTok 18<br/><span style="color:#c07a55;">6 con error de token</span></div>
+                </div>
+                <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                  <div style="font-size:10.5px; color:#888; text-transform:uppercase;">Suscripciones</div>
+                  <div style="font-size:22px; font-weight:600;">3 <span style="font-size:11px; font-weight:400; color:#c07a55;">por vencer ≤ 15 días</span></div>
+                  <div style="font-size:10.5px; color:#666; line-height:1.6;">Kiosco Doña Rosa (3 d) · Vera (9 d) · Nima (14 d)</div>
+                </div>
+              </div>
+
+              <!-- salud del job -->
+              <div style="font-size:12.5px; font-weight:600; margin:12px 0 6px;">Salud del job diario por organización</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; overflow:hidden;">
+                <div style="display:grid; grid-template-columns:1.3fr .8fr .9fr .7fr 1fr; gap:8px; padding:6px 12px; font-size:10px; color:#888; border-bottom:1.5px solid #3a3a3a; text-transform:uppercase;">
+                  <span>Organización</span><span>Tipo</span><span>Última corrida</span><span>% éxito</span><span>Errores</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.3fr .8fr .9fr .7fr 1fr; gap:8px; padding:7px 12px; font-size:11.5px; border-bottom:1.2px solid #e5e5e5; background:#fdf6f4; align-items:center;">
+                  <b>Estudio Nima</b><span>Agencia</span><span>hoy 03:00</span><span style="color:#c0392b; font-weight:600;">40%</span><span style="color:#c0392b;">3 cuentas fallaron · 2 días seguidos</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.3fr .8fr .9fr .7fr 1fr; gap:8px; padding:7px 12px; font-size:11.5px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                  <b>Agencia Litoral</b><span>Agencia</span><span>hoy 03:00</span><span style="color:#4a8a5f; font-weight:600;">100%</span><span style="color:#888;">—</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.3fr .8fr .9fr .7fr 1fr; gap:8px; padding:7px 12px; font-size:11.5px; align-items:center; color:#999;">
+                  <b style="color:#666;">Kiosco Doña Rosa</b><span>Autogest.</span><span style="font-style:italic;">pausado (suspendida)</span><span>—</span><span>—</span>
+                </div>
+              </div>
+              <div style="font-size:11px; color:#2a78d6; margin-top:6px;">orden: peor % éxito arriba; fila clickeable → detalle de organización. Suspendidas: el job las saltea (se muestra «pausado»)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- móvil -->
+        <div class="dv-card" style="width:260px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · apilado</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; overflow:hidden;">
+            <div style="background:#1c2230; color:#fff; padding:7px 12px; font-size:11px;">▣ <b>Plataforma</b></div>
+            <div style="display:flex; gap:10px; padding:6px 12px; border-bottom:1.5px solid #3a3a3a; font-size:10.5px;"><b>Observab.</b><span style="color:#888;">Orgs</span><span style="color:#888;">Audit</span></div>
+            <div style="padding:8px; background:#fafafa; display:flex; flex-direction:column; gap:6px;">
+              <div style="border:1.5px solid #c07a55; border-radius:8px; background:#fdf6f4; padding:7px 9px; font-size:10px;"><b>⚠ 3 alertas</b> · ver todas ▸</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px; font-size:10.5px;"><b>14 organizaciones</b> · 12 activas · 1 gracia · 1 susp.</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px; font-size:10.5px;"><b>87 cuentas</b> · 6 con error</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px; font-size:10.5px;"><b>Job diario</b><br/><span style="color:#c0392b;">Estudio Nima 40%</span> · Litoral 100% · …</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c detalle de org ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Vista 2 · Detalle de organización — con switch demo Dueño/Soporte y modal «Registrar pago»</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:760px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · rol Dueño (lo tachado en violeta NO lo ve Soporte)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; background:#fff;">
+            <div style="background:#1c2230; color:#fff; padding:7px 14px; font-size:12px;">▣ Fil-Grama · <b>Plataforma</b> · ‹ Organizaciones</div>
+            <div style="padding:12px 14px; background:#fafafa;">
+
+              <!-- header org -->
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                <div>
+                  <div style="font-size:16px; font-weight:600;">Estudio Nima <span class="pill" style="border:1.2px solid #999; color:#666;">Agencia</span> <span class="pill" style="border:1.2px solid #c8a415; color:#a2830f;">● Por vencer · 14 días</span></div>
+                  <div style="font-size:11px; color:#888; margin-top:3px;">creada 12 mar 2026 · 4 usuarios · 6 clientes · 15 cuentas</div>
+                </div>
+                <div style="display:flex; gap:6px; font-size:11.5px;">
+                  <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:4px 10px; background:#fff;">👤 Entrar como soporte</span>
+                  <span style="border:1.5px solid #6B4FA1; color:#6B4FA1; border-radius:6px; padding:4px 10px; background:#fff;">⏸ Suspender</span>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <!-- datos y límites -->
+                <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                  <div style="font-size:12px; font-weight:600;">Datos y límites</div>
+                  <div style="font-size:11px; color:#666; margin-top:6px; line-height:1.9;">
+                    Contacto: nima@estudio.com · +595 981 …<br/>
+                    Límites (manuales, etapa B): <b>10</b> clientes · <b>30</b> cuentas · <b>8</b> usuarios <span style="border:1.2px solid #999; border-radius:5px; padding:0 6px; font-size:10px;">editar</span><br/>
+                    Uso actual: 6 clientes · 15 cuentas · 4 usuarios
+                  </div>
+                </div>
+                <!-- usuarios -->
+                <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px;">
+                  <div style="font-size:12px; font-weight:600;">Usuarios (4)</div>
+                  <div style="font-size:11px; color:#666; margin-top:6px; line-height:1.9;">
+                    Nadia F. — Owner · último acceso hoy<br/>
+                    Bruno T. — Admin · hace 3 días · <span style="color:#2a78d6; text-decoration:underline;">reenviar invitación</span><br/>
+                    +2 empleados ▸
+                  </div>
+                </div>
+              </div>
+
+              <!-- suscripción (solo dueño) -->
+              <div style="border:1.5px solid #6B4FA1; border-radius:8px; background:#faf7ff; padding:10px 12px; margin-top:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div style="font-size:12px; font-weight:600;">Suscripción <span class="pill" style="border:1.2px solid #6B4FA1; color:#6B4FA1;">solo Dueño</span></div>
+                  <span style="background:#3a3a3a; color:#fff; border-radius:6px; padding:4px 12px; font-size:11.5px; font-weight:600;">+ Registrar pago</span>
+                </div>
+                <div style="font-size:11px; color:#666; margin-top:6px;">Vigente hasta <b>16 jul 2026</b> · gracia de 7 días después · estados: vigente / por vencer / gracia / suspendida</div>
+                <div style="border:1.2px solid #ccc; border-radius:6px; background:#fff; margin-top:6px; font-size:10.5px;">
+                  <div style="display:grid; grid-template-columns:1fr 1fr .6fr 1fr 1fr; gap:6px; padding:4px 10px; color:#888; border-bottom:1.2px solid #e5e5e5; text-transform:uppercase; font-size:9px;"><span>Pagado</span><span>Monto</span><span>Meses</span><span>Cubre hasta</span><span>Registrado por</span></div>
+                  <div style="display:grid; grid-template-columns:1fr 1fr .6fr 1fr 1fr; gap:6px; padding:5px 10px; border-bottom:1.2px solid #eee;"><span>16 abr 2026</span><span>Gs. 1.350.000</span><span>3</span><span>16 jul 2026</span><span>Enrique · 📎</span></div>
+                  <div style="display:grid; grid-template-columns:1fr 1fr .6fr 1fr 1fr; gap:6px; padding:5px 10px;"><span>16 ene 2026</span><span>Gs. 1.350.000</span><span>3</span><span>16 abr 2026</span><span>Enrique</span></div>
+                </div>
+              </div>
+
+              <!-- notas internas -->
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:10px 12px; margin-top:8px;">
+                <div style="font-size:12px; font-weight:600;">Notas internas <span style="font-size:10px; color:#888; font-weight:400;">(las ve todo el staff, nunca el tenant)</span></div>
+                <div style="font-size:11px; color:#666; margin-top:5px; line-height:1.7;">«Pidieron subir el límite de cuentas en agosto» — Enrique, 20 jun · <span style="border:1.2px dashed #999; border-radius:5px; padding:0 8px;">+ agregar nota</span></div>
+              </div>
+
+              <div style="font-size:11px; color:#2a78d6; margin-top:8px;">Rol <b>Soporte</b>: no ve el bloque violeta de Suscripción ni «Suspender»; sí puede reenviar invitaciones, disparar re-sync y «Entrar como soporte». Impersonar SIEMPRE queda en el audit log.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- modal registrar pago -->
+        <div class="dv-card" style="width:330px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Modal «Registrar pago» (solo Dueño)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:10px; background:#fff; padding:14px; display:flex; flex-direction:column; gap:10px;">
+            <div style="font-size:14px; font-weight:600;">Registrar pago · Estudio Nima</div>
+            <div style="font-size:10.5px; color:#666; background:#f2f6fc; border:1.2px solid #cdd; border-radius:6px; padding:6px 9px;">El pago llega por transferencia y el comprobante por WhatsApp — acá solo se registra.</div>
+            <div>
+              <div style="font-size:11px; color:#666;">Monto</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:6px; padding:5px 10px; font-size:12px; margin-top:3px;"><b>Gs.</b> 1.350.000</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#666;">Meses habilitados</div>
+              <div style="display:flex; gap:5px; margin-top:3px; align-items:center;">
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; font-size:11px;">1</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; font-size:11px; background:#e8e8e8; font-weight:600;">3</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; font-size:11px;">6</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; font-size:11px;">12</span>
+                <span style="border:1.5px dashed #999; border-radius:6px; padding:3px 9px; font-size:11px; color:#888;">otro: __</span>
+              </div>
+              <div style="font-size:10px; color:#2a78d6; margin-top:4px;">cantidad libre con «otro» · extiende desde el vencimiento actual → «cubre hasta 16 oct 2026»</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#666;">Nota (opcional)</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:6px; padding:5px 10px; font-size:11px; color:#bbb; margin-top:3px;">ej: transferencia Itaú, recibo #123</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:#666;">Comprobante (opcional)</div>
+              <div style="border:1.5px dashed #999; border-radius:6px; padding:8px; font-size:11px; color:#888; text-align:center; margin-top:3px;">⤒ adjuntar imagen o PDF</div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px;">
+              <span style="border:1.5px solid #999; border-radius:6px; padding:5px 12px; font-size:12px;">Cancelar</span>
+              <span style="background:#3a3a3a; color:#fff; border-radius:6px; padding:5px 12px; font-size:12px; font-weight:600;">Registrar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1d audit log ============================================================ -->
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Vista 3 · Audit log — append-only, filtrable por staff, acción y organización</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:700px; padding:14px;">
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; background:#fff;">
+            <div style="background:#1c2230; color:#fff; padding:7px 14px; font-size:12px;">▣ Fil-Grama · <b>Plataforma</b></div>
+            <div style="padding:12px 14px; background:#fafafa;">
+              <div style="display:flex; gap:6px; margin-bottom:8px; font-size:11px;">
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; background:#fff;">Staff: todos ▾</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; background:#fff;">Acción: todas ▾</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; background:#fff;">Organización: todas ▾</span>
+                <span style="border:1.5px solid #3a3a3a; border-radius:6px; padding:3px 9px; background:#fff;">▦ 30 días ▾</span>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; overflow:hidden; font-size:11px;">
+                <div style="display:grid; grid-template-columns:.9fr 1.5fr 1fr .9fr; gap:8px; padding:5px 12px; color:#888; border-bottom:1.5px solid #3a3a3a; text-transform:uppercase; font-size:9.5px;"><span>Quién</span><span>Qué</span><span>Organización</span><span>Cuándo</span></div>
+                <div style="display:grid; grid-template-columns:.9fr 1.5fr 1fr .9fr; gap:8px; padding:6px 12px; border-bottom:1.2px solid #e5e5e5;"><span>Enrique</span><span>Registró pago Gs. 1.350.000 · 3 meses</span><span>Estudio Nima</span><span>hoy 14:02</span></div>
+                <div style="display:grid; grid-template-columns:.9fr 1.5fr 1fr .9fr; gap:8px; padding:6px 12px; border-bottom:1.2px solid #e5e5e5; background:#faf7ff;"><span>Caro (soporte)</span><span>👤 Entró como soporte · 22 min</span><span>Agencia Litoral</span><span>hoy 11:40</span></div>
+                <div style="display:grid; grid-template-columns:.9fr 1.5fr 1fr .9fr; gap:8px; padding:6px 12px; border-bottom:1.2px solid #e5e5e5;"><span>Caro (soporte)</span><span>Reenvió invitación a bruno@nima.com</span><span>Estudio Nima</span><span>ayer 17:15</span></div>
+                <div style="display:grid; grid-template-columns:.9fr 1.5fr 1fr .9fr; gap:8px; padding:6px 12px;"><span>Enrique</span><span>⏸ Suspendió la organización (impago)</span><span>Kiosco Doña Rosa</span><span>28 jun</span></div>
+              </div>
+              <div style="font-size:11px; color:#2a78d6; margin-top:6px;">impersonaciones resaltadas en violeta con duración; sin editar ni borrar (append-only); fila expandible con detalle e IP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1e banner ============================================================ -->
+    <div class="dv-opt" id="1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Banner de impersonación — flotante abajo, sobre cualquier pantalla normal</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:520px; padding:14px;">
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; overflow:hidden; position:relative; background:#fff;">
+            <div style="padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:12px; color:#888;">Dashboard de Café Aurora (pantalla normal de la org, sin cambios)</div>
+            <div style="height:110px; background:#fafafa;"></div>
+            <div style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); background:#1c2230; color:#fff; border-radius:10px; padding:8px 16px; font-size:11.5px; display:flex; align-items:center; gap:12px; box-shadow:3px 3px 0 rgba(0,0,0,.15); white-space:nowrap;">
+              👤 Estás viendo <b>Agencia Litoral</b> como soporte · quedará registrado · <span style="text-decoration:underline;">Salir</span>
+            </div>
+          </div>
+          <div style="font-size:11.5px; color:#666; margin-top:8px;">Flotante, no tapa la navegación; mismo ink oscuro del chrome de plataforma; con tiempo límite de sesión.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Decisiones: tabs horizontales; «otro: __» permite cualquier cantidad de meses; el pago extiende desde el vencimiento actual (según spec §subscription_periods). Elegí chrome <a class="dv-oid" href="#1a">A u B</a> y aprobá por vista: "<a class="dv-oid" href="#1b">1b</a> ok", "<a class="dv-oid" href="#1c">1c</a> ok pero…", etc.</p>
+</section>
+</x-dc>
+</body>
+</html>

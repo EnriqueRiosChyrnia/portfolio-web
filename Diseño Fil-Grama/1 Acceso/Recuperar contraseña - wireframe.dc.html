@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+    .wf-input{border:1.5px solid #3a3a3a;border-radius:6px;padding:6px 10px;font-size:12px;background:#fff}
+    .wf-card{border:1.5px solid #3a3a3a;border-radius:12px;background:#fff;padding:18px 20px}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Recuperar contraseña (self-service, pública) — misma familia visual que Login · nunca revela si el email existe</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a pedir enlace ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Paso 1 · Pedir el enlace — desde «Olvidé mi contraseña» en el Login</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <div class="dv-card" style="width:330px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Login: el link reemplaza al «contactá al administrador»</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:16px; display:flex; justify-content:center;">
+            <div class="wf-card" style="width:250px; padding:14px 16px;">
+              <div style="text-align:center; font-size:13px; font-weight:600;">▣ Fil-Grama</div>
+              <div class="wf-input" style="color:#bbb; margin-top:10px; font-size:10.5px;">Email</div>
+              <div class="wf-input" style="color:#bbb; margin-top:8px; font-size:10.5px;">Contraseña</div>
+              <div style="text-align:center; font-size:10.5px; color:#2a78d6; text-decoration:underline; margin-top:8px;">Olvidé mi contraseña</div>
+              <div style="background:#3a3a3a; color:#fff; border-radius:7px; padding:7px 0; font-size:11px; font-weight:600; text-align:center; margin-top:10px;">Iniciar sesión</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dv-card" style="width:360px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Pantalla «Recuperar contraseña» · reposo</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:18px; display:flex; justify-content:center;">
+            <div class="wf-card" style="width:270px;">
+              <div style="text-align:center;"><div style="width:30px; height:30px; border:1.5px solid #3a3a3a; border-radius:8px; margin:0 auto;"></div><div style="font-size:14px; font-weight:600; margin-top:5px;">Recuperar contraseña</div></div>
+              <div style="font-size:11px; color:#666; text-align:center; margin-top:6px; line-height:1.5;">Decinos tu email y te enviamos un enlace para crear una nueva.</div>
+              <div style="margin-top:12px;"><div style="font-size:10.5px; color:#666;">Email</div><div class="wf-input" style="color:#bbb; margin-top:3px;">nombre@empresa.com</div></div>
+              <div style="background:#3a3a3a; color:#fff; border-radius:7px; padding:8px 0; font-size:11.5px; font-weight:600; text-align:center; margin-top:12px;">Enviarme el enlace</div>
+              <div style="text-align:center; font-size:10.5px; color:#888; margin-top:10px;">‹ Volver al login</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dv-card" style="width:360px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Después de enviar · SIEMPRE la misma respuesta (exista o no)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:18px; display:flex; justify-content:center;">
+            <div class="wf-card" style="width:270px; text-align:center;">
+              <div style="width:34px; height:34px; border:1.5px solid #4a8a5f; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; color:#4a8a5f;">✉</div>
+              <div style="font-size:13px; font-weight:600; margin-top:9px;">Revisá tu correo</div>
+              <div style="font-size:11px; color:#666; margin-top:5px; line-height:1.6;">Si <b>laura@litoral.com</b> tiene una cuenta, le enviamos un enlace para crear una contraseña nueva. Vale por 60 minutos.</div>
+              <div style="font-size:10px; color:#888; margin-top:10px;">¿No llegó? Revisá spam o <span style="text-decoration:underline;">reenviá</span> (en 60 s)</div>
+              <div style="font-size:10.5px; color:#888; margin-top:8px;">‹ Volver al login</div>
+            </div>
+          </div>
+          <div style="font-size:11px; color:#2a78d6; margin-top:6px;">respuesta neutra: no revela si el email existe · reenvío con cooldown para evitar spam</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b nueva contraseña ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Paso 2 · Nueva contraseña (desde el enlace del email) + token vencido/usado</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:360px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Formulario · mismo checklist que Aceptar invitación</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:18px; display:flex; justify-content:center;">
+            <div class="wf-card" style="width:270px;">
+              <div style="text-align:center;"><div style="width:30px; height:30px; border:1.5px solid #3a3a3a; border-radius:8px; margin:0 auto;"></div><div style="font-size:14px; font-weight:600; margin-top:5px;">Nueva contraseña</div></div>
+              <div style="font-size:11px; color:#666; text-align:center; margin-top:5px;">para <b>laura@litoral.com</b></div>
+              <div style="margin-top:12px;"><div style="font-size:10.5px; color:#666;">Nueva contraseña</div><div class="wf-input" style="color:#bbb; margin-top:3px; display:flex; justify-content:space-between;"><span>••••••••</span><span style="font-size:10px; color:#2a78d6;">Mostrar</span></div></div>
+              <div style="font-size:10px; color:#666; margin-top:5px; line-height:1.7;">✓ <span style="color:#4a8a5f;">Al menos 8 caracteres</span><br/>○ Al menos un número</div>
+              <div style="margin-top:10px;"><div style="font-size:10.5px; color:#666;">Repetir contraseña</div><div class="wf-input" style="color:#bbb; margin-top:3px;">••••••••</div></div>
+              <div style="background:#3a3a3a; color:#fff; border-radius:7px; padding:8px 0; font-size:11.5px; font-weight:600; text-align:center; margin-top:12px;">Guardar y entrar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dv-card" style="width:360px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Token vencido o ya usado · mismo patrón que la invitación</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:18px; display:flex; justify-content:center;">
+            <div class="wf-card" style="width:270px; text-align:center;">
+              <div style="width:34px; height:34px; border:1.5px solid #c07a55; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; color:#c07a55;">⏱</div>
+              <div style="font-size:13px; font-weight:600; margin-top:9px;">Este enlace ya no sirve</div>
+              <div style="font-size:11px; color:#666; margin-top:5px; line-height:1.6;">Venció (dura 60 minutos) o ya fue usado. Pedí uno nuevo y listo.</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:7px; padding:6px 0; font-size:11px; font-weight:600; margin-top:11px; background:#fff;">Pedir un enlace nuevo</div>
+              <div style="font-size:10.5px; color:#888; margin-top:8px;">‹ Volver al login</div>
+            </div>
+          </div>
+          <div style="font-size:11px; color:#2a78d6; margin-top:6px;">a diferencia de la invitación, acá SÍ hay acción directa: vuelve al paso 1 con el email precargado</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c confirmación + email ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Paso 3 · Confirmación → Login · y el email (asunto + cuerpo)</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:330px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Confirmación breve</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:18px; display:flex; justify-content:center;">
+            <div class="wf-card" style="width:250px; text-align:center;">
+              <div style="width:34px; height:34px; border:1.5px solid #4a8a5f; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; color:#4a8a5f;">✓</div>
+              <div style="font-size:13px; font-weight:600; margin-top:9px;">Contraseña actualizada</div>
+              <div style="font-size:11px; color:#666; margin-top:5px;">Ya podés entrar con la nueva.</div>
+              <div style="background:#3a3a3a; color:#fff; border-radius:7px; padding:7px 0; font-size:11px; font-weight:600; margin-top:11px;">Ir al login</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dv-card" style="width:420px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">El email · simple, un solo botón</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; overflow:hidden;">
+            <div style="padding:8px 12px; border-bottom:1.5px solid #3a3a3a; font-size:11px; background:#fafafa;">
+              <b>De:</b> Fil-Grama &lt;no-responder@fil-grama.com&gt;<br/>
+              <b>Asunto:</b> Creá tu nueva contraseña de Fil-Grama
+            </div>
+            <div style="padding:16px 18px; font-size:11.5px; line-height:1.7;">
+              <div style="font-weight:600;">▣ Fil-Grama</div>
+              <div style="margin-top:8px;">Hola Laura,</div>
+              <div style="margin-top:4px; color:#444;">Pediste cambiar tu contraseña. Tocá el botón para crear una nueva — el enlace vale por <b>60 minutos</b> y se usa una sola vez.</div>
+              <div style="display:inline-block; background:#3a3a3a; color:#fff; border-radius:7px; padding:7px 16px; font-size:11px; font-weight:600; margin-top:10px;">Crear nueva contraseña</div>
+              <div style="margin-top:10px; color:#888; font-size:10.5px;">¿No fuiste vos? Ignoralo — tu contraseña actual sigue funcionando.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dv-card" style="width:250px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · misma card a lo ancho</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#efeff2; padding:14px;">
+            <div class="wf-card" style="padding:14px;">
+              <div style="text-align:center; font-size:12px; font-weight:600;">Recuperar contraseña</div>
+              <div class="wf-input" style="color:#bbb; margin-top:8px; font-size:10px;">nombre@empresa.com</div>
+              <div style="background:#3a3a3a; color:#fff; border-radius:7px; padding:7px 0; font-size:10.5px; font-weight:600; text-align:center; margin-top:9px;">Enviarme el enlace</div>
+              <div style="text-align:center; font-size:9.5px; color:#888; margin-top:7px;">‹ Volver al login</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Decisiones: enlace de 60 minutos y un solo uso (mismo patrón que invitaciones/connect-links); respuesta neutra idéntica exista o no el email; reenvío con cooldown de 60 s; en token vencido hay «Pedir un enlace nuevo» directo; el Login cambia «contactá al administrador» por «Olvidé mi contraseña». Probá: "aprobado" · "que el enlace dure 24 h" · "agregá logout de otras sesiones al confirmar".</p>
+</section>
+</x-dc>
+</body>
+</html>

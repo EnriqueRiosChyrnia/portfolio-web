@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgSpin { to { transform: rotate(360deg); } }
+    @keyframes filgShimmer { 0% { background-position:-360px 0; } 100% { background-position:360px 0; } }
+    @keyframes filgFade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+    .filg-sk { background:#EAEEF3; background-image:linear-gradient(90deg,#EAEEF3 0,#F3F6FA 180px,#EAEEF3 360px); background-size:720px 100%; animation:filgShimmer 1.25s linear infinite; }
+    .filg-row:hover { background:#F7F9FC; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:980px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Elegí qué cuentas conectar</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Paso de selección que aparece <span style="color:#3D4757; font-weight:500;">después de autorizar en Meta</span>, cuando el permiso devuelve más de una Página o cuenta. Es multi-selección: tildá las que quieras dar de alta. La cuenta <span style="color:#3D4757; font-weight:500;">personal</span> queda deshabilitada, con el porqué a un clic. Probá: tildá / destildá, abrí el ⓘ, y «Conectar» para ver a dónde vuelve. Cambiá el estado demo para ver cargando, enlace vencido y vacío.</div>
+  </div>
+
+  <!-- demo switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="4"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP · public connect-link ============ -->
+    <div style="flex:none; width:720px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · página pública del connect-link · interactivo</div>
+      <div style="border-radius:16px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <!-- public brand bar -->
+        <div style="height:58px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 22px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:28px; display:block;" />
+          <div style="display:flex; align-items:center; gap:7px; font-size:12px; color:#8A95A6;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="5" y="10.5" width="14" height="8.5" rx="2" stroke="#8A95A6" stroke-width="1.7"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#8A95A6" stroke-width="1.7"/></svg>
+            Conexión segura
+          </div>
+        </div>
+
+        <!-- body -->
+        <div style="background:radial-gradient(120% 90% at 50% -10%, #EAF0FA 0%, #F4F6FA 46%, #F4F6FA 100%); padding:34px 30px 44px; min-height:572px; display:flex; justify-content:center;">
+
+          <!-- ===== SELECT ===== -->
+          <sc-if value="{{ isSelect }}" hint-placeholder-val="{{ true }}">
+            <div style="width:566px; max-width:100%; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); overflow:hidden;">
+              <div style="padding:24px 26px 16px;">
+                <div style="display:inline-flex; align-items:center; gap:7px; background:#E7F4EC; border-radius:8px; padding:5px 11px; font-size:12px; font-weight:500; color:#1F7A50;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#1F7A50" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Autorizaste en Meta
+                </div>
+                <div style="font-size:19px; font-weight:600; color:#141921; margin-top:13px; line-height:1.32;">Elegí qué cuentas de Café Aurora querés conectar</div>
+                <div style="font-size:13.5px; color:#647084; line-height:1.6; margin-top:7px;">Tu permiso nos dio acceso a varias cuentas. Marcá las que quieras sumar a Fil-Grama; podés elegir más de una.</div>
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:0 26px 12px;">
+                <span onClick="{{ toggleAll }}" style="font-size:12.5px; font-weight:500; color:{{ accent }}; cursor:pointer;">{{ toggleAllLabel }}</span>
+                <span style="font-size:12.5px; color:#8A95A6;">{{ countLabel }}</span>
+              </div>
+
+              <div style="padding:0 18px; display:flex; flex-direction:column; gap:8px;">
+                <sc-for list="{{ selectRows }}" as="r" hint-placeholder-count="4">
+                  <div>
+                    <div class="filg-row" onClick="{{ r.onClick }}" style="{{ r.rowStyle }}">
+                      <span style="{{ r.boxStyle }}">{{ r.check }}</span>
+                      <div style="width:38px; height:38px; border-radius:10px; background:{{ r.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:11px; font-weight:600; color:{{ r.tintInk }};">{{ r.code }}</span></div>
+                      <div style="flex:1; min-width:0;">
+                        <div style="display:flex; align-items:center; gap:8px;"><span style="font-size:14px; font-weight:600; color:{{ r.nameInk }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ r.name }}</span><span style="font-size:12.5px; color:#9AA4B2;">{{ r.handle }}</span></div>
+                        <div style="font-size:12px; color:{{ r.typeInk }}; margin-top:3px;">{{ r.type }}</div>
+                      </div>
+                      <sc-if value="{{ r.unsupported }}" hint-placeholder-val="{{ false }}">
+                        <div style="display:flex; align-items:center; gap:8px; flex:none;">
+                          <span style="font-size:11px; font-weight:500; color:#8A6A3C; background:#FBF4EC; border:1px solid #F0E2CC; border-radius:6px; padding:3px 8px;">No soportada</span>
+                          <span onClick="{{ r.onInfo }}" style="width:21px; height:21px; border-radius:50%; border:1px solid #C9D1DB; display:flex; align-items:center; justify-content:center; font-size:12px; color:#647084; cursor:pointer; font-family:Georgia,serif; font-style:italic;">i</span>
+                        </div>
+                      </sc-if>
+                    </div>
+                    <sc-if value="{{ r.infoOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin:7px 2px 2px; padding:12px 14px; background:#FBF4EC; border:1px solid #F0E2CC; border-radius:10px; display:flex; gap:9px;">
+                        <span style="font-size:14px; line-height:1.2; color:#B07A3A;">ⓘ</span>
+                        <span style="font-size:12.5px; color:#8A6A3C; line-height:1.55;">Las cuentas <span style="font-weight:600;">personales</span> no comparten métricas, así que no podemos analizarlas. Convertila a <span style="font-weight:600;">profesional</span> (Business o Creator) desde la app de Instagram y volvé a abrir este enlace.</span>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="padding:20px 26px 16px; margin-top:6px; display:flex; align-items:center; justify-content:space-between;">
+                <span onClick="{{ cancel }}" style="font-size:13.5px; color:#647084; cursor:pointer;">Cancelar</span>
+                <div onClick="{{ confirm }}" style="{{ confirmStyle }}">{{ confirmLabel }}</div>
+              </div>
+              <div style="padding:0 26px 22px;"><div style="font-size:11.5px; color:#9AA4B2; line-height:1.5; border-top:1px solid #F0F3F7; padding-top:13px;">La contraseña se escribe siempre en Meta, nunca en Fil-Grama. Vas a poder ajustar esta selección más adelante.</div></div>
+            </div>
+          </sc-if>
+
+          <!-- ===== CONFIRMED · returns to connected list (no dead end) ===== -->
+          <sc-if value="{{ isConfirmed }}" hint-placeholder-val="{{ false }}">
+            <div style="width:566px; max-width:100%; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); overflow:hidden;">
+              <div style="padding:26px 26px 18px; display:flex; gap:13px; align-items:flex-start;">
+                <div style="width:46px; height:46px; border-radius:12px; background:#E7F4EC; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#1F7A50" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div style="flex:1;">
+                  <div style="font-size:18px; font-weight:600; color:#141921;">Conectamos {{ confirmedWord }}</div>
+                  <div style="font-size:13.5px; color:#647084; line-height:1.55; margin-top:5px;">Ya quedaron vinculadas a Café Aurora. Las primeras métricas aparecen tras la próxima captura diaria; no hace falta hacer nada más.</div>
+                </div>
+              </div>
+              <div style="padding:2px 26px 4px;">
+                <div style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:10px;">Cuentas conectadas</div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  <sc-for list="{{ confirmedRows }}" as="c" hint-placeholder-count="3">
+                    <div style="background:#fff; border:1px solid #CFE8DA; border-radius:11px; padding:11px 13px; display:flex; align-items:center; gap:12px;">
+                      <div style="width:36px; height:36px; border-radius:9px; background:{{ c.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10.5px; font-weight:600; color:{{ c.tintInk }};">{{ c.code }}</span></div>
+                      <div style="flex:1; min-width:0;"><div style="font-size:13.5px; font-weight:600; color:#141921;">{{ c.name }}</div><div style="font-size:11.5px; color:#9AA4B2;">{{ c.handle }}</div></div>
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#E7F4EC; color:#1F7A50; border-radius:7px; padding:4px 10px; font-size:11.5px; font-weight:500;"><span style="width:5px; height:5px; border-radius:50%; background:currentColor;"></span>Conectada</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="padding:18px 26px 8px;">
+                <div onClick="{{ connectAnother }}" style="height:42px; display:flex; align-items:center; justify-content:center; gap:8px; border:1px solid #D4DAE3; color:#3D4757; border-radius:10px; font-size:13.5px; font-weight:500; cursor:pointer;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#3D4757" stroke-width="1.6" stroke-linecap="round"/></svg>Conectar otra red</div>
+              </div>
+              <div style="padding:0 26px 24px;"><div style="font-size:11.5px; color:#9AA4B2; line-height:1.5; border-top:1px solid #F0F3F7; padding-top:13px;">Ya podés cerrar esta pestaña. La agencia ve estas cuentas en Fil-Grama.</div></div>
+            </div>
+          </sc-if>
+
+          <!-- ===== LOADING ===== -->
+          <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+            <div style="width:566px; max-width:100%; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); overflow:hidden;">
+              <div style="padding:26px 26px 8px; display:flex; align-items:center; gap:11px;">
+                <span style="display:inline-flex; width:22px; height:22px; border:2.4px solid #D7DEE7; border-top-color:{{ accent }}; border-radius:50%; animation:filgSpin .7s linear infinite;"></span>
+                <div><div style="font-size:16px; font-weight:600; color:#141921;">Buscando tus cuentas…</div><div style="font-size:12.5px; color:#8A95A6; margin-top:2px;">Estamos trayendo lo que autorizaste en Meta.</div></div>
+              </div>
+              <div style="padding:14px 22px 26px; display:flex; flex-direction:column; gap:9px;">
+                <sc-for list="{{ skel3 }}" as="s" hint-placeholder-count="3">
+                  <div style="border:1px solid #EEF1F5; border-radius:12px; padding:13px 14px; display:flex; align-items:center; gap:13px;">
+                    <div class="filg-sk" style="width:18px; height:18px; border-radius:5px; flex:none;"></div>
+                    <div class="filg-sk" style="width:38px; height:38px; border-radius:10px; flex:none;"></div>
+                    <div style="flex:1;"><div class="filg-sk" style="width:150px; height:13px; border-radius:6px;"></div><div class="filg-sk" style="width:96px; height:11px; border-radius:5px; margin-top:8px;"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== ERROR · enlace vencido ===== -->
+          <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+            <div style="width:466px; max-width:100%; align-self:center; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); padding:38px 32px 30px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+              <div style="width:58px; height:58px; border-radius:15px; background:#FBEFEC; border:1px solid #F3DAD2; display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 8v5" stroke="#C2603F" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.4" r="1.1" fill="#C2603F"/><circle cx="12" cy="12" r="9" stroke="#C2603F" stroke-width="1.6"/></svg></div>
+              <div style="font-size:18px; font-weight:600; color:#141921; margin-top:15px;">El enlace venció</div>
+              <div style="font-size:13.5px; color:#647084; line-height:1.6; max-width:360px; margin-top:8px;">Por seguridad, los enlaces de conexión caducan a las 72 horas. Pedile a la agencia uno nuevo, o reintentá si lo abriste recién.</div>
+              <div onClick="{{ retry }}" style="margin-top:20px; height:42px; display:flex; align-items:center; gap:8px; padding:0 20px; background:{{ accent }}; color:#fff; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7a5 5 0 1 1-1.5-3.5M12 1v3H9" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Volver a intentar</div>
+            </div>
+          </sc-if>
+
+          <!-- ===== EMPTY · defensivo ===== -->
+          <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="width:466px; max-width:100%; align-self:center; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); padding:38px 32px 30px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+              <div style="width:60px; height:60px; border-radius:16px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="#3D6FB4" stroke-width="1.7"/><path d="M16 16l4 4" stroke="#3D6FB4" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+              <div style="font-size:18px; font-weight:600; color:#141921; margin-top:15px;">No encontramos cuentas para conectar</div>
+              <div style="font-size:13.5px; color:#647084; line-height:1.6; max-width:380px; margin-top:8px;">Tu autorización no incluyó ninguna Página ni cuenta profesional. Revisá que tu cuenta sea Business o Creator y esté vinculada a una Página, y volvé a intentar.</div>
+              <div onClick="{{ retry }}" style="margin-top:20px; height:42px; display:flex; align-items:center; gap:8px; padding:0 20px; background:{{ accent }}; color:#fff; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7a5 5 0 1 1-1.5-3.5M12 1v3H9" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Volver a intentar</div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ RIGHT · mobile + notes ============ -->
+    <div style="flex:none; width:430px; display:flex; flex-direction:column; gap:28px;">
+
+      <!-- mobile -->
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil · se apila</div>
+        <div style="width:390px; border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+          <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:24px; display:block;" /><span style="display:flex; align-items:center; gap:5px; font-size:11px; color:#8A95A6;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="5" y="10.5" width="14" height="8.5" rx="2" stroke="#8A95A6" stroke-width="1.8"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#8A95A6" stroke-width="1.8"/></svg>Seguro</span></div>
+          <div style="background:radial-gradient(130% 70% at 50% -8%, #EAF0FA 0%, #F4F6FA 50%, #F4F6FA 100%); padding:18px 16px 22px;">
+            <div style="display:inline-flex; align-items:center; gap:6px; background:#E7F4EC; border-radius:7px; padding:4px 9px; font-size:11px; font-weight:500; color:#1F7A50;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#1F7A50" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Autorizaste en Meta</div>
+            <div style="font-size:16px; font-weight:600; color:#141921; margin-top:11px; line-height:1.3;">Elegí qué cuentas de Café Aurora querés conectar</div>
+            <div style="font-size:12px; color:#647084; line-height:1.5; margin-top:6px;">Meta nos dio acceso a varias. Marcá las que quieras sumar.</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;">
+              <div style="border:1.5px solid #B9C6DD; background:#F6F9FE; border-radius:11px; padding:11px 12px; display:flex; align-items:center; gap:11px;"><span style="width:18px; height:18px; border-radius:5px; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; flex:none;">✓</span><div style="width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#FCEFE6,#F6E1EC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10px; font-weight:600; color:#B5638A;">IG</span></div><div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:600; color:#141921;">Café Aurora</div><div style="font-size:11px; color:#647084; margin-top:2px;">Cuenta de Instagram profesional</div></div></div>
+              <div style="border:1.5px solid #B9C6DD; background:#F6F9FE; border-radius:11px; padding:11px 12px; display:flex; align-items:center; gap:11px;"><span style="width:18px; height:18px; border-radius:5px; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; flex:none;">✓</span><div style="width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#E7EEFB,#DCE6F7); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10px; font-weight:600; color:#2C5FA8;">FB</span></div><div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:600; color:#141921;">Café Aurora</div><div style="font-size:11px; color:#647084; margin-top:2px;">Página de Facebook</div></div></div>
+              <div style="border:1px solid #EDE2CF; background:#FCFAF5; border-radius:11px; padding:11px 12px; display:flex; align-items:center; gap:11px; opacity:.92;"><span style="width:18px; height:18px; border-radius:5px; background:#E5E9EF; border:1px solid #D4DAE3; flex:none;"></span><div style="width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#FCEFE6,#F6E1EC); display:flex; align-items:center; justify-content:center; flex:none; filter:grayscale(.3);"><span style="font-size:10px; font-weight:600; color:#B5638A;">IG</span></div><div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:600; color:#647084;">Aurora</div><div style="font-size:11px; color:#B07A3A; margin-top:2px;">Cuenta personal · no soportada</div></div></div>
+            </div>
+            <div style="height:44px; background:{{ accent }}; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:#fff; margin-top:16px;">Conectar 2 cuentas</div>
+            <div style="text-align:center; margin-top:11px;"><span style="font-size:13px; color:#647084;">Cancelar</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- annotation: destination -->
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">A dónde vuelve al confirmar</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px; display:flex; flex-direction:column; gap:13px;">
+          <div style="display:flex; gap:11px; align-items:flex-start;">
+            <span style="width:28px; height:28px; border-radius:8px; background:#EAF2FB; display:flex; align-items:center; justify-content:center; flex:none; margin-top:1px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="14" rx="2" stroke="{{ accent }}" stroke-width="1.7"/><path d="M4 9h16" stroke="{{ accent }}" stroke-width="1.7"/></svg></span>
+            <div><div style="font-size:13.5px; font-weight:600; color:#141921;">Connect-link público</div><div style="font-size:12px; color:#647084; line-height:1.5; margin-top:2px;">El cliente vuelve a la lista de cuentas conectadas dentro del mismo enlace (lo de arriba), no a un callejón de «¡listo!».</div></div>
+          </div>
+          <div style="display:flex; gap:11px; align-items:flex-start; border-top:1px solid #F0F3F7; padding-top:13px;">
+            <span style="width:28px; height:28px; border-radius:8px; background:#EAF2FB; display:flex; align-items:center; justify-content:center; flex:none; margin-top:1px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.2" stroke="{{ accent }}" stroke-width="1.7"/><circle cx="17" cy="6" r="2.2" stroke="{{ accent }}" stroke-width="1.7"/><circle cx="17" cy="18" r="2.2" stroke="{{ accent }}" stroke-width="1.7"/><path d="M8 11l7-4M8 13l7 4" stroke="{{ accent }}" stroke-width="1.7"/></svg></span>
+            <div style="flex:1;"><div style="font-size:13.5px; font-weight:600; color:#141921;">Flujo acompañado por la agencia</div><div style="font-size:12px; color:#647084; line-height:1.5; margin-top:2px;">Vuelve a <span onClick="{{ goManage }}" style="color:{{ accent }}; font-weight:500; cursor:pointer;">Gestionar redes</span>, con las nuevas cuentas ya en la lista.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- annotation: single account skips -->
+      <div style="border-radius:14px; border:1px solid #E9EDF2; background:#fff; padding:14px 16px;">
+        <div style="display:flex; gap:9px; align-items:flex-start;">
+          <span style="font-size:13px; color:#647084;">ⓘ</span>
+          <div style="font-size:12.5px; color:#647084; line-height:1.55;">Si Meta devuelve <span style="color:#3D4757; font-weight:500;">una sola</span> cuenta, este paso se saltea y va directo a la lista de conectadas.</div>
+        </div>
+      </div>
+
+      <!-- contract footnote -->
+      <div style="border-radius:14px; border:1px dashed #CBD3DE; background:#FAFBFD; padding:14px 16px;">
+        <div style="font-size:10.5px; font-weight:600; letter-spacing:.6px; text-transform:uppercase; color:#9AA4B2; margin-bottom:8px;">Contrato · para cablear</div>
+        <div style="font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:11px; color:#647084; line-height:1.7;">GET&nbsp;/oauth/select/{token}<br>→ {clientName, candidates[]}<br>POST&nbsp;/oauth/select/{token}<br>{externalAccountIds:[…]}</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:820},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  netMeta = {
+    ig: { name:'Instagram', code:'IG', tint:'linear-gradient(135deg,#FCEFE6,#F6E1EC)', tintInk:'#B5638A' },
+    fb: { name:'Facebook',  code:'FB', tint:'linear-gradient(135deg,#E7EEFB,#DCE6F7)', tintInk:'#2C5FA8' },
+    tt: { name:'TikTok',    code:'TT', tint:'linear-gradient(135deg,#E6F2F1,#E0EDEC)', tintInk:'#3E7C77' },
+  };
+
+  candidates = [
+    { id:'ig1', net:'ig', name:'Café Aurora',   handle:'@cafeaurora',    type:'Cuenta de Instagram profesional', supported:true },
+    { id:'fb1', net:'fb', name:'Café Aurora',   handle:'Página principal', type:'Página de Facebook',            supported:true },
+    { id:'fb2', net:'fb', name:'Aurora Eventos', handle:'',               type:'Página de Facebook',              supported:true },
+    { id:'igp', net:'ig', name:'Aurora',        handle:'@aurora.personal', type:'Cuenta personal',               supported:false },
+  ];
+
+  state = { demo:'select', sel:{ ig1:true, fb1:true, fb2:false }, info:false, confirmed:false, confirmedList:[] };
+
+  seg(active) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 14px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+                  : { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+  setDemo(d) { this.setState({ demo:d, confirmed:false, info:false }); }
+
+  toggle(id) {
+    const c = this.candidates.find(x => x.id === id);
+    if (!c || !c.supported) return;
+    this.setState(s => ({ sel:{ ...s.sel, [id]: !s.sel[id] } }));
+  }
+  toggleAll() {
+    const supp = this.candidates.filter(c => c.supported);
+    const allOn = supp.every(c => this.state.sel[c.id]);
+    const next = {};
+    supp.forEach(c => { next[c.id] = !allOn; });
+    this.setState(s => ({ sel:{ ...s.sel, ...next } }));
+  }
+  confirm() {
+    const ids = this.candidates.filter(c => c.supported && this.state.sel[c.id]).map(c => c.id);
+    if (!ids.length) return;
+    this.setState({ confirmed:true, confirmedList:ids, info:false });
+  }
+  retry() {
+    this.setState({ demo:'loading', confirmed:false, info:false });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ demo:'select' }), 1500);
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+
+    const demoStates = [['select','Selección'],['loading','Cargando'],['error','Enlace vencido'],['empty','Vacío']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setDemo(k), style:this.seg(k === st.demo) }));
+
+    const isLoading = st.demo === 'loading';
+    const isError = st.demo === 'error';
+    const isEmpty = st.demo === 'empty';
+    const isSelect = st.demo === 'select' && !st.confirmed;
+    const isConfirmed = st.demo === 'select' && st.confirmed;
+
+    const supp = this.candidates.filter(c => c.supported);
+    const selCount = supp.filter(c => st.sel[c.id]).length;
+    const allOn = selCount === supp.length;
+
+    const selectRows = this.candidates.map(c => {
+      const m = this.netMeta[c.net];
+      const on = !!st.sel[c.id] && c.supported;
+      const un = !c.supported;
+      const rowStyle = un
+        ? { display:'flex', alignItems:'center', gap:'12px', border:'1px solid #EDE2CF', borderRadius:'12px', padding:'12px 14px', background:'#FCFAF5', cursor:'default', opacity:.9 }
+        : { display:'flex', alignItems:'center', gap:'12px', border:'1.5px solid ' + (on ? this.softer(accent,.34) : '#E4E8EE'), borderRadius:'12px', padding:'12px 14px', background: on ? this.softer(accent,.92) : '#fff', cursor:'pointer', transition:'border-color .12s, background .12s' };
+      const boxStyle = un
+        ? { width:'19px', height:'19px', borderRadius:'5px', flex:'none', background:'#E5E9EF', border:'1px solid #D4DAE3' }
+        : { width:'19px', height:'19px', borderRadius:'5px', flex:'none', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'12px', color:'#fff', border:'1.5px solid ' + (on ? accent : '#C2CBD6'), background: on ? accent : 'transparent' };
+      return {
+        code:m.code, tint: un ? 'linear-gradient(135deg,#F0E8DC,#ECE3D5)' : m.tint, tintInk: un ? '#A98A5E' : m.tintInk,
+        name:c.name, handle:c.handle, type:c.type,
+        nameInk: un ? '#647084' : '#141921', typeInk: un ? '#B07A3A' : '#647084',
+        check: on ? '✓' : '', rowStyle, boxStyle, unsupported: un,
+        infoOpen: un && st.info,
+        onClick: () => this.toggle(c.id),
+        onInfo: (e) => { try { e.stopPropagation(); } catch(_){} this.setState(s => ({ info: !s.info })); },
+      };
+    });
+
+    const canConfirm = selCount > 0;
+    const confirmStyle = canConfirm
+      ? { height:'42px', display:'flex', alignItems:'center', padding:'0 20px', background:accent, color:'#fff', borderRadius:'10px', fontSize:'14px', fontWeight:600, cursor:'pointer' }
+      : { height:'42px', display:'flex', alignItems:'center', padding:'0 20px', background:'#EEF1F5', color:'#AAB2BE', borderRadius:'10px', fontSize:'14px', fontWeight:600, cursor:'not-allowed' };
+
+    const confirmedRows = this.candidates.filter(c => st.confirmedList.includes(c.id)).map(c => {
+      const m = this.netMeta[c.net];
+      return { code:m.code, tint:m.tint, tintInk:m.tintInk, name:c.name, handle: c.handle || c.type };
+    });
+    const cc = st.confirmedList.length;
+
+    return {
+      accent,
+      demoStates,
+      isLoading, isError, isEmpty, isSelect, isConfirmed,
+      skel3:[0,1,2],
+      selectRows,
+      toggleAll: () => this.toggleAll(),
+      toggleAllLabel: allOn ? 'Quitar selección' : 'Seleccionar todas',
+      countLabel: selCount + ' de ' + supp.length + ' seleccionadas',
+      confirm: () => this.confirm(), confirmStyle,
+      confirmLabel: canConfirm ? ('Conectar ' + selCount + (selCount === 1 ? ' cuenta' : ' cuentas')) : 'Conectar seleccionadas',
+      cancel: () => this.go('Resultado de conexión.dc.html'),
+      confirmedRows, confirmedWord: cc + (cc === 1 ? ' cuenta' : ' cuentas'),
+      connectAnother: () => this.setState({ confirmed:false, info:false }),
+      retry: () => this.retry(),
+      goManage: () => this.go('../3 Workspace de cliente/Gestionar redes.dc.html'),
+    };
+  }
+
+  softer(hex, amt) {
+    const t = amt == null ? .42 : amt;
+    const h = hex.replace('#','');
+    const r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+    const mix = (c) => Math.round(c + (255 - c) * t);
+    return 'rgb(' + mix(r) + ',' + mix(g) + ',' + mix(b) + ')';
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgShimmer { 0% { background-position: -360px 0; } 100% { background-position: 360px 0; } }
+    .filg-sk { background:#EAEEF3; background-image:linear-gradient(90deg,#EAEEF3 0px,#F3F6FA 180px,#EAEEF3 360px); background-size:720px 100%; animation:filgShimmer 1.25s linear infinite; }
+    .filg-row:hover { background:#F7F9FC; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Todas las publicaciones</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Interactivo: filtrá por <span style="color:#3D4757; font-weight:500;">cuenta</span> (cascada red → cuenta), por tipo y por rango de fechas; ordená por fecha, alcance o interacciones. Pocas métricas por fila, con popover <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; vertical-align:middle;">i</span>; cada fila baja al detalle. Más abajo: carga, vacío y error.</div>
+  </div>
+
+  <!-- demo etiquetas -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+    <span style="font-size:12px; color:#8A95A6;">Etiquetas (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ tagDemoStates }}" as="d" hint-placeholder-count="2"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="position:relative; border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeMenus }}" style="position:absolute; inset:0; z-index:20;"></div>
+        </sc-if>
+
+        <!-- top bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <div style="width:28px; height:28px; border-radius:8px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><polyline points="1,11 5,7 8,9 14,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span style="font-size:16px; font-weight:600; color:#141921; letter-spacing:-.2px;">Fil-Grama</span>
+          </div>
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <!-- page body -->
+        <div style="background:#F5F7FA; padding:20px 28px 28px;">
+
+          <!-- breadcrumb -->
+          <div onClick="{{ goDashboard }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;">
+            <span style="font-size:15px;">‹</span><span>Café Aurora</span>
+          </div>
+
+          <!-- title -->
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-top:12px;">
+            <div>
+              <div style="font-size:22px; font-weight:600; color:#141921; letter-spacing:-.3px;">Todas las publicaciones</div>
+              <div style="font-size:13px; color:#647084; margin-top:5px;">Café Aurora · {{ totalCount }} publicaciones · 4 cuentas</div>
+            </div>
+          </div>
+
+          <!-- controls -->
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:18px;">
+
+            <!-- ACCOUNT cascade red -> cuenta -->
+            <div style="position:relative; z-index:25;">
+              <div onClick="{{ toggle.account }}" style="{{ accountBtnStyle }}">
+                <sc-if value="{{ accountHasNet }}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size:10px; font-weight:600; color:#fff; background:{{ accent }}; border-radius:4px; padding:2px 5px;">{{ accountNetCode }}</span>
+                </sc-if>
+                <span style="font-weight:500;">{{ accountBtnLabel }}</span>
+                <span style="color:#9AA4B2; margin-left:2px;">▾</span>
+              </div>
+              <sc-if value="{{ open.account }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:42px; left:0; width:286px; border:1px solid #E5E9EF; border-radius:12px; background:#fff; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:30;">
+                  <div style="font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#9AA4B2; padding:7px 10px 4px;">Filtrar por cuenta</div>
+                  <div onClick="{{ pickAllAccounts }}" style="{{ allAccountsStyle }}">
+                    <span>Todas las cuentas</span>
+                    <sc-if value="{{ allAccountsSel }}" hint-placeholder-val="{{ false }}"><span style="color:{{ accent }};">✓</span></sc-if>
+                  </div>
+                  <sc-for list="{{ accountGroups }}" as="g" hint-placeholder-count="3">
+                    <div style="font-size:11px; color:#9AA4B2; padding:9px 10px 3px;">{{ g.net }}</div>
+                    <sc-for list="{{ g.items }}" as="a" hint-placeholder-count="1">
+                      <div onClick="{{ a.onClick }}" style="{{ a.rowStyle }}">
+                        <span style="display:flex; align-items:center; gap:8px;">
+                          <span style="font-size:10px; font-weight:600; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px;">{{ a.code }}</span>
+                          <span style="font-size:13px; color:#232A36;">{{ a.handle }}</span>
+                        </span>
+                        <sc-if value="{{ a.selected }}" hint-placeholder-val="{{ false }}"><span style="color:{{ accent }};">✓</span></sc-if>
+                      </div>
+                    </sc-for>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- TYPE -->
+            <div style="position:relative; z-index:25;">
+              <div onClick="{{ toggle.type }}" style="{{ typeBtnStyle }}">
+                <span>{{ typeBtnLabel }}</span><span style="color:#9AA4B2; margin-left:2px;">▾</span>
+              </div>
+              <sc-if value="{{ open.type }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:42px; left:0; width:188px; border:1px solid #E5E9EF; border-radius:12px; background:#fff; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:30;">
+                  <sc-for list="{{ typeOptions }}" as="t" hint-placeholder-count="7">
+                    <div onClick="{{ t.onClick }}" style="{{ t.rowStyle }}">
+                      <span style="font-size:13px; color:#232A36;">{{ t.label }}</span>
+                      <sc-if value="{{ t.selected }}" hint-placeholder-val="{{ false }}"><span style="color:{{ accent }};">✓</span></sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- DATE RANGE -->
+            <div style="position:relative; z-index:25;">
+              <div onClick="{{ toggle.range }}" style="{{ rangeBtnStyle }}">
+                <span>{{ rangeBtnLabel }}</span><span style="color:#9AA4B2; margin-left:2px;">▾</span>
+              </div>
+              <sc-if value="{{ open.range }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:42px; left:0; width:212px; border:1px solid #E5E9EF; border-radius:12px; background:#fff; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:30;">
+                  <sc-for list="{{ rangeOptions }}" as="r" hint-placeholder-count="7">
+                    <div onClick="{{ r.onClick }}" style="{{ r.rowStyle }}">
+                      <span style="font-size:13px; color:#232A36;">{{ r.label }}</span>
+                      <sc-if value="{{ r.selected }}" hint-placeholder-val="{{ false }}"><span style="color:{{ accent }};">✓</span></sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ customOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:42px; left:0; width:264px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:16px; z-index:31;">
+                  <div style="font-size:13px; font-weight:600; color:#141921;">Rango personalizado</div>
+                  <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+                    <label style="display:flex; flex-direction:column; gap:5px;"><span style="font-size:11.5px; color:#647084;">Desde</span><input type="date" value="{{ customFrom }}" onChange="{{ onCustomFrom }}" style="{{ customFromStyle }}" /></label>
+                    <label style="display:flex; flex-direction:column; gap:5px;"><span style="font-size:11.5px; color:#647084;">Hasta</span><input type="date" value="{{ customTo }}" onChange="{{ onCustomTo }}" style="{{ customToStyle }}" /></label>
+                  </div>
+                  <sc-if value="{{ customError }}" hint-placeholder-val="{{ false }}"><div style="font-size:11.5px; color:#C2603F; margin-top:8px; line-height:1.4;">{{ customErrorText }}</div></sc-if>
+                  <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;">
+                    <div onClick="{{ customCancel }}" style="height:34px; display:flex; align-items:center; padding:0 13px; border:1px solid #D4DAE3; border-radius:8px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cancelar</div>
+                    <div onClick="{{ customApply }}" style="{{ customApplyStyle }}">Aplicar</div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- TAG (etiqueta de campaña) -->
+            <div style="position:relative; z-index:25;">
+              <div onClick="{{ toggle.tag }}" style="{{ tagBtnStyle }}">
+                <span style="font-weight:600; color:#6B4FA1;">⌗</span><span>{{ tagBtnLabel }}</span><span style="color:#9AA4B2; margin-left:2px;">▾</span>
+              </div>
+              <sc-if value="{{ open.tag }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:42px; left:0; width:238px; border:1px solid #E5E9EF; border-radius:12px; background:#fff; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:30;">
+                  <sc-if value="{{ tagsExist }}" hint-placeholder-val="{{ true }}">
+                    <sc-for list="{{ tagOptions }}" as="t" hint-placeholder-count="3">
+                      <div onClick="{{ t.onClick }}" style="{{ t.rowStyle }}">
+                        <span style="font-size:13px; color:#232A36;">{{ t.label }}</span>
+                        <span style="display:flex; align-items:center; gap:8px;"><span style="font-size:11.5px; color:#9AA4B2;">{{ t.count }}</span><sc-if value="{{ t.selected }}" hint-placeholder-val="{{ false }}"><span style="color:{{ accent }};">✓</span></sc-if></span>
+                      </div>
+                    </sc-for>
+                  </sc-if>
+                  <sc-if value="{{ tagsNone }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:12px 11px; font-size:12.5px; color:#647084; line-height:1.55;">Todavía no usaron etiquetas. Sirven para agrupar publicaciones de una campaña y ver cómo rindió en conjunto — se crean con el ⌗+ de cada fila.</div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+
+            <div style="flex:1;"></div>
+
+            <!-- El orden se maneja SOLO desde los headers de columna (un mecanismo).
+                 El dropdown de orden queda para móvil, donde no hay headers. -->
+            <div style="font-size:12px; color:#9AA4B2;">Ordenar: tocá una columna ↓</div>
+          </div>
+
+          <!-- active filter chips -->
+          <sc-if value="{{ hasActiveFilters }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:12px;">
+              <sc-for list="{{ activeChips }}" as="c" hint-placeholder-count="1">
+                <div onClick="{{ c.onClear }}" style="display:flex; align-items:center; gap:7px; height:28px; padding:0 6px 0 11px; background:#fff; border:1px solid #E0E5EC; border-radius:7px; font-size:12px; color:#3D4757; cursor:pointer;">
+                  {{ c.label }}<span style="display:inline-flex; width:15px; height:15px; align-items:center; justify-content:center; border-radius:4px; background:#EEF1F5; color:#8A95A6; font-size:11px;">✕</span>
+                </div>
+              </sc-for>
+              <div onClick="{{ clearAll }}" style="font-size:12px; color:{{ accent }}; cursor:pointer; padding:0 4px;">Limpiar todo</div>
+            </div>
+          </sc-if>
+
+          <!-- banda resumen de campaña (al filtrar por etiqueta) -->
+          <sc-if value="{{ tagBandShow }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; align-items:center; gap:22px; background:#FBFAFE; border:1px solid #E4DCF2; border-radius:13px; padding:13px 18px; margin-top:16px; flex-wrap:wrap;">
+              <span style="display:inline-flex; align-items:center; gap:6px; background:#F3F0FA; border:1px solid #E4DCF2; color:#6B4FA1; border-radius:8px; padding:4px 11px; font-size:12.5px; font-weight:600;">⌗ {{ tagFilterName }}</span>
+              <span style="font-size:13px; color:#3D4757;"><b style="font-variant-numeric:tabular-nums;">{{ tagBandCount }}</b> publicaciones</span>
+              <span style="font-size:13px; color:#3D4757;"><b style="font-variant-numeric:tabular-nums;">{{ tagBandAlcance }}</b> de alcance sumado</span>
+              <span style="font-size:13px; color:#3D4757;"><b style="font-variant-numeric:tabular-nums;">{{ tagBandInterac }}</b> interacciones</span>
+              <span style="font-size:11.5px; color:#8A95A6;">toda la campaña, sin importar los otros filtros</span>
+              <span onClick="{{ clearTag }}" style="margin-left:auto; font-size:12.5px; color:#647084; cursor:pointer;">✕ quitar filtro</span>
+            </div>
+          </sc-if>
+
+          <!-- table card (header sticky dentro del área con scroll) -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:16px; overflow:hidden;">
+           <div style="max-height:470px; overflow:auto;">
+
+            <!-- header -->
+            <div style="display:grid; grid-template-columns:56px 1.7fr 1.1fr .85fr .85fr .82fr .82fr 30px; gap:12px; padding:14px 22px 11px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7; position:sticky; top:0; background:#fff; z-index:5;">
+              <div></div>
+              <div>Publicación</div>
+              <div>Cuenta</div>
+              <div>Tipo</div>
+              <div onClick="{{ sortByDate }}" style="cursor:pointer; user-select:none;">Fecha {{ dateArrow }}</div>
+              <div onClick="{{ sortByAlcance }}" style="display:flex; align-items:center; gap:5px; cursor:pointer; user-select:none;">
+                Alcance {{ alcanceArrow }}
+                <span onClick="{{ infoToggle.alcance }}" onMouseEnter="{{ infoEnter.alcance }}" onMouseLeave="{{ infoLeave.alcance }}" style="position:relative; display:inline-flex;">
+                  <span style="display:inline-flex; width:14px; height:14px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:8px; color:#647084; cursor:help; text-transform:none;">i</span>
+                  <sc-if value="{{ info.alcance }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute; top:22px; left:-12px; width:230px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:12px 14px; z-index:30; text-transform:none; letter-spacing:normal;">
+                      <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Alcance</span>
+                      <span style="display:block; font-size:12.5px; font-weight:400; color:#647084; line-height:1.5;">Personas distintas que vieron la publicación.</span>
+                    </span>
+                  </sc-if>
+                </span>
+              </div>
+              <div onClick="{{ sortByInterac }}" style="display:flex; align-items:center; gap:5px; cursor:pointer; user-select:none;">
+                Interac. {{ interacArrow }}
+                <span onClick="{{ infoToggle.interac }}" onMouseEnter="{{ infoEnter.interac }}" onMouseLeave="{{ infoLeave.interac }}" style="position:relative; display:inline-flex;">
+                  <span style="display:inline-flex; width:14px; height:14px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:8px; color:#647084; cursor:help; text-transform:none;">i</span>
+                  <sc-if value="{{ info.interac }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute; top:22px; left:-90px; width:230px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:12px 14px; z-index:30; text-transform:none; letter-spacing:normal;">
+                      <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Interacciones</span>
+                      <span style="display:block; font-size:12.5px; font-weight:400; color:#647084; line-height:1.5;">Me gusta, comentarios y otras reacciones, sumados. Las stories no registran interacciones.</span>
+                    </span>
+                  </sc-if>
+                </span>
+              </div>
+              <div></div>
+            </div>
+
+            <!-- rows -->
+            <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
+              <div>
+                <sc-for list="{{ rows }}" as="p" hint-placeholder-count="6">
+                  <div class="filg-row" onClick="{{ p.onOpen }}" style="display:grid; grid-template-columns:56px 1.7fr 1.1fr .85fr .85fr .82fr .82fr 30px; gap:12px; align-items:center; padding:11px 22px; border-bottom:1px solid #F4F6F9; cursor:pointer; transition:background .12s;">
+                    <div style="width:46px; height:46px; border-radius:9px; background:{{ p.thumbBg }}; display:flex; align-items:center; justify-content:center;">
+                      <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div style="min-width:0; position:relative;">
+                      <div style="font-size:13px; color:#232A36; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.title }}</div>
+                      <div style="display:flex; align-items:center; gap:5px; margin-top:4px; flex-wrap:wrap;">
+                        <sc-for list="{{ p.tags }}" as="tg" hint-placeholder-count="1"><span style="display:inline-flex; background:#F3F0FA; border:1px solid #E4DCF2; color:#6B4FA1; border-radius:6px; padding:1px 7px; font-size:10.5px; font-weight:500; white-space:nowrap;">⌗ {{ tg }}</span></sc-for>
+                        <span onClick="{{ p.onTagEdit }}" style="display:inline-flex; border:1px dashed #C7D0DB; color:#8A95A6; border-radius:6px; padding:1px 6px; font-size:10.5px; cursor:pointer;" style-hover="display:inline-flex; border:1px dashed #6B4FA1; color:#6B4FA1; border-radius:6px; padding:1px 6px; font-size:10.5px; cursor:pointer;">⌗+</span>
+                      </div>
+                      <sc-if value="{{ p.tagEditorOpen }}" hint-placeholder-val="{{ false }}">
+                        <div onClick="{{ stopClick }}" style="position:absolute; top:100%; left:0; width:252px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.16); padding:8px; z-index:40; cursor:default; margin-top:6px;">
+                          <input value="{{ tagQuery }}" onChange="{{ onTagQuery }}" onClick="{{ stopClick }}" placeholder="Buscar o crear etiqueta…" style="width:100%; height:32px; border:1px solid #D4DAE3; border-radius:8px; padding:0 10px; font-size:12.5px; color:#141921; font-family:inherit; outline:none; background:#fff;" />
+                          <div style="margin-top:5px;">
+                            <sc-for list="{{ tagAssignOptions }}" as="o" hint-placeholder-count="3">
+                              <div onClick="{{ o.onToggle }}" style="{{ o.rowStyle }}"><span style="{{ o.checkStyle }}">✓</span><span style="flex:1; font-size:12.5px; color:#232A36;">⌗ {{ o.name }}</span></div>
+                            </sc-for>
+                            <sc-if value="{{ showCreateTag }}" hint-placeholder-val="{{ false }}">
+                              <div onClick="{{ onCreateTag }}" style="display:flex; align-items:center; gap:7px; padding:8px 9px; border-top:1px solid #F0F3F7; margin-top:4px; font-size:12.5px; font-weight:500; color:{{ accent }}; cursor:pointer;">+ Crear «{{ tagQuery }}»</div>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </sc-if>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:7px; min-width:0;">
+                      <span style="font-size:10px; font-weight:600; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 6px; flex:none;">{{ p.code }}</span>
+                      <span style="font-size:12px; color:#647084; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.handle }}</span>
+                    </div>
+                    <div style="font-size:12px; color:#647084;">{{ p.type }}</div>
+                    <div style="font-size:12px; color:#647084;">{{ p.date }}</div>
+                    <div style="font-size:13px; color:#232A36; font-variant-numeric:tabular-nums;">{{ p.alcanceStr }}</div>
+                    <div style="font-size:13px; color:#232A36; font-variant-numeric:tabular-nums;">{{ p.interacStr }}</div>
+                    <div style="font-size:16px; color:#C4CCD6; text-align:center;">›</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+           </div>
+
+            <!-- inline empty (filter yields nothing) -->
+            <sc-if value="{{ showEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:54px 28px 58px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:11px;">
+                <div style="width:54px; height:54px; border-radius:14px; background:#F1F4F8; border:1px solid #E5E9EF; display:flex; align-items:center; justify-content:center;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6" stroke="#A7B0BD" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6" stroke="#A7B0BD" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6" stroke="#A7B0BD" stroke-width="1.6"/><path d="M14 17h6M17 14v6" stroke="#A7B0BD" stroke-width="1.6" stroke-linecap="round"/></svg>
+                </div>
+                <div style="font-size:16px; font-weight:600; color:#141921;">No hay publicaciones para este filtro</div>
+                <div style="font-size:13px; color:#647084; line-height:1.5; max-width:330px;">Probá con otra cuenta, ampliá el rango de fechas o quitá algún filtro de tipo.</div>
+                <div onClick="{{ clearAll }}" style="margin-top:5px; height:38px; display:flex; align-items:center; padding:0 18px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:500; cursor:pointer;">Limpiar filtros</div>
+              </div>
+            </sc-if>
+
+            <!-- cargar más (mismo paradigma que móvil; sin paginación numérica) -->
+            <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:13px 22px; border-top:1px solid #F0F3F7;">
+                <div style="font-size:12px; color:#8A95A6;">{{ pageInfo }}</div>
+                <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ onLoadMore }}" style="height:34px; display:flex; align-items:center; padding:0 16px; background:#fff; border:1px solid #E0E5EC; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cargar más</div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:54px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <span style="font-size:13px; color:#8A95A6;">‹ Dashboard</span>
+          <div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:16px 16px 22px;">
+          <div style="font-size:18px; font-weight:600; color:#141921;">Todas las publicaciones</div>
+          <div style="font-size:12px; color:#647084; margin-top:3px;">Café Aurora · {{ totalCount }} · 4 cuentas</div>
+
+          <!-- account filter full-width -->
+          <div style="height:42px; background:#fff; border:1.5px solid {{ accent }}; border-radius:9px; display:flex; align-items:center; justify-content:space-between; padding:0 13px; font-size:13px; color:#232A36; margin-top:14px;">
+            <span style="display:flex; align-items:center; gap:8px;"><span style="font-size:10px; font-weight:600; color:#fff; background:{{ accent }}; border-radius:4px; padding:2px 5px;">{{ accountNetCode }}</span><span style="font-weight:500;">{{ accountBtnLabel }}</span></span>
+            <span style="color:#9AA4B2;">▾</span>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <div style="flex:1; height:40px; background:#fff; border:1px solid #E0E5EC; border-radius:9px; display:flex; align-items:center; justify-content:center; gap:7px; font-size:13px; color:#3D4757;">Tipo y fechas <span style="color:#9AA4B2;">▾</span></div>
+            <div style="flex:1; height:40px; background:#fff; border:1px solid #E0E5EC; border-radius:9px; display:flex; align-items:center; justify-content:center; gap:7px; font-size:13px; color:#3D4757;">Más recientes <span style="color:#9AA4B2;">▾</span></div>
+          </div>
+
+          <!-- cards -->
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
+            <sc-for list="{{ mobileRows }}" as="p" hint-placeholder-count="4">
+              <div style="display:flex; gap:11px; align-items:center; background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:11px;">
+                <div style="width:48px; height:48px; border-radius:9px; background:{{ p.thumbBg }}; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:13px; color:#232A36; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.title }}</div>
+                  <div style="display:flex; align-items:center; gap:6px; margin-top:5px;"><span style="font-size:9px; font-weight:600; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:4px; padding:1px 5px;">{{ p.code }}</span><span style="font-size:11px; color:#8A95A6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.handle }} · {{ p.type }} · {{ p.date }}</span></div>
+                  <sc-if value="{{ p.hasTags }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex; gap:4px; margin-top:5px; flex-wrap:wrap;">
+                      <sc-for list="{{ p.tags }}" as="tg" hint-placeholder-count="1"><span style="display:inline-flex; background:#F3F0FA; border:1px solid #E4DCF2; color:#6B4FA1; border-radius:5px; padding:0 6px; font-size:10px; font-weight:500; white-space:nowrap;">⌗ {{ tg }}</span></sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="text-align:right; flex:none;"><div style="font-size:15px; font-weight:600; color:#141921;">{{ p.alcanceStr }}</div><div style="font-size:10px; color:#8A95A6;">alcance</div></div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="text-align:center; margin-top:16px;"><span style="font-size:13px; font-weight:500; color:#3D4757; background:#fff; border:1px solid #E0E5EC; border-radius:9px; padding:10px 20px;">Cargar más</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ ESTADOS ============ -->
+  <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin:36px 0 12px;">Estados</div>
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- LOADING skeleton -->
+    <div style="flex:none; width:720px;">
+      <div style="font-size:12px; font-weight:500; color:#8A95A6; margin-bottom:10px;">Carga · skeleton de filas</div>
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; overflow:hidden; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="display:grid; grid-template-columns:56px 2fr 1.2fr .9fr .8fr .8fr 30px; gap:12px; padding:14px 22px 11px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+          <div></div><div>Publicación</div><div>Cuenta</div><div>Tipo</div><div>Fecha</div><div>Alcance</div><div></div>
+        </div>
+        <sc-for list="{{ skeletonRows }}" as="s" hint-placeholder-count="6">
+          <div style="display:grid; grid-template-columns:56px 2fr 1.2fr .9fr .8fr .8fr 30px; gap:12px; align-items:center; padding:13px 22px; border-bottom:1px solid #F4F6F9;">
+            <div class="filg-sk" style="width:46px; height:46px; border-radius:9px;"></div>
+            <div class="filg-sk" style="height:11px; border-radius:6px; width:{{ s.w1 }};"></div>
+            <div class="filg-sk" style="height:11px; border-radius:6px; width:{{ s.w2 }};"></div>
+            <div class="filg-sk" style="height:11px; border-radius:6px; width:46px;"></div>
+            <div class="filg-sk" style="height:11px; border-radius:6px; width:40px;"></div>
+            <div class="filg-sk" style="height:11px; border-radius:6px; width:44px;"></div>
+            <div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- EMPTY + ERROR stacked -->
+    <div style="flex:none; width:390px; display:flex; flex-direction:column; gap:28px;">
+      <div>
+        <div style="font-size:12px; font-weight:500; color:#8A95A6; margin-bottom:10px;">Vacío · sin resultados</div>
+        <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; box-shadow:0 2px 8px rgba(20,25,33,.06); padding:46px 28px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:11px;">
+          <div style="width:54px; height:54px; border-radius:14px; background:#F1F4F8; border:1px solid #E5E9EF; display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6" stroke="#A7B0BD" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6" stroke="#A7B0BD" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6" stroke="#A7B0BD" stroke-width="1.6"/><path d="M14 17h6M17 14v6" stroke="#A7B0BD" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-size:16px; font-weight:600; color:#141921;">No hay publicaciones para este filtro</div>
+          <div style="font-size:13px; color:#647084; line-height:1.5; max-width:290px;">Probá con otra cuenta, ampliá el rango de fechas o quitá algún filtro de tipo.</div>
+          <div style="margin-top:5px; height:38px; display:flex; align-items:center; padding:0 18px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:500;">Limpiar filtros</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:500; color:#8A95A6; margin-bottom:10px;">Error · no se pudo cargar</div>
+        <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; box-shadow:0 2px 8px rgba(20,25,33,.06); padding:46px 28px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:11px;">
+          <div style="width:54px; height:54px; border-radius:14px; background:#FBEFEC; border:1px solid #F3DAD2; display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 8v5" stroke="#C2603F" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.4" r="1.1" fill="#C2603F"/><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="#C2603F" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <div style="font-size:16px; font-weight:600; color:#141921;">No se pudieron traer las publicaciones</div>
+          <div style="font-size:13px; color:#647084; line-height:1.5; max-width:290px;">Hubo un problema al conectarnos con las redes. Esperá unos segundos y volvé a intentarlo.</div>
+          <div style="display:flex; gap:9px; margin-top:5px;">
+            <div style="height:38px; display:flex; align-items:center; gap:8px; padding:0 18px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:500;">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7a5 5 0 1 1-1.5-3.5M12 1v3H9" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Reintentar
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1320,&quot;height&quot;:960},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = {
+    account: 'all',      // 'all' or account id
+    tagFilter: 'all', tagEditor: null, tagQuery: '', tagsDemo: 'con',
+    tags: ['Lanzamiento junio','Promos','Reels'],
+    postTags: { 1:['Lanzamiento junio','Reels'], 2:['Lanzamiento junio'], 4:['Promos'], 5:['Lanzamiento junio'], 12:['Lanzamiento junio'] },
+    type: 'all',
+    range: (() => { try { const v = localStorage.getItem('fg-range'); return ['7','30','90'].indexOf(v) >= 0 ? v : '90'; } catch(e) { return '90'; } })(),
+    customOpen: false, customFrom: '2026-05-01', customTo: '2026-07-03', appliedFrom: null, appliedTo: null,
+    sortKey: 'date',     // date | alcance | interac
+    sortDir: 'desc',
+    page: 1,
+    open: null,          // account | type | range | sort | null
+    infoKey: null,
+  };
+
+  accounts = [
+    { id:'ig_cafeaurora', net:'ig',     code:'IG', handle:'@cafeaurora' },
+    { id:'ig_auroradeli', net:'ig',     code:'IG', handle:'@aurora.deli' },
+    { id:'fb_cafeaurora', net:'fb',     code:'FB', handle:'Café Aurora' },
+    { id:'tt_cafeaurora', net:'tiktok', code:'TT', handle:'@cafeaurora' },
+  ];
+
+  netName = { ig:'Instagram', fb:'Facebook', tiktok:'TikTok' };
+
+  typeIcon = { Reel:'🎬', Feed:'🖼️', Story:'⭕', Video:'▶️', Imagen:'🖼️', Carrusel:'🎠' };
+
+  posts = [
+    { id:1,  title:'Lanzamiento de temporada otoño 2026', acc:'ig_cafeaurora', type:'Reel',     date:'18 jun', days:4,  alcance:22400, interac:1800, kind:'post' },
+    { id:2,  title:'Detrás de escena: nuestro café',      acc:'tt_cafeaurora', type:'Video',    date:'14 jun', days:8,  alcance:19100, interac:1500, kind:'post' },
+    { id:3,  title:'Encuesta de sabores',                 acc:'ig_auroradeli', type:'Story',    date:'13 jun', days:9,  alcance:8700,  interac:null, kind:'story' },
+    { id:4,  title:'Promo 2x1 fin de semana',             acc:'fb_cafeaurora', type:'Imagen',   date:'9 jun',  days:13, alcance:14700, interac:980,  kind:'post' },
+    { id:5,  title:'Receta: cold brew de naranja',        acc:'ig_cafeaurora', type:'Carrusel', date:'5 jun',  days:17, alcance:12200, interac:760,  kind:'post' },
+    { id:6,  title:'Nuevo horario de fin de semana',      acc:'fb_cafeaurora', type:'Imagen',   date:'2 jun',  days:20, alcance:6100,  interac:340,  kind:'post' },
+    { id:7,  title:'Tips para tu espresso en casa',       acc:'ig_cafeaurora', type:'Feed',     date:'28 may', days:25, alcance:9900,  interac:540,  kind:'post' },
+    { id:8,  title:'Detrás del mostrador (parte 2)',      acc:'tt_cafeaurora', type:'Video',    date:'24 may', days:29, alcance:15300, interac:1200, kind:'post' },
+    { id:9,  title:'Nuevo latte de avellana',             acc:'ig_cafeaurora', type:'Story',    date:'20 may', days:33, alcance:7200,  interac:null, kind:'story' },
+    { id:10, title:'Granos de origen: del campo a la taza',acc:'ig_auroradeli', type:'Carrusel', date:'12 may', days:41, alcance:10400, interac:610,  kind:'post' },
+    { id:11, title:'Reseñas de nuestros clientes',        acc:'fb_cafeaurora', type:'Imagen',   date:'3 may',  days:50, alcance:5500,  interac:280,  kind:'post' },
+    { id:12, title:'El lanzamiento de la marca',          acc:'ig_cafeaurora', type:'Reel',     date:'18 abr', days:65, alcance:28900, interac:2400, kind:'post' },
+  ];
+
+  pageSize = 6;
+
+  fmt(n) {
+    if (n == null) return '—';
+    if (n >= 1000) { const v = n/1000; return (v >= 10 ? v.toFixed(0) : v.toFixed(1)).replace('.0','') + 'k'; }
+    return String(n);
+  }
+
+  thumbBg(net) {
+    if (net === 'ig') return 'linear-gradient(135deg,#FCEFE6,#F6E1EC)';
+    if (net === 'fb') return 'linear-gradient(135deg,#E7EEFB,#DCE6F7)';
+    return 'linear-gradient(135deg,#E6F2F1,#E0EDEC)';
+  }
+
+  /* Hoy demo = 3 jul 2026. days = días atrás de cada post. Devuelve la ventana en días [min,max]. */
+  rangeWindow(st) {
+    const daysAgo = (iso) => { const p = iso.split('-').map(Number); const d = new Date(p[0], p[1]-1, p[2]); return Math.round((this.today - d) / 86400000); };
+    switch (st.range) {
+      case '7':  return { minDays:0, maxDays:7 };
+      case '30': return { minDays:0, maxDays:30 };
+      case '90': return { minDays:0, maxDays:90 };
+      case 'mes': return { minDays:0, maxDays:2 };        // 1–3 jul
+      case 'mesPasado': return { minDays:3, maxDays:32 };  // jun 1–30
+      case 'custom': {
+        if (!st.appliedFrom || !st.appliedTo) return { minDays:0, maxDays:99999 };
+        return { minDays: daysAgo(st.appliedTo), maxDays: daysAgo(st.appliedFrom) };
+      }
+      default: return { minDays:0, maxDays:99999 };        // todo
+    }
+  }
+
+  fmtShort(iso) {
+    const m = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    const p = iso.split('-'); if (p.length !== 3) return iso;
+    return parseInt(p[2],10) + ' ' + m[parseInt(p[1],10)-1];
+  }
+  today = new Date(2026, 6, 3);
+
+  toggleMenu(key) {
+    this.setState(s => ({ open: s.open === key ? null : key }));
+  }
+
+  setSort(key) {
+    this.setState(s => {
+      if (s.sortKey === key) return { sortDir: s.sortDir === 'desc' ? 'asc' : 'desc', open:null, page:1 };
+      return { sortKey: key, sortDir: 'desc', open:null, page:1 };
+    });
+  }
+
+  menuRow(selected, accent) {
+    return {
+      display:'flex', alignItems:'center', justifyContent:'space-between',
+      padding:'8px 10px', borderRadius:'8px', cursor:'pointer',
+      background: selected ? '#F3F6FA' : 'transparent', fontSize:'13px',
+    };
+  }
+
+  btn(active, accent) {
+    return {
+      display:'flex', alignItems:'center', gap:'8px', height:'36px',
+      padding:'0 13px', borderRadius:'9px', background:'#fff', cursor:'pointer',
+      border:'1px solid ' + (active ? accent : '#E0E5EC'),
+      fontSize:'13px', color:'#3D4757', whiteSpace:'nowrap', userSelect:'none',
+    };
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+
+    // ---- etiquetas: fuente efectiva (demo «sin etiquetas aún») ----
+    const tagsOff = st.tagsDemo === 'sin';
+    const allTags = tagsOff ? [] : st.tags;
+    const postTags = tagsOff ? {} : st.postTags;
+
+    // ---- filtering ----
+    let list = this.posts.slice();
+    if (st.account !== 'all') list = list.filter(p => p.acc === st.account);
+    if (st.type !== 'all') list = list.filter(p => p.type === st.type);
+    if (st.tagFilter !== 'all') list = list.filter(p => (postTags[p.id] || []).indexOf(st.tagFilter) >= 0);
+    const win = this.rangeWindow(st);
+    list = list.filter(p => { const d = p.days; return d <= win.maxDays && d >= win.minDays; });
+
+    // ---- sorting ----
+    const dir = st.sortDir === 'desc' ? -1 : 1;
+    list.sort((a,b) => {
+      let av, bv;
+      if (st.sortKey === 'date') { av = a.days; bv = b.days; return (av - bv) * dir; }
+      av = a[st.sortKey] || 0; bv = b[st.sortKey] || 0;
+      return (av - bv) * dir;
+    });
+
+    const totalCount = this.posts.length;
+    const filteredCount = list.length;
+    const hasRows = filteredCount > 0;
+    const showEmpty = !hasRows;
+
+    // ---- "cargar más": se muestran las primeras page*pageSize filas ----
+    const pageCount = Math.max(1, Math.ceil(filteredCount / this.pageSize));
+    const page = Math.min(st.page, pageCount);
+    const start = 0;
+    const pageItems = list.slice(0, page * this.pageSize);
+    const hasMore = filteredCount > pageItems.length;
+
+    const accById = {};
+    this.accounts.forEach(a => accById[a.id] = a);
+
+    const decorate = (p) => {
+      const a = accById[p.acc];
+      return {
+        title: p.title, code: a.code, handle: a.handle, type: p.type, date: p.date,
+        tags: postTags[p.id] || [],
+        hasTags: (postTags[p.id] || []).length > 0,
+        tagEditorOpen: st.tagEditor === p.id,
+        onTagEdit: (e) => { e.stopPropagation(); this.setState(s => ({ tagEditor: s.tagEditor === p.id ? null : p.id, tagQuery: '' })); },
+        alcanceStr: this.fmt(p.alcance), interacStr: this.fmt(p.interac),
+        thumbBg: this.thumbBg(a.net), thumbIcon: this.typeIcon[p.type] || '🖼️',
+        onOpen: () => {
+          const f = p.kind === 'story' ? 'Detalle de story.dc.html' : 'Detalle de publicación.dc.html';
+          try { window.location.href = encodeURI(f); } catch(e) {}
+        },
+      };
+    };
+
+    const rows = pageItems.map(decorate);
+    const mobileRows = list.slice(0, 4).map(decorate);
+
+    // ---- account button ----
+    const selAcc = st.account === 'all' ? null : accById[st.account];
+    const accountBtnLabel = selAcc ? selAcc.handle : 'Todas las cuentas';
+    const accountNetCode = selAcc ? selAcc.code : '';
+    const accountHasNet = !!selAcc;
+
+    const accountGroups = ['ig','fb','tiktok'].map(net => ({
+      net: this.netName[net],
+      items: this.accounts.filter(a => a.net === net).map(a => ({
+        code: a.code, handle: a.handle, selected: st.account === a.id,
+        rowStyle: this.menuRow(st.account === a.id, accent),
+        onClick: () => this.setState({ account: a.id, open:null, page:1 }),
+      })),
+    }));
+
+    // ---- type options ----
+    const types = ['Reel','Feed','Story','Video','Imagen','Carrusel'];
+    const typeBtnLabel = st.type === 'all' ? 'Todos los tipos' : st.type;
+    const typeOptions = [{ key:'all', label:'Todos los tipos' }].concat(types.map(t => ({ key:t, label:t }))).map(o => ({
+      label: o.label, selected: st.type === o.key,
+      rowStyle: this.menuRow(st.type === o.key, accent),
+      onClick: () => this.setState({ type: o.key, open:null, page:1 }),
+    }));
+
+    // ---- range options (set estándar: 7/30/90 · Este mes · Mes pasado · Personalizado… · Todo el historial) ----
+    const rangeLabels = { '7':'Últimos 7 días', '30':'Últimos 30 días', '90':'Últimos 90 días', mes:'Este mes', mesPasado:'Mes pasado', todo:'Todo el historial' };
+    const rangeOrder = ['7','30','90','mes','mesPasado','custom','todo'];
+    let rangeBtnLabel;
+    if (st.range === 'custom' && st.appliedFrom) rangeBtnLabel = this.fmtShort(st.appliedFrom) + ' – ' + this.fmtShort(st.appliedTo);
+    else rangeBtnLabel = rangeLabels[st.range] || 'Últimos 90 días';
+    const rangeOptions = rangeOrder.map(key => {
+      const label = key === 'custom' ? 'Personalizado…' : rangeLabels[key];
+      const selected = st.range === key;
+      const base = this.menuRow(selected, accent);
+      const rowStyle = key === 'custom' ? { ...base, borderTop:'1px solid #F0F3F7', borderRadius:'0 0 8px 8px', marginTop:'3px', paddingTop:'9px' } : base;
+      return { label, selected, rowStyle,
+        onClick: () => {
+          if (key === 'custom') { this.setState({ open:null, customOpen:true }); return; }
+          try { if (['7','30','90'].indexOf(key) >= 0) localStorage.setItem('fg-range', key); } catch(e) {}
+          this.setState({ range: key, open:null, customOpen:false, page:1 });
+        },
+      };
+    });
+    // custom popover
+    const cFrom = st.customFrom, cTo = st.customTo;
+    const customError = !!cFrom && !!cTo && cFrom > cTo;
+    const dateInput = (err) => ({ height:'36px', border:'1px solid ' + (err ? '#E0A28C' : '#D4DAE3'), borderRadius:'8px', padding:'0 10px', fontSize:'13px', color:'#141921', fontFamily:'inherit', background:'#fff' });
+
+    // ---- sort options ----
+    const sorts = [
+      { key:'date',    dir:'desc', label:'Más recientes' },
+      { key:'date',    dir:'asc',  label:'Más antiguas' },
+      { key:'alcance', dir:'desc', label:'Mayor alcance' },
+      { key:'interac', dir:'desc', label:'Mayor interacción' },
+    ];
+    const curSort = sorts.find(s => s.key === st.sortKey && s.dir === st.sortDir);
+    const sortBtnLabel = curSort ? curSort.label : 'Personalizado';
+    const sortOptions = sorts.map(s => ({
+      label: s.label, selected: !!curSort && curSort.label === s.label,
+      rowStyle: this.menuRow(!!curSort && curSort.label === s.label, accent),
+      onClick: () => this.setState({ sortKey: s.key, sortDir: s.dir, open:null, page:1 }),
+    }));
+
+    const arrow = (key) => st.sortKey === key ? (st.sortDir === 'desc' ? '↓' : '↑') : '';
+
+    // ---- active filter chips ----
+    const activeChips = [];
+    if (st.account !== 'all') activeChips.push({ label: 'Cuenta: ' + selAcc.code + ' ' + selAcc.handle, onClear: () => this.setState({ account:'all', page:1 }) });
+    if (st.type !== 'all') activeChips.push({ label: 'Tipo: ' + st.type, onClear: () => this.setState({ type:'all', page:1 }) });
+    if (st.tagFilter !== 'all') activeChips.push({ label: '⌗ ' + st.tagFilter, onClear: () => this.setState({ tagFilter:'all', page:1 }) });
+    if (st.range !== '90' && st.range !== 'todo') activeChips.push({ label: rangeBtnLabel, onClear: () => this.setState({ range:'90', page:1 }) });
+    const hasActiveFilters = activeChips.length > 0;
+    const clearAll = () => this.setState({ account:'all', type:'all', range:'90', customOpen:false, tagFilter:'all', page:1, open:null });
+
+    // ---- page buttons ----
+    const onLoadMore = () => this.setState({ page: page + 1 });
+    const pageInfo = filteredCount === 0 ? 'Sin resultados' :
+      'Mostrando ' + pageItems.length + ' de ' + filteredCount;
+
+    // ---- info popovers ----
+    const ik = st.infoKey;
+    const mkEnter = (k) => () => this.setState({ infoKey: k });
+    const mkLeave = (k) => () => this.setState(s => s.infoKey === k ? { infoKey: null } : null);
+
+    // ---- etiquetas: filtro, banda y asignador ----
+    const segTag = (active) => {
+      const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap' };
+      return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' } : { ...base, color:'#647084' };
+    };
+    const tagDemoStates = [['con','Con etiquetas'],['sin','Sin etiquetas aún']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ tagsDemo:k, tagFilter:'all', tagEditor:null, open:null, page:1 }), style: segTag(k === st.tagsDemo) }));
+
+    const tagCount = (name) => this.posts.filter(p => (postTags[p.id] || []).indexOf(name) >= 0).length;
+    const tagBtnLabel = st.tagFilter === 'all' ? 'Etiqueta' : st.tagFilter;
+    const tagOptions = [{ key:'all', label:'Todas las etiquetas', count:'' }]
+      .concat(allTags.map(t => ({ key:t, label:t, count:String(tagCount(t)) })))
+      .map(o => ({
+        label: o.label, count: o.count, selected: st.tagFilter === o.key,
+        rowStyle: this.menuRow(st.tagFilter === o.key, accent),
+        onClick: () => this.setState({ tagFilter: o.key, open:null, page:1 }),
+      }));
+
+    const tagBandShow = st.tagFilter !== 'all';
+    let tagBandCount = '0', tagBandAlcance = '0', tagBandInterac = '0';
+    if (tagBandShow) {
+      const camp = this.posts.filter(p => (postTags[p.id] || []).indexOf(st.tagFilter) >= 0);
+      tagBandCount = String(camp.length);
+      tagBandAlcance = this.fmt(camp.reduce((s, p) => s + (p.alcance || 0), 0));
+      tagBandInterac = this.fmt(camp.reduce((s, p) => s + (p.interac || 0), 0));
+    }
+
+    const q = (st.tagQuery || '').trim();
+    const qL = q.toLowerCase();
+    const editorTags = st.tagEditor != null ? (postTags[st.tagEditor] || []) : [];
+    const tagAssignOptions = allTags
+      .filter(t => !qL || t.toLowerCase().includes(qL))
+      .map(name => {
+        const on = editorTags.indexOf(name) >= 0;
+        return {
+          name,
+          rowStyle: { display:'flex', alignItems:'center', gap:'8px', padding:'7px 9px', borderRadius:'8px', cursor:'pointer', background: on ? '#F5F8FC' : 'transparent' },
+          checkStyle: { display:'inline-flex', width:'16px', height:'16px', borderRadius:'5px', alignItems:'center', justifyContent:'center', fontSize:'10px', flex:'none', background: on ? accent : '#fff', color: on ? '#fff' : 'transparent', border: on ? 'none' : '1.5px solid #C7D0DB' },
+          onToggle: (e) => {
+            e.stopPropagation();
+            this.setState(s => {
+              const cur = s.postTags[s.tagEditor] || [];
+              const next = on ? cur.filter(t => t !== name) : cur.concat([name]);
+              return { postTags: { ...s.postTags, [s.tagEditor]: next } };
+            });
+          },
+        };
+      });
+    const showCreateTag = q.length > 0 && !allTags.some(t => t.toLowerCase() === qL);
+
+    // ---- skeleton ----
+    const skeletonRows = [
+      { w1:'62%', w2:'54%' }, { w1:'48%', w2:'46%' }, { w1:'70%', w2:'50%' },
+      { w1:'40%', w2:'58%' }, { w1:'66%', w2:'44%' }, { w1:'52%', w2:'52%' },
+    ];
+
+    return {
+      accent, totalCount,
+      // controls
+      accountBtnLabel, accountNetCode, accountHasNet,
+      accountBtnStyle: { ...this.btn(st.account !== 'all', accent), border:'1.5px solid ' + (st.account !== 'all' ? accent : '#B9C0C9') },
+      allAccountsSel: st.account === 'all',
+      allAccountsStyle: this.menuRow(st.account === 'all', accent),
+      pickAllAccounts: () => this.setState({ account:'all', open:null, page:1 }),
+      accountGroups,
+      typeBtnLabel, typeBtnStyle: this.btn(st.type !== 'all', accent), typeOptions,
+      rangeBtnLabel, rangeBtnStyle: this.btn(st.range !== 90, accent), rangeOptions,
+      sortBtnLabel, sortBtnStyle: this.btn(false, accent), sortOptions,
+      toggle: {
+        account: () => this.toggleMenu('account'),
+        type: () => this.toggleMenu('type'),
+        range: () => this.toggleMenu('range'),
+        sort: () => this.toggleMenu('sort'),
+        tag: () => this.toggleMenu('tag'),
+      },
+      open: { account: st.open === 'account', type: st.open === 'type', range: st.open === 'range', sort: st.open === 'sort', tag: st.open === 'tag' },
+      menuOpen: st.open !== null,
+      closeMenus: () => this.setState({ open:null }),
+      // sorting headers
+      sortByDate: () => this.setSort('date'),
+      sortByAlcance: () => this.setSort('alcance'),
+      sortByInterac: () => this.setSort('interac'),
+      dateArrow: arrow('date'), alcanceArrow: arrow('alcance'), interacArrow: arrow('interac'),
+      // chips
+      hasActiveFilters, activeChips, clearAll,
+      // rango personalizado
+      customOpen: st.customOpen,
+      customFrom: st.customFrom, customTo: st.customTo,
+      customFromStyle: dateInput(customError), customToStyle: dateInput(customError),
+      onCustomFrom: (e) => this.setState({ customFrom: e.target.value }),
+      onCustomTo: (e) => this.setState({ customTo: e.target.value }),
+      customError, customErrorText: '«Desde» no puede ser posterior a «hasta».',
+      customApplyStyle: customError
+        ? { height:'34px', display:'flex', alignItems:'center', padding:'0 15px', background:'#EEF1F5', color:'#9AA4B2', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'default' }
+        : { height:'34px', display:'flex', alignItems:'center', padding:'0 15px', background:accent, color:'#fff', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer' },
+      customCancel: () => this.setState({ customOpen:false }),
+      customApply: () => { if (customError) return; this.setState(s => ({ range:'custom', customOpen:false, appliedFrom:s.customFrom, appliedTo:s.customTo, page:1 })); },
+      // etiquetas
+      tagDemoStates,
+      tagBtnLabel, tagBtnStyle: this.btn(st.tagFilter !== 'all', accent),
+      tagOptions, tagsExist: allTags.length > 0, tagsNone: allTags.length === 0,
+      tagBandShow, tagFilterName: st.tagFilter, tagBandCount, tagBandAlcance, tagBandInterac,
+      clearTag: () => this.setState({ tagFilter:'all', page:1 }),
+      tagQuery: st.tagQuery,
+      onTagQuery: (e) => this.setState({ tagQuery: e.target.value }),
+      tagAssignOptions, showCreateTag,
+      onCreateTag: (e) => {
+        e.stopPropagation();
+        const nq = (st.tagQuery || '').trim();
+        if (!nq) return;
+        this.setState(s => {
+          const cur = s.postTags[s.tagEditor] || [];
+          return { tags: s.tags.concat([nq]), postTags: { ...s.postTags, [s.tagEditor]: cur.concat([nq]) }, tagQuery: '' };
+        });
+      },
+      stopClick: (e) => e.stopPropagation(),
+      // table
+      rows, mobileRows, hasRows, showEmpty,
+      pageInfo, hasMore, onLoadMore,
+      // info
+      info: { alcance: ik === 'alcance', interac: ik === 'interac' },
+      infoEnter: { alcance: mkEnter('alcance'), interac: mkEnter('interac') },
+      infoLeave: { alcance: mkLeave('alcance'), interac: mkLeave('interac') },
+      infoToggle: {
+        alcance: (e) => { e.stopPropagation(); this.setState(s => ({ infoKey: s.infoKey === 'alcance' ? null : 'alcance' })); },
+        interac: (e) => { e.stopPropagation(); this.setState(s => ({ infoKey: s.infoKey === 'interac' ? null : 'interac' })); },
+      },
+      // nav
+      goDashboard: () => { try { window.location.href = encodeURI('Dashboard.dc.html'); } catch(e) {} },
+      // skeleton
+      skeletonRows,
+    };
+  }
+}
+</script>
+</body>
+</html>

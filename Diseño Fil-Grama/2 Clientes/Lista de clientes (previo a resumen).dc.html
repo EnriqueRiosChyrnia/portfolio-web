@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    input::placeholder { color: #8A95A6; }
+    input:focus { outline: none; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:900px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Home — Lista de clientes</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Interactiva: el selector de métrica cambia el número grande de todas las tarjetas, el toggle filtra prioritarios y el buscador filtra por nombre. Pasá el cursor sobre cada <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; vertical-align:middle;">i</span> para ver qué significa la métrica.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <!-- top bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          </div>
+          <div style="display:flex; align-items:center; gap:18px;">
+            <span style="font-size:13px; font-weight:600; color:#141921;">Clientes</span>
+            <span style="position:relative; display:inline-flex;">
+              <div onClick="{{ onAvatarToggle }}" style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568; cursor:pointer;">LF</div>
+              <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:40px; right:0; width:216px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:50;">
+                  <div style="padding:8px 11px 9px; border-bottom:1px solid #F0F3F7; margin-bottom:5px;">
+                    <div style="font-size:13px; font-weight:600; color:#141921;">Lucía Ferreira</div>
+                    <div style="font-size:11.5px; color:#8A95A6; margin-top:1px;">Admin · lucia@agencia.com</div>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer;" style-hover="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer; background:#F5F7FA;">Administración</div>
+                  <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer;" style-hover="display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer; background:#F5F7FA;">Cerrar sesión</div>
+                </div>
+              </sc-if>
+            </span>
+          </div>
+        </div>
+
+        <!-- page body -->
+        <div style="background:#F5F7FA; padding:26px 28px 30px;">
+
+          <!-- header -->
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
+            <div>
+              <div style="font-size:24px; font-weight:600; color:#141921; letter-spacing:-.3px;">Clientes</div>
+              <div style="font-size:13px; color:#647084; margin-top:5px;">{{ subtitle }}</div>
+            </div>
+            <div style="height:38px; background:#fff; border:1px solid #D4DAE3; border-radius:9px; display:flex; align-items:center; padding:0 14px; gap:9px; font-size:13px; color:#353D4D; cursor:pointer;">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2.5" width="12" height="10.5" rx="2" stroke="#647084" stroke-width="1.2"/><path d="M1 5.5h12" stroke="#647084" stroke-width="1.2"/><path d="M4 1v2.5M10 1v2.5" stroke="#647084" stroke-width="1.2" stroke-linecap="round"/></svg>
+              Últimos 7 días
+            </div>
+          </div>
+
+          <!-- controls -->
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:20px;">
+            <!-- search -->
+            <div style="flex:1; min-width:240px; height:40px; background:#fff; border:1px solid #D4DAE3; border-radius:10px; display:flex; align-items:center; gap:10px; padding:0 13px;">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#8A95A6" stroke-width="1.4"/><path d="M10 10l3 3" stroke="#8A95A6" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <input value="{{ searchValue }}" onInput="{{ onSearch }}" placeholder="Buscar cliente" style="border:none; background:transparent; font-family:inherit; font-size:14px; color:#141921; width:100%;"/>
+            </div>
+            <!-- toggle Todos / Prioritarios -->
+            <div style="display:flex; background:#EEF1F5; border-radius:10px; padding:3px; gap:2px;">
+              <sc-for list="{{ filtersList }}" as="f" hint-placeholder-count="2">
+                <div style="{{ f.style }}" onClick="{{ f.onClick }}">{{ f.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- metric selector -->
+          <div style="display:flex; align-items:center; gap:12px; margin-top:14px;">
+            <span style="font-size:12px; color:#8A95A6; text-transform:uppercase; letter-spacing:.6px;">Métrica</span>
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+              <sc-for list="{{ metricsList }}" as="m" hint-placeholder-count="4">
+                <div style="{{ m.style }}" onClick="{{ m.onClick }}">{{ m.label }}</div>
+              </sc-for>
+            </div>
+            <span onClick="{{ onInfoToggle }}" onMouseEnter="{{ onInfoEnter }}" onMouseLeave="{{ onInfoLeave }}" style="position:relative; display:inline-flex;">
+              <span style="display:inline-flex; width:17px; height:17px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:10px; color:#647084; cursor:help;">i</span>
+              <sc-if value="{{ infoOpen }}" hint-placeholder-val="{{ false }}">
+                <span style="position:absolute; top:27px; left:-10px; width:252px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                  <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">{{ metricLabel }}</span>
+                  <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">{{ metricExplanation }}</span>
+                </span>
+              </sc-if>
+            </span>
+          </div>
+
+          <!-- card grid -->
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:22px;">
+            <sc-for list="{{ visibleClients }}" as="c" hint-placeholder-count="6">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px; display:flex; flex-direction:column; gap:13px; min-height:182px; cursor:pointer; transition:border-color .15s, box-shadow .15s;" style-hover="background:#fff; border:1px solid {{ c.accent }}; border-radius:13px; padding:18px; display:flex; flex-direction:column; gap:13px; min-height:182px; cursor:pointer; box-shadow:0 4px 14px rgba(20,25,33,.07);">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="display:flex; align-items:center; gap:9px; min-width:0; flex:1;">
+                    <sc-if value="{{ c.hasLogo }}" hint-placeholder-val="{{ false }}">
+                      <div style="{{ c.logoStyle }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+                    </sc-if>
+                    <sc-if value="{{ c.noLogo }}" hint-placeholder-val="{{ true }}">
+                      <div style="{{ c.avatarStyle }}">{{ c.initials }}</div>
+                    </sc-if>
+                    <span style="font-size:15px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;">{{ c.name }}</span>
+                    <sc-if value="{{ c.priority }}" hint-placeholder-val="{{ true }}">
+                      <svg width="15" height="15" viewBox="0 0 15 15" style="flex:none;"><path d="M7.5 1l1.8 3.9 4.2.5-3.1 2.9.8 4.2-3.7-2.1-3.7 2.1.8-4.2L1.5 5.4l4.2-.5z" fill="{{ c.accent }}"/></svg>
+                    </sc-if>
+                  </div>
+                  <div style="display:flex; gap:5px; flex:none;">
+                    <sc-for list="{{ c.networks }}" as="n" hint-placeholder-count="3">
+                      <span style="font-size:10px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:6px; padding:3px 6px;">{{ n }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:baseline; gap:11px; margin-top:2px;">
+                  <span style="font-size:36px; font-weight:600; color:#141921; letter-spacing:-1px; line-height:1; font-variant-numeric:tabular-nums;">{{ c.hero }}</span>
+                  <sc-if value="{{ c.showTrend }}" hint-placeholder-val="{{ true }}">
+                    <span style="{{ c.trendStyle }}">{{ c.trend }}</span>
+                  </sc-if>
+                </div>
+
+                <div style="margin-top:auto;">
+                  <svg width="100%" height="46" viewBox="0 0 196 40" preserveAspectRatio="none">
+                    <polygon points="{{ c.areaPoints }}" fill="{{ c.accent }}" fill-opacity="0.07"/>
+                    <polyline points="{{ c.sparkPoints }}" fill="none" stroke="{{ c.accent }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </sc-for>
+
+            <!-- add client -->
+            <div style="border:1.5px dashed #C9D1DB; border-radius:13px; min-height:182px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:9px; color:#647084; cursor:pointer; transition:all .15s;" style-hover="border:1.5px dashed {{ accent }}; border-radius:13px; min-height:182px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:9px; color:{{ accent }}; cursor:pointer; background:#fff;">
+              <div style="width:38px; height:38px; border-radius:50%; background:#EEF1F5; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:300; line-height:1;">+</div>
+              <div style="font-size:14px;">Agregar cliente</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="position:relative; border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ onSheetClose }}" style="position:absolute; inset:0; background:rgba(20,25,33,.38); z-index:40; display:flex; align-items:flex-end;">
+            <div onClick="{{ stopClick }}" style="width:100%; background:#fff; border-radius:16px 16px 0 0; padding:10px 16px 18px; box-shadow:0 -8px 30px rgba(20,25,33,.18);">
+              <div style="width:36px; height:4px; border-radius:2px; background:#D4DAE3; margin:0 auto;"></div>
+              <div style="font-size:15px; font-weight:600; color:#141921; margin-top:14px;">Métrica de las tarjetas</div>
+              <div style="display:flex; flex-direction:column; gap:4px; margin-top:10px;">
+                <sc-for list="{{ sheetMetrics }}" as="m" hint-placeholder-count="4">
+                  <div onClick="{{ m.onPick }}" style="{{ m.rowStyle }}">
+                    <span style="{{ m.radioStyle }}"><sc-if value="{{ m.selected }}" hint-placeholder-val="{{ false }}"><span style="width:8px; height:8px; border-radius:50%; background:#fff;"></span></sc-if></span>
+                    <span style="flex:1;">
+                      <span style="display:block; font-size:14px; font-weight:500; color:#141921;">{{ m.label }}</span>
+                      <span style="display:block; font-size:12px; color:#647084; line-height:1.45; margin-top:2px;">{{ m.info }}</span>
+                    </span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <div style="height:54px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <div style="display:flex; align-items:center; gap:9px;">
+            <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:26px; height:26px; border-radius:7px; display:block;" />
+            <span style="font-size:15px; font-weight:600; color:#141921;">Fil-Grama</span>
+          </div>
+          <div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:18px 16px 22px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-size:20px; font-weight:600; color:#141921; letter-spacing:-.3px;">Clientes</div>
+            <div style="height:32px; background:#fff; border:1px solid #D4DAE3; border-radius:8px; display:flex; align-items:center; padding:0 11px; gap:6px; font-size:12px; color:#353D4D;">7 días</div>
+          </div>
+
+          <div style="height:40px; background:#fff; border:1px solid #D4DAE3; border-radius:10px; display:flex; align-items:center; gap:10px; padding:0 13px; margin-top:14px;">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#8A95A6" stroke-width="1.4"/><path d="M10 10l3 3" stroke="#8A95A6" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input value="{{ searchValue }}" onInput="{{ onSearch }}" placeholder="Buscar cliente" style="border:none; background:transparent; font-family:inherit; font-size:14px; color:#141921; width:100%;"/>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <div style="flex:1; display:flex; background:#EEF1F5; border-radius:10px; padding:3px; gap:2px;">
+              <sc-for list="{{ filtersList }}" as="f" hint-placeholder-count="2">
+                <div style="{{ f.styleMobile }}" onClick="{{ f.onClick }}">{{ f.label }}</div>
+              </sc-for>
+            </div>
+            <div onClick="{{ onSheetOpen }}" style="height:40px; background:#fff; border:1px solid #D4DAE3; border-radius:10px; display:flex; align-items:center; padding:0 13px; gap:8px; font-size:13px; color:#141921; cursor:pointer;">
+              {{ metricLabel }} <span style="color:#8A95A6; font-size:10px;">▾</span>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px;">
+            <sc-for list="{{ visibleClients }}" as="c" hint-placeholder-count="3">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:16px;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="display:flex; align-items:center; gap:9px; min-width:0; flex:1;">
+                    <sc-if value="{{ c.hasLogo }}" hint-placeholder-val="{{ false }}">
+                      <div style="{{ c.logoStyle }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+                    </sc-if>
+                    <sc-if value="{{ c.noLogo }}" hint-placeholder-val="{{ true }}">
+                      <div style="{{ c.avatarStyle }}">{{ c.initials }}</div>
+                    </sc-if>
+                    <span style="font-size:15px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;">{{ c.name }}</span>
+                    <sc-if value="{{ c.priority }}" hint-placeholder-val="{{ true }}">
+                      <svg width="14" height="14" viewBox="0 0 15 15" style="flex:none;"><path d="M7.5 1l1.8 3.9 4.2.5-3.1 2.9.8 4.2-3.7-2.1-3.7 2.1.8-4.2L1.5 5.4l4.2-.5z" fill="{{ c.accent }}"/></svg>
+                    </sc-if>
+                  </div>
+                  <div style="display:flex; gap:5px; flex:none;">
+                    <sc-for list="{{ c.networks }}" as="n" hint-placeholder-count="3">
+                      <span style="font-size:10px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:6px; padding:3px 6px;">{{ n }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:baseline; gap:10px; margin-top:12px;">
+                  <span style="font-size:31px; font-weight:600; color:#141921; letter-spacing:-.7px; line-height:1; font-variant-numeric:tabular-nums;">{{ c.hero }}</span>
+                  <sc-if value="{{ c.showTrend }}" hint-placeholder-val="{{ true }}">
+                    <span style="{{ c.trendStyle }}">{{ c.trend }}</span>
+                  </sc-if>
+                </div>
+                <div style="margin-top:8px;">
+                  <svg width="100%" height="40" viewBox="0 0 196 40" preserveAspectRatio="none">
+                    <polygon points="{{ c.areaPoints }}" fill="{{ c.accent }}" fill-opacity="0.07"/>
+                    <polyline points="{{ c.sparkPoints }}" fill="none" stroke="{{ c.accent }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </sc-for>
+
+            <div style="border:1.5px dashed #C9D1DB; border-radius:13px; padding:18px; display:flex; align-items:center; justify-content:center; gap:9px; color:#647084;">
+              <span style="font-size:19px; font-weight:300;">+</span><span style="font-size:14px;">Agregar cliente</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:820},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]},&quot;defaultMetric&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;alcance&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;alcance&quot;,&quot;seguidores&quot;,&quot;interacciones&quot;,&quot;engagement&quot;]},&quot;showTrend&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { metric: null, filter: 'todos', search: '', infoOpen: false, sheetOpen: false, menuOpen: false };
+
+  clients = [
+    { name:'Café Aurora', priority:true, logo:true, networks:['IG','FB','TikTok'], metrics:{
+      alcance:{value:'48.2k', trend:'▲ 12%'}, seguidores:{value:'9.8k', trend:'▲ 2.1%'},
+      interacciones:{value:'3.4k', trend:'▲ 9%'}, engagement:{value:'5.1%', trend:'▼ 0.2 pts'} } },
+    { name:'Estudio Volta', priority:false, networks:['IG','TikTok'], metrics:{
+      alcance:{value:'22.7k', trend:'▲ 5%'}, seguidores:{value:'5.4k', trend:'▲ 1.2%'},
+      interacciones:{value:'1.9k', trend:'▲ 4%'}, engagement:{value:'4.3%', trend:'▲ 0.3 pts'} } },
+    { name:'Bici Mensajería', priority:true, networks:['IG','FB'], metrics:{
+      alcance:{value:'9.8k', trend:'▼ 3%'}, seguidores:{value:'3.4k', trend:'▲ 0.5%'},
+      interacciones:{value:'720', trend:'▼ 6%'}, engagement:{value:'3.8%', trend:'▼ 0.4 pts'} } },
+    { name:'Verde Mercado', priority:false, networks:['IG','FB','TikTok'], metrics:{
+      alcance:{value:'64.1k', trend:'▲ 18%'}, seguidores:{value:'12.6k', trend:'▲ 3.4%'},
+      interacciones:{value:'5.2k', trend:'▲ 14%'}, engagement:{value:'6.2%', trend:'▲ 0.5 pts'} } },
+    { name:'Clínica Sur', priority:false, networks:['IG','FB'], metrics:{
+      alcance:{value:'14.3k', trend:'▼ 1%'}, seguidores:{value:'7.1k', trend:'▲ 0.8%'},
+      interacciones:{value:'1.1k', trend:'▲ 2%'}, engagement:{value:'2.9%', trend:'▼ 0.1 pts'} } },
+    { name:'Mango Helados', priority:true, networks:['IG','TikTok'], metrics:{
+      alcance:{value:'31.5k', trend:'▲ 7%'}, seguidores:{value:'8.2k', trend:'▲ 1.9%'},
+      interacciones:{value:'2.8k', trend:'▲ 11%'}, engagement:{value:'5.7%', trend:'▲ 0.6 pts'} } },
+  ];
+
+  meta = {
+    alcance:      { label:'Alcance',       info:'Cuántas personas distintas vieron el contenido en el período.' },
+    seguidores:   { label:'Seguidores',    info:'Total de seguidores y cuánto creció en el período.' },
+    interacciones:{ label:'Interacciones', info:'Me gusta, comentarios y otras reacciones, sumados.' },
+    engagement:   { label:'Engagement',    info:'Qué porcentaje de quienes vieron el contenido interactuó.' },
+  };
+
+  upShape = [30,25,27,17,20,11,13,6];
+  downShape = [9,13,11,18,16,23,21,28];
+
+  seg(active, accent, h) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 14px', height:(h||'28')+'px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const metric = this.state.metric || this.props.defaultMetric || 'alcance';
+    const showTrend = this.props.showTrend !== false;
+    const filter = this.state.filter;
+    const search = (this.state.search || '').toLowerCase();
+
+    const list = this.clients
+      .filter(c => filter === 'prioritarios' ? c.priority : true)
+      .filter(c => c.name.toLowerCase().includes(search));
+
+    const clamp = (v) => Math.max(4, Math.min(32, v));
+
+    const visibleClients = list.map((c, idx) => {
+      const m = c.metrics[metric];
+      const up = m.trend.indexOf('▲') === 0;
+      const off = ((idx * 7) % 5) - 2;
+      const shape = (up ? this.upShape : this.downShape).map(y => clamp(y + off));
+      const pts = shape.map((y, i) => (i * 28) + ',' + y).join(' ');
+      const area = '0,40 ' + pts + ' 196,40';
+      const initials = c.name.split(' ').filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase();
+      const pal = [ {bg:'#EAF2FB',fg:'#1E66BC'}, {bg:'#E5EDF7',fg:'#14529C'}, {bg:'#EAEEF3',fg:'#5B6B82'}, {bg:'#EEF1F5',fg:'#4A5568'}, {bg:'#E8EFF9',fg:'#3B85D6'} ];
+      let hsh = 0; for (const ch of c.name) hsh = (hsh + ch.charCodeAt(0)) % pal.length;
+      const tint = pal[hsh];
+      return {
+        name: c.name, priority: c.priority,
+        networks: c.networks,
+        hero: m.value, trend: m.trend, showTrend,
+        accent,
+        hasLogo: !!c.logo, noLogo: !c.logo, initials,
+        logoStyle: { width:'36px', height:'36px', borderRadius:'9px', background:accent, display:'flex', alignItems:'center', justifyContent:'center', flex:'none' },
+        avatarStyle: { width:'36px', height:'36px', borderRadius:'9px', background:tint.bg, color:tint.fg, display:'flex', alignItems:'center', justifyContent:'center', flex:'none', fontSize:'13px', fontWeight:600 },
+        trendStyle: up
+          ? { background:'#EAF2FB', color:accent, fontSize:'12px', fontWeight:600, padding:'3px 8px', borderRadius:'7px', lineHeight:'1.2', fontVariantNumeric:'tabular-nums' }
+          : { background:'#FBEFEC', color:'#B2552F', fontSize:'12px', fontWeight:600, padding:'3px 8px', borderRadius:'7px', lineHeight:'1.2', fontVariantNumeric:'tabular-nums' },
+        sparkPoints: pts, areaPoints: area,
+      };
+    });
+
+    const metricsList = Object.keys(this.meta).map(k => ({
+      key: k, label: this.meta[k].label,
+      onClick: () => this.setState({ metric: k }),
+      style: this.seg(k === metric, accent, '28'),
+    }));
+
+    const filtersList = [
+      { key:'todos', label:'Todos' },
+      { key:'prioritarios', label:'Prioritarios' },
+    ].map(f => ({
+      label: f.label,
+      onClick: () => this.setState({ filter: f.key }),
+      style: this.seg(f.key === filter, accent, '28'),
+      styleMobile: this.seg(f.key === filter, accent, '28'),
+    }));
+
+    const n = visibleClients.length;
+    const subtitle = n + (n === 1 ? ' cliente' : ' clientes') + ' · resumen de los últimos 7 días';
+
+    return {
+      accent,
+      metricLabel: this.meta[metric].label,
+      metricExplanation: this.meta[metric].info,
+      searchValue: this.state.search || '',
+      onSearch: (e) => this.setState({ search: e.target.value }),
+      infoOpen: this.state.infoOpen,
+      onInfoEnter: () => this.setState({ infoOpen: true }),
+      onInfoLeave: () => this.setState({ infoOpen: false }),
+      onInfoToggle: () => this.setState(s => ({ infoOpen: !s.infoOpen })),
+      menuOpen: this.state.menuOpen,
+      onAvatarToggle: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      sheetOpen: this.state.sheetOpen,
+      onSheetOpen: () => this.setState({ sheetOpen: true }),
+      onSheetClose: () => this.setState({ sheetOpen: false }),
+      stopClick: (e) => e.stopPropagation(),
+      sheetMetrics: Object.keys(this.meta).map(k => {
+        const sel = k === metric;
+        return {
+          label: this.meta[k].label, info: this.meta[k].info, selected: sel,
+          onPick: () => this.setState({ metric: k, sheetOpen: false }),
+          rowStyle: { display:'flex', alignItems:'flex-start', gap:'11px', padding:'10px 9px', borderRadius:'10px', cursor:'pointer', background: sel ? '#F5F8FC' : 'transparent' },
+          radioStyle: { width:'18px', height:'18px', borderRadius:'50%', flex:'none', marginTop:'2px', display:'flex', alignItems:'center', justifyContent:'center', border: sel ? 'none' : '1.5px solid #B4BDCA', background: sel ? accent : '#fff' },
+        };
+      }),
+      metricsList, filtersList, visibleClients, subtitle,
+    };
+  }
+}
+</script>
+</body>
+</html>

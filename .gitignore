@@ -1,2 +1,9 @@
 .DS_Store
-Diseño Fil-Grama/
+.thumbnail
+
+# Archivos de trabajo del diseño (no forman parte del sitio publicado)
+Diseño Fil-Grama/screenshots/
+Diseño Fil-Grama/handoff-frontend/
+Diseño Fil-Grama/**/*.md
+Diseño Fil-Grama/uploads/*.png
+Diseño Fil-Grama/Portafolio Fil-Grama.dc.html

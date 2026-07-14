@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+    .filg-hov:hover { background:#F7F9FC; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Notificaciones + Salud de cuentas</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">La <span style="color:#3D4757; font-weight:500;">campana</span> vive en la barra superior de todas las pantallas (acá se muestra sobre Salud de cuentas): badge con pendientes, popover cronológico con lo urgente arriba y una acción por fila; se marca leída al abrir. <span style="color:#3D4757; font-weight:500;">Salud de cuentas</span> es la 3ª sección de Administración (solo admins): todas las cuentas de todos los clientes ordenadas por gravedad, con último sync, vencimiento de token y acción rápida. Probá el estado «Todo en orden».</div>
+  </div>
+
+  <!-- demo state switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="2"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1120px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · Administración → Salud de cuentas · campana interactiva</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+
+        <!-- top bar con campana -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px; position:relative; z-index:70;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="display:flex; align-items:center; gap:14px;">
+            <span style="position:relative; display:inline-flex;">
+              <div onClick="{{ bellToggle }}" style="{{ bellStyle }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 9.5a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" stroke="#3D4757" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.3 19.5a2 2 0 0 0 3.4 0" stroke="#3D4757" stroke-width="1.7" stroke-linecap="round"/></svg>
+                <sc-if value="{{ showBadge }}" hint-placeholder-val="{{ true }}">
+                  <span style="position:absolute; top:2px; right:2px; min-width:16px; height:16px; background:#C2603F; color:#fff; border-radius:9px; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid #fff;">{{ badgeCount }}</span>
+                </sc-if>
+              </div>
+              <sc-if value="{{ bellOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:46px; right:0; width:372px; background:#fff; border:1px solid #E5E9EF; border-radius:14px; box-shadow:0 14px 40px rgba(20,25,33,.18); z-index:90; animation:filgFade .16s ease; overflow:hidden;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; padding:13px 16px; border-bottom:1px solid #F0F3F7;">
+                    <span style="font-size:14px; font-weight:600; color:#141921;">Notificaciones</span>
+                    <span style="font-size:11.5px; color:#8A95A6;">{{ bellSubtitle }}</span>
+                  </div>
+                  <sc-if value="{{ allClear }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:26px 20px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px;">
+                      <div style="width:42px; height:42px; border-radius:50%; background:#E7F4EC; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1F7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                      <div style="font-size:13.5px; font-weight:600; color:#141921;">No hay nada que atender</div>
+                      <div style="font-size:12.5px; color:#647084; line-height:1.5;">Las 8 cuentas están conectadas y el sync de hoy salió bien.</div>
+                    </div>
+                  </sc-if>
+                  <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="4">
+                    <div onClick="{{ n.onGo }}" class="filg-hov" style="{{ n.rowStyle }}">
+                      <span style="{{ n.dotStyle }}"></span>
+                      <div style="flex:1; min-width:0;">
+                        <div style="font-size:13px; color:#141921; line-height:1.4;"><span style="font-weight:600;">{{ n.cliente }}</span> · {{ n.msg }}</div>
+                        <div style="display:flex; align-items:center; gap:7px; margin-top:4px;">
+                          <span style="font-size:11.5px; color:#8A95A6;">{{ n.meta }}</span>
+                          <span style="font-size:12px; font-weight:500; color:{{ accent }};">{{ n.action }} →</span>
+                        </div>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <div onClick="{{ closeBell }}" style="padding:11px 16px; border-top:1px solid #F0F3F7; text-align:center; font-size:12.5px; font-weight:500; color:{{ accent }}; cursor:pointer;">Ver salud de cuentas →</div>
+                </div>
+              </sc-if>
+            </span>
+            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; color:#647084;">Admin</span><div style="width:32px; height:32px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff;">LF</div></div>
+          </div>
+        </div>
+        <sc-if value="{{ bellOpen }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closeBell }}" style="position:absolute; inset:0; z-index:60;"></div></sc-if>
+
+        <!-- body: salud de cuentas -->
+        <div style="background:#F5F7FA; padding:24px 28px 36px; min-height:520px;">
+          <div onClick="{{ goAdmin }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content; margin-bottom:14px;"><span style="font-size:15px;">‹</span><span>Administración</span></div>
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+            <div>
+              <h1 style="font-size:24px; font-weight:600; color:#141921; letter-spacing:-.3px; margin:0;">Salud de cuentas</h1>
+              <div style="font-size:13px; color:#647084; margin-top:5px;">{{ saludSubtitle }}</div>
+            </div>
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+              <sc-for list="{{ filterList }}" as="f" hint-placeholder-count="2"><div style="{{ f.style }}" onClick="{{ f.onClick }}">{{ f.label }}</div></sc-for>
+            </div>
+          </div>
+
+          <sc-if value="{{ saludAllClear }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; align-items:center; gap:12px; background:#E7F4EC; border:1px solid #CFE8DA; border-radius:12px; padding:14px 18px; margin-top:18px;">
+              <div style="width:34px; height:34px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1F7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div>
+                <div style="font-size:14px; font-weight:600; color:#1F7A50;">No hay nada que atender</div>
+                <div style="font-size:12.5px; color:#3D6A50; margin-top:2px;">Todas las cuentas están conectadas y sincronizando con normalidad.</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:18px; overflow:visible;">
+            <div style="display:grid; grid-template-columns:1.6fr 1fr .9fr .9fr 1fr; gap:12px; padding:13px 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+              <div>Cliente / cuenta</div><div>Estado</div><div>Último sync ✓</div><div>Token vence</div><div style="text-align:right;">Acción</div>
+            </div>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+              <div style="{{ r.rowStyle }}">
+                <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                  <div style="width:32px; height:32px; border-radius:8px; background:{{ r.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10px; font-weight:600; color:{{ r.tintInk }};">{{ r.code }}</span></div>
+                  <div style="min-width:0;">
+                    <div style="font-size:13.5px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ r.cliente }}</div>
+                    <div style="font-size:12px; color:#8A95A6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ r.handle }}</div>
+                  </div>
+                </div>
+                <div><span style="{{ r.pillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ r.statusLabel }}</span></div>
+                <div style="font-size:13px; color:#647084; font-variant-numeric:tabular-nums;">{{ r.lastSync }}</div>
+                <div style="font-size:13px; color:{{ r.tokenColor }}; font-variant-numeric:tabular-nums;">{{ r.token }}</div>
+                <div style="display:flex; justify-content:flex-end;">
+                  <sc-if value="{{ r.hasAction }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ r.onAction }}" style="{{ r.actionStyle }}">{{ r.actionLabel }}</div>
+                  </sc-if>
+                  <sc-if value="{{ r.noAction }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px; color:#C4CCD6;">—</span></sc-if>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:36px 20px; text-align:center; font-size:13px; color:#8A95A6;">Ninguna cuenta con problemas 🎉 — cambiá el filtro a «Todas» para ver el resto.</div>
+            </sc-if>
+          </div>
+          <div style="font-size:12px; color:#8A95A6; margin-top:10px;">Ordenada por gravedad: error → por vencer → en orden. La acción lleva a Gestionar redes del cliente (o a reintentar el sync).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil · la campana abre pantalla completa</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <sc-if value="{{ mNotifClosed }}" hint-placeholder-val="{{ true }}">
+          <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+            <span style="font-size:13px; color:#8A95A6;">‹ Administración</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span onClick="{{ mOpenNotif }}" style="position:relative; display:inline-flex; width:34px; height:34px; align-items:center; justify-content:center; cursor:pointer;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M18 9.5a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" stroke="#3D4757" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.3 19.5a2 2 0 0 0 3.4 0" stroke="#3D4757" stroke-width="1.7" stroke-linecap="round"/></svg>
+                <sc-if value="{{ showBadge }}" hint-placeholder-val="{{ true }}"><span style="position:absolute; top:0; right:0; min-width:15px; height:15px; background:#C2603F; color:#fff; border-radius:8px; font-size:9.5px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 3px; border:2px solid #fff;">{{ badgeCount }}</span></sc-if>
+              </span>
+              <div style="width:30px; height:30px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff;">LF</div>
+            </div>
+          </div>
+          <div style="background:#F5F7FA; padding:16px 16px 22px; min-height:420px;">
+            <div style="font-size:18px; font-weight:600; color:#141921;">Salud de cuentas</div>
+            <div style="font-size:12.5px; color:#647084; margin-top:3px;">{{ saludSubtitle }}</div>
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; margin-top:12px;">
+              <sc-for list="{{ filterList }}" as="f" hint-placeholder-count="2"><div style="{{ f.styleMobile }}" onClick="{{ f.onClick }}">{{ f.label }}</div></sc-for>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:9px; margin-top:12px;">
+              <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+                <div style="{{ r.cardStyle }}">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:30px; height:30px; border-radius:8px; background:{{ r.tint }}; display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:9.5px; font-weight:600; color:{{ r.tintInk }};">{{ r.code }}</span></div>
+                    <div style="flex:1; min-width:0;">
+                      <div style="font-size:13px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ r.cliente }} <span style="font-weight:400; color:#8A95A6;">{{ r.handle }}</span></div>
+                      <div style="font-size:11px; color:#8A95A6; margin-top:2px;">sync ✓ {{ r.lastSync }} · token {{ r.token }}</div>
+                    </div>
+                    <span style="{{ r.pillStyleSm }}"><span style="width:5px; height:5px; border-radius:50%; background:currentColor;"></span>{{ r.statusLabel }}</span>
+                  </div>
+                  <sc-if value="{{ r.hasAction }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ r.onAction }}" style="{{ r.actionStyleMobile }}">{{ r.actionLabel }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- notificaciones pantalla completa -->
+        <sc-if value="{{ mNotifOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+            <span onClick="{{ mCloseNotif }}" style="font-size:13px; color:#8A95A6; cursor:pointer;">‹ Volver</span>
+            <span style="font-size:14px; font-weight:600; color:#141921;">Notificaciones</span>
+            <span style="width:44px;"></span>
+          </div>
+          <div style="background:#F5F7FA; padding:12px 12px 22px; min-height:420px;">
+            <sc-if value="{{ allClear }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:36px 22px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:9px; margin-top:4px;">
+                <div style="width:44px; height:44px; border-radius:50%; background:#E7F4EC; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1F7A50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div style="font-size:14px; font-weight:600; color:#141921;">No hay nada que atender</div>
+                <div style="font-size:12.5px; color:#647084; line-height:1.5;">Las 8 cuentas están conectadas y el sync de hoy salió bien.</div>
+              </div>
+            </sc-if>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="4">
+                <div onClick="{{ n.onGo }}" style="{{ n.cardStyle }}">
+                  <span style="{{ n.dotStyle }}"></span>
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-size:12.5px; color:#141921; line-height:1.4;"><span style="font-weight:600;">{{ n.cliente }}</span> · {{ n.msg }}</div>
+                    <div style="display:flex; align-items:center; gap:7px; margin-top:4px;">
+                      <span style="font-size:11px; color:#8A95A6;">{{ n.meta }}</span>
+                      <span style="font-size:11.5px; font-weight:500; color:{{ accent }};">{{ n.action }} →</span>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- notas -->
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Notas</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;">La campana va en la barra superior de <span style="color:#3D4757; font-weight:500;">todas</span> las pantallas y muestra todos los clientes para todo el equipo; el badge se limpia al abrir el popover. Salud de cuentas quedó como 3ª card del hub de Administración (solo admins). Las acciones reutilizan destinos existentes: Reconectar → Gestionar redes del cliente; Reintentar envío → Reporte; sync → Sincronización.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { demo:'pendientes', bellOpen:false, seen:false, filter:'todas', mNotif:false };
+
+  netMeta = {
+    ig: { code:'IG', tint:'linear-gradient(135deg,#FCEFE6,#F6E1EC)', tintInk:'#B5638A' },
+    fb: { code:'FB', tint:'linear-gradient(135deg,#E7EEFB,#DCE6F7)', tintInk:'#2C5FA8' },
+    tt: { code:'TT', tint:'linear-gradient(135deg,#E6F2F1,#E0EDEC)', tintInk:'#3E7C77' },
+  };
+
+  notifData = [
+    { sev:'err',  cliente:'Café Aurora', msg:'TikTok con error de token', meta:'dejamos de traer métricas · hace 2 h', action:'Reconectar', go:'../3 Workspace de cliente/Gestionar redes.dc.html' },
+    { sev:'err',  cliente:'Molinos Don Alexis', msg:'el reporte programado no se envió', meta:'falló el email; el PDF está en el historial · ayer', action:'Reintentar envío', go:'../3 Workspace de cliente/Reporte.dc.html' },
+    { sev:'warn', cliente:'Vera Estudio', msg:'el token de Instagram vence en 5 días', meta:'reconectá antes para no perder datos', action:'Reconectar', go:'../3 Workspace de cliente/Gestionar redes.dc.html' },
+    { sev:'info', cliente:'Café Aurora', msg:'reporte de junio enviado ✓', meta:'a 2 destinatarios · 1 jul', action:'Ver en historial', go:'../3 Workspace de cliente/Reporte.dc.html' },
+    { sev:'info', cliente:'Sync diario', msg:'falló para 2 cuentas', meta:'corrida #142 · ayer 03:00', action:'Ver sincronización', go:'Sincronización.dc.html' },
+  ];
+
+  notifDataClear = [
+    { sev:'info', cliente:'Café Aurora', msg:'reporte de junio enviado ✓', meta:'a 2 destinatarios · 1 jul', action:'Ver en historial', go:'../3 Workspace de cliente/Reporte.dc.html' },
+    { sev:'info', cliente:'Sync diario', msg:'completado para las 8 cuentas', meta:'hoy 03:00', action:'Ver sincronización', go:'Sincronización.dc.html' },
+  ];
+
+  rowsData = [
+    { cliente:'Café Aurora', net:'tt', handle:'@cafe.aurora', sev:'err',  status:'Error de token', lastSync:'hace 3 días', token:'vencido', action:'Reconectar', go:'../3 Workspace de cliente/Gestionar redes.dc.html' },
+    { cliente:'Vera Estudio', net:'ig', handle:'@vera.estudio', sev:'warn', status:'Por vencer', lastSync:'hoy 03:00', token:'en 5 días', action:'Reconectar', go:'../3 Workspace de cliente/Gestionar redes.dc.html' },
+    { cliente:'Café Aurora', net:'ig', handle:'@cafeaurora', sev:'ok', status:'Conectada', lastSync:'hoy 03:00', token:'en 54 días' },
+    { cliente:'Café Aurora', net:'fb', handle:'Café Aurora', sev:'ok', status:'Conectada', lastSync:'hoy 03:00', token:'en 54 días' },
+    { cliente:'Molinos Don Alexis', net:'fb', handle:'Molinos Don Alexis', sev:'ok', status:'Conectada', lastSync:'hoy 03:00', token:'en 31 días' },
+    { cliente:'Molinos Don Alexis', net:'ig', handle:'@molinosdonalexis', sev:'ok', status:'Conectada', lastSync:'hoy 03:00', token:'en 31 días' },
+    { cliente:'Vera Estudio', net:'tt', handle:'@vera.estudio', sev:'ok', status:'Conectada', lastSync:'hoy 03:00', token:'en 18 días' },
+    { cliente:'Molinos Don Alexis', net:'tt', handle:'@molinos.da', sev:'ok', status:'Conectada', lastSync:'hoy 03:00', token:'en 40 días' },
+  ];
+
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  seg(active, accent, opts) {
+    opts = opts || {};
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:opts.pad||'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap', flex: opts.flex||'none' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084' };
+  }
+
+  pill(kind, small) {
+    const base = { display:'inline-flex', alignItems:'center', gap: small?'5px':'6px', borderRadius:'7px', padding: small?'2px 8px':'3px 9px', fontSize: small?'10.5px':'11.5px', fontWeight:500, whiteSpace:'nowrap', flex:'none' };
+    if (kind === 'err') return { ...base, background:'#FBEFEC', color:'#9A4A30' };
+    if (kind === 'warn') return { ...base, background:'#FAF3DE', color:'#7A6428' };
+    return { ...base, background:'#E7F4EC', color:'#1F7A50' };
+  }
+
+  dot(sev) {
+    const c = sev === 'err' ? '#C2603F' : sev === 'warn' ? '#C8A415' : '#C4CCD6';
+    return { width:'8px', height:'8px', borderRadius:'50%', background:c, flex:'none', marginTop:'6px' };
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const isClear = st.demo === 'orden';
+
+    const demoStates = [['pendientes','Con pendientes'],['orden','Todo en orden']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ demo:k, bellOpen:false, seen:false, filter:'todas', mNotif:false }), style:this.seg(k===st.demo, accent) }));
+
+    // ----- notificaciones -----
+    const source = isClear ? this.notifDataClear : this.notifData;
+    const pending = isClear ? 0 : source.filter(n => n.sev !== 'info').length;
+    const showBadge = pending > 0 && !st.seen;
+
+    const notifs = source.map((n, i) => {
+      const unread = !isClear && n.sev !== 'info';
+      return {
+        cliente: n.cliente, msg: n.msg, meta: n.meta, action: n.action,
+        onGo: () => this.go(n.go),
+        dotStyle: this.dot(n.sev),
+        rowStyle: { display:'flex', gap:'11px', padding:'12px 16px', borderBottom:'1px solid #F4F6F9', cursor:'pointer', background: unread ? '#FBF8F5' : '#fff', alignItems:'flex-start' },
+        cardStyle: { display:'flex', gap:'10px', padding:'12px 13px', background: unread ? '#FBF6F2' : '#fff', border:'1px solid #E9EDF2', borderRadius:'11px', cursor:'pointer', alignItems:'flex-start' },
+      };
+    });
+
+    // ----- salud -----
+    const problems = this.rowsData.filter(r => r.sev !== 'ok').length;
+    const effProblems = isClear ? 0 : problems;
+    let data = isClear ? this.rowsData.map(r => r.sev === 'ok' ? r : { ...r, sev:'ok', status:'Conectada', lastSync:'hoy 03:00', token:'en 30 días', action:null }) : this.rowsData;
+    const order = { err:0, warn:1, ok:2 };
+    data = data.slice().sort((a, b) => order[a.sev] - order[b.sev]);
+    if (st.filter === 'problemas') data = data.filter(r => r.sev !== 'ok');
+
+    const filterList = [['todas','Todas (8)'],['problemas','Con problemas (' + effProblems + ')']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ filter:k }), style:this.seg(k===st.filter, accent), styleMobile:this.seg(k===st.filter, accent, { flex:'1' }) }));
+
+    const rows = data.map(r => {
+      const m = this.netMeta[r.net];
+      const hasAction = !!r.action && r.sev !== 'ok';
+      const rowBg = r.sev === 'err' ? '#FDFAF8' : (r.sev === 'warn' ? '#FDFBF4' : '#fff');
+      return {
+        cliente: r.cliente, handle: r.handle, code: m.code, tint: m.tint, tintInk: m.tintInk,
+        statusLabel: r.status,
+        pillStyle: this.pill(r.sev, false), pillStyleSm: this.pill(r.sev, true),
+        lastSync: r.lastSync, token: r.token,
+        tokenColor: r.sev === 'err' ? '#B2552F' : (r.sev === 'warn' ? '#8A6E1C' : '#647084'),
+        rowStyle: { display:'grid', gridTemplateColumns:'1.6fr 1fr .9fr .9fr 1fr', gap:'12px', alignItems:'center', padding:'12px 20px', borderBottom:'1px solid #F4F6F9', background:rowBg },
+        cardStyle: { background:rowBg === '#fff' ? '#fff' : rowBg, border:'1px solid ' + (r.sev === 'err' ? '#F0D7CD' : r.sev === 'warn' ? '#EFE2B8' : '#E9EDF2'), borderRadius:'11px', padding:'12px 13px' },
+        hasAction, noAction: !hasAction,
+        actionLabel: r.action || '',
+        onAction: () => this.go(r.go),
+        actionStyle: { height:'32px', display:'flex', alignItems:'center', padding:'0 14px', background:accent, color:'#fff', borderRadius:'8px', fontSize:'12.5px', fontWeight:600, cursor:'pointer' },
+        actionStyleMobile: { height:'34px', display:'flex', alignItems:'center', justifyContent:'center', background:accent, color:'#fff', borderRadius:'8px', fontSize:'12.5px', fontWeight:600, cursor:'pointer', marginTop:'10px' },
+      };
+    });
+
+    return {
+      accent, demoStates,
+      // campana
+      bellOpen: st.bellOpen,
+      bellStyle: { position:'relative', width:'38px', height:'38px', borderRadius:'10px', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', background: st.bellOpen ? '#EEF1F5' : 'transparent' },
+      bellToggle: () => this.setState(s => ({ bellOpen: !s.bellOpen, seen: true })),
+      closeBell: () => this.setState({ bellOpen:false }),
+      showBadge, badgeCount: String(pending),
+      bellSubtitle: pending > 0 ? pending + ' pendientes · leídas al abrir' : 'estás al día',
+      allClear: isClear,
+      notifs,
+      // salud
+      saludSubtitle: isClear ? '8 cuentas de 3 clientes · todo en orden' : '8 cuentas de 3 clientes · ' + effProblems + ' con problemas',
+      saludAllClear: isClear && st.filter === 'todas',
+      filterList, rows, noRows: rows.length === 0,
+      goAdmin: () => this.go('Administración.dc.html'),
+      // mobile
+      mNotifOpen: st.mNotif, mNotifClosed: !st.mNotif,
+      mOpenNotif: () => this.setState({ mNotif:true, seen:true }),
+      mCloseNotif: () => this.setState({ mNotif:false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

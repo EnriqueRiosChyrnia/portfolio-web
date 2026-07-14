@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Campana de notificaciones (todas las pantallas) + Salud de cuentas (Administración, solo admins)</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Popover: lista cronológica simple — lo urgente arriba, un link de acción por fila</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1a desktop -->
+        <div class="dv-card" style="width:560px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · campana junto al avatar, popover abierto</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <!-- top bar -->
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1.5px solid #3a3a3a;">
+              <div style="font-size:15px; font-weight:600;">Fil-Grama</div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="position:relative; width:26px; height:26px; border:1.5px solid #3a3a3a; border-radius:6px; display:flex; align-items:center; justify-content:center;">🔔<span style="position:absolute; top:-6px; right:-6px; background:#c0392b; color:#fff; border-radius:8px; font-size:9px; padding:0 4px; font-weight:600;">3</span></div>
+                <div style="width:24px; height:24px; border:1.5px solid #3a3a3a; border-radius:50%;"></div>
+              </div>
+            </div>
+            <div style="position:relative; height:300px; background:#fafafa;">
+              <div style="font-size:12px; color:#bbb; padding:12px;">…cualquier pantalla debajo…</div>
+              <!-- popover -->
+              <div style="position:absolute; top:6px; right:10px; width:330px; border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; box-shadow:3px 3px 0 rgba(0,0,0,.1);">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-bottom:1.5px solid #3a3a3a;">
+                  <b style="font-size:13px;">Notificaciones</b>
+                  <span style="font-size:10.5px; color:#888;">se marcan leídas al abrir</span>
+                </div>
+                <div style="padding:8px 12px; border-bottom:1.2px solid #e5e5e5; background:#fdf6f4;">
+                  <div style="font-size:12px;"><b style="color:#c0392b;">●</b> <b>Café Aurora</b> · TikTok con error de token</div>
+                  <div style="font-size:10.5px; color:#888; margin-left:12px;">dejamos de traer métricas · hace 2 h · <span style="color:#2a78d6; text-decoration:underline;">Reconectar →</span></div>
+                </div>
+                <div style="padding:8px 12px; border-bottom:1.2px solid #e5e5e5; background:#fdf6f4;">
+                  <div style="font-size:12px;"><b style="color:#c0392b;">●</b> <b>Molinos Don Alexis</b> · reporte programado no se envió</div>
+                  <div style="font-size:10.5px; color:#888; margin-left:12px;">falló el email, el PDF está en el historial · ayer · <span style="color:#2a78d6; text-decoration:underline;">Reintentar envío →</span></div>
+                </div>
+                <div style="padding:8px 12px; border-bottom:1.2px solid #e5e5e5;">
+                  <div style="font-size:12px;"><b style="color:#c8a415;">●</b> <b>Vera Estudio</b> · token de IG vence en 5 días</div>
+                  <div style="font-size:10.5px; color:#888; margin-left:12px;">reconectá antes para no perder datos · <span style="color:#2a78d6; text-decoration:underline;">Reconectar →</span></div>
+                </div>
+                <div style="padding:8px 12px; border-bottom:1.2px solid #e5e5e5; color:#888;">
+                  <div style="font-size:12px;">○ <b>Café Aurora</b> · reporte de junio enviado ✓</div>
+                  <div style="font-size:10.5px; margin-left:12px;">a 2 destinatarios · 1 jul · <span style="color:#2a78d6; text-decoration:underline;">Ver en historial →</span></div>
+                </div>
+                <div style="padding:8px 12px; border-bottom:1.2px solid #e5e5e5; color:#888;">
+                  <div style="font-size:12px;">○ <b>Sync diario</b> · falló para 2 cuentas</div>
+                  <div style="font-size:10.5px; margin-left:12px;">corrida #142, ayer 03:00 · <span style="color:#2a78d6; text-decoration:underline;">Ver sincronización →</span></div>
+                </div>
+                <div style="padding:8px 12px; text-align:center; font-size:11.5px; color:#2a78d6; text-decoration:underline;">Ver salud de cuentas (admin) →</div>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:12px; color:#2a78d6; margin-top:6px;">● rojo = requiere acción · ● amarillo = por vencer · ○ gris = informativa. Rojas arriba, luego por fecha. Alcance: todos los clientes, igual para todo el equipo.</div>
+        </div>
+
+        <!-- 1a mobile -->
+        <div class="dv-card" style="width:280px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · la campana abre pantalla completa</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fff; overflow:hidden;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-bottom:1.5px solid #3a3a3a;">
+              <span style="font-size:13px;">‹ Volver</span><b style="font-size:13px;">Notificaciones</b><span style="width:20px;"></span>
+            </div>
+            <div style="background:#fafafa; padding:8px; display:flex; flex-direction:column; gap:6px;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fdf6f4; padding:8px 10px;">
+                <div style="font-size:11.5px;"><b style="color:#c0392b;">●</b> <b>Café Aurora</b> · TT error de token</div>
+                <div style="font-size:10px; color:#888; margin-top:2px;">hace 2 h · <span style="color:#2a78d6; text-decoration:underline;">Reconectar →</span></div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fdf6f4; padding:8px 10px;">
+                <div style="font-size:11.5px;"><b style="color:#c0392b;">●</b> <b>Molinos D.A.</b> · envío fallido</div>
+                <div style="font-size:10px; color:#888; margin-top:2px;">ayer · <span style="color:#2a78d6; text-decoration:underline;">Reintentar →</span></div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px;">
+                <div style="font-size:11.5px;"><b style="color:#c8a415;">●</b> <b>Vera Estudio</b> · token vence en 5 días</div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px; color:#888;">
+                <div style="font-size:11.5px;">○ <b>Café Aurora</b> · reporte enviado ✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Popover: agrupado por tipo con headers (Cuentas · Reportes · Sincronización) — escanea más rápido si hay muchas</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- 1b desktop -->
+        <div class="dv-card" style="width:440px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · mismo trigger, popover agrupado</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; box-shadow:3px 3px 0 rgba(0,0,0,.1); width:340px; margin:0 auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-bottom:1.5px solid #3a3a3a;">
+              <b style="font-size:13px;">Notificaciones</b><span style="font-size:10.5px; color:#888;">3 pendientes</span>
+            </div>
+            <div style="padding:6px 12px 2px; font-size:10px; color:#888; text-transform:uppercase; letter-spacing:.5px;">Cuentas (2)</div>
+            <div style="padding:6px 12px; border-bottom:1.2px solid #eee; font-size:12px;"><b style="color:#c0392b;">●</b> Café Aurora · TT error de token <span style="color:#2a78d6; text-decoration:underline; font-size:10.5px;">Reconectar →</span></div>
+            <div style="padding:6px 12px; border-bottom:1.2px solid #e5e5e5; font-size:12px;"><b style="color:#c8a415;">●</b> Vera Estudio · IG vence en 5 días <span style="color:#2a78d6; text-decoration:underline; font-size:10.5px;">Reconectar →</span></div>
+            <div style="padding:6px 12px 2px; font-size:10px; color:#888; text-transform:uppercase; letter-spacing:.5px;">Reportes (2)</div>
+            <div style="padding:6px 12px; border-bottom:1.2px solid #eee; font-size:12px;"><b style="color:#c0392b;">●</b> Molinos D.A. · envío fallido <span style="color:#2a78d6; text-decoration:underline; font-size:10.5px;">Reintentar →</span></div>
+            <div style="padding:6px 12px; border-bottom:1.2px solid #e5e5e5; font-size:12px; color:#888;">○ Café Aurora · reporte enviado ✓</div>
+            <div style="padding:6px 12px 2px; font-size:10px; color:#888; text-transform:uppercase; letter-spacing:.5px;">Sincronización (1)</div>
+            <div style="padding:6px 12px; font-size:12px; color:#888;">○ Sync diario · falló para 2 cuentas <span style="color:#2a78d6; text-decoration:underline; font-size:10.5px;">Ver →</span></div>
+            <div style="padding:8px 12px; border-top:1.5px solid #3a3a3a; text-align:center; font-size:11.5px; color:#2a78d6; text-decoration:underline;">Ver salud de cuentas →</div>
+          </div>
+          <div style="font-size:12px; color:#2a78d6; margin-top:10px;">Costo: con pocas notificaciones los headers son ruido; la urgencia queda partida entre grupos.</div>
+        </div>
+
+        <!-- 1b mobile -->
+        <div class="dv-card" style="width:280px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · pantalla completa con chips de filtro por tipo</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fff; overflow:hidden;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-bottom:1.5px solid #3a3a3a;">
+              <span style="font-size:13px;">‹ Volver</span><b style="font-size:13px;">Notificaciones</b><span style="width:20px;"></span>
+            </div>
+            <div style="display:flex; gap:5px; padding:8px 10px; border-bottom:1.2px solid #e5e5e5;">
+              <span style="border:1.5px solid #3a3a3a; border-radius:10px; padding:1px 9px; font-size:10.5px; background:#e8e8e8; font-weight:600;">Todas</span>
+              <span style="border:1.2px solid #999; border-radius:10px; padding:1px 9px; font-size:10.5px;">Cuentas</span>
+              <span style="border:1.2px solid #999; border-radius:10px; padding:1px 9px; font-size:10.5px;">Reportes</span>
+              <span style="border:1.2px solid #999; border-radius:10px; padding:1px 9px; font-size:10.5px;">Sync</span>
+            </div>
+            <div style="background:#fafafa; padding:8px; display:flex; flex-direction:column; gap:6px;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fdf6f4; padding:8px 10px; font-size:11.5px;"><b style="color:#c0392b;">●</b> Café Aurora · TT error</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:8px 10px; font-size:11.5px;"><b style="color:#c8a415;">●</b> Vera Estudio · vence en 5 días</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Compartido: Salud de cuentas (Administración) · estado «todo en orden»</div>
+      <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
+
+        <!-- salud tabla -->
+        <div class="dv-card" style="width:720px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · Administración → Salud de cuentas (3ª card del hub) · errores arriba</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <div style="padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:13px; color:#888;">top bar admin + «‹ Administración»</div>
+            <div style="padding:14px 16px; background:#fafafa;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                <div>
+                  <div style="font-size:15px; font-weight:600;">Salud de cuentas</div>
+                  <div style="font-size:11.5px; color:#888;">todas las cuentas de todos los clientes · 2 con problemas</div>
+                </div>
+                <div style="display:flex; gap:6px; font-size:11px;">
+                  <span style="border:1.5px solid #3a3a3a; border-radius:10px; padding:1px 9px; background:#e8e8e8; font-weight:600;">Todas (8)</span>
+                  <span style="border:1.2px solid #c0392b; color:#c0392b; border-radius:10px; padding:1px 9px;">Con problemas (2)</span>
+                </div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; overflow:hidden;">
+                <div style="display:grid; grid-template-columns:1.2fr .9fr .9fr 1fr 1fr; gap:8px; padding:7px 12px; font-size:10.5px; color:#888; border-bottom:1.5px solid #3a3a3a; text-transform:uppercase;">
+                  <span>Cliente / cuenta</span><span>Estado</span><span>Último sync ✓</span><span>Token vence</span><span>Acción</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.2fr .9fr .9fr 1fr 1fr; gap:8px; padding:8px 12px; font-size:12px; border-bottom:1.2px solid #e5e5e5; align-items:center; background:#fdf6f4;">
+                  <span><b>Café Aurora</b> · TT @cafe.aurora</span>
+                  <span style="border:1.5px solid #c0392b; color:#c0392b; border-radius:10px; padding:0 8px; font-size:10.5px; width:max-content;">● Error de token</span>
+                  <span>hace 3 días</span><span style="color:#c0392b;">vencido</span>
+                  <span style="border:1.5px solid #3a3a3a; border-radius:5px; padding:2px 8px; font-size:11px; font-weight:600; width:max-content;">Reconectar</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.2fr .9fr .9fr 1fr 1fr; gap:8px; padding:8px 12px; font-size:12px; border-bottom:1.2px solid #e5e5e5; align-items:center; background:#fdf9ee;">
+                  <span><b>Vera Estudio</b> · IG @vera.estudio</span>
+                  <span style="border:1.5px solid #c8a415; color:#a2830f; border-radius:10px; padding:0 8px; font-size:10.5px; width:max-content;">● Por vencer</span>
+                  <span>hoy 03:00</span><span style="color:#a2830f;">en 5 días</span>
+                  <span style="border:1.5px solid #3a3a3a; border-radius:5px; padding:2px 8px; font-size:11px; font-weight:600; width:max-content;">Reconectar</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.2fr .9fr .9fr 1fr 1fr; gap:8px; padding:8px 12px; font-size:12px; border-bottom:1.2px solid #e5e5e5; align-items:center;">
+                  <span><b>Café Aurora</b> · IG @cafeaurora</span>
+                  <span style="border:1.5px solid #4a8a5f; color:#4a8a5f; border-radius:10px; padding:0 8px; font-size:10.5px; width:max-content;">● Conectada</span>
+                  <span>hoy 03:00</span><span>en 54 días</span>
+                  <span style="font-size:11px; color:#888;">—</span>
+                </div>
+                <div style="display:grid; grid-template-columns:1.2fr .9fr .9fr 1fr 1fr; gap:8px; padding:8px 12px; font-size:12px; align-items:center;">
+                  <span><b>Molinos Don Alexis</b> · FB</span>
+                  <span style="border:1.5px solid #4a8a5f; color:#4a8a5f; border-radius:10px; padding:0 8px; font-size:10.5px; width:max-content;">● Conectada</span>
+                  <span>hoy 03:00</span><span>en 31 días</span>
+                  <span style="font-size:11px; color:#888;">—</span>
+                </div>
+              </div>
+              <div style="font-size:11.5px; color:#2a78d6; margin-top:6px;">orden: error → por vencer → OK; «Reconectar» lleva a Gestionar redes del cliente; pills y chips reutilizados</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- todo en orden -->
+        <div class="dv-card" style="width:360px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Estado «todo en orden» (aplica a campana y a salud)</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fafafa; padding:12px; display:flex; flex-direction:column; gap:10px;">
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:18px; text-align:center;">
+              <div style="width:36px; height:36px; border:1.5px solid #4a8a5f; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; color:#4a8a5f;">✓</div>
+              <div style="font-size:13px; font-weight:600; margin-top:8px;">No hay nada que atender</div>
+              <div style="font-size:11.5px; color:#666; margin-top:4px; line-height:1.5;">Las 8 cuentas están conectadas y el sync de hoy salió bien.</div>
+            </div>
+            <div style="font-size:11.5px; color:#666;">Campana sin badge cuando no hay pendientes; el popover muestra las últimas informativas + este estado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Decisión: la campana muestra todos los clientes para todo el equipo (equipo chico; filtro por prioritarios puede venir después). Badge se limpia al abrir. Probá: "aprobado <a class="dv-oid" href="#1a">1a</a>" · "<a class="dv-oid" href="#1b">1b</a> pero sin el grupo Sincronización".</p>
+</section>
+</x-dc>
+</body>
+</html>

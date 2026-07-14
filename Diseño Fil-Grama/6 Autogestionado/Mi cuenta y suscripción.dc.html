@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgFade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .filg-hov:hover { background:#F7F9FC; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Autogestionado — Mi cuenta y suscripción</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">La pantalla «Organización» sin las secciones de usuarios e invitaciones (etapa B: 1 usuario por organización autogestionada), con etiqueta más humana. Se llega desde el menú del avatar; el breadcrumb vuelve al dashboard de la marca. Datos (nombre + zona horaria) y suscripción en solo-lectura con cómo renovar. Cambiá el estado demo de la suscripción.</div>
+  </div>
+
+  <!-- demo -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Suscripción (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="3"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1040px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; color:#647084;">Autogestionado</span><div style="width:32px; height:32px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff;">VS</div></div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:20px 28px 32px; min-height:560px;">
+          <div onClick="{{ goDash }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content; margin-bottom:14px;"><span style="font-size:15px;">‹</span><span>Café Aurora</span></div>
+
+          <!-- banner suscripción -->
+          <sc-if value="{{ showBanner }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ bannerStyle }}">
+              <div style="display:flex; align-items:flex-start; gap:10px;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:none; margin-top:1px;"><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1" fill="currentColor"/></svg>
+                <div>
+                  <div style="font-size:13.5px; font-weight:600;">{{ bannerTitle }}</div>
+                  <div style="font-size:12.5px; margin-top:3px; line-height:1.5; opacity:.9;">{{ bannerBody }}</div>
+                </div>
+              </div>
+              <div onClick="{{ waClick }}" style="{{ waBtnStyle }}">💬 Avisar a Fil-Grama</div>
+            </div>
+          </sc-if>
+
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+            <div><h1 style="font-size:24px; font-weight:600; color:#141921; letter-spacing:-.3px; margin:0;">Mi cuenta y suscripción</h1><div style="font-size:13px; color:#647084; margin-top:5px;">Café Aurora · tus datos y tu suscripción.</div></div>
+            <span></span>
+          </div>
+
+          <!-- datos -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px; margin-top:18px;">
+            <div style="font-size:14px; font-weight:600; color:#141921;">Datos</div>
+            <div style="display:flex; gap:18px; margin-top:12px; flex-wrap:wrap; align-items:flex-end;">
+              <div>
+                <div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Nombre de la organización</div>
+                <input value="{{ orgNombre }}" onChange="{{ onNombre }}" style="width:260px; height:38px; border:1px solid #D4DAE3; border-radius:9px; padding:0 12px; font-size:13.5px; color:#141921; font-family:inherit; outline:none; background:#fff;" />
+              </div>
+              <div>
+                <div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Zona horaria</div>
+                <span style="position:relative; display:inline-flex;">
+                  <div onClick="{{ tzToggle }}" style="width:280px; height:38px; display:flex; align-items:center; justify-content:space-between; padding:0 12px; border:1px solid #D4DAE3; border-radius:9px; cursor:pointer; background:#fff;">
+                    <span style="font-size:13.5px; color:#141921;">{{ tzLabel }}</span>
+                    <span style="font-size:10px; color:#8A95A6;">▾</span>
+                  </div>
+                  <sc-if value="{{ tzOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute; top:44px; left:0; width:280px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:6px; z-index:60;">
+                      <sc-for list="{{ tzOptions }}" as="o" hint-placeholder-count="5">
+                        <div class="filg-hov" onClick="{{ o.onPick }}" style="{{ o.style }}"><span style="flex:1;">{{ o.label }}</span><sc-if value="{{ o.selected }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px; color:{{ accent }};">✓</span></sc-if></div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; margin-left:auto;">
+                <sc-if value="{{ dirty }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px; color:#8A95A6;">cambios sin guardar</span></sc-if>
+                <sc-if value="{{ savedToast }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px; color:#1F7A50;">Guardado ✓</span></sc-if>
+                <div onClick="{{ save }}" style="{{ saveBtnStyle }}">Guardar</div>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#8A95A6; margin-top:10px;">La zona horaria define los horarios del sync diario y de los reportes programados.</div>
+          </div>
+
+          <sc-if value="{{ ocultoAutogest }}" hint-placeholder-val="{{ false }}">
+          <!-- usuarios -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:16px; overflow:visible;">
+            <div style="padding:15px 20px 0; font-size:14px; font-weight:600; color:#141921;">Usuarios ({{ usersCount }})</div>
+            <div style="display:grid; grid-template-columns:2fr 1fr 120px 90px; gap:12px; padding:11px 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;"><div>Usuario</div><div>Rol</div><div>Estado</div><div style="text-align:right;">Alta</div></div>
+            <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="4">
+              <div style="display:grid; grid-template-columns:2fr 1fr 120px 90px; gap:12px; align-items:center; padding:12px 20px; border-bottom:1px solid #F4F6F9;">
+                <div style="min-width:0;"><div style="font-size:13.5px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ u.name }}</div><div style="font-size:12px; color:#8A95A6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ u.email }}</div></div>
+                <div>
+                  <sc-if value="{{ u.isOwner }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px; color:#647084;">Owner</span></sc-if>
+                  <sc-if value="{{ u.editable }}" hint-placeholder-val="{{ true }}">
+                    <span style="position:relative; display:inline-flex;">
+                      <div onClick="{{ u.rolToggle }}" class="filg-hov" style="height:30px; display:flex; align-items:center; gap:7px; padding:0 11px; border:1px solid #E0E5EC; border-radius:8px; font-size:12.5px; color:#3D4757; cursor:pointer; background:#fff;">{{ u.rol }} <span style="font-size:9px; color:#8A95A6;">▾</span></div>
+                      <sc-if value="{{ u.rolOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute; top:36px; left:0; width:140px; background:#fff; border:1px solid #E5E9EF; border-radius:10px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:5px; z-index:60;">
+                          <sc-for list="{{ u.rolOptions }}" as="o" hint-placeholder-count="2">
+                            <div class="filg-hov" onClick="{{ o.onPick }}" style="{{ o.style }}"><span style="flex:1;">{{ o.label }}</span><sc-if value="{{ o.selected }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px; color:{{ accent }};">✓</span></sc-if></div>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </span>
+                  </sc-if>
+                </div>
+                <div><span style="display:inline-flex; align-items:center; gap:6px; height:22px; padding:0 9px; border-radius:7px; font-size:12px; font-weight:500; background:#E7F4EC; color:#1F7A50;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ u.estado }}</span></div>
+                <div style="text-align:right; font-size:12.5px; color:#8A95A6;">{{ u.alta }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- invitaciones pendientes -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:16px; overflow:hidden;">
+            <div style="padding:15px 20px 0; display:flex; align-items:baseline; gap:9px;">
+              <span style="font-size:14px; font-weight:600; color:#141921;">Invitaciones pendientes ({{ pendCount }})</span>
+              <span style="font-size:12px; color:#8A95A6;">el link vence a los 7 días</span>
+            </div>
+            <sc-if value="{{ pendEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:20px; font-size:13px; color:#8A95A6;">No hay invitaciones pendientes — todo el equipo ya tiene su cuenta.</div>
+            </sc-if>
+            <sc-if value="{{ pendHasRows }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid; grid-template-columns:1.6fr .8fr 1fr 1.2fr; gap:12px; padding:11px 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7; margin-top:8px;"><div>Email</div><div>Rol</div><div>Estado</div><div style="text-align:right;"></div></div>
+              <sc-for list="{{ pendRows }}" as="p" hint-placeholder-count="2">
+                <div style="display:grid; grid-template-columns:1.6fr .8fr 1fr 1.2fr; gap:12px; align-items:center; padding:12px 20px; border-bottom:1px solid #F4F6F9;">
+                  <div style="font-size:13px; color:#232A36; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ p.email }}</div>
+                  <div style="font-size:12.5px; color:#647084;">{{ p.rol }}</div>
+                  <div><span style="{{ p.pillStyle }}">{{ p.estado }}</span></div>
+                  <div style="display:flex; justify-content:flex-end; gap:8px;">
+                    <div onClick="{{ p.onResend }}" class="filg-hov" style="{{ p.resendStyle }}">{{ p.resendLabel }}</div>
+                    <div onClick="{{ p.onCancel }}" class="filg-hov" style="height:30px; display:flex; align-items:center; padding:0 11px; border:1px solid #E0E5EC; border-radius:8px; font-size:12.5px; color:#647084; cursor:pointer; background:#fff;">Cancelar</div>
+                  </div>
+                </div>
+              </sc-for>
+            </sc-if>
+          </div>
+
+          </sc-if>
+
+          <!-- suscripción -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px; margin-top:16px;">
+            <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap;">
+              <span style="font-size:14px; font-weight:600; color:#141921;">Suscripción</span>
+              <span style="font-size:11px; font-weight:500; color:#647084; background:#EEF1F5; border-radius:6px; padding:2px 8px;">solo lectura</span>
+              <span style="{{ susPillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ susEstado }}</span>
+            </div>
+            <div style="font-size:13px; color:#647084; line-height:1.65; margin-top:10px; max-width:640px;">{{ susTexto }}</div>
+            <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
+              <div onClick="{{ waClick }}" style="height:36px; display:flex; align-items:center; gap:8px; padding:0 15px; background:#E7F4EC; border:1px solid #CFE8DA; color:#1F7A50; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">💬 Avisar por WhatsApp</div>
+              <span style="font-size:12px; color:#8A95A6;">te habilitamos los meses en el día, apenas llegue el comprobante</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== MODAL INVITAR ===== -->
+        <sc-if value="{{ inviteOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; background:rgba(20,25,33,.4); display:flex; align-items:center; justify-content:center; z-index:80;">
+            <div style="width:440px; max-width:92%; background:#fff; border-radius:16px; box-shadow:0 18px 50px rgba(20,25,33,.28); overflow:hidden; animation:filgFade .18s ease;">
+              <div style="padding:20px 24px 0; display:flex; align-items:center; justify-content:space-between;">
+                <div style="font-size:17px; font-weight:600; color:#141921;">Invitar usuario</div>
+                <div onClick="{{ closeInvite }}" style="width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8A95A6; font-size:16px;">✕</div>
+              </div>
+              <div style="padding:16px 24px 4px; display:flex; flex-direction:column; gap:15px;">
+                <div>
+                  <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Email</div>
+                  <input value="{{ invEmail }}" onChange="{{ onInvEmail }}" placeholder="nombre@litoral.com" style="{{ invEmailStyle }}" />
+                  <sc-if value="{{ invErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px; color:#C2603F; margin-top:6px;">Ingresá un email válido para enviar la invitación.</div></sc-if>
+                </div>
+                <div>
+                  <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Rol</div>
+                  <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; width:max-content;">
+                    <sc-for list="{{ invRolList }}" as="r" hint-placeholder-count="2"><div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div></sc-for>
+                  </div>
+                </div>
+                <div style="background:#EEF3FB; border:1px solid #DCE6F6; border-radius:10px; padding:10px 13px; font-size:12.5px; color:#3D6FB4; line-height:1.5;">Le llega un email con un link para crear su cuenta y contraseña. El link vence a los 7 días; podés reenviarlo desde acá.</div>
+              </div>
+              <div style="padding:18px 24px 20px; display:flex; justify-content:flex-end; gap:10px;">
+                <div onClick="{{ closeInvite }}" style="height:38px; display:flex; align-items:center; padding:0 15px; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cancelar</div>
+                <div onClick="{{ sendInvite }}" style="height:38px; display:flex; align-items:center; padding:0 17px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">Enviar invitación</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE + NOTAS ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#8A95A6;">‹ Café Aurora</span><div style="width:30px; height:30px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff;">VS</div></div>
+        <div style="background:#F5F7FA; padding:16px 16px 22px; display:flex; flex-direction:column; gap:10px;">
+          <sc-if value="{{ showBanner }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ bannerStyleSm }}">
+              <div style="font-size:12.5px; font-weight:600;">{{ bannerTitle }}</div>
+              <div onClick="{{ waClick }}" style="{{ waBtnStyleSm }}">💬 Avisar a Fil-Grama</div>
+            </div>
+          </sc-if>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:18px; font-weight:600; color:#141921;">Mi cuenta</span>
+            <span></span>
+          </div>
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:14px 15px;">
+            <div style="font-size:13px; font-weight:600; color:#141921;">Datos</div>
+            <div style="font-size:12.5px; color:#647084; margin-top:7px; line-height:1.7;">{{ orgNombre }}<br/>{{ tzLabel }}</div>
+          </div>
+          <sc-if value="{{ ocultoAutogest }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:14px 15px;">
+            <div style="font-size:13px; font-weight:600; color:#141921;">Usuarios ({{ usersCount }})</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:9px;">
+              <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="4">
+                <div style="display:flex; align-items:center; gap:8px; font-size:12.5px;">
+                  <span style="font-weight:600; color:#141921;">{{ u.name }}</span>
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:1px 7px;">{{ u.rolLabel }}</span>
+                  <span style="margin-left:auto; font-size:11px; color:#8A95A6;">{{ u.alta }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:14px 15px;">
+            <div style="font-size:13px; font-weight:600; color:#141921;">Pendientes ({{ pendCount }})</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:9px;">
+              <sc-for list="{{ pendRows }}" as="p" hint-placeholder-count="2">
+                <div style="font-size:12px; color:#647084;">{{ p.email }} · {{ p.rol }} · <span onClick="{{ p.onResend }}" style="color:{{ accent }}; font-weight:500; cursor:pointer;">{{ p.resendLabel }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:14px 15px;">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="font-size:13px; font-weight:600; color:#141921;">Suscripción</span><span style="{{ susPillStyleSm }}">{{ susEstado }}</span></div>
+            <div style="font-size:12px; color:#647084; margin-top:6px; line-height:1.6;">{{ susTexto }}</div>
+            <div onClick="{{ waClick }}" style="height:34px; display:flex; align-items:center; justify-content:center; gap:7px; background:#E7F4EC; border:1px solid #CFE8DA; color:#1F7A50; border-radius:8px; font-size:12.5px; font-weight:600; cursor:pointer; margin-top:10px;">💬 Avisar por WhatsApp</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Notas</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;">Variante autogestionada de «Organización»: mismos componentes, sin usuarios ni invitaciones (1 usuario por org en etapa B). Se llega desde el menú del avatar del dashboard de la marca; el breadcrumb vuelve ahí. Renovar = transferencia + aviso por WhatsApp (botón wa.me); recordatorios también por email/WhatsApp a los 15 y 3 días.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = {
+    demo: 'porVencer',
+    nombre: 'Café Aurora', tz: 'asu', tzOpen: false, dirty: false, savedToast: false,
+    rolMap: {}, rolOpen: null,
+    inviteOpen: false, invEmail: '', invRol: 'Empleado', invErr: false,
+    pendExtra: [], resent: {}, cancelled: {},
+  };
+
+  tzs = [
+    ['asu', 'América/Asunción (GMT-3)'],
+    ['bue', 'América/Buenos Aires (GMT-3)'],
+    ['mvd', 'América/Montevideo (GMT-3)'],
+    ['scl', 'América/Santiago (GMT-4)'],
+    ['mex', 'América/Ciudad de México (GMT-6)'],
+    ['mad', 'Europa/Madrid (GMT+1)'],
+  ];
+
+  users = [
+    { id:1, name:'Martín Rojas', email:'martin@litoral.com', rol:'Owner', owner:true, alta:'nov 2025' },
+    { id:2, name:'Lucía Ferreira', email:'lucia@litoral.com', rol:'Admin', alta:'nov 2025' },
+    { id:3, name:'Sofía Ríos', email:'sofia@litoral.com', rol:'Empleada', alta:'feb 2026' },
+    { id:4, name:'Diego Paredes', email:'diego@litoral.com', rol:'Empleado', alta:'may 2026' },
+  ];
+
+  pendBase = [
+    { id:'p1', email:'bruno@litoral.com', rol:'Empleado', vencida:false, meta:'enviada hace 2 días' },
+    { id:'p2', email:'caro@litoral.com', rol:'Admin', vencida:true, meta:'vencida hace 1 día' },
+  ];
+
+  susDemo = {
+    vigente:   { estado:'Vigente', kind:'ok', texto:'Vigente hasta el 3 de noviembre de 2026. Cuando se acerque el vencimiento te avisamos acá y por email. Para renovar: transferí a la cuenta de Fil-Grama y avisá por WhatsApp con el comprobante.' },
+    porVencer: { estado:'Por vencer', kind:'warn', texto:'Vigente hasta el 30 de julio de 2026 — faltan 9 días. Para renovar: transferí a la cuenta de Fil-Grama y avisá por WhatsApp con el comprobante; te habilitamos los meses en el día.', banner:{ title:'La suscripción vence en 9 días (30 jul)', body:'Para renovar: transferí y avisá por WhatsApp con el comprobante. Nada se corta todavía.' } },
+    gracia:    { estado:'En gracia', kind:'err', texto:'Venció el 30 de julio. Tenés 7 días de gracia para renovar antes de que se pause el acceso y la captura de métricas (la historia no se pierde). Transferí y avisá por WhatsApp con el comprobante.', banner:{ title:'La suscripción venció el 30 jul — quedan 5 días de gracia', body:'Renová para que no se pause el acceso ni la captura diaria. La historia no se pierde.' } },
+  };
+
+  seg(active, accent) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084' };
+  }
+
+  optRow(sel) {
+    return { display:'flex', alignItems:'center', gap:'8px', padding:'7px 10px', borderRadius:'8px', fontSize:'13px', color:'#232A36', cursor:'pointer', background: sel ? '#F3F6FA' : 'transparent' };
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const sus = this.susDemo[st.demo];
+
+    const demoStates = [['vigente','Vigente'],['porVencer','Por vencer'],['gracia','En gracia']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ demo:k }), style:this.seg(k===st.demo, accent) }));
+
+    // ----- banner -----
+    const warn = sus.kind === 'warn';
+    const bannerBase = { display:'flex', alignItems:'center', justifyContent:'space-between', gap:'14px', borderRadius:'12px', padding:'13px 18px', marginBottom:'16px', flexWrap:'wrap' };
+    const bannerStyle = warn
+      ? { ...bannerBase, background:'#FAF3DE', border:'1px solid #EFE2B8', color:'#7A6428' }
+      : { ...bannerBase, background:'#FBEFEC', border:'1px solid #F1D6CC', color:'#9A4A30' };
+    const waBtn = { height:'34px', display:'flex', alignItems:'center', gap:'7px', padding:'0 14px', background:'#fff', border:'1px solid ' + (warn ? '#E4D5A6' : '#EBC4B2'), borderRadius:'9px', fontSize:'12.5px', fontWeight:600, cursor:'pointer', color: warn ? '#7A6428' : '#9A4A30', flex:'none' };
+
+    // ----- datos -----
+    const tzLabel = this.tzs.find(t => t[0] === st.tz)[1];
+    const tzOptions = this.tzs.map(([k, l]) => ({
+      label:l, selected: k === st.tz, style:this.optRow(k === st.tz),
+      onPick: () => this.setState({ tz:k, tzOpen:false, dirty:true, savedToast:false }),
+    }));
+    const saveBase = { height:'36px', display:'flex', alignItems:'center', padding:'0 16px', borderRadius:'9px', fontSize:'13px', fontWeight:600, cursor:'pointer', transition:'all .15s' };
+
+    // ----- usuarios -----
+    const userRows = this.users.map(u => {
+      const rol = st.rolMap[u.id] || u.rol;
+      return {
+        name:u.name, email:u.email, alta:u.alta,
+        isOwner: !!u.owner, editable: !u.owner,
+        rol, rolLabel: u.owner ? 'Owner' : rol,
+        estado: u.name.endsWith('a') || u.rol.endsWith('a') ? 'Activa' : 'Activo',
+        rolOpen: st.rolOpen === u.id,
+        rolToggle: () => this.setState(s => ({ rolOpen: s.rolOpen === u.id ? null : u.id })),
+        rolOptions: ['Admin','Empleado'].map(r => ({
+          label:r, selected: rol === r || (rol === 'Empleada' && r === 'Empleado'),
+          style:this.optRow(rol === r),
+          onPick: () => this.setState(s => ({ rolMap: { ...s.rolMap, [u.id]: r }, rolOpen:null })),
+        })),
+      };
+    });
+
+    // ----- invitaciones pendientes -----
+    const allPend = st.pendExtra.concat(this.pendBase).filter(p => !st.cancelled[p.id]);
+    const pendRows = allPend.map(p => {
+      const sent = !!st.resent[p.id];
+      const pillBase = { display:'inline-flex', alignItems:'center', height:'22px', padding:'0 9px', borderRadius:'7px', fontSize:'12px', fontWeight:500 };
+      return {
+        email:p.email, rol:p.rol,
+        estado: sent ? 'reenviada recién' : p.meta,
+        pillStyle: p.vencida && !sent ? { ...pillBase, background:'#FBEFEC', color:'#9A4A30' } : { ...pillBase, background:'#EEF1F5', color:'#647084' },
+        resendLabel: sent ? 'Reenviada ✓' : 'Reenviar',
+        resendStyle: { height:'30px', display:'flex', alignItems:'center', padding:'0 11px', border:'1px solid ' + (sent ? '#CFE8DA' : '#D4DAE3'), borderRadius:'8px', fontSize:'12.5px', fontWeight:500, color: sent ? '#1F7A50' : '#3D4757', cursor: sent ? 'default' : 'pointer', background:'#fff' },
+        onResend: () => { if (!sent) this.setState(s => ({ resent: { ...s.resent, [p.id]: true } })); },
+        onCancel: () => this.setState(s => ({ cancelled: { ...s.cancelled, [p.id]: true } })),
+      };
+    });
+
+    // ----- suscripción -----
+    const pillBase = { display:'inline-flex', alignItems:'center', gap:'6px', borderRadius:'7px', padding:'3px 9px', fontSize:'11.5px', fontWeight:500 };
+    const susPillStyle = sus.kind === 'ok' ? { ...pillBase, background:'#E7F4EC', color:'#1F7A50' }
+      : sus.kind === 'warn' ? { ...pillBase, background:'#FAF3DE', color:'#7A6428' }
+      : { ...pillBase, background:'#FBEFEC', color:'#9A4A30' };
+
+    // ----- invitar -----
+    const invOk = (st.invEmail || '').indexOf('@') > 0;
+
+    return {
+      accent, demoStates,
+      ocultoAutogest: false,
+      goDash: () => { try { window.location.href = encodeURI('Dashboard (mi marca).dc.html'); } catch(e) {} },
+      // banner
+      showBanner: !!sus.banner,
+      bannerTitle: sus.banner ? sus.banner.title : '', bannerBody: sus.banner ? sus.banner.body : '',
+      bannerStyle, bannerStyleSm: { ...bannerStyle, flexDirection:'column', alignItems:'stretch', gap:'9px', padding:'12px 14px', marginBottom:0 },
+      waBtnStyle: waBtn, waBtnStyleSm: { ...waBtn, justifyContent:'center' },
+      waClick: () => {},
+      // datos
+      orgNombre: st.nombre,
+      onNombre: (e) => this.setState({ nombre: e.target.value, dirty:true, savedToast:false }),
+      tzLabel, tzOptions, tzOpen: st.tzOpen,
+      tzToggle: () => this.setState(s => ({ tzOpen: !s.tzOpen })),
+      dirty: st.dirty, savedToast: st.savedToast,
+      saveBtnStyle: st.dirty ? { ...saveBase, background:accent, color:'#fff' } : { ...saveBase, background:'#EEF1F5', color:'#9AA4B2', cursor:'default' },
+      save: () => { if (!st.dirty) return; clearTimeout(this._t); this.setState({ dirty:false, savedToast:true }); this._t = setTimeout(() => this.setState({ savedToast:false }), 2500); },
+      // usuarios
+      userRows, usersCount: this.users.length,
+      // pendientes
+      pendRows, pendCount: allPend.length, pendEmpty: allPend.length === 0, pendHasRows: allPend.length > 0,
+      // suscripción
+      susEstado: sus.estado, susTexto: sus.texto, susPillStyle,
+      susPillStyleSm: { ...susPillStyle, fontSize:'10.5px', padding:'2px 8px' },
+      // invitar
+      inviteOpen: st.inviteOpen,
+      openInvite: () => this.setState({ inviteOpen:true, invEmail:'', invErr:false, invRol:'Empleado' }),
+      closeInvite: () => this.setState({ inviteOpen:false }),
+      invEmail: st.invEmail,
+      onInvEmail: (e) => this.setState({ invEmail: e.target.value, invErr:false }),
+      invEmailStyle: { width:'100%', height:'38px', border:'1px solid ' + (st.invErr ? '#E0A28C' : '#D4DAE3'), borderRadius:'9px', padding:'0 12px', fontSize:'13.5px', color:'#141921', fontFamily:'inherit', outline:'none', background:'#fff' },
+      invErr: st.invErr,
+      invRolList: ['Admin','Empleado'].map(r => ({ label:r, onClick:() => this.setState({ invRol:r }), style:this.seg(r === st.invRol, accent) })),
+      sendInvite: () => {
+        if (!invOk) { this.setState({ invErr:true }); return; }
+        this.setState(s => ({
+          pendExtra: [{ id:'n' + Date.now(), email:s.invEmail.trim(), rol:s.invRol, vencida:false, meta:'enviada recién ✓' }].concat(s.pendExtra),
+          inviteOpen:false,
+        }));
+      },
+    };
+  }
+
+  componentWillUnmount() { clearTimeout(this._t); }
+}
+</script>
+</body>
+</html>

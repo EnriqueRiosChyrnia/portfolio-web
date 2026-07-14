@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:26px; max-width:900px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Detalle de story</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Misma estructura que el detalle de publicación, adaptada a contenido efímero: aviso de captura, miniatura guardada y métricas finales. Donde iría la curva, una nota de que las stories no tienen evolución.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          </div>
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:20px 28px 30px;">
+          <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer;"><span>‹</span><span>Publicaciones</span></div>
+
+          <!-- ephemeral notice (informational) -->
+          <div style="margin-top:14px; background:#EAF2FB; border:1px solid #CADFF5; border-radius:10px; padding:11px 15px; display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex:none;"><circle cx="8" cy="8" r="6.4" stroke="{{ accent }}" stroke-width="1.3"/><path d="M8 4.6V8l2.2 1.3" stroke="{{ accent }}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div style="font-size:13px; color:#353D4D;">Contenido efímero · capturado el <span style="color:#141921; font-weight:500;">19 jun, 11:40</span> (ventana de 24 h)</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:340px 1fr; gap:28px; margin-top:18px;">
+
+            <!-- LEFT: content -->
+            <div>
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; overflow:hidden;">
+                <div style="aspect-ratio:9/16; background:#EEF1F5; display:flex; align-items:center; justify-content:center;">
+                  <div style="display:flex; flex-direction:column; align-items:center; gap:9px; color:#A7B0BD;">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="#B4BDCA" stroke-width="1.5"/><circle cx="9" cy="9" r="1.6" fill="#B4BDCA"/><path d="M4 17l4.5-4.5L13 16l3-3 4 4" stroke="#B4BDCA" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                    <span style="font-size:12px;">Miniatura guardada</span>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:11px; color:#A7B0BD; margin-top:8px; text-align:center;">Imagen cacheada por Fil-Grama</div>
+
+              <div style="display:flex; gap:7px; margin-top:14px;">
+                <span style="font-size:12px; color:#353D4D; background:#fff; border:1px solid #E9EDF2; border-radius:7px; padding:5px 11px;">Instagram</span>
+                <span style="font-size:12px; color:#353D4D; background:#fff; border:1px solid #E9EDF2; border-radius:7px; padding:5px 11px;">Story</span>
+                <span style="font-size:12px; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:7px; padding:5px 11px;">@aurora.deli</span>
+              </div>
+              <div style="font-size:13px; color:#8A95A6; margin-top:14px;">Publicada el 18 jun 2026, 20:15</div>
+              <div style="font-size:13px; color:#8A95A6; margin-top:3px;">Expiró el 19 jun 2026, 20:15</div>
+            </div>
+
+            <!-- RIGHT: performance -->
+            <div>
+              <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px;">
+                <span style="font-size:16px; font-weight:600; color:#141921;">Rendimiento final</span>
+                <span style="font-size:12px; color:#8A95A6;">valores registrados antes de expirar</span>
+              </div>
+
+              <!-- HERO: Alcance + no-evolution note -->
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:20px;">
+                <div style="display:flex; align-items:center; gap:7px;">
+                  <span style="font-size:13px; color:#647084;">Alcance</span>
+                  <span onClick="{{ infoToggle.alcance }}" onMouseEnter="{{ infoEnter.alcance }}" onMouseLeave="{{ infoLeave.alcance }}" style="position:relative; display:inline-flex;">
+                    <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                    <sc-if value="{{ info.alcance }}" hint-placeholder-val="{{ false }}">
+                      <span style="position:absolute; top:25px; left:-10px; width:248px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                        <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Alcance</span>
+                        <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Cuántas personas distintas vieron la story mientras estuvo activa.</span>
+                      </span>
+                    </sc-if>
+                  </span>
+                </div>
+                <div style="font-size:42px; font-weight:600; color:#141921; letter-spacing:-1.1px; line-height:1; margin-top:9px; font-variant-numeric:tabular-nums;">8.7k</div>
+
+                <div style="display:flex; align-items:center; gap:13px; margin-top:18px; padding-top:18px; border-top:1px solid #F0F3F7;">
+                  <div style="width:40px; height:40px; border-radius:10px; background:#F5F7FA; border:1px solid #E9EDF2; display:flex; align-items:center; justify-content:center; flex:none;">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M2 14l3-4 3 2 4-6 4 5 2-2" stroke="#A7B0BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15.5" cy="5.5" r="1.4" fill="#A7B0BD"/></svg>
+                  </div>
+                  <div>
+                    <div style="font-size:13px; font-weight:500; color:#353D4D;">Las stories no tienen evolución en el tiempo</div>
+                    <div style="font-size:12px; color:#8A95A6; line-height:1.5; margin-top:2px;">Al ser efímeras, Fil-Grama guarda solo sus métricas finales. No hay serie histórica para graficar.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- secondary metrics -->
+              <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-top:14px;">
+                <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px;">
+                  <div style="display:flex; align-items:center; gap:7px;">
+                    <span style="font-size:12px; color:#647084;">Respuestas</span>
+                    <span onClick="{{ infoToggle.respuestas }}" onMouseEnter="{{ infoEnter.respuestas }}" onMouseLeave="{{ infoLeave.respuestas }}" style="position:relative; display:inline-flex;">
+                      <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                      <sc-if value="{{ info.respuestas }}" hint-placeholder-val="{{ false }}">
+                        <span style="position:absolute; top:24px; left:-10px; width:232px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                          <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Respuestas</span>
+                          <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Mensajes directos que la gente envió respondiendo a la story.</span>
+                        </span>
+                      </sc-if>
+                    </span>
+                  </div>
+                  <div style="font-size:25px; font-weight:600; color:#141921; margin-top:9px; letter-spacing:-.5px; font-variant-numeric:tabular-nums;">64</div>
+                </div>
+                <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px;">
+                  <div style="display:flex; align-items:center; gap:7px;">
+                    <span style="font-size:12px; color:#647084;">Navegación</span>
+                    <span onClick="{{ infoToggle.navegacion }}" onMouseEnter="{{ infoEnter.navegacion }}" onMouseLeave="{{ infoLeave.navegacion }}" style="position:relative; display:inline-flex;">
+                      <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                      <sc-if value="{{ info.navegacion }}" hint-placeholder-val="{{ false }}">
+                        <span style="position:absolute; top:24px; left:-10px; width:248px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                          <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Navegación</span>
+                          <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Toques para avanzar, retroceder o salir mientras veían la story.</span>
+                        </span>
+                      </sc-if>
+                    </span>
+                  </div>
+                  <div style="font-size:25px; font-weight:600; color:#141921; margin-top:9px; letter-spacing:-.5px; font-variant-numeric:tabular-nums;">7.9k</div>
+                </div>
+                <div style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px;">
+                  <div style="display:flex; align-items:center; gap:7px;">
+                    <span style="font-size:12px; color:#647084;">Clicks en link</span>
+                    <span onClick="{{ infoToggle.clicks }}" onMouseEnter="{{ infoEnter.clicks }}" onMouseLeave="{{ infoLeave.clicks }}" style="position:relative; display:inline-flex;">
+                      <span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+                      <sc-if value="{{ info.clicks }}" hint-placeholder-val="{{ false }}">
+                        <span style="position:absolute; top:24px; right:-10px; width:232px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                          <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Clicks en link</span>
+                          <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Veces que tocaron el sticker de enlace de la story.</span>
+                        </span>
+                      </sc-if>
+                    </span>
+                  </div>
+                  <div style="font-size:25px; font-weight:600; color:#141921; margin-top:9px; letter-spacing:-.5px; font-variant-numeric:tabular-nums;">143</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:54px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; padding:0 16px;">
+          <span style="font-size:13px; color:#8A95A6;">‹ Publicaciones</span>
+        </div>
+        <div style="background:#F5F7FA; padding:16px 16px 24px;">
+          <div style="background:#EAF2FB; border:1px solid #CADFF5; border-radius:10px; padding:10px 13px; display:flex; align-items:center; gap:9px;">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="flex:none;"><circle cx="8" cy="8" r="6.4" stroke="{{ accent }}" stroke-width="1.3"/><path d="M8 4.6V8l2.2 1.3" stroke="{{ accent }}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div style="font-size:12.5px; color:#353D4D;">Contenido efímero · capturado el <span style="color:#141921; font-weight:500;">19 jun, 11:40</span></div>
+          </div>
+
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; overflow:hidden; margin-top:14px;">
+            <div style="aspect-ratio:9/16; background:#EEF1F5; display:flex; align-items:center; justify-content:center;">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; color:#A7B0BD;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="#B4BDCA" stroke-width="1.5"/><circle cx="9" cy="9" r="1.6" fill="#B4BDCA"/><path d="M4 17l4.5-4.5L13 16l3-3 4 4" stroke="#B4BDCA" stroke-width="1.5" stroke-linejoin="round"/></svg><span style="font-size:12px;">Miniatura guardada</span></div>
+            </div>
+          </div>
+          <div style="font-size:11px; color:#A7B0BD; margin-top:8px; text-align:center;">Imagen cacheada por Fil-Grama</div>
+
+          <div style="display:flex; gap:7px; margin-top:12px; flex-wrap:wrap;">
+            <span style="font-size:12px; color:#353D4D; background:#fff; border:1px solid #E9EDF2; border-radius:7px; padding:5px 11px;">Instagram</span>
+            <span style="font-size:12px; color:#353D4D; background:#fff; border:1px solid #E9EDF2; border-radius:7px; padding:5px 11px;">Story</span>
+            <span style="font-size:12px; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:7px; padding:5px 11px;">@aurora.deli</span>
+          </div>
+          <div style="font-size:13px; color:#8A95A6; margin-top:10px;">Publicada el 18 jun 2026, 20:15 · expiró el 19 jun</div>
+
+          <div style="font-size:15px; font-weight:600; color:#141921; margin:22px 0 12px;">Rendimiento final</div>
+
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:16px;">
+            <span style="font-size:12px; color:#647084;">Alcance</span>
+            <div style="font-size:33px; font-weight:600; color:#141921; letter-spacing:-.8px; line-height:1; margin-top:6px;">8.7k</div>
+            <div style="display:flex; align-items:center; gap:11px; margin-top:14px; padding-top:14px; border-top:1px solid #F0F3F7;">
+              <div style="width:34px; height:34px; border-radius:9px; background:#F5F7FA; border:1px solid #E9EDF2; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M2 14l3-4 3 2 4-6 4 5 2-2" stroke="#A7B0BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15.5" cy="5.5" r="1.4" fill="#A7B0BD"/></svg></div>
+              <div style="font-size:12px; color:#8A95A6; line-height:1.5;">Sin evolución en el tiempo: guardamos solo sus métricas finales.</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; margin-top:12px;">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px;"><span style="font-size:10px; color:#647084;">Respuestas</span><div style="font-size:20px; font-weight:600; color:#141921; margin-top:5px;">64</div></div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px;"><span style="font-size:10px; color:#647084;">Navegación</span><div style="font-size:20px; font-weight:600; color:#141921; margin-top:5px;">7.9k</div></div>
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px;"><span style="font-size:10px; color:#647084;">Clicks</span><div style="font-size:20px; font-weight:600; color:#141921; margin-top:5px;">143</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:720},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { infoKey: null };
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const ik = this.state.infoKey;
+    const mkEnter = (key) => () => this.setState({ infoKey: key });
+    const mkLeave = (key) => () => this.setState(s => s.infoKey === key ? { infoKey: null } : null);
+    const keys = ['alcance', 'respuestas', 'navegacion', 'clicks'];
+    const info = {}, infoEnter = {}, infoLeave = {}, infoToggle = {};
+    keys.forEach(k => {
+      info[k] = ik === k; infoEnter[k] = mkEnter(k); infoLeave[k] = mkLeave(k);
+      infoToggle[k] = () => this.setState(s => ({ infoKey: s.infoKey === k ? null : k }));
+    });
+    return { accent, info, infoEnter, infoLeave };
+  }
+}
+</script>
+</body>
+</html>

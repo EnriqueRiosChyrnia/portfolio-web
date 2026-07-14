@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgFade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .filg-hov:hover { background:#F7F9FC; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Reporte — historial + programación</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Al entrar se ve el <span style="color:#3D4757; font-weight:500;">historial de reportes generados</span> con re-descarga; <span style="color:#3D4757; font-weight:500;">Generar reporte</span> sigue siendo la acción primaria y abre el flujo actual (controles + vista + exportar). La pestaña <span style="color:#3D4757; font-weight:500;">Programación</span> crea reportes automáticos mensuales (día X, tipo, formato, redes, emails opcionales) con pausar/eliminar. Probá los estados demo: historial vacío y envío fallido con reintentar.</div>
+  </div>
+
+  <!-- demo state switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="3"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+
+        <!-- top bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <!-- workspace header + tabs -->
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:16px 28px 0;">
+          <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Clientes</span></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:12px;">
+            <div style="display:flex; align-items:center; gap:13px;">
+              <div style="width:44px; height:44px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+              <div>
+                <div style="font-size:21px; font-weight:600; color:#141921; letter-spacing:-.3px;">Café Aurora</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:6px;">
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">IG</span>
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">FB</span>
+                  <span style="font-size:11px; font-weight:500; color:#647084; background:#fff; border:1px solid #E9EDF2; border-radius:6px; padding:3px 8px;">TikTok</span>
+                </div>
+              </div>
+            </div>
+            <div onClick="{{ goGenerar }}" style="height:40px; background:{{ accent }}; border-radius:9px; display:flex; align-items:center; padding:0 18px; gap:8px; font-size:14px; font-weight:500; color:#fff; cursor:pointer;">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 1.5h6l3 3v9H3z" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 1.5v3h3" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+              Generar reporte
+            </div>
+          </div>
+          <div style="display:flex; gap:4px; margin-top:16px;">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5"><div style="{{ t.style }}">{{ t.label }}</div></sc-for>
+          </div>
+        </div>
+
+        <!-- body -->
+        <div style="background:#F5F7FA; padding:20px 28px 32px; min-height:480px;">
+
+          <!-- pestañas internas -->
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+              <sc-for list="{{ viewTabs }}" as="v" hint-placeholder-count="2"><div style="{{ v.style }}" onClick="{{ v.onClick }}">{{ v.label }}</div></sc-for>
+            </div>
+            <sc-if value="{{ isProg }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ openModal }}" style="height:36px; display:flex; align-items:center; gap:7px; padding:0 15px; background:#fff; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">
+                <span style="font-size:15px; color:{{ accent }}; line-height:1;">+</span> Nueva programación
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- ===== HISTORIAL ===== -->
+          <sc-if value="{{ isHist }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ histEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:52px 30px; margin-top:16px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;">
+                <div style="width:50px; height:50px; border-radius:14px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 3.5h9l4 4V20.5H6z" stroke="#3D6FB4" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 3.5v4h4" stroke="#3D6FB4" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 13h6M9 16.5h4" stroke="#3D6FB4" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+                <div style="font-size:15px; font-weight:600; color:#141921;">Todavía no generaste reportes de este cliente</div>
+                <div style="font-size:13px; color:#647084; line-height:1.55; max-width:400px;">Generá el primero con el botón de arriba, o programá uno mensual para que salga solo y quede acá.</div>
+                <div style="display:flex; gap:10px; margin-top:6px;">
+                  <div onClick="{{ goGenerar }}" style="height:38px; display:flex; align-items:center; padding:0 17px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">Generar reporte</div>
+                  <div onClick="{{ goProgTab }}" style="height:38px; display:flex; align-items:center; padding:0 17px; border:1px solid #D4DAE3; background:#fff; color:#3D4757; border-radius:9px; font-size:13px; font-weight:500; cursor:pointer;">Programar uno mensual</div>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ histHasRows }}" hint-placeholder-val="{{ true }}">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:16px; overflow:hidden;">
+                <div style="display:grid; grid-template-columns:1.2fr .8fr 1fr .6fr 1.1fr .9fr; gap:12px; padding:13px 20px 9px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;">
+                  <div>Fecha</div><div>Tipo</div><div>Rango</div><div>Formato</div><div>Generado por</div><div></div>
+                </div>
+                <sc-for list="{{ histRows }}" as="h" hint-placeholder-count="4">
+                  <div style="display:grid; grid-template-columns:1.2fr .8fr 1fr .6fr 1.1fr .9fr; gap:12px; align-items:center; padding:12px 20px; border-bottom:1px solid #F4F6F9;">
+                    <div style="font-size:13px; color:#232A36; font-variant-numeric:tabular-nums;">{{ h.fecha }}</div>
+                    <div style="font-size:13px; color:#232A36;">{{ h.tipo }}</div>
+                    <div style="font-size:13px; color:#647084;">{{ h.rango }}</div>
+                    <div><span style="font-size:11px; font-weight:500; color:#647084; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:5px; padding:2px 7px;">{{ h.formato }}</span></div>
+                    <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#647084;">
+                      <sc-if value="{{ h.auto }}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 1 1-2.3-5.6" stroke="#8A95A6" stroke-width="1.9" stroke-linecap="round"/><path d="M20 3v4h-4" stroke="#8A95A6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+                      <span>{{ h.quien }}</span>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end;">
+                      <div class="filg-hov" style="height:32px; display:flex; align-items:center; gap:6px; padding:0 13px; border:1px solid #D4DAE3; border-radius:8px; font-size:12.5px; font-weight:500; color:#3D4757; cursor:pointer;">
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 12h10" stroke="#3D4757" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Descargar
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-size:12px; color:#8A95A6; margin-top:10px;">Los reportes generados por una programación aparecen con el ícono de repetición.</div>
+            </sc-if>
+          </sc-if>
+
+          <!-- ===== PROGRAMACIÓN ===== -->
+          <sc-if value="{{ isProg }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:16px;">
+              <sc-for list="{{ progRows }}" as="p" hint-placeholder-count="2">
+                <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px;">
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px;">
+                    <div>
+                      <div style="font-size:14.5px; font-weight:600; color:#141921;">{{ p.title }}</div>
+                      <div style="font-size:13px; color:#647084; margin-top:5px;">{{ p.detail }}</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; flex:none;">
+                      <div onClick="{{ p.onToggle }}" class="filg-hov" style="height:32px; display:flex; align-items:center; gap:6px; padding:0 12px; border:1px solid #D4DAE3; border-radius:8px; font-size:12.5px; font-weight:500; color:#3D4757; cursor:pointer;">{{ p.toggleLabel }}</div>
+                      <div onClick="{{ p.onDelete }}" class="filg-hov" style="height:32px; width:32px; display:flex; align-items:center; justify-content:center; border:1px solid #D4DAE3; border-radius:8px; cursor:pointer;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 6.5h16M9.5 6V4h5v2M6.5 6.5l1 13h9l1-13" stroke="#8A95A6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap;">
+                    <span style="{{ p.pillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ p.statusLabel }}</span>
+                    <span style="font-size:12px; color:#8A95A6;">{{ p.statusNote }}</span>
+                    <sc-if value="{{ p.showRetry }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ p.onRetry }}" style="height:30px; display:flex; align-items:center; gap:6px; padding:0 12px; background:{{ accent }}; color:#fff; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 1 1-2.3-5.6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M20 3v4h-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Reintentar envío
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ progEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:44px 30px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;">
+                  <div style="width:50px; height:50px; border-radius:14px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" stroke="#3D6FB4" stroke-width="1.6"/><path d="M3.5 9.5h17M8 2.8v4M16 2.8v4" stroke="#3D6FB4" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+                  <div style="font-size:15px; font-weight:600; color:#141921;">Sin programaciones activas</div>
+                  <div style="font-size:13px; color:#647084; line-height:1.55; max-width:380px;">Creá una para que el reporte se genere solo cada mes y quede en el historial (y se envíe por email si querés).</div>
+                  <div onClick="{{ openModal }}" style="margin-top:4px; height:38px; display:flex; align-items:center; padding:0 17px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">+ Nueva programación</div>
+                </div>
+              </sc-if>
+              <div style="font-size:12px; color:#8A95A6;">Una programación genera el reporte automáticamente y lo deja en el historial; si tiene destinatarios, además lo envía por email.</div>
+            </div>
+          </sc-if>
+
+        </div>
+
+        <!-- ===== MODAL NUEVA PROGRAMACIÓN ===== -->
+        <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; background:rgba(20,25,33,.34); display:flex; align-items:center; justify-content:center; z-index:80;">
+            <div style="width:480px; max-width:92%; background:#fff; border-radius:16px; box-shadow:0 18px 50px rgba(20,25,33,.28); overflow:hidden; animation:filgFade .18s ease;">
+              <div style="padding:20px 24px 0; display:flex; align-items:center; justify-content:space-between;">
+                <div style="font-size:17px; font-weight:600; color:#141921;">Nueva programación</div>
+                <div onClick="{{ closeModal }}" style="width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8A95A6; font-size:16px;">✕</div>
+              </div>
+              <div style="padding:16px 24px 4px; display:flex; flex-direction:column; gap:16px;">
+
+                <div>
+                  <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Frecuencia</div>
+                  <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span style="height:34px; display:inline-flex; align-items:center; padding:0 13px; background:#EAF2FB; border:1px solid #C9DCF3; border-radius:8px; font-size:13px; font-weight:500; color:{{ accent }};">Mensual</span>
+                    <span style="font-size:13px; color:#647084;">el día</span>
+                    <span style="position:relative; display:inline-flex;">
+                      <div onClick="{{ dayToggle }}" style="height:34px; display:flex; align-items:center; gap:7px; padding:0 12px; border:1px solid #D4DAE3; border-radius:8px; font-size:13px; color:#141921; cursor:pointer;">{{ mDay }} <span style="font-size:9px; color:#8A95A6;">▾</span></div>
+                      <sc-if value="{{ dayOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute; top:40px; left:0; width:76px; max-height:180px; overflow-y:auto; background:#fff; border:1px solid #E5E9EF; border-radius:10px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:5px; z-index:90;">
+                          <sc-for list="{{ dayOptions }}" as="o" hint-placeholder-count="5"><div class="filg-hov" onClick="{{ o.onPick }}" style="padding:6px 10px; border-radius:6px; font-size:13px; color:#232A36; cursor:pointer;">{{ o.label }}</div></sc-for>
+                        </div>
+                      </sc-if>
+                    </span>
+                    <span style="font-size:13px; color:#647084;">a las</span>
+                    <span style="position:relative; display:inline-flex;">
+                      <div onClick="{{ timeToggle }}" style="height:34px; display:flex; align-items:center; gap:7px; padding:0 12px; border:1px solid #D4DAE3; border-radius:8px; font-size:13px; color:#141921; cursor:pointer;">{{ mTime }} <span style="font-size:9px; color:#8A95A6;">▾</span></div>
+                      <sc-if value="{{ timeOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute; top:40px; left:0; width:90px; background:#fff; border:1px solid #E5E9EF; border-radius:10px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:5px; z-index:90;">
+                          <sc-for list="{{ timeOptions }}" as="o" hint-placeholder-count="4"><div class="filg-hov" onClick="{{ o.onPick }}" style="padding:6px 10px; border-radius:6px; font-size:13px; color:#232A36; cursor:pointer;">{{ o.label }}</div></sc-for>
+                        </div>
+                      </sc-if>
+                    </span>
+                  </div>
+                  <div style="font-size:12px; color:#8A95A6; margin-top:7px;">Cubre el mes calendario anterior completo.</div>
+                </div>
+
+                <div style="display:flex; gap:22px; flex-wrap:wrap;">
+                  <div>
+                    <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Tipo</div>
+                    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+                      <sc-for list="{{ tipoList }}" as="t" hint-placeholder-count="2"><div style="{{ t.style }}" onClick="{{ t.onClick }}">{{ t.label }}</div></sc-for>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Formato</div>
+                    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+                      <sc-for list="{{ formatoList }}" as="f" hint-placeholder-count="2"><div style="{{ f.style }}" onClick="{{ f.onClick }}">{{ f.label }}</div></sc-for>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Redes</div>
+                  <div style="display:flex; gap:6px;">
+                    <sc-for list="{{ redChips }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</div></sc-for>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="font-size:12px; font-weight:500; color:#647084; margin-bottom:7px;">Enviar por email <span style="font-weight:400; color:#8A95A6;">(opcional)</span></div>
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; border:1px solid #D4DAE3; border-radius:9px; padding:7px 9px; background:#fff;">
+                    <sc-for list="{{ mDest }}" as="e" hint-placeholder-count="1">
+                      <span style="display:inline-flex; align-items:center; gap:6px; background:#EEF1F5; border-radius:7px; padding:4px 9px; font-size:12.5px; color:#3D4757;">{{ e.label }}<span onClick="{{ e.onRemove }}" style="cursor:pointer; color:#8A95A6; font-size:11px;">✕</span></span>
+                    </sc-for>
+                    <input value="{{ mEmailInput }}" onChange="{{ onEmailInput }}" onKeyDown="{{ onEmailKey }}" placeholder="{{ emailPlaceholder }}" style="flex:1; min-width:150px; border:none; outline:none; font-size:13px; color:#141921; font-family:inherit; padding:4px 2px; background:transparent;" />
+                  </div>
+                  <div style="font-size:12px; color:#8A95A6; margin-top:7px;">Enter para agregar. Sin destinatarios, el reporte igual queda en el historial.</div>
+                </div>
+
+              </div>
+              <div style="padding:18px 24px 20px; display:flex; justify-content:flex-end; gap:10px;">
+                <div onClick="{{ closeModal }}" style="height:38px; display:flex; align-items:center; padding:0 15px; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cancelar</div>
+                <div onClick="{{ createProg }}" style="height:38px; display:flex; align-items:center; padding:0 17px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">Crear programación</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#8A95A6;">‹ Clientes</span><div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div></div>
+
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:12px 16px 0;">
+          <div style="font-size:17px; font-weight:600; color:#141921;">Café Aurora</div>
+          <div style="display:flex; gap:2px; margin-top:10px; overflow-x:auto;">
+            <sc-for list="{{ tabsMobile }}" as="t" hint-placeholder-count="5"><div style="{{ t.style }}">{{ t.label }}</div></sc-for>
+          </div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:16px 16px 22px; min-height:420px;">
+          <div onClick="{{ goGenerar }}" style="height:42px; background:{{ accent }}; border-radius:9px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:14px; font-weight:500; color:#fff; cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 15 15" fill="none"><path d="M3 1.5h6l3 3v9H3z" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 1.5v3h3" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            Generar reporte
+          </div>
+
+          <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; margin-top:12px;">
+            <sc-for list="{{ viewTabs }}" as="v" hint-placeholder-count="2"><div style="{{ v.styleMobile }}" onClick="{{ v.onClick }}">{{ v.label }}</div></sc-for>
+          </div>
+
+          <!-- historial móvil -->
+          <sc-if value="{{ isHist }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ histEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:34px 22px; margin-top:12px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:9px;">
+                <div style="width:44px; height:44px; border-radius:12px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 3.5h9l4 4V20.5H6z" stroke="#3D6FB4" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 3.5v4h4" stroke="#3D6FB4" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+                <div style="font-size:14px; font-weight:600; color:#141921;">Todavía no generaste reportes</div>
+                <div style="font-size:12.5px; color:#647084; line-height:1.55;">Generá el primero con el botón de arriba, o programá uno mensual.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ histHasRows }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; flex-direction:column; gap:9px; margin-top:12px;">
+                <sc-for list="{{ histRows }}" as="h" hint-placeholder-count="4">
+                  <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px 13px; display:flex; align-items:center; gap:10px;">
+                    <div style="flex:1; min-width:0;">
+                      <div style="font-size:13px; font-weight:600; color:#141921;">{{ h.tipo }} · {{ h.rango }}</div>
+                      <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:#8A95A6; margin-top:3px;">
+                        <span>{{ h.fecha }}</span><span>·</span><span>{{ h.formato }}</span><span>·</span>
+                        <sc-if value="{{ h.auto }}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 1 1-2.3-5.6" stroke="#8A95A6" stroke-width="2.2" stroke-linecap="round"/><path d="M20 3v4h-4" stroke="#8A95A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+                        <span>{{ h.quien }}</span>
+                      </div>
+                    </div>
+                    <div style="width:36px; height:36px; border:1px solid #D4DAE3; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex:none;">
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 12h10" stroke="#3D4757" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+
+          <!-- programación móvil -->
+          <sc-if value="{{ isProg }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:9px; margin-top:12px;">
+              <sc-for list="{{ progRows }}" as="p" hint-placeholder-count="2">
+                <div style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:13px 14px;">
+                  <div style="font-size:13.5px; font-weight:600; color:#141921;">{{ p.title }}</div>
+                  <div style="font-size:12px; color:#647084; margin-top:4px; line-height:1.45;">{{ p.detail }}</div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-top:9px; flex-wrap:wrap;">
+                    <span style="{{ p.pillStyleSm }}"><span style="width:5px; height:5px; border-radius:50%; background:currentColor;"></span>{{ p.statusLabel }}</span>
+                    <span style="font-size:11px; color:#8A95A6;">{{ p.statusNote }}</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:7px; margin-top:10px;">
+                    <sc-if value="{{ p.showRetry }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ p.onRetry }}" style="height:32px; display:flex; align-items:center; gap:6px; padding:0 12px; background:{{ accent }}; color:#fff; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer;">↻ Reintentar envío</div>
+                    </sc-if>
+                    <div onClick="{{ p.onToggle }}" style="height:32px; display:flex; align-items:center; padding:0 12px; border:1px solid #D4DAE3; border-radius:8px; font-size:12px; font-weight:500; color:#3D4757; cursor:pointer;">{{ p.toggleLabel }}</div>
+                    <div onClick="{{ p.onDelete }}" style="height:32px; width:32px; display:flex; align-items:center; justify-content:center; border:1px solid #D4DAE3; border-radius:8px; cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 6.5h16M9.5 6V4h5v2M6.5 6.5l1 13h9l1-13" stroke="#8A95A6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                </div>
+              </sc-for>
+              <div onClick="{{ openModal }}" style="height:40px; display:flex; align-items:center; justify-content:center; gap:7px; border:1px dashed #C7D0DB; border-radius:11px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer; background:#fff;">
+                <span style="color:{{ accent }}; font-size:15px; line-height:1;">+</span> Nueva programación
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <!-- notas -->
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Notas</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;"><span style="color:#3D4757; font-weight:500;">Generar reporte</span> abre el flujo existente (controles + vista en pantalla + exportar), ahora en <span style="color:#3D4757; font-weight:500;">Reporte - generar</span>, cuyo breadcrumb vuelve acá. Una programación genera el reporte solo, lo deja en el historial con ⟳ y lo envía si hay destinatarios; si falla el email, el reporte igual queda generado y <span style="color:#3D4757; font-weight:500;">Reintentar envío</span> solo reenvía.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = {
+    view: 'hist', demo: 'datos',
+    modalOpen: false, dayOpen: false, timeOpen: false,
+    mDay: 1, mTime: '08:00', mTipo: 'Resumen', mFormato: 'PDF',
+    mRedes: { todas:true, ig:false, fb:false, tt:false },
+    mDest: [], mEmailInput: '',
+    progs: null, // se inicializa por demo
+    retried: false,
+    createdProgs: [],
+    deleted: {},
+    paused: { 2: true },
+  };
+
+  hist = [
+    { fecha:'1 jul 2026, 08:00', tipo:'Resumen', rango:'Junio 2026', formato:'PDF', quien:'Automático', auto:true },
+    { fecha:'18 jun 2026, 15:22', tipo:'Extendido', rango:'1–15 jun 2026', formato:'PDF', quien:'Lucía F.', auto:false },
+    { fecha:'2 jun 2026, 10:05', tipo:'Resumen', rango:'Mayo 2026', formato:'MD', quien:'Martín R.', auto:false },
+    { fecha:'1 jun 2026, 08:00', tipo:'Resumen', rango:'Mayo 2026', formato:'PDF', quien:'Automático', auto:true },
+  ];
+
+  baseProgs = [
+    { id:1, tipo:'Resumen', day:1, time:'08:00', formato:'PDF', redes:'Todas las redes', dest:'clientes@aurora.com y 1 más', lastOk:'último: 1 jul ✓ · próximo: 1 ago' },
+    { id:2, tipo:'Extendido', day:2, time:'09:00', formato:'PDF', redes:'Solo IG', dest:'sin destinatarios — queda en el historial', lastOk:'próximo: 2 ago' },
+  ];
+
+  seg(active, accent, opts) {
+    opts = opts || {};
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:opts.pad||'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap', flex: opts.flex||'none' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  pill(kind, small) {
+    const base = { display:'inline-flex', alignItems:'center', gap: small?'5px':'6px', borderRadius:'7px', padding: small?'2px 8px':'3px 9px', fontSize: small?'11px':'11.5px', fontWeight:500 };
+    if (kind === 'activa') return { ...base, background:'#E7F4EC', color:'#1F7A50' };
+    if (kind === 'pausada') return { ...base, background:'#EEF1F5', color:'#647084' };
+    return { ...base, background:'#FBEFEC', color:'#9A4A30' };
+  }
+
+  addEmail() {
+    const v = (this.state.mEmailInput || '').trim();
+    if (!v || v.indexOf('@') < 1) return;
+    this.setState(s => ({ mDest: s.mDest.concat([v]), mEmailInput: '' }));
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const isHist = st.view === 'hist';
+    const isProg = st.view === 'prog';
+    const isVacio = st.demo === 'vacio';
+    const isFallido = st.demo === 'fallido';
+
+    // ----- demo switch -----
+    const demoStates = [['datos','Con datos'],['vacio','Historial vacío'],['fallido','Envío fallido']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ demo:k, view: k==='fallido' ? 'prog' : 'hist', modalOpen:false, retried:false }), style:this.seg(k===st.demo, accent) }));
+
+    // ----- workspace tabs -----
+    const tabBase = { padding:'11px 15px', fontSize:'13.5px', whiteSpace:'nowrap', borderBottom:'2px solid transparent', marginBottom:'-1px', color:'#647084' };
+    const mkTabs = (base) => ['Dashboard','Publicaciones','Comparar','Audiencia','Reporte']
+      .map(label => ({ label, style: label === 'Reporte' ? { ...base, color:accent, fontWeight:600, borderBottomColor:accent } : base }));
+    const tabs = mkTabs(tabBase);
+    const tabsMobile = mkTabs({ ...tabBase, padding:'10px 11px', fontSize:'12.5px', flex:'none' });
+
+    // ----- pestañas internas -----
+    const progCount = this.baseProgs.filter(p => !st.deleted[p.id]).length + st.createdProgs.length;
+    const viewTabs = [['hist','Historial'],['prog', isVacio ? 'Programación' : 'Programación (' + progCount + ')']]
+      .map(([k,l]) => ({
+        label:l, onClick:() => this.setState({ view:k }),
+        style: this.seg(k===st.view, accent),
+        styleMobile: this.seg(k===st.view, accent, { flex:'1' }),
+      }));
+
+    // ----- historial -----
+    const histEmpty = isVacio;
+    const histRows = isVacio ? [] : this.hist;
+
+    // ----- programaciones -----
+    let progList = isVacio ? [] : this.baseProgs.filter(p => !st.deleted[p.id]).concat(st.createdProgs);
+    const progRows = progList.map(p => {
+      const paused = !!st.paused[p.id];
+      const failed = isFallido && p.id === 1 && !st.retried;
+      const retriedNow = isFallido && p.id === 1 && st.retried;
+      let statusKind, statusLabel, statusNote;
+      if (failed) { statusKind='fallida'; statusLabel='Envío fallido'; statusNote='el reporte de junio se generó y está en el historial; falló el email (1 jul)'; }
+      else if (paused) { statusKind='pausada'; statusLabel='Pausada'; statusNote='no genera reportes hasta que la reanudes'; }
+      else { statusKind='activa'; statusLabel='Activa'; statusNote = retriedNow ? 'email reenviado hace un momento ✓' : p.lastOk; }
+      return {
+        title: p.tipo + ' mensual · día ' + p.day + ' · ' + p.time,
+        detail: p.formato + ' · ' + p.redes + ' · ' + p.dest,
+        statusLabel, statusNote,
+        pillStyle: this.pill(statusKind, false),
+        pillStyleSm: this.pill(statusKind, true),
+        showRetry: failed,
+        onRetry: () => this.setState({ retried: true }),
+        toggleLabel: paused ? '▶ Reanudar' : '⏸ Pausar',
+        onToggle: () => this.setState(s => ({ paused: { ...s.paused, [p.id]: !s.paused[p.id] } })),
+        onDelete: () => this.setState(s => ({ deleted: { ...s.deleted, [p.id]: true }, createdProgs: s.createdProgs.filter(c => c.id !== p.id) })),
+      };
+    });
+
+    // ----- modal -----
+    const dayOptions = [1,2,3,5,10,15,20,25].map(d => ({ label:String(d), onPick:() => this.setState({ mDay:d, dayOpen:false }) }));
+    const timeOptions = ['07:00','08:00','09:00','12:00'].map(t => ({ label:t, onPick:() => this.setState({ mTime:t, timeOpen:false }) }));
+    const tipoList = ['Resumen','Extendido'].map(t => ({ label:t, onClick:() => this.setState({ mTipo:t }), style:this.seg(t===st.mTipo, accent) }));
+    const formatoList = ['PDF','Markdown'].map(f => ({ label:f, onClick:() => this.setState({ mFormato:f }), style:this.seg(f===st.mFormato, accent) }));
+
+    const chipStyle = (on) => ({
+      height:'32px', display:'inline-flex', alignItems:'center', padding:'0 13px', borderRadius:'8px', fontSize:'12.5px', fontWeight:500, cursor:'pointer', transition:'all .15s',
+      background: on ? '#EAF2FB' : '#fff', border: on ? '1px solid #C9DCF3' : '1px solid #D4DAE3', color: on ? accent : '#647084',
+    });
+    const redChips = [['todas','Todas'],['ig','IG'],['fb','FB'],['tt','TikTok']].map(([k,l]) => ({
+      label:l, style: chipStyle(!!st.mRedes[k]),
+      onClick: () => this.setState(s => {
+        if (k === 'todas') return { mRedes: { todas:true, ig:false, fb:false, tt:false } };
+        const r = { ...s.mRedes, todas:false, [k]: !s.mRedes[k] };
+        if (!r.ig && !r.fb && !r.tt) r.todas = true;
+        return { mRedes: r };
+      }),
+    }));
+
+    const mDest = st.mDest.map((e, i) => ({ label:e, onRemove:() => this.setState(s => ({ mDest: s.mDest.filter((x,j) => j!==i) })) }));
+
+    return {
+      accent, demoStates, tabs, tabsMobile, viewTabs,
+      isHist, isProg,
+      goProgTab: () => this.setState({ view:'prog' }),
+      // historial
+      histEmpty, histHasRows: !histEmpty, histRows,
+      // programación
+      progRows, progEmpty: progList.length === 0,
+      // navegación
+      goGenerar: () => { try { window.location.href = encodeURI('Reporte - generar.dc.html'); } catch(e) {} },
+      // modal
+      modalOpen: st.modalOpen,
+      openModal: () => this.setState({ modalOpen:true, dayOpen:false, timeOpen:false }),
+      closeModal: () => this.setState({ modalOpen:false }),
+      dayOpen: st.dayOpen, dayToggle: () => this.setState(s => ({ dayOpen: !s.dayOpen, timeOpen:false })),
+      timeOpen: st.timeOpen, timeToggle: () => this.setState(s => ({ timeOpen: !s.timeOpen, dayOpen:false })),
+      mDay: st.mDay, mTime: st.mTime, dayOptions, timeOptions, tipoList, formatoList, redChips,
+      mDest, mEmailInput: st.mEmailInput,
+      emailPlaceholder: st.mDest.length ? 'agregar otro…' : 'agregar destinatarios…',
+      onEmailInput: (e) => this.setState({ mEmailInput: e.target.value }),
+      onEmailKey: (e) => { if (e.key === 'Enter') this.addEmail(); },
+      createProg: () => {
+        this.addEmail();
+        this.setState(s => {
+          const r = s.mRedes;
+          const redes = r.todas ? 'Todas las redes' : ['ig','fb','tt'].filter(k => r[k]).map(k => k==='ig'?'IG':k==='fb'?'FB':'TikTok').join(' + ');
+          const destArr = s.mDest;
+          const dest = destArr.length === 0 ? 'sin destinatarios — queda en el historial' : (destArr[0] + (destArr.length > 1 ? ' y ' + (destArr.length-1) + ' más' : ''));
+          const nuevo = {
+            id: 'n' + Date.now(), tipo: s.mTipo, day: s.mDay, time: s.mTime,
+            formato: s.mFormato === 'Markdown' ? 'MD' : s.mFormato, redes, dest,
+            lastOk: 'próximo: ' + s.mDay + ' ago',
+          };
+          return { createdProgs: s.createdProgs.concat([nuevo]), modalOpen:false, mDest:[], mEmailInput:'', view:'prog', demo: s.demo === 'vacio' ? 'datos' : s.demo };
+        });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

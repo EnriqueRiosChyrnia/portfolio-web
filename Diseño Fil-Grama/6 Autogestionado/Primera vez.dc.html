@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Autogestionado — primera vez</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Recién aceptó la invitación y todavía no conectó redes: el Dashboard vacío es una <span style="color:#3D4757; font-weight:500;">bienvenida guiada</span> con un solo botón — cero decisiones. Tras el primer sync no se ve nunca más.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- DESKTOP -->
+    <div style="flex:none; width:1180px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">VS</div>
+        </div>
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:16px 28px 0;">
+          <div style="display:flex; align-items:center; gap:13px;">
+            <div style="width:44px; height:44px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div style="font-size:21px; font-weight:600; color:#141921; letter-spacing:-.3px;">Café Aurora</div>
+          </div>
+          <div style="display:flex; gap:4px; margin-top:16px;">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6"><div style="{{ t.style }}">{{ t.label }}</div></sc-for>
+          </div>
+        </div>
+        <div style="background:#F5F7FA; min-height:520px; display:flex; align-items:center; justify-content:center; padding:40px 24px;">
+          <div style="width:480px; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.07); padding:44px 44px 38px; text-align:center;">
+            <div style="width:64px; height:64px; border-radius:18px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.4" stroke="#3D6FB4" stroke-width="1.6"/><circle cx="17" cy="6" r="2.4" stroke="#3D6FB4" stroke-width="1.6"/><circle cx="17" cy="18" r="2.4" stroke="#3D6FB4" stroke-width="1.6"/><path d="M8.1 10.9 14.8 7.2M8.1 13.1l6.7 3.7" stroke="#3D6FB4" stroke-width="1.6"/></svg>
+            </div>
+            <div style="font-size:21px; font-weight:600; color:#141921; letter-spacing:-.3px; margin-top:18px;">¡Hola Valen! Conectá tu Instagram para empezar</div>
+            <div style="font-size:13.5px; color:#647084; line-height:1.65; margin-top:10px;">Te llevamos al inicio de sesión oficial de la red — nunca guardamos tu contraseña. Desde mañana vas a ver tus métricas acá, todos los días.</div>
+            <div onClick="{{ goConnect }}" style="height:46px; display:inline-flex; align-items:center; gap:9px; padding:0 26px; background:{{ accent }}; color:#fff; border-radius:11px; font-size:14.5px; font-weight:600; cursor:pointer; margin-top:22px; box-shadow:0 4px 14px rgba(30,102,188,.22);">
+              <svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Conectar Instagram
+            </div>
+            <div style="font-size:12.5px; color:#8A95A6; margin-top:14px;">también podés conectar <span onClick="{{ goConnect }}" style="color:{{ accent }}; font-weight:500; cursor:pointer;">Facebook</span> o <span onClick="{{ goConnect }}" style="color:{{ accent }}; font-weight:500; cursor:pointer;">TikTok</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <span style="font-size:14px; font-weight:600; color:#141921;">Fil-Grama</span>
+          <div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">VS</div>
+        </div>
+        <div style="background:#F5F7FA; min-height:520px; display:flex; align-items:center; padding:24px 20px;">
+          <div style="width:100%; background:#fff; border:1px solid #E9EDF2; border-radius:16px; padding:34px 26px 30px; text-align:center;">
+            <div style="width:56px; height:56px; border-radius:16px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.4" stroke="#3D6FB4" stroke-width="1.6"/><circle cx="17" cy="6" r="2.4" stroke="#3D6FB4" stroke-width="1.6"/><circle cx="17" cy="18" r="2.4" stroke="#3D6FB4" stroke-width="1.6"/><path d="M8.1 10.9 14.8 7.2M8.1 13.1l6.7 3.7" stroke="#3D6FB4" stroke-width="1.6"/></svg>
+            </div>
+            <div style="font-size:18px; font-weight:600; color:#141921; margin-top:14px; letter-spacing:-.2px;">¡Hola Valen! Conectá tu Instagram</div>
+            <div style="font-size:12.5px; color:#647084; line-height:1.6; margin-top:8px;">Inicio de sesión oficial de la red — nunca guardamos tu contraseña. Desde mañana ves tus métricas acá.</div>
+            <div onClick="{{ goConnect }}" style="height:44px; display:flex; align-items:center; justify-content:center; gap:8px; background:{{ accent }}; color:#fff; border-radius:11px; font-size:14px; font-weight:600; cursor:pointer; margin-top:18px;">Conectar Instagram</div>
+            <div style="font-size:12px; color:#8A95A6; margin-top:12px;">también <span style="color:{{ accent }}; font-weight:500;">Facebook</span> o <span style="color:{{ accent }}; font-weight:500;">TikTok</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:800},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const tabBase = { padding:'11px 15px', fontSize:'13.5px', whiteSpace:'nowrap', borderBottom:'2px solid transparent', marginBottom:'-1px', color:'#647084' };
+    return {
+      accent,
+      tabs: ['Dashboard','Publicaciones','Comparar redes','Audiencia','Reporte','Redes'].map(label => label === 'Dashboard'
+        ? { label, style: { ...tabBase, color:accent, fontWeight:600, borderBottomColor:accent } }
+        : { label, style: tabBase }),
+      goConnect: () => { try { window.location.href = encodeURI('../3 Workspace de cliente/Gestionar redes.dc.html'); } catch(e) {} },
+    };
+  }
+}
+</script>
+</body>
+</html>

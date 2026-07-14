@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgShimmer { 0% { background-position:-360px 0; } 100% { background-position:360px 0; } }
+    .filg-sk { background:#EAEEF3; background-image:linear-gradient(90deg,#EAEEF3 0,#F3F6FA 180px,#EAEEF3 360px); background-size:720px 100%; animation:filgShimmer 1.25s linear infinite; border-radius:6px; }
+    .filg-row:hover { background:#F7F9FC; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:920px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Administración — Usuarios</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Equipo de la agencia con acceso a Fil-Grama. Buscá, filtrá por rol y estado, abrí un usuario para editarlo, o creá uno nuevo. Cambiá el estado demo para ver lista, vacío y cargando.</div>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="3"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- DESKTOP -->
+    <div style="flex:none; width:1040px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; color:#647084;">Admin</span><div style="width:32px; height:32px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff;">LF</div></div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:20px 28px 30px; min-height:520px;">
+          <div onClick="{{ goAdmin }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content; margin-bottom:14px;"><span style="font-size:15px;">‹</span><span>Administración</span></div>
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+            <div><h1 style="font-size:24px; font-weight:600; color:#141921; letter-spacing:-.3px; margin:0;">Usuarios</h1><div style="font-size:13px; color:#647084; margin-top:5px;">Equipo de la agencia con acceso a Fil-Grama.</div></div>
+            <div onClick="{{ openCreate }}" style="height:38px; display:flex; align-items:center; gap:8px; padding:0 16px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13.5px; font-weight:500; cursor:pointer;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>Crear usuario</div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:20px;">
+            <div style="flex:1; min-width:220px; position:relative;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="position:absolute; left:13px; top:50%; transform:translateY(-50%);"><circle cx="11" cy="11" r="7" stroke="#9AA4B2" stroke-width="1.7"/><path d="m20 20-3.2-3.2" stroke="#9AA4B2" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <input value="{{ q }}" onInput="{{ onSearch }}" placeholder="Buscar por nombre o email" style="width:100%; height:40px; border:1px solid #D4DAE3; border-radius:9px; padding:0 14px 0 36px; font-size:13.5px; font-family:inherit; color:#141921; outline:none; background:#fff;" />
+            </div>
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;"><sc-for list="{{ rolList }}" as="r" hint-placeholder-count="3"><div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div></sc-for></div>
+            <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;"><sc-for list="{{ estadoList }}" as="e" hint-placeholder-count="3"><div style="{{ e.style }}" onClick="{{ e.onClick }}">{{ e.label }}</div></sc-for></div>
+          </div>
+
+          <!-- CARGANDO -->
+          <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:18px; padding:8px 0;">
+              <sc-for list="{{ skel }}" as="s" hint-placeholder-count="5"><div style="display:flex; align-items:center; gap:14px; padding:13px 20px; border-bottom:1px solid #F4F6F9;"><div style="flex:1;"><div class="filg-sk" style="width:160px; height:13px;"></div><div class="filg-sk" style="width:200px; height:11px; margin-top:7px;"></div></div><div class="filg-sk" style="width:90px; height:12px;"></div><div class="filg-sk" style="width:60px; height:20px; border-radius:7px;"></div><div class="filg-sk" style="width:50px; height:11px;"></div></div></sc-for>
+            </div>
+          </sc-if>
+
+          <!-- VACIO -->
+          <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:18px; padding:56px 30px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:11px;">
+              <div style="width:54px; height:54px; border-radius:14px; background:#EEF3FB; border:1px solid #DCE6F6; display:flex; align-items:center; justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="#3D6FB4" stroke-width="1.6"/><path d="M5 19.5c0-3.7 3.1-5.6 7-5.6s7 1.9 7 5.6" stroke="#3D6FB4" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+              <div style="font-size:17px; font-weight:600; color:#141921;">{{ emptyTitle }}</div>
+              <div style="font-size:13.5px; color:#647084; line-height:1.6; max-width:360px;">{{ emptyDesc }}</div>
+              <sc-if value="{{ emptyShowCreate }}" hint-placeholder-val="{{ true }}"><div onClick="{{ openCreate }}" style="margin-top:4px; height:40px; display:flex; align-items:center; gap:8px; padding:0 18px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13.5px; font-weight:600; cursor:pointer;">Crear usuario</div></sc-if>
+            </div>
+          </sc-if>
+
+          <!-- LISTA -->
+          <sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:18px; overflow:hidden;">
+              <div style="display:grid; grid-template-columns:2fr 1fr 120px 90px; gap:12px; padding:13px 20px 11px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; border-bottom:1px solid #F0F3F7;"><div>Usuario</div><div>Rol</div><div>Estado</div><div style="text-align:right;">Alta</div></div>
+              <sc-for list="{{ rows }}" as="u" hint-placeholder-count="5">
+                <div class="filg-row" onClick="{{ u.onClick }}" style="display:grid; grid-template-columns:2fr 1fr 120px 90px; gap:12px; align-items:center; padding:12px 20px; border-bottom:1px solid #F4F6F9; cursor:pointer; transition:background .12s;">
+                  <div style="min-width:0;"><div style="font-size:13.5px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ u.name }}</div><div style="font-size:12px; color:#8A95A6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ u.email }}</div></div>
+                  <div style="font-size:13px; color:#647084;">{{ u.rol }}</div>
+                  <div><span style="display:inline-flex; align-items:center; height:22px; padding:0 9px; border-radius:7px; font-size:12px; font-weight:500; background:{{ u.badgeBg }}; color:{{ u.badgeFg }};">{{ u.estado }}</span></div>
+                  <div style="text-align:right; font-size:12.5px; color:#8A95A6;">{{ u.alta }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:16px; flex-wrap:wrap;">
+              <span style="font-size:12.5px; color:#8A95A6;">{{ pageLabel }}</span>
+              <div style="display:flex; gap:8px;"><div onClick="{{ prevPage }}" style="{{ prevStyle }}">Anterior</div><div onClick="{{ nextPage }}" style="{{ nextStyle }}">Siguiente</div></div>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- CREATE MODAL -->
+        <sc-if value="{{ createOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeCreate }}" style="position:absolute; inset:0; background:rgba(20,25,33,.42); display:flex; align-items:center; justify-content:center; z-index:50; padding:20px;">
+            <div onClick="{{ stop }}" style="width:440px; max-width:100%; background:#fff; border-radius:16px; box-shadow:0 18px 50px rgba(20,25,33,.28); overflow:hidden;">
+              <div style="padding:20px 22px 0; display:flex; align-items:flex-start; justify-content:space-between; gap:12px;"><div><div style="font-size:17px; font-weight:600; color:#141921;">Crear usuario</div><div style="font-size:13px; color:#647084; margin-top:3px; line-height:1.5;">Le damos acceso a un integrante del equipo.</div></div><div onClick="{{ closeCreate }}" style="font-size:20px; color:#A7B0BD; cursor:pointer; line-height:1;">×</div></div>
+              <div style="padding:18px 22px 4px; display:flex; flex-direction:column; gap:14px;">
+                <div><div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Nombre completo</div><input placeholder="Ej. María López" style="width:100%; height:40px; border:1px solid #D4DAE3; border-radius:10px; padding:0 13px; font-size:14px; font-family:inherit; outline:none;" /></div>
+                <div><div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Email</div><input placeholder="nombre@agencia.com" style="width:100%; height:40px; border:1px solid #D4DAE3; border-radius:10px; padding:0 13px; font-size:14px; font-family:inherit; outline:none;" /></div>
+                <div><div style="font-size:12.5px; font-weight:500; color:#3D4757; margin-bottom:7px;">Rol</div><div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; width:max-content;"><sc-for list="{{ cRolList }}" as="r" hint-placeholder-count="2"><div style="{{ r.style }}" onClick="{{ r.onClick }}">{{ r.label }}</div></sc-for></div></div>
+                <div style="display:flex; align-items:flex-start; gap:8px; background:#F5F8FC; border-radius:10px; padding:11px 13px;"><span style="display:inline-flex; width:15px; height:15px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; flex:none; margin-top:1px;">i</span><span style="font-size:12px; color:#647084; line-height:1.5;">Le enviaremos un email para que defina su contraseña. No guardamos contraseñas en texto plano.</span></div>
+              </div>
+              <div style="padding:16px 22px 20px; display:flex; justify-content:flex-end; gap:10px;"><div onClick="{{ closeCreate }}" style="height:38px; display:flex; align-items:center; padding:0 16px; font-size:13.5px; color:#647084; cursor:pointer;">Cancelar</div><div onClick="{{ closeCreate }}" style="height:38px; display:flex; align-items:center; padding:0 18px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13.5px; font-weight:600; cursor:pointer;">Crear usuario</div></div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#8A95A6;">‹ Administración</span><div style="width:28px; height:28px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff;">LF</div></div>
+        <div style="background:#F5F7FA; padding:16px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;"><span style="font-size:18px; font-weight:600; color:#141921;">Usuarios</span><div onClick="{{ openCreate }}" style="height:32px; display:flex; align-items:center; gap:6px; padding:0 12px; background:{{ accent }}; color:#fff; border-radius:8px; font-size:12.5px; font-weight:500;">Crear</div></div>
+          <input value="{{ q }}" onInput="{{ onSearch }}" placeholder="Buscar" style="width:100%; height:38px; border:1px solid #D4DAE3; border-radius:9px; padding:0 13px; font-size:13px; font-family:inherit; outline:none; margin-top:12px; background:#fff;" />
+          <div style="display:flex; flex-direction:column; gap:9px; margin-top:12px;">
+            <sc-for list="{{ rowsMobile }}" as="u" hint-placeholder-count="4"><div onClick="{{ u.onClick }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:11px; padding:12px;"><div style="display:flex; align-items:center; justify-content:space-between; gap:8px;"><div style="min-width:0;"><div style="font-size:13.5px; font-weight:600; color:#141921;">{{ u.name }}</div><div style="font-size:11.5px; color:#8A95A6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ u.email }}</div></div><span style="display:inline-flex; align-items:center; height:21px; padding:0 8px; border-radius:7px; font-size:11px; font-weight:500; background:{{ u.badgeBg }}; color:{{ u.badgeFg }}; flex:none;">{{ u.estado }}</span></div><div style="font-size:11.5px; color:#647084; margin-top:7px;">{{ u.rol }} · alta {{ u.alta }}</div></div></sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { demo:'lista', rol:'ALL', estado:'ALL', q:'', page:0, createOpen:false, cRol:'EMPLEADO' };
+
+  users = [
+    { name:'Lucía Fernández', email:'lucia@agencia.com', rol:'ADMIN', activo:true, alta:'12 mar' },
+    { name:'Marco Díaz', email:'marco@agencia.com', rol:'EMPLEADO', activo:true, alta:'3 abr' },
+    { name:'Sofía Ruiz', email:'sofia@agencia.com', rol:'EMPLEADO', activo:true, alta:'21 abr' },
+    { name:'Diego Paredes', email:'diego@agencia.com', rol:'EMPLEADO', activo:false, alta:'9 ene' },
+    { name:'Valentina Gómez', email:'valentina@agencia.com', rol:'ADMIN', activo:true, alta:'28 feb' },
+    { name:'Tomás Acosta', email:'tomas@agencia.com', rol:'EMPLEADO', activo:true, alta:'15 may' },
+    { name:'Carla Benítez', email:'carla@agencia.com', rol:'EMPLEADO', activo:false, alta:'2 jun' },
+    { name:'Nahuel Vera', email:'nahuel@agencia.com', rol:'EMPLEADO', activo:true, alta:'19 jun' },
+  ];
+  PAGE = 5;
+
+  seg(active, accent, opts) {
+    opts = opts || {};
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 13px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+                  : { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+  pageBtn(enabled) {
+    const base = { height:'32px', display:'flex', alignItems:'center', padding:'0 14px', borderRadius:'8px', fontSize:'13px', fontWeight:500, border:'1px solid #D4DAE3' };
+    return enabled ? { ...base, background:'#fff', color:'#3D4757', cursor:'pointer' } : { ...base, background:'#F5F7FA', color:'#B4BDCA', cursor:'not-allowed' };
+  }
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+  setFilter(patch) { this.setState({ ...patch, page:0 }); }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+
+    const demoStates = [['lista','Con usuarios'],['vacio','Vacío'],['cargando','Cargando']]
+      .map(([k,l]) => ({ label:l, onClick:()=>this.setState({ demo:k, page:0, createOpen:false }), style:this.seg(k===st.demo, accent) }));
+
+    const rolList = [['ALL','Todos'],['ADMIN','Admins'],['EMPLEADO','Empleados']]
+      .map(([k,l]) => ({ label:l, onClick:()=>this.setFilter({ rol:k }), style:this.seg(k===st.rol, accent) }));
+    const estadoList = [['ALL','Todos'],['ACTIVE','Activos'],['INACTIVE','Inactivos']]
+      .map(([k,l]) => ({ label:l, onClick:()=>this.setFilter({ estado:k }), style:this.seg(k===st.estado, accent) }));
+
+    const q = st.q.trim().toLowerCase();
+    let filtered = this.users
+      .filter(u => st.rol === 'ALL' ? true : u.rol === st.rol)
+      .filter(u => st.estado === 'ALL' ? true : (st.estado === 'ACTIVE' ? u.activo : !u.activo))
+      .filter(u => q ? (u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)) : true);
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / this.PAGE));
+    const page = Math.min(st.page, totalPages - 1);
+    const slice = filtered.slice(page * this.PAGE, page * this.PAGE + this.PAGE);
+
+    const mkRow = (u) => ({
+      name:u.name, email:u.email, rol: u.rol === 'ADMIN' ? 'Administrador' : 'Empleado',
+      estado: u.activo ? 'Activo' : 'Inactivo',
+      badgeBg: u.activo ? '#E7F4EC' : '#E9EDF2', badgeFg: u.activo ? '#1F7A50' : '#4A5568',
+      alta: u.alta, onClick: () => this.go('Detalle de usuario.dc.html'),
+    });
+
+    const isLoading = st.demo === 'cargando';
+    const isAllEmpty = st.demo === 'vacio';
+    const noMatch = !isLoading && !isAllEmpty && filtered.length === 0;
+    const isEmpty = isAllEmpty || noMatch;
+    const isList = !isLoading && !isEmpty;
+
+    const cRolList = [['EMPLEADO','Empleado'],['ADMIN','Administrador']]
+      .map(([k,l]) => ({ label:l, onClick:()=>this.setState({ cRol:k }), style:this.seg(k===st.cRol, accent) }));
+
+    return {
+      accent, demoStates, rolList, estadoList,
+      q: st.q, onSearch: (e)=>this.setFilter({ q:e.target.value }),
+      isLoading, isEmpty, isList,
+      emptyTitle: isAllEmpty ? 'Todavía no hay usuarios' : 'No hay usuarios con ese filtro',
+      emptyDesc: isAllEmpty ? 'Creá el primer usuario para darle acceso al equipo.' : 'Probá con otro nombre, rol o estado.',
+      emptyShowCreate: isAllEmpty,
+      skel:[0,1,2,3,4],
+      rows: slice.map(mkRow), rowsMobile: slice.slice(0,4).map(mkRow),
+      pageLabel: `Página ${page + 1} de ${totalPages} · ${filtered.length} en total`,
+      prevPage: () => page > 0 && this.setState({ page: page - 1 }),
+      nextPage: () => page < totalPages - 1 && this.setState({ page: page + 1 }),
+      prevStyle: this.pageBtn(page > 0), nextStyle: this.pageBtn(page < totalPages - 1),
+      openCreate: () => this.setState({ createOpen:true }), closeCreate: () => this.setState({ createOpen:false }),
+      stop: (e) => { try { e.stopPropagation(); } catch(_){} },
+      createOpen: st.createOpen, cRolList,
+      goAdmin: () => this.go('Administración.dc.html'),
+    };
+  }
+}
+</script>
+</body>
+</html>

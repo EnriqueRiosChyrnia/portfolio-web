@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    .filg-card { transition:box-shadow .14s, transform .14s; }
+    .filg-card:hover { box-shadow:0 8px 24px rgba(20,25,33,.10); transform:translateY(-2px); }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:880px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Administración — inicio</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Solo para admins (se llega desde el menú del avatar). Ahora es un <span style="color:#3D4757; font-weight:500;">hub</span>: la gestión se dividió en dos secciones — Usuarios y Sincronización — en vez de una sola pantalla con todo.</div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+    <div style="flex:none; width:1000px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:13px; color:#647084;">Admin</span><div style="width:32px; height:32px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#fff;">LF</div></div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:28px 30px 40px; min-height:420px;">
+          <h1 style="font-size:24px; font-weight:600; color:#141921; letter-spacing:-.3px; margin:0;">Administración</h1>
+          <div style="font-size:13px; color:#647084; margin-top:5px;">Gestión interna de la agencia. Fuera del uso diario.</div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:24px;">
+            <!-- Usuarios -->
+            <div class="filg-card" onClick="{{ goUsuarios }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px; cursor:pointer; min-height:150px; display:flex; flex-direction:column; gap:12px;">
+              <div style="width:46px; height:46px; border-radius:12px; background:#EAF2FB; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="{{ accent }}" stroke-width="1.7"/><path d="M5 19.5c0-3.7 3.1-5.6 7-5.6s7 1.9 7 5.6" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+              <div style="font-size:17px; font-weight:600; color:#141921;">Organización</div>
+              <div style="font-size:13px; color:#647084; line-height:1.55;">Datos de la agencia, zona horaria, usuarios e invitaciones, y estado de la suscripción.</div>
+              <div style="margin-top:auto; font-size:13px; color:{{ accent }}; font-weight:500;">Abrir →</div>
+            </div>
+            <!-- Sincronización -->
+            <div class="filg-card" onClick="{{ goSync }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px; cursor:pointer; min-height:150px; display:flex; flex-direction:column; gap:12px;">
+              <div style="width:46px; height:46px; border-radius:12px; background:#EAF2FB; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 11a8 8 0 0 0-13.4-4.3L4 9" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 5v4h4" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 13a8 8 0 0 0 13.4 4.3L20 15" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 19v-4h-4" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div style="font-size:17px; font-weight:600; color:#141921;">Sincronización</div>
+              <div style="margin-top:auto; font-size:13px; color:{{ accent }}; font-weight:500;">Abrir →</div>
+            </div>
+            <!-- Salud de cuentas -->
+            <div class="filg-card" onClick="{{ goSalud }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:22px; cursor:pointer; min-height:150px; display:flex; flex-direction:column; gap:12px;">
+              <div style="width:46px; height:46px; border-radius:12px; background:#EAF2FB; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l2.5-6 4 12 2.5-6h5" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div style="font-size:17px; font-weight:600; color:#141921;">Salud de cuentas</div>
+              <div style="font-size:13px; color:#647084; line-height:1.55;">Todas las cuentas de todos los clientes: estado, último sync y vencimiento de token, con acción rápida.</div>
+              <div style="margin-top:auto; font-size:13px; color:{{ accent }}; font-weight:500;">Abrir →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:none; width:380px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="width:380px; border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><div style="display:flex; align-items:center; gap:9px;"><div style="width:24px; height:24px; border-radius:7px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="13" height="13" viewBox="0 0 15 15" fill="none"><polyline points="1,11 5,7 8,9 14,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span style="font-size:14px; font-weight:600; color:#141921;">Fil-Grama</span></div><div style="width:28px; height:28px; border-radius:50%; background:{{ accent }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff;">LF</div></div>
+        <div style="background:#F5F7FA; padding:18px 16px 26px;">
+          <h1 style="font-size:20px; font-weight:600; color:#141921; margin:0;">Administración</h1>
+          <div style="font-size:12.5px; color:#647084; margin-top:4px;">Gestión interna de la agencia.</div>
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:18px;">
+            <div onClick="{{ goUsuarios }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px; display:flex; align-items:center; gap:13px;"><div style="width:42px; height:42px; border-radius:11px; background:#EAF2FB; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="{{ accent }}" stroke-width="1.7"/><path d="M5 19.5c0-3.7 3.1-5.6 7-5.6s7 1.9 7 5.6" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#141921;">Usuarios</div><div style="font-size:12px; color:#647084; line-height:1.45; margin-top:3px;">Roles, estado y prioritarios del equipo.</div></div><span style="font-size:18px; color:#C4CCD6;">›</span></div>
+            <div onClick="{{ goSync }}" style="background:#fff; border:1px solid #E9EDF2; border-radius:12px; padding:16px; display:flex; align-items:center; gap:13px;"><div style="width:42px; height:42px; border-radius:11px; background:#EAF2FB; display:flex; align-items:center; justify-content:center; flex:none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M20 11a8 8 0 0 0-13.4-4.3L4 9" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 5v4h4" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 13a8 8 0 0 0 13.4 4.3L20 15" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 19v-4h-4" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#141921;">Sincronización</div><div style="font-size:12px; color:#647084; line-height:1.45; margin-top:3px;">Historial del job y disparo manual.</div></div><span style="font-size:18px; color:#C4CCD6;">›</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:620},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    return {
+      accent,
+      goUsuarios: () => this.go('Organización.dc.html'),
+      goSync: () => this.go('Sincronización.dc.html'),
+      goSalud: () => this.go('Salud de cuentas.dc.html'),
+    };
+  }
+}
+</script>
+</body>
+</html>

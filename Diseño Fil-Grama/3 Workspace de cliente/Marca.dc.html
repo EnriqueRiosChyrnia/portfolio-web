@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+    @keyframes filgFade { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .filg-hov:hover { background:#F7F9FC; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:940px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Marca del cliente — tema de reportes</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Sub-sección <span style="color:#3D4757; font-weight:500;">Marca</span> dentro de la pestaña Cuentas (junto a Redes). Personaliza los reportes del cliente (PDF y vista en pantalla): logo, <span style="color:#3D4757; font-weight:500;">colores de marca</span> (1 o más; el primero es el primario; se guardan como metadata legible por un MCP) y <span style="color:#3D4757; font-weight:500;">tipografías por rol</span> (títulos / subtítulos / cuerpo — fuente segura o archivo propio). La vista previa se actualiza en vivo; guardado explícito. Probá los estados demo.</div>
+  </div>
+
+  <!-- demo state switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="3"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:1040px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio · pestaña Cuentas → Marca · interactivo</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); position:relative;">
+
+        <!-- app bar -->
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <!-- client header + tabs -->
+        <div style="background:#fff; border-bottom:1px solid #E9EDF2; padding:16px 26px 0;">
+          <div onClick="{{ goWorkspace }}" style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Café Aurora</span></div>
+          <div style="display:flex; align-items:center; gap:13px; margin-top:12px;">
+            <div style="width:44px; height:44px; border-radius:11px; background:{{ accent }}; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.4" fill="#fff"/><path d="M9 8.5l1.2-2h3.6L15 8.5" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div style="font-size:21px; font-weight:600; color:#141921; letter-spacing:-.3px;">Café Aurora</div>
+          </div>
+          <div style="display:flex; gap:4px; margin-top:16px;">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5"><div style="{{ t.style }}">{{ t.label }}</div></sc-for>
+          </div>
+        </div>
+
+        <!-- body -->
+        <div style="background:#F5F7FA; padding:24px 26px 34px; min-height:560px;">
+
+          <!-- sub-tabs -->
+          <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; width:max-content; margin-bottom:18px;">
+            <div onClick="{{ goRedes }}" style="display:flex; align-items:center; justify-content:center; padding:0 15px; height:30px; font-size:13px; border-radius:7px; color:#647084; cursor:pointer; white-space:nowrap;">Redes</div>
+            <div style="display:flex; align-items:center; justify-content:center; padding:0 15px; height:30px; font-size:13px; border-radius:7px; background:#fff; color:#141921; font-weight:500; box-shadow:0 1px 2px rgba(20,25,33,.08); white-space:nowrap;">Marca</div>
+          </div>
+
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:16px;">
+            <div>
+              <div style="font-size:17px; font-weight:600; color:#141921;">Marca de Café Aurora</div>
+              <div style="font-size:13px; color:#647084; margin-top:3px;">Se aplica a los reportes de este cliente — PDF y vista en pantalla. Lo demás sigue con el tema Fil-Grama.</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1.15fr 1fr; gap:16px; align-items:start;">
+
+            <!-- ===== FORM ===== -->
+            <div style="display:flex; flex-direction:column; gap:14px;">
+
+              <!-- logo -->
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px;">
+                <div style="font-size:14px; font-weight:600; color:#141921;">Logo</div>
+                <div style="display:flex; align-items:center; gap:16px; margin-top:12px;">
+                  <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+                    <div style="width:72px; height:72px; border:1px solid #E9EDF2; border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; flex:none;">
+                      <div style="width:52px; height:52px; border-radius:50%; background:{{ primaryColor }}; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:600; color:#fff;">CA</div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:72px; height:72px; border:1.5px dashed #C7D0DB; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#9AA4B2; text-align:center; flex:none;">sin logo</div>
+                  </sc-if>
+                  <div>
+                    <div style="display:flex; gap:8px;">
+                      <div onClick="{{ uploadLogo }}" class="filg-hov" style="height:34px; display:flex; align-items:center; gap:7px; padding:0 14px; border:1px solid #D4DAE3; border-radius:8px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer; background:#fff;">
+                        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 10V2M4 5l3-3 3 3M2 12h10" stroke="#3D4757" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        {{ logoBtnLabel }}
+                      </div>
+                      <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+                        <div onClick="{{ removeLogo }}" class="filg-hov" style="height:34px; display:flex; align-items:center; padding:0 12px; border:1px solid #E0E5EC; border-radius:8px; font-size:13px; color:#647084; cursor:pointer; background:#fff;">Quitar</div>
+                      </sc-if>
+                    </div>
+                    <div style="font-size:12px; color:#8A95A6; margin-top:8px;">PNG o SVG · ideal con fondo transparente · aparece en la portada y el pie del PDF</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- colores -->
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px;">
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px;">
+                  <div style="font-size:14px; font-weight:600; color:#141921;">Colores de marca</div>
+                  <div style="font-size:12px; color:#8A95A6;">blanco y negro ya vienen; el 1º es el primario</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-top:14px; flex-wrap:wrap;">
+                  <sc-for list="{{ colorChips }}" as="c" hint-placeholder-count="2">
+                    <div onClick="{{ c.onSelect }}" style="{{ c.wrapStyle }}">
+                      <div style="{{ c.swatchStyle }}"></div>
+                      <sc-if value="{{ c.isPrimary }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:-7px; right:-7px; font-size:9px; font-weight:600; background:#141921; color:#fff; border-radius:6px; padding:1px 5px;">1º</span></sc-if>
+                    </div>
+                  </sc-for>
+                  <div onClick="{{ addColor }}" style="width:40px; height:40px; border:1.5px dashed #C7D0DB; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#8A95A6; font-size:17px; cursor:pointer;">+</div>
+                </div>
+
+                <!-- editor del color seleccionado -->
+                <div style="display:flex; align-items:center; gap:10px; margin-top:14px; padding-top:14px; border-top:1px solid #F0F3F7; flex-wrap:wrap;">
+                  <input type="color" value="{{ selColorHex }}" onChange="{{ onPickColor }}" style="width:38px; height:34px; border:1px solid #D4DAE3; border-radius:8px; padding:2px; background:#fff; cursor:pointer;" />
+                  <input value="{{ selColorHex }}" onChange="{{ onHexInput }}" style="width:96px; height:34px; border:1px solid #D4DAE3; border-radius:8px; padding:0 10px; font-size:13px; font-family:ui-monospace, Menlo, monospace; color:#141921; background:#fff; outline:none;" />
+                  <sc-if value="{{ canMakePrimary }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ makePrimary }}" class="filg-hov" style="height:34px; display:flex; align-items:center; padding:0 12px; border:1px solid #D4DAE3; border-radius:8px; font-size:12.5px; font-weight:500; color:#3D4757; cursor:pointer; background:#fff;">Hacer primario</div>
+                  </sc-if>
+                  <sc-if value="{{ canRemoveColor }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ removeColor }}" class="filg-hov" style="height:34px; display:flex; align-items:center; padding:0 12px; border:1px solid #E0E5EC; border-radius:8px; font-size:12.5px; color:#647084; cursor:pointer; background:#fff;">Quitar color</div>
+                  </sc-if>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:7px; margin-top:12px; background:#F5F7FA; border:1px solid #EEF1F5; border-radius:8px; padding:8px 11px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none;"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.4L12 15l-1.9-4.6L5.5 9l4.6-1.4L12 3Z" stroke="#8A95A6" stroke-width="1.5" stroke-linejoin="round"/><path d="M18.5 15.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9.9-2.1Z" stroke="#8A95A6" stroke-width="1.3" stroke-linejoin="round"/></svg>
+                  <span style="font-size:12px; color:#647084;">Se guarda como metadata del cliente: <span style="font-family:ui-monospace, Menlo, monospace; font-size:11px; color:#3D4757;">{{ metadataStr }}</span> — un asistente (MCP) puede leerla al armar reportes.</span>
+                </div>
+              </div>
+
+              <!-- tipografías -->
+              <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px;">
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px;">
+                  <div style="font-size:14px; font-weight:600; color:#141921;">Tipografías</div>
+                  <div style="font-size:12px; color:#8A95A6;">fuente segura o archivo propio (.ttf, .otf, .woff2)</div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+                  <sc-for list="{{ fontRows }}" as="f" hint-placeholder-count="3">
+                    <div>
+                      <div style="display:grid; grid-template-columns:88px 1fr; gap:12px; align-items:center;">
+                        <span style="font-size:13px; color:#647084;">{{ f.role }}</span>
+                        <span style="position:relative; display:block;">
+                          <div onClick="{{ f.onToggle }}" style="{{ f.fieldStyle }}">
+                            <span style="{{ f.valueStyle }}">{{ f.valueLabel }}</span>
+                            <span style="font-size:10px; color:#8A95A6;">▾</span>
+                          </div>
+                          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+                            <div style="position:absolute; top:42px; left:0; width:250px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:60;">
+                              <div style="font-size:10.5px; font-weight:600; letter-spacing:.6px; text-transform:uppercase; color:#8A95A6; padding:7px 11px 3px;">Fuentes seguras</div>
+                              <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="6">
+                                <div class="filg-hov" onClick="{{ o.onPick }}" style="display:flex; align-items:center; justify-content:space-between; padding:7px 11px; border-radius:8px; cursor:pointer;">
+                                  <span style="{{ o.style }}">{{ o.label }}</span>
+                                  <sc-if value="{{ o.selected }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px; color:{{ accent }};">✓</span></sc-if>
+                                </div>
+                              </sc-for>
+                              <div class="filg-hov" onClick="{{ f.onUpload }}" style="display:flex; align-items:center; gap:8px; padding:9px 11px; border-radius:8px; cursor:pointer; border-top:1px solid #F0F3F7; margin-top:4px;">
+                                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 10V2M4 5l3-3 3 3M2 12h10" stroke="#3D4757" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <span style="font-size:13px; font-weight:500; color:#3D4757;">Subir fuente…</span>
+                              </div>
+                            </div>
+                          </sc-if>
+                        </span>
+                      </div>
+                      <sc-if value="{{ f.error }}" hint-placeholder-val="{{ false }}">
+                        <div style="display:flex; align-items:flex-start; gap:8px; margin:8px 0 0 100px; background:#FBEFEC; border:1px solid #F3DAD2; border-radius:9px; padding:9px 12px;">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex:none; margin-top:1px;"><path d="M12 8v5" stroke="#C2603F" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.4" r="1.1" fill="#C2603F"/><path d="M10.3 4.2 2.9 17.1A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.9L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="#C2603F" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                          <span style="font-size:12.5px; color:#8A4A30; line-height:1.5;">No pudimos leer <b>{{ f.errorFile }}</b> — no parece una fuente válida. Mientras tanto, {{ f.roleLower }} usa <b>{{ f.fallback }}</b>. <span onClick="{{ f.onUpload }}" style="text-decoration:underline; cursor:pointer; font-weight:500;">Probar con otro archivo</span></span>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== PREVIEW ===== -->
+            <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:18px 20px; position:sticky; top:16px;">
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-size:14px; font-weight:600; color:#141921;">Vista previa</span>
+                <span style="font-size:12px; color:#8A95A6;">portada del reporte · se actualiza en vivo</span>
+              </div>
+              <div style="border:1px solid #E5E9EF; border-radius:8px; margin-top:12px; padding:28px 26px 24px; background:#fff; box-shadow:0 2px 10px rgba(20,25,33,.06);">
+                <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:46px; height:46px; border-radius:50%; background:{{ primaryColor }}; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:600; color:#fff;">CA</div>
+                </sc-if>
+                <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ false }}">
+                  <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:24px; display:block;" />
+                </sc-if>
+                <div style="height:7px; width:64%; background:{{ primaryColor }}; border-radius:4px; margin-top:20px;"></div>
+                <div style="{{ pvTitleStyle }}">Reporte mensual</div>
+                <div style="{{ pvSubStyle }}">Café Aurora · Junio 2026</div>
+                <div style="{{ pvBodyStyle }}">Resumen del desempeño en redes: alcance, interacciones y evolución de seguidores del período, comparados contra el mes anterior.</div>
+                <div style="display:flex; gap:6px; margin-top:18px;">
+                  <sc-for list="{{ pvBars }}" as="b" hint-placeholder-count="3"><div style="{{ b.style }}"></div></sc-for>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:22px; border-top:1px solid #F0F3F7; padding-top:10px;">
+                  <span style="{{ pvFootStyle }}">fil-grama.com</span>
+                  <span style="{{ pvFootStyle }}">pág. 1</span>
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns:auto 1fr; gap:4px 10px; font-size:11.5px; color:#8A95A6; margin-top:12px;">
+                <span>Títulos</span><span style="color:#647084;">{{ titName }}</span>
+                <span>Subtítulos</span><span style="color:#647084;">{{ subName }}</span>
+                <span>Cuerpo</span><span style="color:#647084;">{{ bodyName }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- barra guardar -->
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:18px; background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:13px 20px;">
+            <div onClick="{{ openReset }}" style="display:flex; align-items:center; gap:7px; font-size:13px; color:#647084; cursor:pointer;">
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7a5 5 0 1 1 1.5 3.5M2 13v-3h3" stroke="#647084" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Restablecer al tema Fil-Grama
+            </div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <sc-if value="{{ dirty }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px; color:#8A95A6;">cambios sin guardar</span></sc-if>
+              <sc-if value="{{ savedToast }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px; color:#1F7A50;">Guardado ✓</span></sc-if>
+              <div onClick="{{ save }}" style="{{ saveBtnStyle }}">Guardar cambios</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- modal restablecer -->
+        <sc-if value="{{ resetOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; background:rgba(20,25,33,.34); display:flex; align-items:center; justify-content:center; z-index:80;">
+            <div style="width:420px; max-width:92%; background:#fff; border-radius:16px; box-shadow:0 18px 50px rgba(20,25,33,.28); overflow:hidden; animation:filgFade .18s ease;">
+              <div style="padding:20px 22px 0;"><div style="font-size:17px; font-weight:600; color:#141921;">¿Restablecer al tema Fil-Grama?</div></div>
+              <div style="padding:12px 22px 4px; font-size:13.5px; color:#647084; line-height:1.6;">Se quitan el logo, los colores y las tipografías de <span style="color:#141921; font-weight:600;">Café Aurora</span>. Los reportes ya generados no cambian; los próximos salen con el tema Fil-Grama.</div>
+              <div style="padding:18px 22px 20px; display:flex; justify-content:flex-end; gap:10px;">
+                <div onClick="{{ closeReset }}" style="height:38px; display:flex; align-items:center; padding:0 15px; border:1px solid #D4DAE3; border-radius:9px; font-size:13px; font-weight:500; color:#3D4757; cursor:pointer;">Cancelar</div>
+                <div onClick="{{ confirmReset }}" style="height:38px; display:flex; align-items:center; padding:0 17px; background:{{ accent }}; color:#fff; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer;">Restablecer</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;"><span style="font-size:13px; color:#8A95A6;">‹ Café Aurora</span><div style="width:30px; height:30px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div></div>
+
+        <div style="background:#F5F7FA; padding:16px 16px 22px;">
+          <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+            <div style="flex:1; display:flex; align-items:center; justify-content:center; height:30px; font-size:12.5px; border-radius:7px; color:#647084; cursor:pointer;">Redes</div>
+            <div style="flex:1; display:flex; align-items:center; justify-content:center; height:30px; font-size:12.5px; border-radius:7px; background:#fff; color:#141921; font-weight:500; box-shadow:0 1px 2px rgba(20,25,33,.08);">Marca</div>
+          </div>
+
+          <!-- preview colapsable -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; margin-top:12px; overflow:hidden;">
+            <div onClick="{{ togglePv }}" style="display:flex; align-items:center; justify-content:space-between; padding:13px 15px; cursor:pointer;">
+              <span style="font-size:13px; font-weight:600; color:#141921;">Vista previa</span>
+              <span style="font-size:11px; color:#8A95A6;">{{ pvToggleLabel }}</span>
+            </div>
+            <sc-if value="{{ pvOpen }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:0 15px 15px;">
+                <div style="border:1px solid #E5E9EF; border-radius:8px; padding:18px 16px; background:#fff;">
+                  <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}"><div style="width:34px; height:34px; border-radius:50%; background:{{ primaryColor }}; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:#fff;">CA</div></sc-if>
+                  <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ false }}"><img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:18px; display:block;" /></sc-if>
+                  <div style="height:5px; width:60%; background:{{ primaryColor }}; border-radius:3px; margin-top:13px;"></div>
+                  <div style="{{ pvTitleStyleSm }}">Reporte mensual</div>
+                  <div style="{{ pvSubStyleSm }}">Café Aurora · Junio 2026</div>
+                  <div style="display:flex; gap:4px; margin-top:12px;">
+                    <sc-for list="{{ pvBars }}" as="b" hint-placeholder-count="3"><div style="{{ b.styleSm }}"></div></sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- logo -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:14px 15px; margin-top:10px;">
+            <div style="font-size:13px; font-weight:600; color:#141921;">Logo</div>
+            <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
+              <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+                <div style="width:54px; height:54px; border:1px solid #E9EDF2; border-radius:10px; display:flex; align-items:center; justify-content:center; flex:none;"><div style="width:40px; height:40px; border-radius:50%; background:{{ primaryColor }}; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; color:#fff;">CA</div></div>
+              </sc-if>
+              <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ false }}">
+                <div style="width:54px; height:54px; border:1.5px dashed #C7D0DB; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:10px; color:#9AA4B2; flex:none;">sin logo</div>
+              </sc-if>
+              <div onClick="{{ uploadLogo }}" style="height:34px; display:flex; align-items:center; gap:6px; padding:0 13px; border:1px solid #D4DAE3; border-radius:8px; font-size:12.5px; font-weight:500; color:#3D4757; cursor:pointer; background:#fff;">⤒ {{ logoBtnLabel }}</div>
+            </div>
+          </div>
+
+          <!-- colores -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:14px 15px; margin-top:10px;">
+            <div style="font-size:13px; font-weight:600; color:#141921;">Colores de marca</div>
+            <div style="display:flex; align-items:center; gap:9px; margin-top:10px; flex-wrap:wrap;">
+              <sc-for list="{{ colorChips }}" as="c" hint-placeholder-count="2">
+                <div onClick="{{ c.onSelect }}" style="{{ c.wrapStyle }}"><div style="{{ c.swatchStyleSm }}"></div>
+                  <sc-if value="{{ c.isPrimary }}" hint-placeholder-val="{{ false }}"><span style="position:absolute; top:-6px; right:-6px; font-size:8px; font-weight:600; background:#141921; color:#fff; border-radius:5px; padding:0 4px;">1º</span></sc-if>
+                </div>
+              </sc-for>
+              <div onClick="{{ addColor }}" style="width:34px; height:34px; border:1.5px dashed #C7D0DB; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#8A95A6; font-size:15px; cursor:pointer;">+</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:11px;">
+              <input type="color" value="{{ selColorHex }}" onChange="{{ onPickColor }}" style="width:34px; height:30px; border:1px solid #D4DAE3; border-radius:7px; padding:2px; background:#fff;" />
+              <input value="{{ selColorHex }}" onChange="{{ onHexInput }}" style="width:86px; height:30px; border:1px solid #D4DAE3; border-radius:7px; padding:0 8px; font-size:12px; font-family:ui-monospace, Menlo, monospace; color:#141921; background:#fff; outline:none;" />
+            </div>
+          </div>
+
+          <!-- tipografías -->
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:13px; padding:14px 15px; margin-top:10px;">
+            <div style="font-size:13px; font-weight:600; color:#141921;">Tipografías</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+              <sc-for list="{{ fontRows }}" as="f" hint-placeholder-count="3">
+                <div style="display:grid; grid-template-columns:72px 1fr; gap:9px; align-items:center;">
+                  <span style="font-size:12px; color:#647084;">{{ f.role }}</span>
+                  <div style="{{ f.fieldStyleSm }}"><span style="{{ f.valueStyleSm }}">{{ f.valueLabel }}</span><span style="font-size:9px; color:#8A95A6;">▾</span></div>
+                </div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ anyFontError }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; gap:7px; margin-top:10px; background:#FBEFEC; border:1px solid #F3DAD2; border-radius:8px; padding:8px 10px;">
+                <span style="font-size:11.5px; color:#8A4A30; line-height:1.5;">⚠ La fuente de títulos no se pudo leer; se usa <b>Helvetica</b> mientras tanto.</span>
+              </div>
+            </sc-if>
+          </div>
+
+          <div onClick="{{ save }}" style="{{ saveBtnStyleMobile }}">Guardar cambios</div>
+          <div onClick="{{ openReset }}" style="font-size:12px; color:#647084; text-align:center; margin-top:10px; cursor:pointer; text-decoration:underline;">Restablecer al tema Fil-Grama</div>
+        </div>
+      </div>
+
+      <!-- notas -->
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Notas</div>
+        <div style="border-radius:14px; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06); background:#fff; padding:16px 18px;">
+          <div style="font-size:13px; color:#647084; line-height:1.6;">Vive en la pestaña <span style="color:#3D4757; font-weight:500;">Cuentas</span> como sub-sección junto a Redes (Gestionar redes ahora muestra el mismo switch). Los colores se guardan como <span style="color:#3D4757; font-weight:500;">metadata del cliente</span> para que un MCP pueda usarlos al generar reportes. Cualquier miembro puede editar; guardado explícito con aviso de cambios sin guardar.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  safeFonts = ['Georgia','Helvetica','Times New Roman','Verdana','Trebuchet MS','Palatino'];
+
+  presets = {
+    marca: {
+      logo: true,
+      colors: ['#E6B800','#4A7A4A'],
+      fonts: { tit:{kind:'file', name:'Aurora-Display.woff2'}, sub:{kind:'safe', name:'Helvetica'}, cuerpo:{kind:'safe', name:'Georgia'} },
+      errTit: false,
+    },
+    default: {
+      logo: false,
+      colors: ['#1E66BC'],
+      fonts: { tit:{kind:'fg'}, sub:{kind:'fg'}, cuerpo:{kind:'fg'} },
+      errTit: false,
+    },
+    invalida: {
+      logo: true,
+      colors: ['#E6B800','#4A7A4A'],
+      fonts: { tit:{kind:'error', name:'logo-final.ttf'}, sub:{kind:'safe', name:'Helvetica'}, cuerpo:{kind:'safe', name:'Georgia'} },
+      errTit: true,
+    },
+  };
+
+  state = {
+    demo: 'marca',
+    ...JSON.parse(JSON.stringify({ logo:true, colors:['#E6B800','#4A7A4A'], fonts:{ tit:{kind:'file', name:'Aurora-Display.woff2'}, sub:{kind:'safe', name:'Helvetica'}, cuerpo:{kind:'safe', name:'Georgia'} }, errTit:false })),
+    selColor: 0, openFont: null, dirty: false, savedToast: false, resetOpen: false, pvOpen: true,
+  };
+
+  applyPreset(k) {
+    const p = JSON.parse(JSON.stringify(this.presets[k]));
+    this.setState({ demo:k, logo:p.logo, colors:p.colors, fonts:p.fonts, errTit:p.errTit, selColor:0, openFont:null, dirty:false, savedToast:false, resetOpen:false });
+  }
+
+  seg(active, accent) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 15px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', transition:'all .15s', whiteSpace:'nowrap' };
+    if (active) return { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' };
+    return { ...base, background:'transparent', color:'#647084' };
+  }
+
+  famFor(f) {
+    if (!f || f.kind === 'fg') return "'Public Sans', ui-sans-serif, sans-serif";
+    if (f.kind === 'file') return "'Iowan Old Style', 'Palatino Linotype', Palatino, serif";
+    if (f.kind === 'error') return 'Helvetica, Arial, sans-serif';
+    return f.name + ', sans-serif';
+  }
+
+  nameFor(f) {
+    if (!f || f.kind === 'fg') return 'Public Sans (tema Fil-Grama)';
+    if (f.kind === 'file') return f.name;
+    if (f.kind === 'error') return 'Helvetica (fallback)';
+    return f.name + ' (segura)';
+  }
+
+  markDirty(patch) { this.setState({ ...patch, dirty: true, savedToast: false }); }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const st = this.state;
+    const primary = st.colors[0] || '#1E66BC';
+    const sel = Math.min(st.selColor, st.colors.length - 1);
+
+    const demoStates = [['marca','Marca configurada'],['default','Default Fil-Grama'],['invalida','Fuente inválida']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.applyPreset(k), style:this.seg(k===st.demo, accent) }));
+
+    const tabBase = { padding:'11px 15px', fontSize:'13.5px', whiteSpace:'nowrap', borderBottom:'2px solid transparent', marginBottom:'-1px', color:'#647084' };
+    const tabs = ['Dashboard','Publicaciones','Comparar','Reporte','Cuentas'].map(label => label === 'Cuentas'
+      ? { label, style:{ ...tabBase, color:accent, fontWeight:600, borderBottomColor:accent } }
+      : { label, style:tabBase });
+
+    // ----- colores -----
+    const colorChips = st.colors.map((hex, i) => ({
+      isPrimary: i === 0,
+      onSelect: () => this.setState({ selColor: i }),
+      wrapStyle: { position:'relative', cursor:'pointer', flex:'none' },
+      swatchStyle: { width:'40px', height:'40px', borderRadius:'10px', background:hex, border: i === sel ? '2px solid #141921' : '1px solid #D4DAE3', boxShadow: i === sel ? '0 0 0 3px #E9EDF2' : 'none' },
+      swatchStyleSm: { width:'34px', height:'34px', borderRadius:'8px', background:hex, border: i === sel ? '2px solid #141921' : '1px solid #D4DAE3' },
+    }));
+
+    const setColor = (v) => {
+      const val = (v || '').trim();
+      if (!/^#[0-9a-fA-F]{6}$/.test(val)) return;
+      this.markDirty({ colors: st.colors.map((c, i) => i === sel ? val.toUpperCase() : c) });
+    };
+
+    const metadataStr = '{"colores":[' + st.colors.map(c => '"' + c + '"').join(',') + ']}';
+
+    // ----- tipografías -----
+    const roles = [['tit','Títulos'],['sub','Subtítulos'],['cuerpo','Cuerpo']];
+    const fontRows = roles.map(([key, role]) => {
+      const f = st.fonts[key];
+      const isErr = f.kind === 'error';
+      const open = st.openFont === key;
+      const fieldBase = { height:'38px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'8px', padding:'0 13px', background:'#fff', borderRadius:'9px', cursor:'pointer' };
+      return {
+        role, roleLower: role.toLowerCase(), open,
+        valueLabel: isErr ? f.name + ' — no se pudo leer' : this.nameFor(f),
+        fieldStyle: { ...fieldBase, border: isErr ? '1px solid #E4B8A6' : '1px solid #D4DAE3', background: isErr ? '#FDF6F3' : '#fff' },
+        fieldStyleSm: { ...fieldBase, height:'34px', fontSize:'12px', border: isErr ? '1px solid #E4B8A6' : '1px solid #D4DAE3', background: isErr ? '#FDF6F3' : '#fff' },
+        valueStyle: { fontSize:'13px', fontWeight:500, color: isErr ? '#B2552F' : '#141921', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' },
+        valueStyleSm: { fontSize:'12px', fontWeight:500, color: isErr ? '#B2552F' : '#141921', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' },
+        onToggle: () => this.setState(s => ({ openFont: s.openFont === key ? null : key })),
+        options: this.safeFonts.map(name => ({
+          label: name,
+          style: { fontSize:'13px', color:'#232A36', fontFamily: name + ', sans-serif' },
+          selected: f.kind === 'safe' && f.name === name,
+          onPick: () => this.markDirty({ fonts: { ...st.fonts, [key]: { kind:'safe', name } }, openFont: null }),
+        })),
+        onUpload: () => this.markDirty({ fonts: { ...st.fonts, [key]: { kind:'file', name: key === 'tit' ? 'Aurora-Display.woff2' : 'Aurora-Text.woff2' } }, openFont: null }),
+        error: isErr,
+        errorFile: f.name,
+        fallback: 'Helvetica',
+      };
+    });
+
+    // ----- preview -----
+    const titFam = this.famFor(st.fonts.tit);
+    const subFam = this.famFor(st.fonts.sub);
+    const bodyFam = this.famFor(st.fonts.cuerpo);
+    const pvBars = st.colors.concat(['#E9EDF2']).slice(0, 4).map((c, i) => ({
+      style: { height:'30px', flex:'1', background:c, opacity: i < st.colors.length ? .28 : 1, borderRadius:'4px', border: i < st.colors.length ? 'none' : '1px solid #EEF1F5' },
+      styleSm: { height:'20px', flex:'1', background:c, opacity: i < st.colors.length ? .28 : 1, borderRadius:'3px', border: i < st.colors.length ? 'none' : '1px solid #EEF1F5' },
+    }));
+
+    const saveBase = { height:'38px', display:'flex', alignItems:'center', justifyContent:'center', padding:'0 18px', borderRadius:'9px', fontSize:'13px', fontWeight:600, cursor:'pointer', transition:'all .15s' };
+
+    return {
+      accent, demoStates, tabs,
+      goWorkspace: () => { try { window.location.href = encodeURI('Workspace.dc.html'); } catch(e) {} },
+      goRedes: () => { try { window.location.href = encodeURI('Gestionar redes.dc.html'); } catch(e) {} },
+      // logo
+      hasLogo: st.logo, noLogo: !st.logo,
+      logoBtnLabel: st.logo ? 'Reemplazar logo' : 'Subir logo',
+      uploadLogo: () => this.markDirty({ logo: true }),
+      removeLogo: () => this.markDirty({ logo: false }),
+      // colores
+      colorChips, primaryColor: primary,
+      selColorHex: st.colors[sel],
+      onPickColor: (e) => setColor(e.target.value),
+      onHexInput: (e) => setColor(e.target.value),
+      addColor: () => this.markDirty({ colors: st.colors.concat(['#3D6FB4']), selColor: st.colors.length }),
+      canRemoveColor: st.colors.length > 1,
+      removeColor: () => this.markDirty({ colors: st.colors.filter((c, i) => i !== sel), selColor: 0 }),
+      canMakePrimary: sel > 0,
+      makePrimary: () => this.markDirty({ colors: [st.colors[sel]].concat(st.colors.filter((c, i) => i !== sel)), selColor: 0 }),
+      metadataStr,
+      // tipografías
+      fontRows,
+      anyFontError: st.fonts.tit.kind === 'error',
+      titName: this.nameFor(st.fonts.tit), subName: this.nameFor(st.fonts.sub), bodyName: this.nameFor(st.fonts.cuerpo),
+      // preview
+      pvTitleStyle: { fontSize:'26px', fontWeight:600, color:'#141921', marginTop:'14px', fontFamily:titFam, letterSpacing:'-.3px' },
+      pvTitleStyleSm: { fontSize:'17px', fontWeight:600, color:'#141921', marginTop:'10px', fontFamily:titFam },
+      pvSubStyle: { fontSize:'14px', color:'#647084', marginTop:'5px', fontFamily:subFam },
+      pvSubStyleSm: { fontSize:'11.5px', color:'#647084', marginTop:'3px', fontFamily:subFam },
+      pvBodyStyle: { fontSize:'12.5px', color:'#647084', lineHeight:1.6, marginTop:'14px', fontFamily:bodyFam },
+      pvFootStyle: { fontSize:'10.5px', color:'#9AA4B2', fontFamily:bodyFam },
+      pvBars,
+      // guardar / restablecer
+      dirty: st.dirty, savedToast: st.savedToast,
+      saveBtnStyle: st.dirty ? { ...saveBase, background:accent, color:'#fff' } : { ...saveBase, background:'#EEF1F5', color:'#9AA4B2', cursor:'default' },
+      saveBtnStyleMobile: st.dirty ? { ...saveBase, height:'42px', marginTop:'12px', background:accent, color:'#fff' } : { ...saveBase, height:'42px', marginTop:'12px', background:'#EEF1F5', color:'#9AA4B2', cursor:'default' },
+      save: () => { if (!st.dirty) return; clearTimeout(this._st); this.setState({ dirty:false, savedToast:true }); this._st = setTimeout(() => this.setState({ savedToast:false }), 2500); },
+      resetOpen: st.resetOpen,
+      openReset: () => this.setState({ resetOpen: true }),
+      closeReset: () => this.setState({ resetOpen: false }),
+      confirmReset: () => { this.applyPreset('default'); this.setState({ dirty:true }); },
+      // mobile preview
+      pvOpen: st.pvOpen, togglePv: () => this.setState(s => ({ pvOpen: !s.pvOpen })),
+      pvToggleLabel: st.pvOpen ? 'ocultar ▴' : 'mostrar ▾',
+    };
+  }
+
+  componentWillUnmount() { clearTimeout(this._st); }
+}
+</script>
+</body>
+</html>

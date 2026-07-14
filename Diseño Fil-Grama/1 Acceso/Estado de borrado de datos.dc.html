@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:900px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Estado de borrado de datos · página pública</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">URL pública que exige Meta para App Review: <span style="font-family:ui-monospace,monospace; font-size:12.5px; color:#3D4757;">/data-deletion?code=…</span>. Sin login, marca Fil-Grama. Muestra el código del pedido y su estado. Cambiá el estado demo.</div>
+  </div>
+
+  <!-- demo state switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="3"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:680px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio</div>
+      <div style="border-radius:16px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="min-height:560px; background:radial-gradient(120% 90% at 50% -10%, #EAF0FA 0%, #F4F6FA 46%, #F4F6FA 100%); display:flex; align-items:center; justify-content:center; padding:52px 24px;">
+
+          <div style="width:452px; max-width:100%; background:#fff; border:1px solid #E9EDF2; border-radius:18px; box-shadow:0 12px 40px rgba(20,25,33,.08); padding:34px 34px 28px;">
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+              <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:42px; height:42px; border-radius:12px; display:block; box-shadow:0 4px 12px rgba(30,102,188,.22);" />
+              <div style="font-size:13px; font-weight:600; color:#8A95A6; letter-spacing:.2px; margin-top:12px;">Fil-Grama · Borrado de datos</div>
+
+              <div style="width:54px; height:54px; border-radius:15px; background:{{ iconBg }}; display:flex; align-items:center; justify-content:center; margin-top:18px;">
+                <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7A50" stroke-width="1.7"/><path d="M8.5 12.2l2.4 2.3 4.6-4.8" stroke="#1F7A50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+                <sc-if value="{{ isPending }}" hint-placeholder-val="{{ true }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="{{ accent }}" stroke-width="1.7"/><path d="M12 8v4.4l2.6 1.6" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+                <sc-if value="{{ isNotFound }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="#647084" stroke-width="1.7"/><path d="M16 16l4 4" stroke="#647084" stroke-width="1.7" stroke-linecap="round"/></svg></sc-if>
+              </div>
+
+              <div style="font-size:19px; font-weight:600; color:#141921; margin-top:15px;">{{ title }}</div>
+              <div style="font-size:13.5px; color:#647084; line-height:1.6; max-width:360px; margin-top:9px;">{{ message }}</div>
+            </div>
+
+            <!-- code box -->
+            <div style="margin-top:22px; border:1px solid #E9EDF2; border-radius:12px; background:#F7F9FC; padding:13px 15px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <div><div style="font-size:11px; color:#8A95A6;">Código del pedido</div><div style="font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:14px; font-weight:600; color:#232A36; margin-top:3px; letter-spacing:.3px;">{{ code }}</div></div>
+              <span style="{{ statusPillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ statusLabel }}</span>
+            </div>
+
+            <!-- stepper -->
+            <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; align-items:flex-start; margin-top:24px; padding:0 4px;">
+                <div style="display:flex; flex-direction:column; align-items:center; flex:none; width:74px;"><span style="{{ n0.style }}">{{ n0.mark }}</span><span style="{{ n0.labelStyle }}">{{ n0.label }}</span></div>
+                <div style="{{ line0 }}"></div>
+                <div style="display:flex; flex-direction:column; align-items:center; flex:none; width:74px;"><span style="{{ n1.style }}">{{ n1.mark }}</span><span style="{{ n1.labelStyle }}">{{ n1.label }}</span></div>
+                <div style="{{ line1 }}"></div>
+                <div style="display:flex; flex-direction:column; align-items:center; flex:none; width:74px;"><span style="{{ n2.style }}">{{ n2.mark }}</span><span style="{{ n2.labelStyle }}">{{ n2.label }}</span></div>
+              </div>
+              <div style="font-size:12px; color:#8A95A6; text-align:center; margin-top:16px;">{{ dateLine }}</div>
+            </sc-if>
+
+            <div style="font-size:11.5px; color:#9AA4B2; line-height:1.55; text-align:center; margin-top:22px; border-top:1px solid #F0F3F7; padding-top:16px;">¿Dudas sobre tus datos? Escribinos a <span style="color:#647084;">privacidad@fil-grama.com</span> con tu código.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:16px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="min-height:560px; background:radial-gradient(130% 80% at 50% -8%, #EAF0FA 0%, #F4F6FA 48%, #F4F6FA 100%); display:flex; align-items:center; justify-content:center; padding:28px 18px;">
+          <div style="width:100%; background:#fff; border:1px solid #E9EDF2; border-radius:17px; box-shadow:0 10px 30px rgba(20,25,33,.07); padding:26px 22px 22px;">
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+              <img src="../uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:38px; height:38px; border-radius:11px; display:block;" />
+              <div style="font-size:12px; font-weight:600; color:#8A95A6; margin-top:10px;">Fil-Grama · Borrado de datos</div>
+              <div style="width:50px; height:50px; border-radius:14px; background:{{ iconBg }}; display:flex; align-items:center; justify-content:center; margin-top:16px;">
+                <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7A50" stroke-width="1.7"/><path d="M8.5 12.2l2.4 2.3 4.6-4.8" stroke="#1F7A50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+                <sc-if value="{{ isPending }}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="{{ accent }}" stroke-width="1.7"/><path d="M12 8v4.4l2.6 1.6" stroke="{{ accent }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+                <sc-if value="{{ isNotFound }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="#647084" stroke-width="1.7"/><path d="M16 16l4 4" stroke="#647084" stroke-width="1.7" stroke-linecap="round"/></svg></sc-if>
+              </div>
+              <div style="font-size:17px; font-weight:600; color:#141921; margin-top:13px;">{{ title }}</div>
+              <div style="font-size:13px; color:#647084; line-height:1.55; margin-top:8px;">{{ message }}</div>
+            </div>
+            <div style="margin-top:18px; border:1px solid #E9EDF2; border-radius:11px; background:#F7F9FC; padding:12px 13px;">
+              <div style="font-size:11px; color:#8A95A6;">Código del pedido</div>
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:4px;"><span style="font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px; font-weight:600; color:#232A36;">{{ code }}</span><span style="{{ statusPillStyle }}"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>{{ statusLabel }}</span></div>
+            </div>
+            <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:12px; color:#8A95A6; text-align:center; margin-top:16px;">{{ dateLine }}</div>
+            </sc-if>
+            <div style="font-size:11px; color:#9AA4B2; line-height:1.5; text-align:center; margin-top:18px; border-top:1px solid #F0F3F7; padding-top:14px;">¿Dudas? privacidad@fil-grama.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:680},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { demo: 'recibido' };
+
+  code = 'del_3f9a-x2qz-7k1p';
+
+  data = {
+    recibido: {
+      kind:'pending', title:'Recibimos tu pedido de borrado',
+      message:'Estamos borrando los datos asociados a tu cuenta. Suele completarse en hasta 30 días; no tenés que hacer nada más.',
+      statusLabel:'En proceso', stepIndex:1, dateLine:'Pedido recibido el 28 jun 2026',
+    },
+    completado: {
+      kind:'done', title:'Tu pedido de borrado se completó',
+      message:'Borramos los datos asociados a tu cuenta. Si en el futuro volvés a conectar, empezamos de cero.',
+      statusLabel:'Completado', stepIndex:3, dateLine:'Completado el 02 jul 2026',
+    },
+    noencontrado: {
+      kind:'notfound', title:'No encontramos ese pedido',
+      message:'El código no coincide con ningún pedido de borrado, o ya expiró de nuestros registros. Revisá el enlace o escribinos.',
+      statusLabel:'Sin registro', stepIndex:0, dateLine:'',
+    },
+  };
+
+  seg(active) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 14px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+                  : { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  node(state, label, accent) {
+    const ring = { width:'26px', height:'26px', borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'12px', flex:'none', fontWeight:600 };
+    let style, mark;
+    if (state === 'done') { style = { ...ring, background:accent, color:'#fff' }; mark = '✓'; }
+    else if (state === 'active') { style = { ...ring, background:'#fff', border:'2px solid ' + accent, color:accent }; mark = '•'; }
+    else { style = { ...ring, background:'#EEF1F5', border:'1px solid #DBE0E8', color:'#AEB6C2' }; mark = ''; }
+    const labelStyle = { fontSize:'11px', color: state === 'pending' ? '#9AA4B2' : '#3D4757', fontWeight: state === 'pending' ? 400 : 500, marginTop:'8px', textAlign:'center', lineHeight:1.3 };
+    return { style, mark, label, labelStyle };
+  }
+
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const demo = this.state.demo;
+    const d = this.data[demo];
+
+    const demoStates = [['recibido','Recibido'],['completado','Completado'],['noencontrado','No encontrado']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ demo:k }), style:this.seg(k === demo) }));
+
+    const idx = d.stepIndex; // 0 none, 1 active second, 3 all done
+    const stateFor = (i) => idx >= 3 ? 'done' : (i < idx ? 'done' : (i === idx ? 'active' : 'pending'));
+    const labels = ['Recibido','En proceso','Completado'];
+    const n0 = this.node(idx >= 1 ? (idx >= 3 ? 'done' : 'done') : 'pending', labels[0], accent);
+    const n1 = this.node(idx >= 3 ? 'done' : (idx === 1 ? 'active' : 'pending'), labels[1], accent);
+    const n2 = this.node(idx >= 3 ? 'done' : 'pending', labels[2], accent);
+
+    const lineBase = { flex:'1', height:'2px', borderRadius:'2px', marginTop:'12px', minWidth:'18px' };
+    const line0 = { ...lineBase, background: idx >= 1 ? accent : '#E3E6EA' };
+    const line1 = { ...lineBase, background: idx >= 3 ? accent : '#E3E6EA' };
+
+    const pill = (bg, ink) => ({ display:'inline-flex', alignItems:'center', gap:'7px', background:bg, color:ink, borderRadius:'7px', padding:'4px 10px', fontSize:'12px', fontWeight:500, flex:'none', whiteSpace:'nowrap' });
+    let statusPillStyle, iconBg;
+    if (d.kind === 'done') { statusPillStyle = pill('#E7F4EC', '#1F7A50'); iconBg = '#E7F4EC'; }
+    else if (d.kind === 'pending') { statusPillStyle = pill('#EAF2FB', accent); iconBg = '#EAF2FB'; }
+    else { statusPillStyle = pill('#EEF1F5', '#647084'); iconBg = '#EEF1F5'; }
+
+    return {
+      accent,
+      demoStates,
+      code: this.code,
+      title: d.title, message: d.message,
+      statusLabel: d.statusLabel, statusPillStyle, iconBg,
+      isDone: d.kind === 'done', isPending: d.kind === 'pending', isNotFound: d.kind === 'notfound',
+      showStepper: d.kind !== 'notfound',
+      n0, n1, n2, line0, line1, dateLine: d.dateLine,
+    };
+  }
+}
+</script>
+</body>
+</html>

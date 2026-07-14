@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+    .node{border:1.5px solid #3a3a3a;border-radius:8px;background:#fff;padding:6px 12px;font-size:11.5px;display:inline-block}
+    .dead{border:1.5px dashed #c07a55;color:#c07a55;background:#fdf6f4;text-decoration:line-through}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Autogestionado — variante de navegación: una organización de un solo cliente (su marca), sin cartera</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a mapa ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Mapa de navegación resultante — lo tachado no existe para autogestionado</div>
+      <div class="dv-card" style="width:760px; padding:18px;">
+        <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="node">Login / Aceptar invitación</span>
+            <span style="color:#888;">→ aterriza directo en</span>
+            <span class="node" style="background:#e8e8e8; font-weight:600;">Dashboard de su marca</span>
+            <span style="font-size:10.5px; color:#2a78d6;">← el logo también lleva acá</span>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; color:#888; width:110px;">NO existen:</span>
+            <span class="node dead">Home / Lista de clientes</span>
+            <span class="node dead">Nuevo cliente</span>
+            <span class="node dead">‹ Clientes (breadcrumb)</span>
+            <span class="node dead">Comparar clientes entre sí</span>
+          </div>
+
+          <div style="display:flex; align-items:flex-start; gap:8px;">
+            <span style="font-size:11px; color:#888; width:110px; padding-top:6px;">Workspace<br/>(idéntico):</span>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; padding:8px 12px; background:#fafafa;">
+              <div style="display:flex; gap:10px; font-size:11.5px;">
+                <b style="border-bottom:2.5px solid #2a78d6; padding-bottom:2px;">Dashboard</b><span>Publicaciones</span><span>Comparar redes</span><span>Audiencia</span><span>Reporte</span><span>Redes</span>
+              </div>
+              <div style="font-size:10px; color:#888; margin-top:5px;">«Comparar redes» (IG vs TikTok de su marca) · «Redes» = Gestionar redes + Marca («Cuentas» era ambiguo sin la palabra cliente cerca) · copy auditado: donde decía «el cliente» dice «tu marca»; «Metas» → «Tus metas»</div>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:flex-start; gap:8px;">
+            <span style="font-size:11px; color:#888; width:110px; padding-top:6px;">Menú avatar:</span>
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; padding:8px 12px; background:#fff; font-size:11.5px; line-height:1.9;">
+                <b>Valen · Café Aurora</b><br/>
+                Mi cuenta y suscripción <span style="font-size:9.5px; color:#888;">(datos + renovar)</span><br/>
+                Cerrar sesión
+              </div>
+              <div style="border:1.5px dashed #c07a55; border-radius:8px; padding:8px 12px; font-size:11px; color:#c07a55; line-height:1.8;">
+                sin «Administración»<br/>sin gestión de usuarios<br/>(1 usuario por org en etapa B)
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b pantalla clave: dashboard ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Pantalla clave 1 · Dashboard con la barra ajustada (menú del avatar abierto)</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:640px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · sin «‹ Clientes», sin link Clientes en la barra</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1.5px solid #3a3a3a;">
+              <span style="font-size:14px; font-weight:600;">Fil-Grama <span style="font-size:10px; color:#2a78d6; font-weight:400;">← logo = ir a mi dashboard</span></span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:11px; color:#888;">🔔</span>
+                <div style="width:22px; height:22px; border:1.5px solid #3a3a3a; border-radius:50%;"></div>
+              </div>
+            </div>
+            <div style="padding:10px 16px 0; border-bottom:1.5px solid #3a3a3a; position:relative;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:30px; height:30px; border:1.5px solid #3a3a3a; border-radius:8px;"></div>
+                <div style="font-size:16px; font-weight:600;">Café Aurora <span style="font-size:10px; color:#888; font-weight:400;">(su marca — sin breadcrumb, no hay adónde «volver»)</span></div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:10px; font-size:12px; color:#888;">
+                <span style="color:#1a1a1a; border-bottom:2.5px solid #2a78d6; font-weight:600; padding-bottom:3px;">Dashboard</span>
+                <span>Publicaciones</span><span>Comparar redes</span><span>Audiencia</span><span>Reporte</span><span>Redes</span>
+              </div>
+              <!-- avatar menu -->
+              <div style="position:absolute; top:-34px; right:10px; width:180px; border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; box-shadow:3px 3px 0 rgba(0,0,0,.1); z-index:5;">
+                <div style="padding:7px 11px; border-bottom:1.2px solid #e5e5e5;">
+                  <div style="font-size:11.5px; font-weight:600;">Valentina Sosa</div>
+                  <div style="font-size:9.5px; color:#888;">Café Aurora · autogestionado</div>
+                </div>
+                <div style="padding:6px 11px; font-size:11px; border-bottom:1.2px solid #eee;">Mi cuenta y suscripción</div>
+                <div style="padding:6px 11px; font-size:11px;">Cerrar sesión</div>
+              </div>
+            </div>
+            <div style="padding:12px 16px; background:#fafafa; font-size:11px; color:#888;">…KPIs, metas, cuentas conectadas y mejores publicaciones — idéntico al Dashboard actual…</div>
+          </div>
+        </div>
+
+        <!-- móvil -->
+        <div class="dv-card" style="width:250px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · logo + avatar, sin «‹ Clientes»</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#fff; overflow:hidden;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-bottom:1.5px solid #3a3a3a;">
+              <span style="font-size:12px; font-weight:600;">Fil-Grama</span>
+              <div style="width:20px; height:20px; border:1.5px solid #3a3a3a; border-radius:50%;"></div>
+            </div>
+            <div style="padding:8px 12px 0; border-bottom:1.5px solid #3a3a3a;">
+              <div style="font-size:13px; font-weight:600;">Café Aurora</div>
+              <div style="display:flex; gap:8px; margin-top:7px; font-size:10px; color:#888; white-space:nowrap; overflow:hidden;">
+                <span style="color:#1a1a1a; border-bottom:2px solid #2a78d6; font-weight:600;">Dashboard</span>
+                <span>Public.</span><span>Comparar</span><span>Audiencia</span><span>Repo…</span>
+              </div>
+            </div>
+            <div style="padding:10px; background:#fafafa; font-size:10px; color:#888;">…contenido idéntico…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c pantalla clave: mi organización ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Pantalla clave 2 · «Mi organización» — la pantalla Organización sin usuarios ni invitaciones</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:520px; padding:14px;">
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <div style="padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:12px; color:#888;">top bar · «‹ Café Aurora» (vuelve a su dashboard)</div>
+            <div style="padding:12px 16px; background:#fafafa; display:flex; flex-direction:column; gap:8px;">
+              <div style="border:1.5px solid #c8a415; border-radius:8px; background:#fdf9ee; padding:7px 10px; font-size:10.5px;">⚠ La suscripción vence en 9 días · 💬 Avisar a Fil-Grama</div>
+              <div style="font-size:14px; font-weight:600;">Mi cuenta y suscripción</div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#fff; padding:9px 11px; font-size:11px; line-height:1.9;">
+                <b>Datos</b><br/>Nombre: Café Aurora · Zona horaria: América/Asunción ▾ · Guardar
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#f4f4f4; padding:9px 11px; font-size:11px; line-height:1.7;">
+                <b>Suscripción</b> (solo lectura) · ● Por vencer<br/>Vigente hasta el 30 jul. Para renovar: transferí y avisá por WhatsApp. <span style="border:1.2px solid #3a3a3a; border-radius:5px; padding:0 7px; font-size:10px; background:#fff;">💬 wa.me</span>
+              </div>
+              <div style="font-size:10.5px; color:#2a78d6;">sin secciones de usuarios/invitaciones: en etapa B el autogestionado es 1 usuario por organización. Mismos componentes que «Organización» de agencia, con etiqueta más humana. Recordatorio de vencimiento también por email/WhatsApp (15 y 3 días antes) — no depende de que entre a la app.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1d primera vez ============================================================ -->
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Primera vez (mayor fricción resuelta): el Dashboard vacío es una bienvenida guiada, no una pantalla muerta</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:520px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Recién aceptó la invitación, todavía sin redes conectadas</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#fff; overflow:hidden;">
+            <div style="padding:8px 14px; border-bottom:1.5px solid #3a3a3a; font-size:12px; color:#888;">top bar · Café Aurora · tabs</div>
+            <div style="padding:24px 20px; background:#fafafa; text-align:center;">
+              <div style="width:40px; height:40px; border:1.5px solid #3a3a3a; border-radius:10px; margin:0 auto;"></div>
+              <div style="font-size:15px; font-weight:600; margin-top:10px;">¡Hola Valen! Conectá tu Instagram para empezar</div>
+              <div style="font-size:11.5px; color:#666; margin-top:5px; line-height:1.6;">Te llevamos al inicio de sesión oficial de la red — nunca guardamos tu contraseña.<br/>Desde mañana vas a ver tus métricas acá, todos los días.</div>
+              <div style="display:inline-block; background:#3a3a3a; color:#fff; border-radius:7px; padding:8px 18px; font-size:12.5px; font-weight:600; margin-top:12px;">Conectar Instagram</div>
+              <div style="font-size:10.5px; color:#888; margin-top:8px;">también podés conectar <span style="text-decoration:underline;">Facebook</span> o <span style="text-decoration:underline;">TikTok</span></div>
+            </div>
+          </div>
+          <div style="font-size:11.5px; color:#2a78d6; margin-top:8px;">reusa el patrón «Dashboard sin datos»; tras el primer sync no se ve nunca más. Un solo botón grande: cero decisiones.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Ajustes de fricción aplicados: menú «Mi cuenta y suscripción» · pestañas «Comparar redes» y «Redes» · copy «tu marca» en vez de «el cliente» · bienvenida guiada en <a class="dv-oid" href="#1d">1d</a> · recordatorios de vencimiento por email/WhatsApp. Decime "aprobado" y paso a alta fidelidad (Dashboard ajustado + primera vez + Mi cuenta y suscripción).</p>
+</section>
+</x-dc>
+</body>
+</html>

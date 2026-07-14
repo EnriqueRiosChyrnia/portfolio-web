@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; }
+    * { box-sizing:border-box; }
+    @keyframes filgShimmer { 0% { background-position:-360px 0; } 100% { background-position:360px 0; } }
+    .fg-sk { background:#EAEEF3; background-image:linear-gradient(90deg,#EAEEF3 0,#F3F6FA 180px,#EAEEF3 360px); background-size:720px 100%; animation:filgShimmer 1.25s linear infinite; border-radius:7px; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="./navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-height:100vh; background:#EAEDF1; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif; padding:48px 24px 80px;">
+  <div style="max-width:1060px; margin:0 auto;">
+
+    <!-- header -->
+    <div style="display:flex; align-items:center; gap:13px;">
+      <img src="uploads/filgrama-isotipo.svg" alt="Fil-Grama" style="width:40px; height:40px; border-radius:11px; display:block;" />
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Sistema</div>
+        <div style="font-size:27px; font-weight:600; color:#141921; letter-spacing:-.4px; margin-top:2px;">Guía de componentes canónicos</div>
+      </div>
+    </div>
+    <div style="font-size:14px; color:#647084; margin-top:12px; max-width:720px; line-height:1.6;">Una sola versión de cada patrón. Toda pantalla nueva copia de acá — nunca se reinventa un pill, un segmented o un popover. Los valores salen de <b style="font-weight:600; color:#3D4757;">uploads/filgrama-colors.css</b> (en el front real: <span style="font-family:ui-monospace,monospace; font-size:12.5px;">tokens.css</span>).</div>
+
+    <!-- ===== tokens ===== -->
+    <div style="font-size:16px; font-weight:600; color:#141921; margin:30px 0 12px;">Tokens</div>
+    <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:20px 24px;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:12px 18px;">
+        <sc-for list="{{ tokens }}" as="t" hint-placeholder-count="12">
+          <div style="display:flex; align-items:center; gap:9px;">
+            <span style="{{ t.swatch }}"></span>
+            <span style="min-width:0;">
+              <span style="display:block; font-size:12px; font-weight:600; color:#141921; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ t.name }}</span>
+              <span style="display:block; font-size:11px; color:#8A95A6; font-family:ui-monospace, monospace;">{{ t.value }}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size:12px; color:#8A95A6; margin-top:14px; line-height:1.5;">Radios: 7px (pills, chips, segmented item) · 9-10px (botones, inputs) · 13px (tarjetas). Tipografía: Public Sans 400/500/600. Números SIEMPRE con <span style="font-family:ui-monospace,monospace;">tabular-nums</span>.</div>
+    </div>
+
+    <!-- ===== components grid ===== -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:26px;">
+
+      <!-- topbar -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px; grid-column:1 / -1;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">1 · Barra superior</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Única en todo el producto: logo horizontal SVG (vuelve a Clientes) + nav de nivel superior + avatar con menú (Administración solo admin, Cerrar sesión). Nunca logo dibujado, nunca breadcrumbs adentro.</div>
+        <div style="border:1px solid #E9EDF2; border-radius:10px; overflow:visible; margin-top:12px;">
+          <div style="height:56px; background:#fff; border-radius:10px; display:flex; align-items:center; justify-content:space-between; padding:0 20px;">
+            <img src="uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:28px; display:block;" />
+            <div style="display:flex; align-items:center; gap:18px;">
+              <span style="font-size:13px; font-weight:600; color:#141921;">Clientes</span>
+              <span style="font-size:13px; color:#647084;">Administración</span>
+              <span style="position:relative; display:inline-flex;">
+                <div onClick="{{ menuToggle }}" style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568; cursor:pointer;">LF</div>
+                <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute; top:40px; right:0; width:210px; background:#fff; border:1px solid #E5E9EF; border-radius:12px; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:50; text-align:left;">
+                    <div style="padding:8px 11px 9px; border-bottom:1px solid #F0F3F7; margin-bottom:5px;"><div style="font-size:13px; font-weight:600; color:#141921;">Lucía Ferreira</div><div style="font-size:11.5px; color:#8A95A6;">Admin · lucia@agencia.com</div></div>
+                    <div style="padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer;" style-hover="padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer; background:#F5F7FA;">Administración</div>
+                    <div style="padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer;" style-hover="padding:8px 11px; border-radius:8px; font-size:13px; color:#232A36; cursor:pointer; background:#F5F7FA;">Cerrar sesión</div>
+                  </div>
+                </sc-if>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- breadcrumb -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">2 · Breadcrumb</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Uno solo por vista, arriba a la izquierda. Nombra SIEMPRE el destino, nunca la página actual. Flecha «‹», nunca «←».</div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
+          <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#8A95A6; cursor:pointer; width:max-content;"><span style="font-size:15px;">‹</span><span>Café Aurora</span></div>
+          <div style="display:flex; align-items:center; gap:8px;"><span style="font-size:12px; color:#B4BDCA; text-decoration:line-through;">‹ Café Aurora · Reporte</span><span style="font-size:11px; color:#C2603F;">✕ nombra la página actual</span></div>
+        </div>
+      </div>
+
+      <!-- pills de estado -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">3 · Pill de estado</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Radio 7px, dot de 6px en currentColor. Solo en su lugar canónico (pestaña Cuentas y filas de cuentas) — nunca en los chips del header.</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+          <span style="display:inline-flex; align-items:center; gap:6px; background:#E7F4EC; color:#1F7A50; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Conectada</span>
+          <span style="display:inline-flex; align-items:center; gap:6px; background:#FBEFEC; color:#B2552F; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Error de token</span>
+          <span style="display:inline-flex; align-items:center; gap:6px; background:#FEF3C7; color:#92600A; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>Parcial</span>
+          <span style="display:inline-flex; align-items:center; gap:6px; background:#EAF2FB; color:#1E66BC; border-radius:7px; padding:4px 10px; font-size:12px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>En proceso</span>
+        </div>
+      </div>
+
+      <!-- delta chip -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">4 · Delta de tendencia</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Chip con fondo, peso 600, tabular-nums. Suba = azul, caída = rojizo suave. NUNCA gris (parece deshabilitado). «—» gris plano solo cuando no aplica.</div>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:12px;">
+          <span style="display:inline-flex; align-items:center; background:#EAF2FB; color:#1E66BC; font-size:12px; font-weight:600; padding:3px 8px; border-radius:7px; font-variant-numeric:tabular-nums;">▲ 12%</span>
+          <span style="display:inline-flex; align-items:center; background:#FBEFEC; color:#B2552F; font-size:12px; font-weight:600; padding:3px 8px; border-radius:7px; font-variant-numeric:tabular-nums;">▼ 0.3 pts</span>
+          <span style="display:inline-flex; align-items:center; background:#EAF2FB; color:#1E66BC; font-size:12px; font-weight:600; padding:3px 8px; border-radius:7px; font-variant-numeric:tabular-nums;">▲ 320</span>
+          <span style="font-size:13px; color:#AAB2BE;">—</span>
+        </div>
+      </div>
+
+      <!-- segmented -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">5 · Segmented control</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Para ≤4 opciones visibles (rango, red, métrica, modo). Fondo #EEF1F5, item activo blanco con sombra. Con más opciones → dropdown (6).</div>
+        <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px; width:max-content; margin-top:12px;">
+          <sc-for list="{{ segItems }}" as="s" hint-placeholder-count="3">
+            <div onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- dropdown -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">6 · Dropdown de filtro</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Botón blanco con ▾ que SIEMPRE abre (nada de chevrones decorativos). Activo = borde azul. Nunca &lt;select&gt; nativo. Con filtros activos: chips con ✕ + «Limpiar todo».</div>
+        <div style="display:flex; align-items:flex-start; gap:10px; margin-top:12px;">
+          <div style="position:relative;">
+            <div onClick="{{ ddToggle }}" style="{{ ddBtnStyle }}">{{ ddLabel }} <span style="color:#9AA4B2;">▾</span></div>
+            <sc-if value="{{ ddOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:42px; left:0; width:196px; border:1px solid #E5E9EF; border-radius:12px; background:#fff; box-shadow:0 10px 30px rgba(20,25,33,.14); padding:7px; z-index:30;">
+                <sc-for list="{{ ddOptions }}" as="o" hint-placeholder-count="4">
+                  <div onClick="{{ o.onClick }}" style="{{ o.rowStyle }}">
+                    <span style="font-size:13px; color:#232A36;">{{ o.label }}</span>
+                    <sc-if value="{{ o.selected }}" hint-placeholder-val="{{ false }}"><span style="color:#1E66BC;">✓</span></sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; height:28px; padding:0 6px 0 11px; background:#fff; border:1px solid #E0E5EC; border-radius:7px; font-size:12px; color:#3D4757; margin-top:4px;">Tipo: Reel<span style="display:inline-flex; width:15px; height:15px; align-items:center; justify-content:center; border-radius:4px; background:#EEF1F5; color:#8A95A6; font-size:11px; cursor:pointer;">✕</span></div>
+        </div>
+      </div>
+
+      <!-- KPI card -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">7 · Tarjeta KPI</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Label secundario + ⓘ obligatorio + valor 28px (hero 44-46px) tabular + delta chip. Nada más adentro.</div>
+        <div style="border:1px solid #E9EDF2; border-radius:13px; padding:16px 18px; width:220px; margin-top:12px;">
+          <div style="display:flex; align-items:center; gap:7px;">
+            <span style="font-size:13px; color:#647084;">Alcance</span>
+            <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084;">i</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:10px; margin-top:11px;">
+            <span style="font-size:28px; font-weight:600; color:#141921; letter-spacing:-.6px; font-variant-numeric:tabular-nums;">72.4k</span>
+            <span style="display:inline-flex; align-items:center; background:#EAF2FB; color:#1E66BC; font-size:12px; font-weight:600; padding:3px 8px; border-radius:7px; font-variant-numeric:tabular-nums;">▲ 14%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- popover -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">8 · Popover ⓘ del glosario</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Requisito de la spec: TODA métrica visible lo lleva. Abre con hover Y click/tap (touch y teclado); textos del glosario de la capa 07, nunca nombres de API.</div>
+        <div style="display:flex; align-items:center; gap:7px; margin-top:14px;">
+          <span style="font-size:13px; color:#647084;">Engagement</span>
+          <span onClick="{{ popToggle }}" onMouseEnter="{{ popEnter }}" onMouseLeave="{{ popLeave }}" style="position:relative; display:inline-flex;">
+            <span style="display:inline-flex; width:16px; height:16px; border:1px solid #B4BDCA; border-radius:50%; align-items:center; justify-content:center; font-size:9px; color:#647084; cursor:help;">i</span>
+            <sc-if value="{{ popOpen }}" hint-placeholder-val="{{ true }}">
+              <span style="position:absolute; top:25px; left:-10px; width:248px; background:#fff; border:1px solid #E9EDF2; border-radius:11px; box-shadow:0 8px 24px rgba(20,25,33,.13); padding:13px 15px; z-index:30;">
+                <span style="display:block; font-size:12px; font-weight:600; color:#141921; margin-bottom:4px;">Engagement</span>
+                <span style="display:block; font-size:12.5px; color:#647084; line-height:1.5;">Qué porcentaje de quienes vieron el contenido interactuó.</span>
+              </span>
+            </sc-if>
+          </span>
+          <span style="font-size:11.5px; color:#9AA4B2; margin-left:8px;">← probalo (hover o click)</span>
+        </div>
+        <div style="height:64px;"></div>
+      </div>
+
+      <!-- media placeholder -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">9 · Placeholder de media</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Tint flat de la red + ícono SVG neutro + chip del tipo. Nunca emojis (varían por sistema y bajan el tono del reporte).</div>
+        <div style="display:flex; gap:10px; margin-top:12px;">
+          <sc-for list="{{ thumbs }}" as="th" hint-placeholder-count="3">
+            <div style="width:86px;">
+              <div style="{{ th.box }}">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="15" rx="2.5" stroke="#9AA4B2" stroke-width="1.6"/><circle cx="8.5" cy="10" r="1.6" stroke="#9AA4B2" stroke-width="1.4"/><path d="M5 17l4.5-4.2 3 2.6L16 12l3 3.2" stroke="#9AA4B2" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                <span style="position:absolute; top:6px; left:6px; font-size:9px; font-weight:500; color:#353D4D; background:#fff; border:1px solid #E9EDF2; border-radius:4px; padding:1px 5px;">{{ th.type }}</span>
+              </div>
+              <div style="font-size:10.5px; color:#8A95A6; text-align:center; margin-top:5px;">{{ th.net }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- estados -->
+      <div style="background:#fff; border:1px solid #E9EDF2; border-radius:14px; padding:18px 22px; grid-column:1 / -1;">
+        <div style="font-size:14px; font-weight:600; color:#141921;">10 · Estados de datos</div>
+        <div style="font-size:12.5px; color:#647084; margin-top:3px; line-height:1.5;">Toda vista con datos remotos diseña los cuatro: con datos · vacío amable (con salida) · cargando (skeleton shimmer, nunca spinner solo) · error (explica y ofrece Reintentar).</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px;">
+          <div style="border:1px solid #EDF0F4; border-radius:11px; padding:14px;">
+            <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:10px;">Cargando</div>
+            <div class="fg-sk" style="width:70%; height:12px;"></div>
+            <div class="fg-sk" style="width:46%; height:22px; margin-top:9px;"></div>
+            <div class="fg-sk" style="width:100%; height:34px; margin-top:9px;"></div>
+          </div>
+          <div style="border:1px solid #EDF0F4; border-radius:11px; padding:14px; text-align:center;">
+            <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:10px; text-align:left;">Vacío</div>
+            <div style="font-size:12.5px; font-weight:600; color:#141921;">Aún no hay datos para este rango</div>
+            <div style="font-size:11.5px; color:#647084; margin-top:4px; line-height:1.45;">Ampliá el rango o sumá redes.</div>
+            <span style="display:inline-flex; margin-top:9px; height:28px; align-items:center; padding:0 13px; background:#1E66BC; color:#fff; border-radius:8px; font-size:11.5px; font-weight:500; cursor:pointer;">Ampliar rango</span>
+          </div>
+          <div style="border:1px solid #EDF0F4; border-radius:11px; padding:14px; text-align:center;">
+            <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#8A95A6; margin-bottom:10px; text-align:left;">Error</div>
+            <div style="font-size:12.5px; font-weight:600; color:#141921;">No pudimos cargar los datos</div>
+            <div style="font-size:11.5px; color:#647084; margin-top:4px; line-height:1.45;">Esperá unos segundos y reintentá.</div>
+            <span style="display:inline-flex; margin-top:9px; height:28px; align-items:center; padding:0 13px; background:#1E66BC; color:#fff; border-radius:8px; font-size:11.5px; font-weight:500; cursor:pointer;">Reintentar</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="font-size:12px; color:#9AA4B2; text-align:center; margin-top:36px;">Guía de componentes · resultado de la auditoría (problema de fondo nº 3) · los diez patrones ya están aplicados en las 23 pantallas</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:1200}}">
+class Component extends DCLogic {
+  state = { seg: '30 días', ddOpen: false, ddSel: 'Últimos 90 días', popOpen: true, menuOpen: false };
+
+  renderVals() {
+    const segBase = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 14px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s' };
+    const segItems = ['7 días','30 días','90 días'].map(l => ({
+      label: l,
+      onClick: () => this.setState({ seg: l }),
+      style: l === this.state.seg
+        ? { ...segBase, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+        : { ...segBase, color:'#647084' },
+    }));
+
+    const ddOptions = ['Últimos 7 días','Últimos 30 días','Últimos 90 días','Todo el período'].map(l => ({
+      label: l, selected: l === this.state.ddSel,
+      rowStyle: { display:'flex', alignItems:'center', justifyContent:'space-between', padding:'8px 10px', borderRadius:'8px', cursor:'pointer', background: l === this.state.ddSel ? '#F3F6FA' : 'transparent' },
+      onClick: () => this.setState({ ddSel: l, ddOpen: false }),
+    }));
+
+    const thumbs = [
+      { type:'Reel',   net:'Instagram', box:{ position:'relative', width:'86px', height:'86px', borderRadius:'9px', background:'#FBEFE9', display:'flex', alignItems:'center', justifyContent:'center' } },
+      { type:'Imagen', net:'Facebook',  box:{ position:'relative', width:'86px', height:'86px', borderRadius:'9px', background:'#E9F0FB', display:'flex', alignItems:'center', justifyContent:'center' } },
+      { type:'Video',  net:'TikTok',    box:{ position:'relative', width:'86px', height:'86px', borderRadius:'9px', background:'#EDEFF2', display:'flex', alignItems:'center', justifyContent:'center' } },
+    ];
+
+    const sw = (bg, border) => ({ width:'26px', height:'26px', borderRadius:'7px', background:bg, border:'1px solid ' + (border || '#E9EDF2'), flex:'none' });
+    const tokens = [
+      { name:'primary',        value:'#1E66BC', swatch: sw('#1E66BC') },
+      { name:'bg-page',        value:'#F5F7FA', swatch: sw('#F5F7FA') },
+      { name:'border',         value:'#E9EDF2', swatch: sw('#fff', '#D4DAE3') },
+      { name:'text-primary',   value:'#141921', swatch: sw('#141921') },
+      { name:'text-secondary', value:'#647084', swatch: sw('#647084') },
+      { name:'success',        value:'#1F7A50', swatch: sw('#E7F4EC', '#CFE8DA') },
+      { name:'danger',         value:'#C2603F', swatch: sw('#FBEFEC', '#F1D6CC') },
+      { name:'warning',        value:'#92600A', swatch: sw('#FEF3C7', '#FDE68A') },
+      { name:'delta-up',       value:'#EAF2FB / azul', swatch: sw('#EAF2FB', '#CADFF5') },
+      { name:'delta-down',     value:'#FBEFEC / #B2552F', swatch: sw('#FBEFEC', '#F1D6CC') },
+      { name:'net-ig',         value:'#FBEFE9', swatch: sw('#FBEFE9') },
+      { name:'net-fb',         value:'#E9F0FB', swatch: sw('#E9F0FB') },
+      { name:'net-tt',         value:'#EDEFF2', swatch: sw('#EDEFF2') },
+    ];
+
+    return {
+      tokens, segItems, thumbs, ddOptions,
+      ddLabel: this.state.ddSel,
+      ddOpen: this.state.ddOpen,
+      ddToggle: () => this.setState(s => ({ ddOpen: !s.ddOpen })),
+      ddBtnStyle: { display:'flex', alignItems:'center', gap:'8px', height:'36px', padding:'0 13px', borderRadius:'9px', background:'#fff', cursor:'pointer', border:'1px solid #E0E5EC', fontSize:'13px', color:'#3D4757', whiteSpace:'nowrap', userSelect:'none' },
+      popOpen: this.state.popOpen,
+      popToggle: () => this.setState(s => ({ popOpen: !s.popOpen })),
+      popEnter: () => this.setState({ popOpen: true }),
+      popLeave: () => {},
+      menuOpen: this.state.menuOpen,
+      menuToggle: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+    };
+  }
+}
+</script>
+</body>
+</html>

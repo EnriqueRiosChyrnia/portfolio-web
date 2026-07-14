@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="fg-navegador" from="../navegador.js" hint-size="0,0"></x-import>
+
+<div style="min-width:100%; min-height:100vh; width:max-content; box-sizing:border-box; padding:48px; background:#d9dee4; font-family:'Public Sans', ui-sans-serif, system-ui, sans-serif;">
+
+  <div style="margin-bottom:22px; max-width:900px;">
+    <div style="font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#8A95A6;">Fil-Grama · Alta fidelidad</div>
+    <div style="font-size:21px; font-weight:600; color:#232A36; margin-top:6px;">Resultado de conexión</div>
+    <div style="font-size:14px; color:#647084; margin-top:6px; line-height:1.5;">Vuelta del OAuth de Meta o TikTok. El backend redirige acá con <span style="font-family:ui-monospace,monospace; font-size:12.5px; color:#3D4757;">?accountId</span> (éxito) o <span style="font-family:ui-monospace,monospace; font-size:12.5px; color:#3D4757;">?error</span>. Ningún error es un callejón: cada uno explica qué pasó y ofrece <span style="color:#3D4757; font-weight:500;">cómo salir</span>. Cambiá el estado demo.</div>
+  </div>
+
+  <!-- demo state switch -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px; flex-wrap:wrap;">
+    <span style="font-size:12px; color:#8A95A6;">Estado (demo):</span>
+    <div style="display:flex; background:#EEF1F5; border-radius:9px; padding:3px; gap:2px;">
+      <sc-for list="{{ demoStates }}" as="d" hint-placeholder-count="5"><div style="{{ d.style }}" onClick="{{ d.onClick }}">{{ d.label }}</div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:44px; align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none; width:720px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Escritorio</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:60px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:30px; display:block;" />
+          <div style="width:32px; height:32px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+
+        <div style="background:#F5F7FA; padding:48px 30px 54px; display:flex; justify-content:center;">
+          <div style="width:524px; max-width:100%; background:#fff; border:1px solid #E9EDF2; border-radius:16px; box-shadow:0 12px 40px rgba(20,25,33,.08); padding:38px 34px 30px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+            <div style="width:60px; height:60px; border-radius:16px; background:{{ iconBg }}; display:flex; align-items:center; justify-content:center;">
+              <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ true }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7A50" stroke-width="1.7"/><path d="M8.5 12.2l2.4 2.3 4.6-4.8" stroke="#1F7A50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+              <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#C2603F" stroke-width="1.7"/><path d="M12 7.5v5.5" stroke="#C2603F" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1" fill="#C2603F"/></svg></sc-if>
+            </div>
+            <div style="font-size:19px; font-weight:600; color:#141921; margin-top:15px;">{{ title }}</div>
+            <div style="font-size:14px; color:#647084; line-height:1.6; max-width:430px; margin-top:9px;">{{ message }}</div>
+
+            <!-- success: connected account chip -->
+            <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; align-items:center; gap:9px; margin-top:16px; background:#F5F7FA; border:1px solid #E9EDF2; border-radius:10px; padding:9px 13px;">
+                <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,#FCEFE6,#F6E1EC); display:flex; align-items:center; justify-content:center; flex:none;"><span style="font-size:10px; font-weight:600; color:#B5638A;">IG</span></div>
+                <div style="text-align:left;"><div style="font-size:13px; font-weight:600; color:#141921;">@cafeaurora</div><div style="font-size:11.5px; color:#8A95A6;">Instagram · Café Aurora</div></div>
+              </div>
+            </sc-if>
+
+            <!-- remediation steps (personal) -->
+            <sc-if value="{{ hasSteps }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:left; width:100%; background:#F5F8FC; border:1px solid #E4ECF5; border-radius:12px; padding:15px 17px; margin-top:20px;">
+                <div style="font-size:12.5px; font-weight:600; color:#3D4757; margin-bottom:11px;">{{ stepsTitle }}</div>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+                    <div style="display:flex; gap:11px; align-items:flex-start;"><span style="width:21px; height:21px; border-radius:50%; background:{{ accent }}; color:#fff; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; flex:none;">{{ s.n }}</span><div style="font-size:12.5px; color:#647084; line-height:1.5; padding-top:2px;">{{ s.text }}</div></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- contextual tip (otra cuenta) -->
+            <sc-if value="{{ hasTip }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; gap:9px; align-items:flex-start; text-align:left; width:100%; background:#EAF2FB; border-radius:11px; padding:12px 14px; margin-top:18px;">
+                <span style="font-size:13px; color:{{ accent }};">ⓘ</span>
+                <span style="font-size:12.5px; color:#647084; line-height:1.55;">{{ tip }}</span>
+              </div>
+            </sc-if>
+
+            <!-- actions -->
+            <div style="display:flex; gap:10px; margin-top:24px;">
+              <sc-if value="{{ canRetry }}" hint-placeholder-val="{{ false }}"><div onClick="{{ retry }}" style="height:42px; display:flex; align-items:center; gap:8px; padding:0 20px; background:{{ accent }}; color:#fff; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7a5 5 0 1 1-1.5-3.5M12 1v3H9" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Volver a intentar</div></sc-if>
+              <div onClick="{{ goClients }}" style="{{ secondaryStyle }}">{{ secondaryLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE ============ -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:12px; font-weight:600; letter-spacing:.8px; text-transform:uppercase; color:#8A95A6; margin-bottom:12px;">Móvil</div>
+      <div style="border-radius:14px; overflow:hidden; border:1px solid #E9EDF2; box-shadow:0 2px 8px rgba(20,25,33,.06);">
+        <div style="height:50px; background:#fff; border-bottom:1px solid #E9EDF2; display:flex; align-items:center; justify-content:space-between; padding:0 16px;">
+          <img src="../uploads/filgrama-logo-horizontal.svg" alt="Fil-Grama" style="height:24px; display:block;" />
+          <div style="width:28px; height:28px; border-radius:50%; background:#E9EDF2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:#4A5568;">LF</div>
+        </div>
+        <div style="background:#F5F7FA; padding:26px 18px 34px; min-height:430px; display:flex; align-items:center; justify-content:center;">
+          <div style="background:#fff; border:1px solid #E9EDF2; border-radius:15px; box-shadow:0 10px 30px rgba(20,25,33,.07); padding:26px 20px 22px; display:flex; flex-direction:column; align-items:center; text-align:center; width:100%;">
+            <div style="width:52px; height:52px; border-radius:14px; background:{{ iconBg }}; display:flex; align-items:center; justify-content:center;">
+              <sc-if value="{{ isSuccess }}" hint-placeholder-val="{{ true }}"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7A50" stroke-width="1.7"/><path d="M8.5 12.2l2.4 2.3 4.6-4.8" stroke="#1F7A50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></sc-if>
+              <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#C2603F" stroke-width="1.7"/><path d="M12 7.5v5.5" stroke="#C2603F" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="16.2" r="1" fill="#C2603F"/></svg></sc-if>
+            </div>
+            <div style="font-size:17px; font-weight:600; color:#141921; margin-top:13px;">{{ title }}</div>
+            <div style="font-size:13px; color:#647084; line-height:1.55; margin-top:8px;">{{ message }}</div>
+
+            <sc-if value="{{ hasSteps }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:left; width:100%; background:#F5F8FC; border:1px solid #E4ECF5; border-radius:11px; padding:13px 14px; margin-top:16px;">
+                <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+                  <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:9px;"><span style="width:19px; height:19px; border-radius:50%; background:{{ accent }}; color:#fff; font-size:10.5px; font-weight:600; display:flex; align-items:center; justify-content:center; flex:none;">{{ s.n }}</span><div style="font-size:12px; color:#647084; line-height:1.45;">{{ s.text }}</div></div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ canRetry }}" hint-placeholder-val="{{ false }}"><div onClick="{{ retry }}" style="height:44px; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; background:{{ accent }}; color:#fff; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; margin-top:18px;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7a5 5 0 1 1-1.5-3.5M12 1v3H9" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Volver a intentar</div></sc-if>
+            <div onClick="{{ goClients }}" style="{{ secondaryStyleMobile }}">{{ secondaryLabel }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:680},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1E66BC&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#1E66BC&quot;,&quot;#14529C&quot;,&quot;#3B85D6&quot;]}}">
+class Component extends DCLogic {
+  state = { demo: 'exito' };
+
+  results = {
+    exito:     { ok:true,  title:'Cuenta conectada', message:'Ya quedó vinculada. Las primeras métricas aparecen tras la próxima captura diaria. No hay que hacer nada más.' },
+    personal:  { ok:false, title:'Esa cuenta es personal', message:'Las cuentas personales no comparten métricas, así que Instagram no nos deja analizarla. Convertila a profesional y vinculá una Página para conectarla.',
+      stepsTitle:'Cómo dejarla lista (un minuto):',
+      steps:[
+        { n:1, text:'En Instagram: Configuración → Tipo de cuenta y herramientas → cambiá a profesional (Business o Creator). Es gratis.' },
+        { n:2, text:'En Editar perfil → Página, vinculá o creá una Página de Facebook.' },
+        { n:3, text:'Volvé acá y tocá «Volver a intentar».' },
+      ] },
+    vencido:   { ok:false, title:'El enlace venció', message:'Por seguridad, los enlaces de conexión caducan a las 72 horas o después de usarse. Reintentá; si no funciona, pedí uno nuevo.' },
+    otra:      { ok:false, title:'Autorizaste con otra cuenta', message:'Iniciaste sesión en Meta con una cuenta distinta a la esperada para este cliente, así que no la conectamos.',
+      tip:'Tu navegador puede estar logueado con otra cuenta. Cerrá esa sesión o usá una ventana de incógnito, y volvé a autorizar con la cuenta del cliente.' },
+    cancelado: { ok:false, title:'Se canceló la autorización', message:'Volviste sin completar la autorización, así que la cuenta no quedó conectada. Podés reintentar cuando quieras.' },
+  };
+
+  seg(active) {
+    const base = { display:'flex', alignItems:'center', justifyContent:'center', padding:'0 13px', height:'30px', fontSize:'13px', cursor:'pointer', borderRadius:'7px', whiteSpace:'nowrap', transition:'all .15s' };
+    return active ? { ...base, background:'#fff', color:'#141921', fontWeight:500, boxShadow:'0 1px 2px rgba(20,25,33,.08)' }
+                  : { ...base, background:'transparent', color:'#647084', fontWeight:400 };
+  }
+
+  go(file) { try { window.location.href = encodeURI(file); } catch(e) {} }
+
+  renderVals() {
+    const accent = this.props.accent || '#1E66BC';
+    const demo = this.state.demo;
+    const r = this.results[demo];
+
+    const demoStates = [['exito','Éxito'],['personal','Cuenta personal'],['vencido','Enlace vencido'],['otra','Otra cuenta'],['cancelado','Cancelado']]
+      .map(([k,l]) => ({ label:l, onClick:() => this.setState({ demo:k }), style:this.seg(k === demo) }));
+
+    const canRetry = !r.ok;
+    const secondaryIsPrimary = r.ok;
+    const secondaryStyle = secondaryIsPrimary
+      ? { height:'42px', display:'flex', alignItems:'center', padding:'0 20px', background:accent, color:'#fff', borderRadius:'10px', fontSize:'14px', fontWeight:600, cursor:'pointer' }
+      : { height:'42px', display:'flex', alignItems:'center', padding:'0 18px', background:'#fff', border:'1px solid #D4DAE3', color:'#3D4757', borderRadius:'10px', fontSize:'14px', fontWeight:500, cursor:'pointer' };
+    const secondaryStyleMobile = secondaryIsPrimary
+      ? { height:'44px', width:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:accent, color:'#fff', borderRadius:'10px', fontSize:'14px', fontWeight:600, cursor:'pointer', marginTop:'18px' }
+      : { height:'42px', width:'100%', display:'flex', alignItems:'center', justifyContent:'center', color:'#647084', fontSize:'13.5px', fontWeight:500, cursor:'pointer', marginTop:'12px' };
+
+    return {
+      accent,
+      demoStates,
+      isSuccess: r.ok, isError: !r.ok,
+      iconBg: r.ok ? '#E7F4EC' : '#FBEFEC',
+      title: r.title, message: r.message,
+      hasSteps: !!r.steps, steps: r.steps || [], stepsTitle: r.stepsTitle || '',
+      hasTip: !!r.tip, tip: r.tip || '',
+      canRetry,
+      retry: () => this.go('Prerrequisitos de Meta.dc.html'),
+      secondaryStyle, secondaryStyleMobile,
+      secondaryLabel: r.ok ? 'Ir a clientes' : 'Ir a clientes',
+      goClients: () => this.go('../2 Clientes/Lista de clientes.dc.html'),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#f0eee9;font-family:'Patrick Hand',system-ui,sans-serif}
+    .dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+    .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+    .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+    .dv-tname{font:600 13px/1.2 'Public Sans',system-ui,sans-serif;color:#1a1a1a}
+    .dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+    .dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+    .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+    .dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.55)}
+    .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+    .dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+    .dv-next{margin:22px 0 0;font:12px/1.5 'Public Sans',system-ui,sans-serif;color:rgba(0,0,0,.5)}
+    .wf-input{border:1.5px solid #3a3a3a;border-radius:6px;padding:6px 10px;font-size:12px;background:#fff}
+  </style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Aceptar invitación (pública, sin login) — misma base, dos variantes; familia visual del Login</span></div>
+  <div class="dv-opts">
+
+    <!-- ============================================================ 1a ============================================================ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Variante fundadora: crea la organización (agencia o autogestionado)</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+
+        <!-- desktop -->
+        <div class="dv-card" style="width:460px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Escritorio · card centrada sobre el fondo del Login</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:24px; display:flex; justify-content:center;">
+            <div style="width:320px; border:1.5px solid #3a3a3a; border-radius:12px; background:#fff; padding:20px 22px;">
+              <!-- brand -->
+              <div style="text-align:center;">
+                <div style="width:34px; height:34px; border:1.5px solid #3a3a3a; border-radius:9px; margin:0 auto;"></div>
+                <div style="font-size:16px; font-weight:600; margin-top:6px;">Fil-Grama</div>
+              </div>
+              <!-- contexto de la invitación -->
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#f2f6fc; padding:10px 12px; margin-top:14px; text-align:center;">
+                <div style="font-size:12px; color:#666;">Te invitaron a crear</div>
+                <div style="font-size:14px; font-weight:600; margin-top:2px;">Agencia Litoral</div>
+                <div style="display:inline-block; border:1.2px solid #999; border-radius:10px; padding:0 9px; font-size:10.5px; color:#666; margin-top:5px;">Organización tipo agencia · vas a ser admin</div>
+              </div>
+              <div style="font-size:10.5px; color:#2a78d6; margin-top:4px;">↑ nombre y tipo vienen de la invitación (no se editan acá); autogestionado dice «para gestionar tus propias redes»</div>
+
+              <!-- form -->
+              <div style="margin-top:12px;">
+                <div style="font-size:11px; color:#666;">Email (de la invitación)</div>
+                <div class="wf-input" style="background:#f4f4f4; color:#888; margin-top:3px;">laura@litoral.com 🔒</div>
+              </div>
+              <div style="margin-top:10px;">
+                <div style="font-size:11px; color:#666;">Nombre completo</div>
+                <div class="wf-input" style="color:#bbb; margin-top:3px;">Laura Benítez</div>
+              </div>
+              <div style="margin-top:10px;">
+                <div style="font-size:11px; color:#666;">Contraseña</div>
+                <div class="wf-input" style="color:#bbb; margin-top:3px; display:flex; justify-content:space-between;"><span>••••••••</span><span style="font-size:10.5px; color:#2a78d6;">Mostrar</span></div>
+                <div style="font-size:10.5px; color:#666; margin-top:4px; line-height:1.7;">
+                  ✓ <span style="color:#4a8a5f;">Al menos 8 caracteres</span><br/>
+                  ○ Al menos un número
+                </div>
+              </div>
+              <div style="margin-top:10px;">
+                <div style="font-size:11px; color:#666;">Repetir contraseña</div>
+                <div class="wf-input" style="color:#bbb; margin-top:3px;">••••••••</div>
+              </div>
+
+              <div style="background:#3a3a3a; color:#fff; border-radius:8px; padding:9px 0; font-size:13px; font-weight:600; text-align:center; margin-top:14px;">Crear organización y entrar</div>
+              <div style="font-size:10px; color:#999; text-align:center; margin-top:8px; line-height:1.5;">Al continuar aceptás los <span style="text-decoration:underline;">términos</span> y la <span style="text-decoration:underline;">política de privacidad</span>.</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px; color:#2a78d6; margin-top:8px;">al confirmar: éxito breve → agencia aterriza en Home de clientes, autogestionado en su dashboard</div>
+        </div>
+
+        <!-- mobile -->
+        <div class="dv-card" style="width:250px; padding:12px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Móvil · sin card, formulario a lo alto</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:14px; background:#efeff2; padding:16px 14px;">
+            <div style="text-align:center;">
+              <div style="width:28px; height:28px; border:1.5px solid #3a3a3a; border-radius:8px; margin:0 auto;"></div>
+              <div style="font-size:14px; font-weight:600; margin-top:4px;">Fil-Grama</div>
+            </div>
+            <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#f2f6fc; padding:8px 10px; margin-top:10px; text-align:center;">
+              <div style="font-size:10.5px; color:#666;">Te invitaron a crear</div>
+              <div style="font-size:12px; font-weight:600;">Agencia Litoral</div>
+            </div>
+            <div class="wf-input" style="background:#f4f4f4; color:#888; margin-top:10px; font-size:10.5px;">laura@litoral.com 🔒</div>
+            <div class="wf-input" style="color:#bbb; margin-top:8px; font-size:10.5px;">Nombre completo</div>
+            <div class="wf-input" style="color:#bbb; margin-top:8px; font-size:10.5px;">Contraseña</div>
+            <div class="wf-input" style="color:#bbb; margin-top:8px; font-size:10.5px;">Repetir contraseña</div>
+            <div style="background:#3a3a3a; color:#fff; border-radius:8px; padding:9px 0; font-size:11.5px; font-weight:600; text-align:center; margin-top:12px;">Crear organización y entrar</div>
+            <div style="font-size:9px; color:#999; text-align:center; margin-top:6px;">Al continuar aceptás los términos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1b ============================================================ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Variante miembro: se une a una organización existente con un rol</div>
+      <div style="display:flex; gap:18px; align-items:flex-start;">
+        <div class="dv-card" style="width:460px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Mismo formulario; cambia solo el bloque de contexto y el botón</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:24px; display:flex; justify-content:center;">
+            <div style="width:320px; border:1.5px solid #3a3a3a; border-radius:12px; background:#fff; padding:20px 22px;">
+              <div style="text-align:center;">
+                <div style="width:34px; height:34px; border:1.5px solid #3a3a3a; border-radius:9px; margin:0 auto;"></div>
+                <div style="font-size:16px; font-weight:600; margin-top:6px;">Fil-Grama</div>
+              </div>
+              <div style="border:1.5px solid #3a3a3a; border-radius:8px; background:#f2f6fc; padding:10px 12px; margin-top:14px; text-align:center;">
+                <div style="font-size:12px; color:#666;"><b>Martín</b> te invitó a sumarte a</div>
+                <div style="font-size:14px; font-weight:600; margin-top:2px;">Agencia Litoral</div>
+                <div style="display:inline-block; border:1.2px solid #999; border-radius:10px; padding:0 9px; font-size:10.5px; color:#666; margin-top:5px;">como Empleado</div>
+              </div>
+              <div style="margin-top:12px;">
+                <div style="font-size:11px; color:#666;">Email (de la invitación)</div>
+                <div class="wf-input" style="background:#f4f4f4; color:#888; margin-top:3px;">sofia@litoral.com 🔒</div>
+              </div>
+              <div style="margin-top:10px;"><div style="font-size:11px; color:#666;">Nombre completo</div><div class="wf-input" style="color:#bbb; margin-top:3px;">Sofía Ríos</div></div>
+              <div style="margin-top:10px;"><div style="font-size:11px; color:#666;">Contraseña</div><div class="wf-input" style="color:#bbb; margin-top:3px;">•••••••• · checklist en vivo</div></div>
+              <div style="margin-top:10px;"><div style="font-size:11px; color:#666;">Repetir contraseña</div><div class="wf-input" style="color:#bbb; margin-top:3px;">••••••••</div></div>
+              <div style="background:#3a3a3a; color:#fff; border-radius:8px; padding:9px 0; font-size:13px; font-weight:600; text-align:center; margin-top:14px;">Unirme y entrar</div>
+              <div style="font-size:10px; color:#999; text-align:center; margin-top:8px;">Al continuar aceptás los <span style="text-decoration:underline;">términos</span>.</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px; color:#2a78d6; margin-top:8px;">sin datos de la org para completar; el rol se muestra como pill informativa</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ 1c ============================================================ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Estados: invitación vencida o ya usada · éxito breve con redirección</div>
+      <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
+
+        <div class="dv-card" style="width:340px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Token vencido o ya usado</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:20px; display:flex; justify-content:center;">
+            <div style="width:270px; border:1.5px solid #3a3a3a; border-radius:12px; background:#fff; padding:22px 20px; text-align:center;">
+              <div style="width:34px; height:34px; border:1.5px solid #3a3a3a; border-radius:9px; margin:0 auto;"></div>
+              <div style="width:38px; height:38px; border:1.5px solid #c07a55; border-radius:50%; margin:14px auto 0; display:flex; align-items:center; justify-content:center; color:#c07a55; font-size:16px;">⏱</div>
+              <div style="font-size:14px; font-weight:600; margin-top:10px;">Esta invitación ya no sirve</div>
+              <div style="font-size:11.5px; color:#666; margin-top:6px; line-height:1.6;">Venció o ya fue usada. No pasa nada: pedile a quien te invitó que te la reenvíe — llega un link nuevo al mismo email.</div>
+              <div style="font-size:10.5px; color:#999; margin-top:12px;">¿Ya tenés cuenta? <span style="text-decoration:underline;">Iniciar sesión</span></div>
+            </div>
+          </div>
+          <div style="font-size:11.5px; color:#2a78d6; margin-top:8px;">sin botones de acción (decidido): mensaje amable + salida a login</div>
+        </div>
+
+        <div class="dv-card" style="width:340px; padding:14px;">
+          <div style="font-size:13px; color:#888; margin-bottom:8px;">Éxito breve → redirige solo</div>
+          <div style="border:1.5px solid #3a3a3a; border-radius:6px; background:#efeff2; padding:20px; display:flex; justify-content:center;">
+            <div style="width:270px; border:1.5px solid #3a3a3a; border-radius:12px; background:#fff; padding:24px 20px; text-align:center;">
+              <div style="width:38px; height:38px; border:1.5px solid #4a8a5f; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; color:#4a8a5f; font-size:16px;">✓</div>
+              <div style="font-size:15px; font-weight:600; margin-top:10px;">¡Listo, Laura!</div>
+              <div style="font-size:11.5px; color:#666; margin-top:6px; line-height:1.6;">Agencia Litoral ya está creada.<br/>Te llevamos a tus clientes…</div>
+              <div style="height:5px; background:#eee; border-radius:3px; margin-top:14px; overflow:hidden;"><div style="height:100%; width:55%; background:#3a3a3a;"></div></div>
+            </div>
+          </div>
+          <div style="font-size:11.5px; color:#2a78d6; margin-top:8px;">agencia → Home clientes · autogestionado → su dashboard · miembro → «Bienvenida a Agencia Litoral»</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Decisión: el nombre de la organización viene definido en la invitación (menos fricción; se muestra, no se edita). Probá: "aprobado" · "que la fundadora pueda editar el nombre de la org" · "mostrame el checklist con error".</p>
+</section>
+</x-dc>
+</body>
+</html>

@@ -42,7 +42,7 @@ portfolio-web/
 ├── index.html                          Home / carátula (~400 líneas)
 ├── fil-grama-report.html               Caso de estudio Fil-Grama (~760 líneas, la página más completa)
 ├── experiencia-backend-plataforma.html Experiencia laboral anonimizada (~450 líneas)
-├── ryguasu.html                        Caso de estudio backend Ryguasu (~560 líneas)
+├── ryguasu.html                        Caso de estudio backend Ryguasu (fichas amenaza→defensa, ver §6.4)
 ├── assets/
 │   ├── og-card.jpg                     Imagen OG compartida por todas las páginas (1200×630)
 │   ├── i18n/
@@ -50,9 +50,12 @@ portfolio-web/
 │   │   ├── index.dict.js               Diccionario de index.html
 │   │   ├── experiencia.dict.js         Diccionario de experiencia-backend-plataforma.html
 │   │   ├── fil-grama-report.dict.js    Diccionario de fil-grama-report.html (incluye SITE_SCREENS_I18N)
-│   │   └── ryguasu.dict.js             Diccionario de ryguasu.html (188 claves)
-│   └── filgrama/                       Capturas reales de Fil-Grama (jpg)
-│       └── diseno/                     Capturas de la fase de diseño (wireframes, hi-fi)
+│   │   └── ryguasu.dict.js             Diccionario de ryguasu.html
+│   ├── filgrama/                       Capturas reales de Fil-Grama (jpg)
+│   │   └── diseno/                     Capturas de la fase de diseño (wireframes, hi-fi)
+│   └── ryguasu/
+│       └── pos-almacen-san-roque-2x.png  Captura del POS (foto "adjunta con cinta" + lightbox)
+├── handoff/                            Handoff del rediseño de ryguasu.html (referencia visual + VOZ.md)
 ├── uploads/Foto_1.JPG                  Retrato del hero en index
 └── Diseño Fil-Grama/                   Mocks interactivos .dc.html (se abren en el modal del tour)
     ├── 1 Acceso/ … 6 Autogestionado/   Carpetas numeradas por área con pantallas .dc.html
@@ -352,29 +355,39 @@ re-renderizar al cambiar idioma. El modal y su JS viven al final de la página.
 Proyecto propio (repo del producto: `~/Documents/Ryguasu`, privado). **SaaS multi-tenant de
 inventario, ventas y punto de venta** para comercio minorista chico de Paraguay (minimarkets,
 panaderías, carnicerías). La página está enfocada 100% en **backend, infraestructura y
-decisiones técnicas** (todavía no hay diseño de pantallas del producto — cuando exista, se puede
-agregar una sección de capturas tipo `#pantallas` de fil-grama).
+decisiones técnicas**.
 
 Rol declarado: backend e infraestructura de Enrique; frontend y diseño visual son de compañeros
 de equipo sobre sus contratos de API. **No inventar autoría más allá de esto.**
 
-Secciones (9 hojas, `RYGUASU.PRT`):
+**Rediseño 2026-07 (origen: `handoff/ryguasu-1d.html`, diseñado en Claude Design).** El formato
+es "informe de amenazas": en vez de hojas temáticas, **7 fichas amenaza→defensa→verificación**
+(`.ficha`, sin `.tear` entre ellas), cada una con la pregunta incómoda como `h3`, dos columnas
+`.fcols` (amenaza/defensa), un anexo opcional (terminal `.term`, demo SQL `.demo`, chips
+`.chips`, simulacro `.drill`) y un pie `.ffoot` con sello `.fstamp` + texto de verificación
+`.fverif` (siempre con "**Mi parte:**"). **El copy es definitivo y sigue `handoff/VOZ.md`**
+(primera persona real, sin patrones de escritura-IA): no reescribirlo; texto nuevo debe seguir
+esas reglas.
 
-| # | id | alt-blue | Contenido |
-|---|---|---|---|
-| — | banner | — | JOB RYGUASU · stamp verde "Backend in production" · factline: 62 endpoints, 36 tablas (25 RLS), 170+ tests, 49 decisiones, 7 días a producción |
-| 01 | `#que-es` | no | El problema; 4 boxes: costo promedio ponderado, ventas inmutables, multi-moneda, POS offline |
-| 02 | `#arquitectura` | sí | Monolito modular Java 25/Spring Boot y su porqué; **diag1** (flujo POS→Cloudflare→Fly.io→PostgreSQL/R2); h3 "Server-authoritative money" |
-| 03 | `#multitenant` | no | RLS fail-closed; stamp "42/42 isolated"; **diag2** (propagación de contexto de tenant); `.ls` de 3 puntos |
-| 04 | `#ingenieria` | sí | `.ls` de 6: idempotencia ON CONFLICT, locking pesimista, permisos por campo, rate limiting sin Redis, licencias JWT offline, sesiones vs tokens |
-| 05 | `#decisiones` | no | Los 49 ADRs; 4 boxes de decisiones destacadas con su porqué |
-| 06 | `#backups` | sí | La saga del backup en 4 `.logrow` (v1 FAIL → v2 OK → dead man's switch → restore real); stamp "Restore tested" |
-| 07 | `#infra` | no | Fly.io + Cloudflare, ~USD 50/mes; 4 boxes: hosting, edge, CI/CD, bug de CI |
-| 08 | `#practicas` | sí | `.chk` de 6: tests, auditoría de seguridad, spec-driven, docs vivas, forense de bugs, humano en el circuito |
-| 09 | `#stack` | no | `.inv` 6 columnas |
+Estructura (`RYGUASU.PRT`):
 
-Nav de la topbar: 8 links (que-es, arquitectura, multitenant, ingenieria, decisiones, backups,
-infra, stack — `#practicas` queda fuera por límite de espacio).
+| id / bloque | alt-blue | Contenido |
+|---|---|---|
+| banner | — | JOB RYGUASU · gallina SVG + stamp verde "Backend en producción" · factline: 62 endpoints, 36 tablas (25 RLS), 170+ tests, 49 decisiones |
+| `#producto` (HOJA 00) | no | Qué es el producto; foto del POS "adjunta con cinta" (`assets/ryguasu/pos-almacen-san-roque-2x.png`) que abre **lightbox** al click |
+| `#preguntas` (intro) | no | "Siete maneras de romperlo" — presenta las fichas |
+| Fichas 01–07 | no | 01 aislamiento (demo SQL **interactiva**: botón quita/restaura contexto de tenant → "0 filas") · 02 concurrencia (term v1 FAIL/v2 OK) · 03 offline (chips outbox→sync_conflict) · 04 moneda/historia · 05 secrets de arranque · 06 backup (term v1/v2/harness) · 07 dead man's switch + drill de restore |
+| `#construccion` | sí | Por qué existen las defensas: SDD 35 specs, 49 DECs, CI, humano en el loop (`.build` 2 col) |
+| `#estado` | no | 3 columnas `.status`: [x] implementado / [~] especificado / [ ] futuro — honestidad sobre qué corre de verdad |
+| `#stack` | no | `.stackline` (una fila tipo factline) |
+
+Nav de la topbar: 5 links (producto, preguntas, construccion, estado, stack). Interacciones en
+el script al pie: snap a grilla (variante con `[data-snap]` para bloques anidados del hero y la
+foto), toggle de contexto (usa `SiteI18n.t("f01.btnRemove"/"f01.btnRestore")` — clave
+`f01.btnRestore` solo se usa desde JS, el validador de §5.2 la lista como "unused": es esperado),
+lightbox (click/Enter abre, click/Escape cierra) y hook `SiteI18nRender` que re-etiqueta el botón
+y re-encaja la grilla al cambiar idioma. Esta página ya no tiene diagramas SVG ni usa
+`.ls/.box/.chk/.logrow/.inv`.
 
 **Hechos verdaderos de Ryguasu para escribir contenido** (verificados contra el repo del
 producto, julio 2026 — no exagerar ni redondear hacia arriba):
@@ -410,8 +423,8 @@ política.
 ## 7. Diagramas SVG (receta para agregar más)
 
 Los diagramas son **SVG inline** dentro de `<div class="panel">`, dibujados a mano con cajas y
-flechas. Referencias: 3 en fil-grama (`#arquitectura`), 2 en ryguasu (`#arquitectura`,
-`#multitenant`).
+flechas. Referencias: 3 en fil-grama (`#arquitectura`). (ryguasu.html tuvo 2 hasta el rediseño
+de 2026-07; la versión actual no lleva diagramas.)
 
 Reglas:
 

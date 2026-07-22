@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ryguasu — Enrique Chyrnia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#43463e;background-image:radial-gradient(1400px 800px at 50% -10%,rgba(255,255,255,.05),transparent 60%);color:#262a20;font-family:"IBM Plex Mono","Courier New",monospace}
+a{color:#262a20;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(38,42,32,.28)}
+a:hover{color:oklch(0.52 0.13 28);text-decoration-color:oklch(0.52 0.13 28)}
+::selection{background:#262a20;color:#f7f4e6}
+</style>
+
+<style>
+.navlink:hover{color:#f7f4e6 !important}
+.photo-hover:hover{transform:rotate(-.4deg) scale(1.015) !important}
+</style>
+</head>
+<body>
+
+<div style="min-height:100vh; padding:0 14px 72px; font-size:14.5px; line-height:26px;">
+
+  <!-- TOPBAR -->
+  <div style="position:sticky; top:0; z-index:30; background:#1d201a; border-bottom:1px solid rgba(247,244,230,.14); margin:0 -14px 26px; padding:0 14px;">
+    <div style="max-width:1220px; margin:0 auto; display:flex; align-items:center; gap:22px; height:50px; color:#cfd3c2; font-size:11.5px; letter-spacing:.08em;">
+      <span style="font-weight:700; color:#f7f4e6; white-space:nowrap;">EC · ENRIQUE CHYRNIA <i style="font-style:normal; color:#9fae8d;">/ RYGUASU.PRT</i></span>
+      <nav style="display:flex; gap:16px; flex:1; overflow:hidden; mask-image:linear-gradient(90deg, #000 calc(100% - 40px), transparent); -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - 40px), transparent);">
+        <a href="#producto" style="color:#a9ad9b; text-decoration:none; text-transform:uppercase; white-space:nowrap;" class="navlink">Producto</a>
+        <a href="#preguntas" style="color:#a9ad9b; text-decoration:none; text-transform:uppercase; white-space:nowrap;" class="navlink">Las preguntas</a>
+        <a href="#construccion" style="color:#a9ad9b; text-decoration:none; text-transform:uppercase; white-space:nowrap;" class="navlink">Cómo se construye</a>
+        <a href="#estado" style="color:#a9ad9b; text-decoration:none; text-transform:uppercase; white-space:nowrap;" class="navlink">Estado</a>
+        <a href="#stack" style="color:#a9ad9b; text-decoration:none; text-transform:uppercase; white-space:nowrap;" class="navlink">Stack</a>
+      </nav>
+      <span style="color:#f7f4e6; border:1px solid rgba(247,244,230,.35); padding:5px 12px; white-space:nowrap; text-transform:uppercase;">← Home</span>
+      <span style="color:#f7f4e6; border:1px solid rgba(247,244,230,.35); padding:5px 12px; font-weight:700; white-space:nowrap;">🌐 ES</span>
+    </div>
+  </div>
+
+  <!-- PAPEL CONTINUO -->
+  <div style="position:relative; max-width:1220px; margin:0 auto; background:#f7f4e6; box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 34px 60px -20px rgba(10,12,8,.55), 0 4px 14px rgba(10,12,8,.3);">
+    <div style="position:absolute; top:0; bottom:0; left:0; width:48px; background:#f2efdf; z-index:2; border-right:1px dashed rgba(38,42,32,.28); background-image:radial-gradient(circle at 50% 50%, #43463e 6px, rgba(15,17,12,.35) 6.5px, rgba(255,255,255,.4) 7.5px, transparent 8.5px); background-size:48px 56px; background-position:0 14px;"></div>
+    <div style="position:absolute; top:0; bottom:0; right:0; width:48px; background:#f2efdf; z-index:2; border-left:1px dashed rgba(38,42,32,.28); background-image:radial-gradient(circle at 50% 50%, #43463e 6px, rgba(15,17,12,.35) 6.5px, rgba(255,255,255,.4) 7.5px, transparent 8.5px); background-size:48px 56px; background-position:0 14px;"></div>
+    <div id="rygSheet" style="margin:0 48px; padding:0 54px 8px; background-image:repeating-linear-gradient(180deg, transparent 0 78px, rgba(96,138,89,.075) 78px 156px);">
+
+      <!-- ===== HERO ===== -->
+      <header style="padding:52px 0; position:relative;" data-screen-label="Hero — Cerrado por diseño">
+        <div style="font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:#6b6e5f; border-top:3px double #262a20; border-bottom:3px double #262a20; padding:23px 0 12px; margin-bottom:26px; display:flex; flex-wrap:wrap; gap:6px 34px;">
+          <span><b style="color:#262a20; font-weight:600;">JOB</b> RYGUASU</span>
+          <span><b style="color:#262a20; font-weight:600;">USER</b> E.CHYRNIA</span>
+          <span><b style="color:#262a20; font-weight:600;">TIPO</b> PROYECTO PERSONAL · SAAS MULTI-TENANT</span>
+          <span><b style="color:#262a20; font-weight:600;">FECHA</b> 2026-07-21</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 220px; gap:44px; align-items:start;">
+          <div>
+            <h1 data-snap="1" style="font-size:clamp(44px,8vw,92px); line-height:.98; font-weight:700; letter-spacing:-.01em; margin:0; text-shadow:1.5px 0 0 currentColor; text-transform:uppercase; background:#f7f4e6; width:fit-content; padding-right:20px;">Ryguasu</h1>
+            <p data-snap="1" style="margin:26px 0 0; max-width:74ch; font-size:clamp(15px,1.6vw,17px);">Ryguasu ("gallina" en Guaraní) es un sistema de inventario, ventas y caja para el comercio chico de Paraguay: el minimercado, la despensa, la carnicería del barrio. Todos los negocios comparten un backend y una base de datos, y eso obliga a tomarse el aislamiento en serio. En esta página no listo features: <b>respondo las preguntas que yo le haría a un sistema que guarda la plata de otra gente</b>.</p>
+            <div data-snap="1" style="margin-top:26px; border-left:3px solid #262a20; padding:0 0 0 22px; max-width:76ch;">
+              <b style="display:block; text-transform:uppercase; font-size:12px; letter-spacing:.12em;">Rol · Backend e infraestructura</b>
+              <p style="margin:0; font-size:13.5px; color:#3c4033;">Diseñé el modelo de datos y la arquitectura, escribí el backend, el aislamiento entre negocios y los backups cifrados, y me encargo de los deploys y de verificar que producción siga sana. El frontend y el diseño visual son de mis compañeros, construidos sobre mis contratos de API.</p>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:20px; padding-top:8px;">
+            <svg width="212" height="212" viewBox="0 0 210 210" role="img" aria-label="Sello de Ryguasu: una gallina" style="transform:rotate(-4deg); opacity:.88; flex:none;">
+              <circle cx="105" cy="105" r="101" fill="none" stroke="#262a20" stroke-width="3"></circle>
+              <circle cx="105" cy="105" r="94" fill="none" stroke="#262a20" stroke-width="1.5"></circle>
+              <g transform="translate(24,28) scale(1.4)">
+                <path fill="#262a20" d="M14 48 L30 43 C28 37 31 30 38 29 C37 25 41 22 44 25 C45 21 50 21 51 25 C54 23 57 26 55 30 C59 34 60 40 56 44 C64 47 71 47 77 43 L92 22 C97 17 102 21 98 27 L88 43 L100 37 C106 34 108 40 102 44 L85 52 C89 63 84 74 73 79 C61 85 46 84 37 77 C28 70 26 59 32 51 C26 51 20 50 14 48 Z"></path>
+                <circle cx="37" cy="35" r="2.5" fill="#f7f4e6"></circle>
+                <path d="M46 58 C56 56 64 60 68 66" fill="none" stroke="#f7f4e6" stroke-width="2"></path>
+                <path d="M48 82 L48 93 M43 93 L53 93 M60 80 L60 93 M55 93 L65 93" stroke="#262a20" stroke-width="3" fill="none"></path>
+              </g>
+            </svg>
+            <div style="display:inline-block; border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:2px 14px; font-size:12.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-5deg); text-align:center;">Backend en producción</div>
+          </div>
+        </div>
+        <div style="margin-top:26px; border-top:1px solid rgba(38,42,32,.28); border-bottom:1px solid rgba(38,42,32,.28); padding:25px 0 12px; display:flex; flex-wrap:wrap; gap:8px 0; font-size:13px; letter-spacing:.04em;">
+          <span style="white-space:nowrap;"><b>62</b> endpoints</span><i style="font-style:normal; color:#6b6e5f; padding:0 14px;">|</i>
+          <span style="white-space:nowrap;"><b>36</b> tablas · 25 bajo RLS</span><i style="font-style:normal; color:#6b6e5f; padding:0 14px;">|</i>
+          <span style="white-space:nowrap;"><b>170+</b> tests de backend</span><i style="font-style:normal; color:#6b6e5f; padding:0 14px;">|</i>
+          <span style="white-space:nowrap;"><b>49</b> decisiones documentadas</span>
+        </div>
+      </header>
+
+      <!-- ===== 00 PRODUCTO ===== -->
+      <div style="position:relative; height:52px;" aria-hidden="true"><div style="position:absolute; left:-102px; right:-102px; top:50%; height:1px; background:repeating-linear-gradient(90deg, rgba(38,42,32,.28) 0 9px, transparent 9px 16px);"></div></div>
+      <section id="producto" style="padding:0 0 52px;" data-screen-label="00 Producto">
+        <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:0 0 12px; margin:26px 0; border-bottom:1px solid rgba(38,42,32,.16); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6b6e5f;"><span><b style="font-weight:600; color:#262a20;">RYGUASU.PRT</b></span><span>HOJA 00 · EL PRODUCTO</span><span>GREENBAR · 132 COL</span></div>
+        <h2 style="display:inline-block; background:#262a20; color:#f7f4e6; padding:0 14px; font-size:clamp(17px,2.4vw,22px); line-height:26px; font-weight:700; margin:0 0 26px; letter-spacing:.04em; text-transform:uppercase;"><span style="color:rgba(247,244,230,.55); font-weight:500; margin-right:16px;">00</span>Primero, el producto</h2>
+        <div style="display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:start;">
+          <div>
+            <p style="margin:0; max-width:72ch;">Un minimercado acá lleva el inventario en papel o en una planilla: nadie sabe cuánto costó de verdad lo que está en góndola, los precios se mueven con el dólar y la caja no deja historia que se pueda revisar. Ryguasu es una <b>suscripción por sucursal</b> con 14 días de prueba: el negocio carga sus productos — códigos de fábrica, códigos internos o PLU de balanza — y vende desde un POS web que aguanta quedarse sin internet.</p>
+            <p style="margin:26px 0 0; max-width:70ch; font-size:13.5px; color:#3c4033;">El backend hace la parte aburrida y difícil: recalcula el costo promedio ponderado en cada compra, congela precio, costo y nombre en cada línea de venta, y maneja Guaraní como base con ARS/USD/BRL a la tasa de cada negocio. El tenant de demostración lleva <b>4.551 ventas en 183 días</b>, cuadradas contra sus propios reportes.</p>
+          </div>
+          <figure data-snap="1" style="margin:0; padding:10px 4px 0;">
+            <div id="posPhoto" role="button" tabindex="0" aria-label="Ampliar la foto del POS" style="position:relative; background:#fdfcf6; padding:12px 12px 44px; box-shadow:0 1px 2px rgba(38,42,32,.25), 0 10px 22px -8px rgba(38,42,32,.4); transform:rotate(-1.6deg); cursor:zoom-in; transition:transform .18s ease;" class="photo-hover">
+              <div style="position:absolute; top:-11px; left:50%; transform:translateX(-50%) rotate(2deg); width:118px; height:26px; background:rgba(214,205,170,.68); border-left:1px solid rgba(255,255,255,.5); border-right:1px solid rgba(255,255,255,.5); box-shadow:0 1px 2px rgba(38,42,32,.18); z-index:2;"></div>
+              <img src="pos-almacen-san-roque-2x.png" alt="POS de Ryguasu: pantalla de venta rápida con un ticket cargado, total en Guaraníes e indicador de sin conexión con ventas en cola" style="display:block; width:100%; height:auto; border:1px solid rgba(38,42,32,.2); filter:saturate(.94);">
+              <div style="position:absolute; left:14px; right:14px; bottom:12px; display:flex; justify-content:space-between; align-items:baseline; gap:10px;">
+                <span style="font-size:12px; color:#3c4033; letter-spacing:.04em;">ADJUNTO A · POS en uso, venta en curso</span>
+                <span style="font-size:10.5px; color:#6b6e5f; letter-spacing:.1em; text-transform:uppercase; white-space:nowrap;">click para ampliar</span>
+              </div>
+            </div>
+            <figcaption style="font-size:12px; color:#6b6e5f; letter-spacing:.04em; margin-top:16px;">Ticket con productos por código y por peso (balanza), total en Gs. — y arriba a la derecha, <b style="color:#3c4033;">"Sin conexión — 3 ventas en cola"</b>: la caja sigue vendiendo sin internet.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div id="posLightboxWrap" style="display:none">
+        <div id="posLightbox" role="button" aria-label="Cerrar la foto ampliada" style="position:fixed; inset:0; z-index:100; background:rgba(29,32,26,.88); display:flex; align-items:center; justify-content:center; padding:34px; cursor:zoom-out;">
+          <div style="position:relative; background:#fdfcf6; padding:14px 14px 46px; box-shadow:0 30px 70px -18px rgba(0,0,0,.7); max-width:min(1240px,94vw); max-height:92vh; display:flex; flex-direction:column;">
+            <img src="pos-almacen-san-roque-2x.png" alt="POS de Ryguasu ampliado" style="display:block; width:100%; height:auto; max-height:calc(92vh - 60px); object-fit:contain; border:1px solid rgba(38,42,32,.2);">
+            <div style="position:absolute; left:16px; right:16px; bottom:13px; display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-family:'IBM Plex Mono',monospace;">
+              <span style="font-size:12.5px; color:#3c4033; letter-spacing:.04em;">ADJUNTO A · RYGUASU.PRT · POS venta rápida, Almacén San Roque</span>
+              <span style="font-size:10.5px; color:#6b6e5f; letter-spacing:.1em; text-transform:uppercase; white-space:nowrap;">click para cerrar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== INTRO PREGUNTAS ===== -->
+      <div style="position:relative; height:52px;" aria-hidden="true"><div style="position:absolute; left:-102px; right:-102px; top:50%; height:1px; background:repeating-linear-gradient(90deg, rgba(38,42,32,.28) 0 9px, transparent 9px 16px);"></div></div>
+      <section id="preguntas" style="padding:0 0 26px;" data-screen-label="Intro preguntas">
+        <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:0 0 12px; margin:26px 0; border-bottom:1px solid rgba(38,42,32,.16); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6b6e5f;"><span><b style="font-weight:600; color:#262a20;">RYGUASU.PRT</b></span><span>FICHAS 01–07 · AMENAZA / DEFENSA</span><span>GREENBAR · 132 COL</span></div>
+        <h2 style="display:inline-block; background:#262a20; color:#f7f4e6; padding:0 14px; font-size:clamp(17px,2.4vw,22px); line-height:26px; font-weight:700; margin:0 0 26px; letter-spacing:.04em; text-transform:uppercase;">Siete maneras de romperlo</h2>
+        <p style="margin:0 0 26px; max-width:74ch;">A un sistema así no se lo juzga por los días en que todo anda bien. Armé estas fichas con las preguntas incómodas — las que me haría un entrevistador, o la realidad — y cada una responde con la <b style="color:oklch(0.52 0.13 28);">amenaza</b>, la <b style="color:oklch(0.5 0.11 150);">defensa que existe hoy</b> y cómo se probó. Los errores del camino también están contados, <b>tal cual pasaron</b>.</p>
+      </section>
+
+      <!-- ===== FICHA 01 — AISLAMIENTO (interactiva) ===== -->
+      <section style="padding:0 0 52px;" data-screen-label="Ficha 01 Aislamiento">
+        <div style="border:1.5px solid #262a20; background:#f7f4e6;">
+          <div style="display:flex; gap:18px; align-items:baseline; padding:24px 28px 0;">
+            <span style="font-size:12px; color:#6b6e5f; white-space:nowrap;">FICHA 01/07</span>
+            <h3 style="margin:0; font-size:clamp(19px,2.6vw,26px); line-height:1.35; font-weight:700; text-shadow:.6px 0 0 currentColor;">¿Y si un negocio consulta los datos de otro?</h3>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px; padding:18px 28px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+            <span style="color:oklch(0.52 0.13 28); font-weight:700;">Amenaza</span>
+            <span style="flex:1; border-bottom:2px dotted rgba(38,42,32,.4); transform:translateY(-4px);"></span>
+            <span style="color:oklch(0.5 0.11 150); font-weight:700;">Defensa probada</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px 36px; padding:12px 28px 0; font-size:13.5px; line-height:1.7; color:#3c4033;">
+            <p style="margin:0;">Un bug en una query, o un job nocturno que olvidó su tenant, devuelve el inventario y las ventas de <b>todos los negocios</b>. Con esquema compartido este accidente no avisa: todo funciona, hasta que un cliente ve datos que no son suyos.</p>
+            <p style="margin:0;">Dos capas independientes: la aplicación resuelve el tenant en cada request, y debajo <b style="color:#262a20;">Row Level Security de PostgreSQL</b> con políticas <code style="background:rgba(38,42,32,.08); padding:0 5px;">FORCE</code> y un rol sin <code style="background:rgba(38,42,32,.08); padding:0 5px;">BYPASSRLS</code>. Sin contexto, la base devuelve <b style="color:#262a20;">cero filas</b> — nunca las de otro.</p>
+          </div>
+          <div style="margin:22px 28px 0; border:1px solid rgba(38,42,32,.3); background:#faf8ee; padding:18px 20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+              <span style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6b6e5f;">SELECT * FROM products — sesión del tenant «Almacén San Roque»</span>
+              <button id="ctxToggle" style="font-family:inherit; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; background:#f7f4e6; color:#262a20; border:1.5px solid #262a20; padding:5px 14px; font-weight:700;">Quitar contexto de tenant</button>
+            </div>
+            <div style="margin-top:14px; font-size:12.5px; border-top:1px solid rgba(38,42,32,.28);">
+              <div style="display:grid; grid-template-columns:110px 1fr 120px 90px; gap:0 16px; padding:6px 2px; color:#6b6e5f; text-transform:uppercase; font-size:10.5px; letter-spacing:.1em; border-bottom:1px solid rgba(38,42,32,.28);"><span>código</span><span>producto</span><span>stock</span><span>precio Gs.</span></div>
+              <div id="ctxOn">
+                <div>
+                  <div style="display:grid; grid-template-columns:110px 1fr 120px 90px; gap:0 16px; padding:5px 2px; border-bottom:1px dotted rgba(38,42,32,.25);"><span>7891000100</span><span>Yerba Selecta 1kg</span><span>34</span><span style="text-align:right;">28.500</span></div>
+                  <div style="display:grid; grid-template-columns:110px 1fr 120px 90px; gap:0 16px; padding:5px 2px; border-bottom:1px dotted rgba(38,42,32,.25);"><span>INT-000041</span><span>Queso Paraguay (kg)</span><span>6.42</span><span style="text-align:right;">52.000</span></div>
+                  <div style="display:grid; grid-template-columns:110px 1fr 120px 90px; gap:0 16px; padding:5px 2px; border-bottom:1px dotted rgba(38,42,32,.25);"><span>2000015004</span><span>PLU 15 · Milanesa (balanza)</span><span>3.80</span><span style="text-align:right;">61.900</span></div>
+                  <div style="padding:8px 2px 2px; color:oklch(0.5 0.11 150); font-weight:700;">154 filas · solo su negocio, siempre</div>
+                </div>
+              </div>
+              <div id="ctxOff" style="display:none">
+                <div style="padding:22px 2px 8px; text-align:center;">
+                  <div style="font-size:44px; line-height:1; font-weight:700; color:oklch(0.52 0.13 28);">0 filas</div>
+                  <div style="margin-top:8px; font-size:12.5px; color:oklch(0.52 0.13 28); font-weight:700; letter-spacing:.06em; text-transform:uppercase;">Falla visible — nunca una fuga silenciosa</div>
+                  <div style="margin-top:4px; font-size:12px; color:#6b6e5f;">Los jobs de fondo deben fijar un contexto centinela explícito, o no leen nada.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:20px 28px 24px;">
+            <span style="border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:1px 14px; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); white-space:nowrap;">Verificado · 42/42 en 403</span>
+            <span style="font-size:12.5px; color:#3c4033; max-width:64ch;"><b style="text-transform:uppercase; font-size:11px; letter-spacing:.1em;">Verificación</b> — una suite se autentica como el negocio A y pega a los 42 endpoints con identificadores del negocio B. <b>Mi parte:</b> las dos capas. Activé RLS cuando el esquema tenía 6 tablas; meterlo después, con 25, hubiera sido mucho peor.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FICHA 02 — CONCURRENCIA ===== -->
+      <section style="padding:0 0 52px;" data-screen-label="Ficha 02 Concurrencia">
+        <div style="border:1.5px solid #262a20; background:#f7f4e6;">
+          <div style="display:flex; gap:18px; align-items:baseline; padding:24px 28px 0;">
+            <span style="font-size:12px; color:#6b6e5f; white-space:nowrap;">FICHA 02/07</span>
+            <h3 style="margin:0; font-size:clamp(19px,2.6vw,26px); line-height:1.35; font-weight:700; text-shadow:.6px 0 0 currentColor;">¿Y si dos cajas venden la última unidad al mismo tiempo?</h3>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px; padding:18px 28px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+            <span style="color:oklch(0.52 0.13 28); font-weight:700;">Amenaza</span>
+            <span style="flex:1; border-bottom:2px dotted rgba(38,42,32,.4); transform:translateY(-4px);"></span>
+            <span style="color:oklch(0.5 0.11 150); font-weight:700;">Defensa probada</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px 36px; padding:12px 28px 0; font-size:13.5px; line-height:1.7; color:#3c4033;">
+            <p style="margin:0;">Dos ventas leen <code style="background:rgba(38,42,32,.08); padding:0 5px;">stock = 1</code> al mismo tiempo, las dos pasan, el stock queda en −1 y después nadie sabe cuál es el costo promedio verdadero.</p>
+            <p style="margin:0;"><code style="background:rgba(38,42,32,.08); padding:0 5px;">SELECT … FOR UPDATE</code> sobre producto y saldo, <b style="color:#262a20;">siempre en el mismo orden</b> — las ventas concurrentes serializan sin deadlocks. Toda mutación de dinero o stock exige un <code style="background:rgba(38,42,32,.08); padding:0 5px;">Idempotency-Key</code>.</p>
+          </div>
+          <div style="margin:22px 28px 0; background:#20241d; padding:14px 18px; font-size:12px; line-height:2; color:#cfd3c2;">
+            <div><span style="color:#9fae8d;">v1 · check-then-insert</span> ……… carrera real de 2 hilos → 500s <span style="color:oklch(0.68 0.15 28); font-weight:700;">[FAIL]</span></div>
+            <div><span style="color:#9fae8d;">v2 · INSERT … ON CONFLICT DO NOTHING</span> … mismo test de carrera → 1 venta, 0 errores <span style="color:oklch(0.72 0.11 150); font-weight:700;">[ OK ]</span></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:20px 28px 24px;">
+            <span style="border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:1px 14px; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); white-space:nowrap;">1 venta · 0 errores</span>
+            <span style="font-size:12.5px; color:#3c4033; max-width:64ch;"><b style="text-transform:uppercase; font-size:11px; letter-spacing:.1em;">Verificación</b> — test de carrera con dos hilos contra un Postgres real (Testcontainers). <b>Mi parte:</b> la primera versión devolvía 500 bajo carrera; la reescribí y dejé ese mismo test como regresión permanente.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FICHA 03 — OFFLINE ===== -->
+      <section style="padding:0 0 52px;" data-screen-label="Ficha 03 Offline">
+        <div style="border:1.5px solid #262a20; background:#f7f4e6;">
+          <div style="display:flex; gap:18px; align-items:baseline; padding:24px 28px 0;">
+            <span style="font-size:12px; color:#6b6e5f; white-space:nowrap;">FICHA 03/07</span>
+            <h3 style="margin:0; font-size:clamp(19px,2.6vw,26px); line-height:1.35; font-weight:700; text-shadow:.6px 0 0 currentColor;">¿Y si se corta internet a mitad del turno?</h3>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px; padding:18px 28px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+            <span style="color:oklch(0.52 0.13 28); font-weight:700;">Amenaza</span>
+            <span style="flex:1; border-bottom:2px dotted rgba(38,42,32,.4); transform:translateY(-4px);"></span>
+            <span style="color:oklch(0.5 0.11 150); font-weight:700;">Defensa probada</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px 36px; padding:12px 28px 0; font-size:13.5px; line-height:1.7; color:#3c4033;">
+            <p style="margin:0;">La caja deja de vender — o peor: vende, y esas ventas se pierden antes de llegar al servidor. Y acá los cortes de internet o de luz pasan nomás; no son un escenario de libro.</p>
+            <p style="margin:0;">POS offline-first con <b style="color:#262a20;">outbox local</b>: las ventas se encolan y sincronizan al volver la conexión. Cada dispositivo porta una <b style="color:#262a20;">licencia JWT firmada por el backend</b> con su tenant y una ventana de gracia según el estado de la suscripción — la identidad sale de la firma, jamás del input del cliente.</p>
+          </div>
+          <div style="margin:22px 28px 0; border:1px solid rgba(38,42,32,.3); background:#faf8ee; padding:14px 18px; font-size:12.5px; color:#3c4033; display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center;">
+            <span style="border:1px solid #262a20; padding:2px 10px; background:#f7f4e6;">venta local</span><span>→</span>
+            <span style="border:1px solid #262a20; padding:2px 10px; background:#f7f4e6;">outbox</span><span>→</span>
+            <span style="border:1px solid #262a20; padding:2px 10px; background:#f7f4e6;">sync firmado</span><span>→</span>
+            <span style="border:1.5px solid oklch(0.55 0.12 65); color:oklch(0.45 0.1 65); padding:2px 10px; font-weight:700;">sync_conflict</span>
+            <span style="flex-basis:100%; font-size:12px; color:#6b6e5f;">Un conflicto de stock jamás produce stock negativo: queda marcado y espera resolución manual por endpoint dedicado. Una venta encolada nunca se pierde por ventana vencida.</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:20px 28px 24px;">
+            <span style="border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:1px 14px; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); white-space:nowrap;">Ninguna venta perdida</span>
+            <span style="font-size:12.5px; color:#3c4033; max-width:64ch;"><b style="text-transform:uppercase; font-size:11px; letter-spacing:.1em;">Verificación</b> — suite de sincronización: replay idempotente, conflictos inyectados, licencias vencidas dentro y fuera de gracia. <b>Mi parte:</b> el protocolo de sync, las licencias firmadas y la política de conflictos.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FICHA 04 — MONEDA / HISTORIA ===== -->
+      <section style="padding:0 0 52px;" data-screen-label="Ficha 04 Moneda">
+        <div style="border:1.5px solid #262a20; background:#f7f4e6;">
+          <div style="display:flex; gap:18px; align-items:baseline; padding:24px 28px 0;">
+            <span style="font-size:12px; color:#6b6e5f; white-space:nowrap;">FICHA 04/07</span>
+            <h3 style="margin:0; font-size:clamp(19px,2.6vw,26px); line-height:1.35; font-weight:700; text-shadow:.6px 0 0 currentColor;">¿Y si el dólar cambia después de la venta?</h3>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px; padding:18px 28px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+            <span style="color:oklch(0.52 0.13 28); font-weight:700;">Amenaza</span>
+            <span style="flex:1; border-bottom:2px dotted rgba(38,42,32,.4); transform:translateY(-4px);"></span>
+            <span style="color:oklch(0.5 0.11 150); font-weight:700;">Defensa probada</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px 36px; padding:12px 28px 24px; font-size:13.5px; line-height:1.7; color:#3c4033;">
+            <p style="margin:0;">Si la historia se recalcula con la tasa o el precio nuevo, los márgenes y reportes viejos dejan de cerrar. Y un cliente con malas intenciones podría mandar su propio total.</p>
+            <p style="margin:0;">El cliente envía solo <code style="background:rgba(38,42,32,.08); padding:0 5px;">productId</code> y <code style="background:rgba(38,42,32,.08); padding:0 5px;">quantity</code>. El servidor calcula y <b style="color:#262a20;">congela por línea</b> precio, costo, nombre y tasa de cambio al instante de la venta, en <code style="background:rgba(38,42,32,.08); padding:0 5px;">numeric(19,4)</code> — nunca punto flotante. Cambiar un precio hoy jamás reescribe el pasado.</p>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:0 28px 24px;">
+            <span style="border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:1px 14px; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); white-space:nowrap;">Historia inmutable</span>
+            <span style="font-size:12.5px; color:#3c4033; max-width:64ch;"><b style="text-transform:uppercase; font-size:11px; letter-spacing:.1em;">Verificación</b> — los reportes del tenant demo (183 días, 4.551 ventas) cierran contra las líneas congeladas. <b>Mi parte:</b> toda la plata se calcula en el servidor; el cliente nunca manda montos.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FICHA 05 — ARRANQUE ===== -->
+      <section style="padding:0 0 52px;" data-screen-label="Ficha 05 Arranque">
+        <div style="border:1.5px solid #262a20; background:#f7f4e6;">
+          <div style="display:flex; gap:18px; align-items:baseline; padding:24px 28px 0;">
+            <span style="font-size:12px; color:#6b6e5f; white-space:nowrap;">FICHA 05/07</span>
+            <h3 style="margin:0; font-size:clamp(19px,2.6vw,26px); line-height:1.35; font-weight:700; text-shadow:.6px 0 0 currentColor;">¿Y si arranca con secrets por defecto?</h3>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px; padding:18px 28px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+            <span style="color:oklch(0.52 0.13 28); font-weight:700;">Amenaza</span>
+            <span style="flex:1; border-bottom:2px dotted rgba(38,42,32,.4); transform:translateY(-4px);"></span>
+            <span style="color:oklch(0.5 0.11 150); font-weight:700;">Defensa probada</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px 36px; padding:12px 28px 24px; font-size:13.5px; line-height:1.7; color:#3c4033;">
+            <p style="margin:0;">Un deploy apurado con credenciales de ejemplo: el sistema levanta, funciona, y queda abierto a cualquiera que haya leído el repositorio.</p>
+            <p style="margin:0;">Un guard de arranque <b style="color:#262a20;">aborta el boot</b> ante secrets default o ausentes — antes de que corran las migraciones. Nació de una auditoría de seguridad independiente: 7 hallazgos, cada uno probado <b style="color:#262a20;">ejecutando el ataque</b>, cada uno cerrado. Además: gitleaks sobre el historial completo en cada push.</p>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:0 28px 24px;">
+            <span style="border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:1px 14px; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); white-space:nowrap;">7/7 hallazgos cerrados</span>
+            <span style="font-size:12.5px; color:#3c4033; max-width:64ch;"><b style="text-transform:uppercase; font-size:11px; letter-spacing:.1em;">Verificación</b> — cada hallazgo se cerró ejecutando de nuevo el ataque, no marcando una planilla. <b>Mi parte:</b> el guard de arranque y el cierre de los 7.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FICHA 06 — BACKUP ===== -->
+      <section style="padding:0 0 52px;" data-screen-label="Ficha 06 Backup">
+        <div style="border:1.5px solid #262a20; background:#f7f4e6;">
+          <div style="display:flex; gap:18px; align-items:baseline; padding:24px 28px 0;">
+            <span style="font-size:12px; color:#6b6e5f; white-space:nowrap;">FICHA 06/07</span>
+            <h3 style="margin:0; font-size:clamp(19px,2.6vw,26px); line-height:1.35; font-weight:700; text-shadow:.6px 0 0 currentColor;">¿Y si el servidor muere esta noche?</h3>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px; padding:18px 28px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+            <span style="color:oklch(0.52 0.13 28); font-weight:700;">Amenaza</span>
+            <span style="flex:1; border-bottom:2px dotted rgba(38,42,32,.4); transform:translateY(-4px);"></span>
+            <span style="color:oklch(0.5 0.11 150); font-weight:700;">Defensa probada</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px 36px; padding:12px 28px 0; font-size:13.5px; line-height:1.7; color:#3c4033;">
+            <p style="margin:0;">Perder días de ventas de decenas de negocios. Trabajo con una regla vieja del oficio: <b style="color:#262a20;">un backup que no se probó no es un backup</b>. Llegar a uno de verdad me tomó cuatro iteraciones, y están documentadas.</p>
+            <p style="margin:0;">Job nocturno: volcado → compresión → cifrado <b style="color:#262a20;">age</b> con clave pública (la privada nunca toca el servidor) → R2, con checksums registrados en base. El dump <b style="color:#262a20;">se completa o grita</b>: nunca queda filtrado en silencio.</p>
+          </div>
+          <div style="margin:22px 28px 0; background:#20241d; padding:14px 18px; font-size:12px; line-height:2; color:#cfd3c2;">
+            <div><span style="color:#9fae8d;">v1 · pg_dump vs RLS forzado</span> …… producción lo rechazó (local pasó: era superuser) <span style="color:oklch(0.68 0.15 28); font-weight:700;">[FAIL]</span></div>
+            <div><span style="color:#9fae8d;">v2 · toggle + trap garantizado</span> … re-fuerza RLS incluso ante fallo · probado con kill −9 <span style="color:oklch(0.72 0.11 150); font-weight:700;">[ OK ]</span></div>
+            <div><span style="color:#9fae8d;">harness local del subsistema</span> …… 37/37 escenarios, con fallos inyectados y restore a S3 local <span style="color:oklch(0.72 0.11 150); font-weight:700;">[ OK ]</span></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:20px 28px 24px;">
+            <span style="border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:1px 14px; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); white-space:nowrap;">Se completa o grita</span>
+            <span style="font-size:12.5px; color:#3c4033; max-width:64ch;"><b style="text-transform:uppercase; font-size:11px; letter-spacing:.1em;">Verificación</b> — el [FAIL] de la v1 me dejó una lección anotada: probar con los privilegios de producción, no con los míos de desarrollador. <b>Mi parte:</b> todo el pipeline, del cron al cifrado.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FICHA 07 — SILENCIO / RESTORE ===== -->
+      <section style="padding:0 0 52px;" data-screen-label="Ficha 07 Restore">
+        <div style="border:1.5px solid #262a20; background:#f7f4e6;">
+          <div style="display:flex; gap:18px; align-items:baseline; padding:24px 28px 0;">
+            <span style="font-size:12px; color:#6b6e5f; white-space:nowrap;">FICHA 07/07</span>
+            <h3 style="margin:0; font-size:clamp(19px,2.6vw,26px); line-height:1.35; font-weight:700; text-shadow:.6px 0 0 currentColor;">¿Y si el backup nunca corrió — y nadie lo notó?</h3>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px; padding:18px 28px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+            <span style="color:oklch(0.52 0.13 28); font-weight:700;">Amenaza</span>
+            <span style="flex:1; border-bottom:2px dotted rgba(38,42,32,.4); transform:translateY(-4px);"></span>
+            <span style="color:oklch(0.5 0.11 150); font-weight:700;">Defensa probada</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px 36px; padding:12px 28px 0; font-size:13.5px; line-height:1.7; color:#3c4033;">
+            <p style="margin:0;">Lo que más miedo da no es que el backup falle: es que deje de correr y nadie se entere. La máquina murió antes de avisar, y el "backup diario" lleva tres semanas sin existir.</p>
+            <p style="margin:0;"><b style="color:#262a20;">Dead man's switch</b> (Healthchecks.io): el job hace ping al terminar bien y al terminar mal — y la <b style="color:#262a20;">ausencia de ping es la alarma</b>. El caso "murió antes de avisar" está cubierto por diseño.</p>
+          </div>
+          <div style="margin:22px 28px 0; border:1.5px solid oklch(0.5 0.11 150); background:#faf8ee; padding:16px 20px;">
+            <div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:oklch(0.5 0.11 150); font-weight:700;">Simulacro de restore · 2026-07-17 · desde R2, en frío</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px 34px; margin-top:8px; font-size:13px;">
+              <span><b>4.553</b> ventas</span><span><b>154</b> productos</span><span><b>3</b> tenants</span><span><b>25/25</b> tablas RLS activas y forzadas</span><span style="color:oklch(0.5 0.11 150); font-weight:700;">0 fixes manuales</span>
+            </div>
+            <div style="margin-top:8px; font-size:12px; color:#6b6e5f;">El simulacro además expuso que los dumps no incluían sus FORCE — ahora cada dump se los agrega solo: el restore es autocontenido por construcción.</div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:20px 28px 24px;">
+            <span style="border:3px double oklch(0.5 0.11 150); color:oklch(0.5 0.11 150); padding:1px 14px; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); white-space:nowrap;">Restore probado · 25/25</span>
+            <span style="font-size:12.5px; color:#3c4033; max-width:64ch;"><b style="text-transform:uppercase; font-size:11px; letter-spacing:.1em;">Verificación</b> — descargado, checksum verificado, descifrado y restaurado sobre un Postgres limpio. <b>Mi parte:</b> el switch, el drill y la corrección que dejó.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CÓMO SE CONSTRUYE ===== -->
+      <div style="position:relative; height:52px;" aria-hidden="true"><div style="position:absolute; left:-102px; right:-102px; top:50%; height:1px; background:repeating-linear-gradient(90deg, rgba(38,42,32,.28) 0 9px, transparent 9px 16px);"></div></div>
+      <section id="construccion" style="padding:0 0 52px; margin:0 -54px; background:#f7f4e6; background-image:repeating-linear-gradient(180deg, transparent 0 78px, rgba(90,115,150,.11) 78px 156px);" data-screen-label="Cómo se construye">
+        <div style="padding:0 54px;">
+          <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:0 0 12px; margin:26px 0; border-bottom:1px solid rgba(38,42,32,.16); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6b6e5f;"><span><b style="font-weight:600; color:#262a20;">RYGUASU.PRT</b></span><span>HOJA · CÓMO SE CONSTRUYE</span><span>GREENBAR · 132 COL</span></div>
+          <h2 style="display:inline-block; background:#262a20; color:#f7f4e6; padding:0 14px; font-size:clamp(17px,2.4vw,22px); line-height:26px; font-weight:700; margin:0 0 26px; letter-spacing:.04em; text-transform:uppercase;">Por qué esas defensas existen</h2>
+          <p style="margin:0 0 26px; max-width:74ch;">Nada de lo de arriba salió de una noche inspirada. Salió de trabajar con specs escritas, decisiones anotadas con su porqué, y una regla fija: nada llega a producción sin que un humano lo apruebe.</p>
+          <ul style="margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:26px 36px;">
+            <li style="font-size:13.5px; line-height:1.7; color:#3c4033;"><b style="display:block; text-transform:uppercase; font-size:13px; letter-spacing:.04em; color:#262a20;">Spec-driven development · 35 specs</b>Trabajo con SDD: cada parte del sistema se especifica antes de codearse, y esas 35 specs son la fuente de verdad. La API escrita manda — un endpoint que se desvía actualiza el contrato en el mismo commit. Si dos specs se contradicen, lo escalo; no lo resuelvo por mi cuenta en silencio.</li>
+            <li style="font-size:13.5px; line-height:1.7; color:#3c4033;"><b style="display:block; text-transform:uppercase; font-size:13px; letter-spacing:.04em; color:#262a20;">49 decisiones con su porqué</b>Registros estilo ADR: fecha, estado, razonamiento, y quién las supera si cambian. Investigar antes de codear: las unidades bonificadas ("12+1") se resolvieron leyendo IAS 2 — cero código cambiado, un documento escrito.</li>
+            <li style="font-size:13.5px; line-height:1.7; color:#3c4033;"><b style="display:block; text-transform:uppercase; font-size:13px; letter-spacing:.04em; color:#262a20;">El CI vio lo que mi máquina no</b>GitHub Actions corre los tests con Testcontainers contra un Postgres real. Los runners de Linux agarraron un bug de precisión de timestamps que en macOS no se reproducía nunca — habría explotado recién en producción. Revisando el resto del código aparecieron 4 casos más del mismo problema.</li>
+            <li style="font-size:13.5px; line-height:1.7; color:#3c4033;"><b style="display:block; text-transform:uppercase; font-size:13px; letter-spacing:.04em; color:#262a20;">Humano en el loop</b>El proyecto se desarrolla con asistencia de IA, con una condición que no se negocia: ningún push, merge ni deploy sale sin mi confirmación. Toda la infraestructura cuesta unos 50 dólares al mes.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===== ESTADO ===== -->
+      <div style="position:relative; height:52px;" aria-hidden="true"><div style="position:absolute; left:-102px; right:-102px; top:50%; height:1px; background:repeating-linear-gradient(90deg, rgba(38,42,32,.28) 0 9px, transparent 9px 16px);"></div></div>
+      <section id="estado" style="padding:0 0 52px;" data-screen-label="Estado del proyecto">
+        <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:0 0 12px; margin:26px 0; border-bottom:1px solid rgba(38,42,32,.16); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6b6e5f;"><span><b style="font-weight:600; color:#262a20;">RYGUASU.PRT</b></span><span>HOJA · ESTADO DEL PROYECTO</span><span>GREENBAR · 132 COL</span></div>
+        <h2 style="display:inline-block; background:#262a20; color:#f7f4e6; padding:0 14px; font-size:clamp(17px,2.4vw,22px); line-height:26px; font-weight:700; margin:0 0 26px; letter-spacing:.04em; text-transform:uppercase;">Qué está hecho, qué está escrito, qué falta</h2>
+        <p style="margin:0 0 26px; max-width:74ch; font-size:13.5px; color:#3c4033;">Prefiero separar lo que ya corre en producción de lo que está escrito y todavía no migré. Mezclar las dos cosas sería venderte algo que no existe.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:26px;">
+          <div style="border-top:3px double #262a20; padding-top:10px;">
+            <div style="font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:oklch(0.5 0.11 150);">[x] Implementado y verificado</div>
+            <ul style="margin:12px 0 0; padding:0; list-style:none; font-size:13px; line-height:1.7; color:#3c4033; display:flex; flex-direction:column; gap:6px;">
+              <li>· RLS en 25 tablas · 42/42 adversarial</li>
+              <li>· Idempotencia y locks bajo carrera real</li>
+              <li>· Backups cifrados + restore drill 25/25</li>
+              <li>· Offline sync con licencias firmadas</li>
+              <li>· Multi-moneda con tasas congeladas</li>
+              <li>· Pago manual de suscripciones (Fase 9)</li>
+              <li>· Defensa del registro abierto: rate-limit por IP, purga de trials a 30 días</li>
+            </ul>
+          </div>
+          <div style="border-top:3px double #262a20; padding-top:10px;">
+            <div style="font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:oklch(0.55 0.12 65);">[~] Especificado, migraciones pendientes</div>
+            <ul style="margin:12px 0 0; padding:0; list-style:none; font-size:13px; line-height:1.7; color:#3c4033; display:flex; flex-direction:column; gap:6px;">
+              <li>· Billing con precios versionados y snapshots de pago (DEC-032/033/035/037)</li>
+              <li>· Zero Trust sobre el panel staff — la app separada existe; el deploy tras Access está pendiente de verificación</li>
+              <li>· Venta por peso completa: PLU y códigos de balanza (spec 15)</li>
+            </ul>
+          </div>
+          <div style="border-top:3px double #262a20; padding-top:10px;">
+            <div style="font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#6b6e5f;">[ ] Futuro, escrito como regla</div>
+            <ul style="margin:12px 0 0; padding:0; list-style:none; font-size:13px; line-height:1.7; color:#3c4033; display:flex; flex-direction:column; gap:6px;">
+              <li>· Staging separado antes de tocar producción con el primer cliente pago — regla dura, no buena intención</li>
+              <li>· Demo pública con tenant sembrado</li>
+              <li>· Acceso para agentes IA vía MCP (spec 19)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== STACK ===== -->
+      <div style="position:relative; height:52px;" aria-hidden="true"><div style="position:absolute; left:-102px; right:-102px; top:50%; height:1px; background:repeating-linear-gradient(90deg, rgba(38,42,32,.28) 0 9px, transparent 9px 16px);"></div></div>
+      <section id="stack" style="padding:0 0 52px;" data-screen-label="Stack">
+        <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; padding:0 0 12px; margin:26px 0; border-bottom:1px solid rgba(38,42,32,.16); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#6b6e5f;"><span><b style="font-weight:600; color:#262a20;">RYGUASU.PRT</b></span><span>HOJA · INVENTARIO TÉCNICO</span><span>GREENBAR · 132 COL</span></div>
+        <h2 style="display:inline-block; background:#262a20; color:#f7f4e6; padding:0 14px; font-size:clamp(17px,2.4vw,22px); line-height:26px; font-weight:700; margin:0 0 26px; letter-spacing:.04em; text-transform:uppercase;">Inventario técnico</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:8px 0; font-size:13px; letter-spacing:.02em; border-top:1px solid rgba(38,42,32,.28); border-bottom:1px solid rgba(38,42,32,.28); padding:12px 0;">
+          <span style="white-space:nowrap;">Java 25 · Spring Boot</span><i style="font-style:normal; color:#6b6e5f; padding:0 12px;">|</i>
+          <span style="white-space:nowrap;">PostgreSQL · RLS · Flyway</span><i style="font-style:normal; color:#6b6e5f; padding:0 12px;">|</i>
+          <span style="white-space:nowrap;">PgBouncer session mode</span><i style="font-style:normal; color:#6b6e5f; padding:0 12px;">|</i>
+          <span style="white-space:nowrap;">Sesiones server-side · CSRF · RBAC</span><i style="font-style:normal; color:#6b6e5f; padding:0 12px;">|</i>
+          <span style="white-space:nowrap;">Fly.io · Cloudflare Pages · R2</span><i style="font-style:normal; color:#6b6e5f; padding:0 12px;">|</i>
+          <span style="white-space:nowrap;">Testcontainers · GitHub Actions · gitleaks</span><i style="font-style:normal; color:#6b6e5f; padding:0 12px;">|</i>
+          <span style="white-space:nowrap;">age · Healthchecks.io · Brevo</span>
+        </div>
+      </section>
+
+      <!-- ===== CONTACTO ===== -->
+      <div style="position:relative; height:52px;" aria-hidden="true"><div style="position:absolute; left:-102px; right:-102px; top:50%; height:1px; background:repeating-linear-gradient(90deg, rgba(38,42,32,.28) 0 9px, transparent 9px 16px);"></div></div>
+      <footer style="padding:52px 0;" data-screen-label="Contacto">
+        <div style="font-size:13px; letter-spacing:.3em; color:#6b6e5f; overflow:hidden; white-space:nowrap; margin-bottom:26px;">*** *** *** *** END OF JOB *** *** *** ***</div>
+        <h3 style="font-size:22px; line-height:26px; text-transform:uppercase; margin:0; text-shadow:.6px 0 0 currentColor; letter-spacing:.02em;">Contacto</h3>
+        <p style="max-width:60ch; margin:26px 0;">Si te quedó una pregunta que las fichas no responden, escribime.</p>
+        <a href="mailto:www.enririos@gmail.com" style="font-size:16px; font-weight:700; display:block; width:fit-content; margin:0;">www.enririos@gmail.com</a>
+        <p style="font-size:12.5px; color:#6b6e5f; margin:26px 0 0; max-width:76ch;">Ryguasu es un producto propietario en desarrollo activo. Esta página describe la ingeniería sin exponer código fuente, credenciales, URLs internas, esquemas ni datos de clientes.</p>
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px 20px; margin-top:52px; padding-top:25px; border-top:1px solid rgba(38,42,32,.28); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:#6b6e5f;">
+          <span>Enrique Chyrnia · Backend e infraestructura</span>
+          <span>← Volver al inicio</span>
+          <span>© 2026</span>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  // Snap de bloques a la grilla de 26px del papel rayado
+  function snap(){
+    var sheet = document.getElementById('rygSheet');
+    if(!sheet) return;
+    var els = sheet.querySelectorAll(':scope > header > *, :scope > section > *, :scope > footer > *, [data-snap]');
+    els.forEach(function(el){ el.style.paddingBottom=''; });
+    var top = sheet.getBoundingClientRect().top;
+    els.forEach(function(el){
+      var base = parseFloat(getComputedStyle(el).paddingBottom)||0;
+      var b = el.getBoundingClientRect().bottom - top;
+      var add = (26 - (b % 26)) % 26;
+      if(add > 0.4 && add < 25.6) el.style.paddingBottom = (base+add)+'px';
+    });
+  }
+  var raf;
+  function req(){ if(raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(snap); }
+  window.addEventListener('resize', req);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(req);
+  window.addEventListener('load', req);
+  req(); setTimeout(req, 300);
+
+  // Toggle de contexto de tenant (ficha 01)
+  var ctx = true;
+  var btn = document.getElementById('ctxToggle');
+  btn.addEventListener('click', function(){
+    ctx = !ctx;
+    document.getElementById('ctxOn').style.display = ctx ? '' : 'none';
+    document.getElementById('ctxOff').style.display = ctx ? 'none' : '';
+    btn.textContent = ctx ? 'Quitar contexto de tenant' : 'Restaurar contexto';
+    btn.style.background = ctx ? '#f7f4e6' : '#262a20';
+    btn.style.color = ctx ? '#262a20' : '#f7f4e6';
+    req();
+  });
+
+  // Lightbox de la foto del POS
+  var lb = document.getElementById('posLightboxWrap');
+  document.getElementById('posPhoto').addEventListener('click', function(){ lb.style.display=''; });
+  document.getElementById('posLightbox').addEventListener('click', function(){ lb.style.display='none'; });
+})();
+</script>
+</body>
+</html>

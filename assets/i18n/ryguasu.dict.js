@@ -1,203 +1,317 @@
+/*
+ * Diccionario EN/ES de ryguasu.html (rediseño "fichas amenaza→defensa").
+ * El copy ES es definitivo (handoff/VOZ.md): no reescribir.
+ */
 window.SiteI18n = window.SiteI18n || {};
 window.SiteI18n.dict = {
+
+  /* ===== meta ===== */
   "meta.title": { en: "Ryguasu — Backend Case Study · Enrique Chyrnia", es: "Ryguasu — Caso de estudio backend · Enrique Chyrnia" },
-  "meta.description": { en: "Ryguasu case study: a multi-tenant SaaS backend for inventory, sales, and POS. Java, Spring Boot, PostgreSQL Row Level Security, encrypted backups, and the reasoning behind each decision.", es: "Caso de estudio de Ryguasu: un backend SaaS multi-tenant para inventario, ventas y punto de venta. Java, Spring Boot, Row Level Security en PostgreSQL, backups cifrados y el porqué de cada decisión." },
+  "meta.description": { en: "Ryguasu: a multi-tenant SaaS backend for inventory, sales, and POS in Paraguay. Seven threat cards — isolation, concurrency, offline, backups — each with its defense and how it was verified.", es: "Ryguasu: backend SaaS multi-tenant de inventario, ventas y POS para el comercio chico de Paraguay. Siete fichas de amenaza — aislamiento, concurrencia, offline, backups — cada una con su defensa y cómo se probó." },
   "meta.ogTitle": { en: "Ryguasu — Backend Case Study · Enrique Chyrnia", es: "Ryguasu — Caso de estudio backend · Enrique Chyrnia" },
-  "meta.ogDescription": { en: "Multi-tenant SaaS backend for inventory, sales, and POS: Java, Spring Boot, PostgreSQL Row Level Security, encrypted backups, and documented decisions.", es: "Backend SaaS multi-tenant para inventario, ventas y punto de venta: Java, Spring Boot, Row Level Security en PostgreSQL, backups cifrados y decisiones documentadas." },
+  "meta.ogDescription": { en: "Multi-tenant SaaS backend for inventory, sales, and POS: seven threat→defense cards, each with how it was verified. Java, Spring Boot, PostgreSQL Row Level Security, encrypted backups.", es: "Backend SaaS multi-tenant de inventario, ventas y POS: siete fichas amenaza→defensa, cada una con cómo se verificó. Java, Spring Boot, Row Level Security en PostgreSQL, backups cifrados." },
   "meta.ogImageAlt": { en: "Enrique Chyrnia — Backend · APIs & Integration · Cloud systems", es: "Enrique Chyrnia — Backend · APIs e integraciones · Sistemas cloud" },
   "meta.ogLocale": { en: "en_US", es: "es_AR" },
   "meta.twitterTitle": { en: "Ryguasu — Backend Case Study · Enrique Chyrnia", es: "Ryguasu — Caso de estudio backend · Enrique Chyrnia" },
-  "meta.twitterDescription": { en: "Multi-tenant SaaS backend for inventory, sales, and POS: Java, Spring Boot, PostgreSQL Row Level Security, encrypted backups, and documented decisions.", es: "Backend SaaS multi-tenant para inventario, ventas y punto de venta: Java, Spring Boot, Row Level Security en PostgreSQL, backups cifrados y decisiones documentadas." },
+  "meta.twitterDescription": { en: "Multi-tenant SaaS backend for inventory, sales, and POS: seven threat→defense cards, each with how it was verified. Java, Spring Boot, PostgreSQL Row Level Security, encrypted backups.", es: "Backend SaaS multi-tenant de inventario, ventas y POS: siete fichas amenaza→defensa, cada una con cómo se verificó. Java, Spring Boot, Row Level Security en PostgreSQL, backups cifrados." },
 
+  /* ===== topbar / nav ===== */
   "topbar.tid": { en: 'EC · ENRIQUE CHYRNIA <i>/ RYGUASU.PRT</i>', es: 'EC · ENRIQUE CHYRNIA <i>/ RYGUASU.PRT</i>' },
-  "nav.quees": { en: "Overview", es: "Qué es" },
-  "nav.arquitectura": { en: "Architecture", es: "Arquitectura" },
-  "nav.multitenant": { en: "Multi-tenant", es: "Multi-tenant" },
-  "nav.ingenieria": { en: "Engineering", es: "Ingeniería" },
-  "nav.decisiones": { en: "Decisions", es: "Decisiones" },
-  "nav.backups": { en: "Backups", es: "Backups" },
-  "nav.infra": { en: "Infra", es: "Infra" },
-  "nav.stack": { en: "Stack", es: "Stack" },
   "topbar.home": { en: "← Home", es: "← Inicio" },
+  "nav.producto": { en: "Product", es: "Producto" },
+  "nav.preguntas": { en: "The questions", es: "Las preguntas" },
+  "nav.construccion": { en: "How it's built", es: "Cómo se construye" },
+  "nav.estado": { en: "Status", es: "Estado" },
+  "nav.stack": { en: "Stack", es: "Stack" },
 
-  "hero.type": { en: "<b>TYPE</b> PERSONAL PROJECT · MULTI-TENANT SAAS", es: "<b>TIPO</b> PROYECTO PROPIO · SAAS MULTI-TENANT" },
+  /* ===== hero ===== */
+  "hero.type": { en: "<b>TYPE</b> PERSONAL PROJECT · MULTI-TENANT SAAS", es: "<b>TIPO</b> PROYECTO PERSONAL · SAAS MULTI-TENANT" },
   "hero.dateLabel": { en: "DATE", es: "FECHA" },
+  "hero.sealAria": { en: "Ryguasu stamp: a hen", es: "Sello de Ryguasu: una gallina" },
   "hero.stamp": { en: "Backend in production", es: "Backend en producción" },
-  "hero.brole": { en: "Inventory, sales, and point-of-sale SaaS for small retail in Paraguay — one backend serving many businesses.", es: "SaaS de inventario, ventas y punto de venta para comercios chicos de Paraguay — un solo backend sirviendo a muchos negocios." },
-  "hero.blead": { en: 'Ryguasu ("hen" in Guaraní) is a multi-tenant SaaS for minimarkets, bakeries, and butcher shops: inventory with weighted average cost, a POS that freezes prices and costs at the moment of sale, multi-currency with frozen exchange rates, and an offline mode so the register keeps selling without internet. Every business shares one backend and one database, isolated by <b class="hl">Row Level Security that fails closed</b>: if the tenant context is missing, the query returns zero rows — never someone else\'s data.', es: 'Ryguasu ("gallina" en guaraní) es un SaaS multi-tenant para minimarkets, panaderías y carnicerías: inventario con costo promedio ponderado, un POS que congela precios y costos en el momento de la venta, multi-moneda con cotizaciones congeladas y un modo offline para que la caja siga vendiendo sin internet. Todos los negocios comparten un backend y una base de datos, aislados por <b class="hl">Row Level Security que falla cerrado</b>: si falta el contexto del tenant, la consulta devuelve cero filas — nunca datos ajenos.' },
-  "hero.rolLabel": { en: "Role · Backend & Infrastructure", es: "Rol · Backend e infraestructura" },
-  "hero.rolP": { en: "I designed the data model and the architecture, implemented the backend, built the tenant isolation and the encrypted backup pipeline, and handle deployments and production verification. Frontend and visual design are teammates' work, built on top of my API contracts.", es: "Diseñé el modelo de datos y la arquitectura, implementé el backend, construí el aislamiento de tenants y el pipeline de backups cifrados, y me encargo de los deploys y la verificación en producción. El frontend y el diseño visual son trabajo de compañeros de equipo, construidos sobre mis contratos de API." },
-  "hero.fact1": { en: "API endpoints", es: "endpoints de API" },
+  "hero.blead": {
+    en: 'Ryguasu ("hen" in Guaraní) is an inventory, sales, and cash register system for the small retail of Paraguay: the minimarket, the corner store, the neighborhood butcher shop. Every business shares one backend and one database, and that forces you to take isolation seriously. On this page I don\'t list features: <b>I answer the questions I\'d ask a system that keeps other people\'s money</b>.',
+    es: 'Ryguasu ("gallina" en Guaraní) es un sistema de inventario, ventas y caja para el comercio chico de Paraguay: el minimercado, la despensa, la carnicería del barrio. Todos los negocios comparten un backend y una base de datos, y eso obliga a tomarse el aislamiento en serio. En esta página no listo features: <b>respondo las preguntas que yo le haría a un sistema que guarda la plata de otra gente</b>.'
+  },
+  "hero.rolLabel": { en: "Role · Backend &amp; infrastructure", es: "Rol · Backend e infraestructura" },
+  "hero.rolP": {
+    en: "I designed the data model and the architecture, wrote the backend, the isolation between businesses and the encrypted backups, and I take care of the deploys and of checking that production stays healthy. The frontend and the visual design are my teammates' work, built on my API contracts.",
+    es: "Diseñé el modelo de datos y la arquitectura, escribí el backend, el aislamiento entre negocios y los backups cifrados, y me encargo de los deploys y de verificar que producción siga sana. El frontend y el diseño visual son de mis compañeros, construidos sobre mis contratos de API."
+  },
+  "hero.fact1": { en: "endpoints", es: "endpoints" },
   "hero.fact2": { en: "tables · 25 under RLS", es: "tablas · 25 bajo RLS" },
   "hero.fact3": { en: "backend tests", es: "tests de backend" },
   "hero.fact4": { en: "decisions documented", es: "decisiones documentadas" },
-  "hero.fact5": { en: "<b>7 days</b> from empty repo to production", es: "<b>7 días</b> de repo vacío a producción" },
 
-  "s01.sheet": { en: "SHEET 01/09 · THE PROBLEM", es: "HOJA 01/09 · EL PROBLEMA" },
-  "s01.title": { en: "Why Ryguasu exists", es: "Por qué existe Ryguasu" },
-  "s01.lede": { en: "A minimarket or a butcher shop in Paraguay runs its inventory on paper or a spreadsheet: nobody knows the real cost of what's on the shelf, prices change with the exchange rate, and the till keeps no verifiable history. Enterprise POS systems are priced for supermarkets, not for a corner store.", es: "Un minimarket o una carnicería en Paraguay lleva el inventario en papel o en una planilla: nadie sabe el costo real de lo que hay en la góndola, los precios cambian con la cotización y la caja no guarda un historial verificable. Los POS empresariales tienen precio de supermercado, no de almacén de barrio." },
-  "s01.note": { en: "Ryguasu is a <b>subscription SaaS per branch</b> with a 14-day trial: each business registers, loads its products (factory barcodes, internal codes, or scale PLUs), and sells from a web POS. The backend does the hard accounting so the owner doesn't have to.", es: "Ryguasu es un <b>SaaS por suscripción por sucursal</b> con prueba de 14 días: cada negocio se registra, carga sus productos (códigos de barras de fábrica, códigos internos o PLU de balanza) y vende desde un POS web. El backend hace la contabilidad difícil para que el dueño no tenga que hacerla." },
-  "s01.box1.bt": { en: "Real costing, not guesses", es: "Costos reales, no estimados" },
-  "s01.box1.span": { en: "Weighted average cost recalculated on every purchase entry; margins come from real data.", es: "Costo promedio ponderado recalculado en cada entrada de compra; los márgenes salen de datos reales." },
-  "s01.box2.bt": { en: "Immutable sales history", es: "Historial de ventas inmutable" },
-  "s01.box2.span": { en: "Each sale line freezes price, cost, and product name at that moment. Changing a price never rewrites the past.", es: "Cada línea de venta congela precio, costo y nombre del producto en ese momento. Cambiar un precio nunca reescribe el pasado." },
-  "s01.box3.bt": { en: "Multi-currency", es: "Multi-moneda" },
-  "s01.box3.span": { en: "Guaraní as base plus ARS/USD/BRL with per-business exchange rates, frozen into every sale.", es: "Guaraní como base más ARS/USD/BRL con cotizaciones por negocio, congeladas en cada venta." },
-  "s01.box4.bt": { en: "Sells without internet", es: "Vende sin internet" },
-  "s01.box4.span": { en: "Offline-first POS with an outbox: sales queue locally and sync when the connection returns.", es: "POS offline-first con outbox: las ventas se encolan localmente y se sincronizan cuando vuelve la conexión." },
+  /* ===== 00 producto ===== */
+  "s00.sheet": { en: "SHEET 00 · THE PRODUCT", es: "HOJA 00 · EL PRODUCTO" },
+  "s00.title": { en: "First, the product", es: "Primero, el producto" },
+  "s00.p1": {
+    en: "A minimarket here keeps its inventory on paper or in a spreadsheet: nobody knows what the goods on the shelf really cost, prices move with the dollar, and the till leaves no history anyone can check. Ryguasu is a <b>subscription per branch</b> with a 14-day trial: the business loads its products — factory barcodes, internal codes or scale PLUs — and sells from a web POS that can take losing the internet.",
+    es: "Un minimercado acá lleva el inventario en papel o en una planilla: nadie sabe cuánto costó de verdad lo que está en góndola, los precios se mueven con el dólar y la caja no deja historia que se pueda revisar. Ryguasu es una <b>suscripción por sucursal</b> con 14 días de prueba: el negocio carga sus productos — códigos de fábrica, códigos internos o PLU de balanza — y vende desde un POS web que aguanta quedarse sin internet."
+  },
+  "s00.p2": {
+    en: "The backend does the boring, hard part: it recalculates the weighted average cost on every purchase, freezes price, cost and name into every sale line, and handles Guaraní as base with ARS/USD/BRL at each business's own rate. The demo tenant carries <b>4,551 sales over 183 days</b>, squared against its own reports.",
+    es: "El backend hace la parte aburrida y difícil: recalcula el costo promedio ponderado en cada compra, congela precio, costo y nombre en cada línea de venta, y maneja Guaraní como base con ARS/USD/BRL a la tasa de cada negocio. El tenant de demostración lleva <b>4.551 ventas en 183 días</b>, cuadradas contra sus propios reportes."
+  },
+  "s00.figAria": { en: "Enlarge the POS photo", es: "Ampliar la foto del POS" },
+  "s00.figAlt": {
+    en: "Ryguasu POS: quick-sale screen with a ticket loaded, total in Guaraníes and an offline indicator with queued sales",
+    es: "POS de Ryguasu: pantalla de venta rápida con un ticket cargado, total en Guaraníes e indicador de sin conexión con ventas en cola"
+  },
+  "s00.figTag": { en: "EXHIBIT A · POS in use, sale in progress", es: "ADJUNTO A · POS en uso, venta en curso" },
+  "s00.figZoom": { en: "click to enlarge", es: "click para ampliar" },
+  "s00.figCap": {
+    en: 'A ticket with products by code and by weight (scale), total in Gs. — and top right, <b class="soft">"Offline — 3 sales queued"</b>: the till keeps selling without internet.',
+    es: 'Ticket con productos por código y por peso (balanza), total en Gs. — y arriba a la derecha, <b class="soft">"Sin conexión — 3 ventas en cola"</b>: la caja sigue vendiendo sin internet.'
+  },
 
-  "s02.sheet": { en: "SHEET 02/09 · ARCHITECTURE", es: "HOJA 02/09 · ARQUITECTURA" },
-  "s02.title": { en: "A modular monolith, on purpose", es: "Un monolito modular, a propósito" },
-  "s02.lede": { en: "Backend in Java 25 with Spring Boot, organized as a <b>modular monolith</b>: packages by domain (auth, tenancy, products, inventory, sales, currency, reports, audit, subscriptions, offline sync) over a single PostgreSQL with versioned Flyway migrations. Not microservices, and that's deliberate: a sale must update stock and weighted average cost <b class=\"hl\">in one atomic transaction</b> — splitting that over a network would buy complexity and give up correctness. The REST API is contract-first: the written spec is binding, and any endpoint that deviates must update the contract in the same commit.", es: "Backend en Java 25 con Spring Boot, organizado como <b>monolito modular</b>: paquetes por dominio (auth, tenancy, productos, inventario, ventas, monedas, reportes, auditoría, suscripciones, sync offline) sobre un único PostgreSQL con migraciones versionadas de Flyway. No son microservicios, y es deliberado: una venta tiene que actualizar stock y costo promedio ponderado <b class=\"hl\">en una sola transacción atómica</b> — partir eso por red compraría complejidad a cambio de resignar correctitud. La API REST es contract-first: la especificación escrita es vinculante, y cualquier endpoint que se desvíe tiene que actualizar el contrato en el mismo commit." },
-  "diag1.aria": { en: "Conceptual diagram of Ryguasu's architecture", es: "Diagrama conceptual de la arquitectura de Ryguasu" },
-  "diag1.cliente": { en: "Point of sale", es: "Punto de venta" },
-  "diag1.pos": { en: "POS · PWA", es: "POS · PWA" },
-  "diag1.posdesc": { en: "offline outbox", es: "outbox offline" },
-  "diag1.edge": { en: "Edge", es: "Edge" },
-  "diag1.cf": { en: "Cloudflare Pages", es: "Cloudflare Pages" },
-  "diag1.cfdesc": { en: "/api/* proxy · no CORS", es: "proxy /api/* · sin CORS" },
-  "diag1.backend": { en: "Backend — Fly.io", es: "Backend — Fly.io" },
-  "diag1.mod1": { en: "Auth · Tenancy · RBAC", es: "Auth · Tenancy · RBAC" },
-  "diag1.mod2": { en: "Products · Stock · WAC", es: "Productos · Stock · CPP" },
-  "diag1.mod3": { en: "Sales · Reports · Audit", es: "Ventas · Reportes · Auditoría" },
-  "diag1.modulos": { en: "modular monolith · Spring Boot", es: "monolito modular · Spring Boot" },
-  "diag1.datos": { en: "Data", es: "Datos" },
-  "diag1.postgres": { en: "PostgreSQL", es: "PostgreSQL" },
-  "diag1.pgdesc": { en: "RLS · 36 tables", es: "RLS · 36 tablas" },
-  "diag1.r2": { en: "R2 · backups", es: "R2 · backups" },
-  "diag1.r2desc": { en: "age-encrypted", es: "cifrados con age" },
-  "diag1.staff": { en: "Operation", es: "Operación" },
-  "diag1.panel": { en: "Staff panel", es: "Panel staff" },
-  "diag1.paneldesc": { en: "separate app", es: "app separada" },
-  "diag1.footer1": { en: "Server-side sessions (HttpOnly cookie) · CSRF · PgBouncer in session mode · nightly encrypted backup job", es: "Sesiones server-side (cookie HttpOnly) · CSRF · PgBouncer en modo sesión · job nocturno de backup cifrado" },
-  "diag1.footer2": { en: "Conceptual, simplified diagram. Reflects the backend's real modules without exposing infrastructure details.", es: "Diagrama conceptual y simplificado. Refleja los módulos reales del backend sin exponer detalles de infraestructura." },
-  "s02.h3.money": { en: "Server-authoritative money", es: "El dinero lo decide el servidor" },
-  "s02.note.money": { en: "The client sends only <code>productId</code> and <code>quantity</code>. The backend computes and freezes price, cost, and name per line — amounts from the frontend are never trusted, and the sales history stays valid even when prices change. Money is <code>numeric(19,4)</code>, never floating point.", es: "El cliente envía solo <code>productId</code> y <code>quantity</code>. El backend calcula y congela precio, costo y nombre por línea — nunca se confía en importes que vengan del frontend, y el historial de ventas sigue siendo válido aunque los precios cambien. El dinero es <code>numeric(19,4)</code>, nunca punto flotante." },
+  /* ===== lightbox ===== */
+  "lb.aria": { en: "Close the enlarged photo", es: "Cerrar la foto ampliada" },
+  "lb.alt": { en: "Ryguasu POS, enlarged", es: "POS de Ryguasu ampliado" },
+  "lb.tag": { en: "EXHIBIT A · RYGUASU.PRT · Quick-sale POS, Almacén San Roque", es: "ADJUNTO A · RYGUASU.PRT · POS venta rápida, Almacén San Roque" },
+  "lb.close": { en: "click to close", es: "click para cerrar" },
 
-  "s03.sheet": { en: "SHEET 03/09 · MULTI-TENANT", es: "HOJA 03/09 · MULTI-TENANT" },
-  "s03.title": { en: "Tenant isolation that fails closed", es: "Aislamiento de tenants que falla cerrado" },
-  "s03.stamp": { en: "42/42 isolated", es: "42/42 aislados" },
-  "s03.lede": { en: "All businesses share one schema; every tenant table carries a <code>business_id</code>. Isolation has <b>two independent layers</b>: the application resolves and enforces the tenant on every request, and underneath, <b class=\"hl\">PostgreSQL Row Level Security</b> acts as a safety net that doesn't depend on application code being right. If a bug — or a background job that forgot its context — queries without a tenant, the database returns <b>zero rows</b> instead of everyone's data.", es: "Todos los negocios comparten un esquema; cada tabla de tenant lleva su <code>business_id</code>. El aislamiento tiene <b>dos capas independientes</b>: la aplicación resuelve y exige el tenant en cada request, y por debajo, <b class=\"hl\">Row Level Security de PostgreSQL</b> actúa como red de seguridad que no depende de que el código de la aplicación esté bien. Si un bug — o un job que olvidó su contexto — consulta sin tenant, la base devuelve <b>cero filas</b> en vez de los datos de todos." },
-  "diag2.aria": { en: "Diagram of tenant context propagation down to Row Level Security", es: "Diagrama de la propagación del contexto de tenant hasta Row Level Security" },
-  "diag2.request": { en: "Request", es: "Request" },
-  "diag2.requestdesc": { en: "session cookie", es: "cookie de sesión" },
-  "diag2.interceptor": { en: "Tenant interceptor", es: "Interceptor de tenant" },
-  "diag2.interceptordesc": { en: "resolves business_id", es: "resuelve business_id" },
-  "diag2.pool": { en: "Connection pool", es: "Pool de conexiones" },
-  "diag2.pooldesc": { en: "context stamped on borrow", es: "contexto sellado al tomar la conexión" },
-  "diag2.rls": { en: "RLS policies", es: "Políticas RLS" },
-  "diag2.rlsdesc": { en: "25 forced tables", es: "25 tablas forzadas" },
-  "diag2.tenantrows": { en: "1 tenant", es: "1 tenant" },
-  "diag2.sincontexto": { en: "no tenant context", es: "sin contexto de tenant" },
-  "diag2.cerofilas": { en: "0 rows returned", es: "devuelve 0 filas" },
-  "diag2.cerofilasdesc": { en: "fails visibly, never leaks silently", es: "falla visible, nunca filtra en silencio" },
-  "diag2.footer": { en: "The app connects as a dedicated role with no RLS bypass; background jobs must set an explicit sentinel context or read nothing.", es: "La app se conecta con un rol dedicado sin bypass de RLS; los jobs deben fijar un contexto centinela explícito o no leen nada." },
-  "s03.li1.b": { en: "RLS from day one", es: "RLS desde el día uno" },
-  "s03.li1.span": { en: "Enabled when the schema had 6 tables, not 25: retrofitting row security onto a grown schema is where these projects usually fail. Every new tenant table ships its policy in the same migration.", es: "Activado cuando el esquema tenía 6 tablas, no 25: encajar row security a un esquema ya crecido es donde estos proyectos suelen fallar. Cada tabla de tenant nueva trae su política en la misma migración." },
-  "s03.li2.b": { en: "No privileged shortcut", es: "Sin atajo privilegiado" },
-  "s03.li2.span": { en: "The application role has no superuser, no table ownership, and no <code>BYPASSRLS</code> — policies are <code>FORCE</code>d, so not even a bug in the app's own queries can step around them.", es: "El rol de la aplicación no tiene superusuario, no es dueño de tablas y no tiene <code>BYPASSRLS</code> — las políticas están en <code>FORCE</code>, así que ni un bug en las propias consultas de la app puede esquivarlas." },
-  "s03.li3.b": { en: "Verified adversarially", es: "Verificado adversarialmente" },
-  "s03.li3.span": { en: "A test suite authenticates as tenant A and calls all 42 business endpoints with tenant B's identifiers: <span class=\"hl\">42 of 42 come back 403</span>. Isolation is proven, not presumed.", es: "Una suite de tests se autentica como el tenant A y llama a los 42 endpoints de negocio con identificadores del tenant B: <span class=\"hl\">42 de 42 devuelven 403</span>. El aislamiento está probado, no presumido." },
+  /* ===== intro fichas ===== */
+  "intro.sheet": { en: "CARDS 01–07 · THREAT / DEFENSE", es: "FICHAS 01–07 · AMENAZA / DEFENSA" },
+  "intro.title": { en: "Seven ways to break it", es: "Siete maneras de romperlo" },
+  "intro.lede": {
+    en: 'A system like this isn\'t judged by the days when everything runs fine. I built these cards around the uncomfortable questions — the ones an interviewer would ask me, or reality would — and each one answers with the <b class="tred">threat</b>, the <b class="tok">defense that exists today</b> and how it was tested. The mistakes along the way are told too, <b>exactly as they happened</b>.',
+    es: 'A un sistema así no se lo juzga por los días en que todo anda bien. Armé estas fichas con las preguntas incómodas — las que me haría un entrevistador, o la realidad — y cada una responde con la <b class="tred">amenaza</b>, la <b class="tok">defensa que existe hoy</b> y cómo se probó. Los errores del camino también están contados, <b>tal cual pasaron</b>.'
+  },
 
-  "s04.sheet": { en: "SHEET 04/09 · ENGINEERING", es: "HOJA 04/09 · INGENIERÍA" },
-  "s04.title": { en: "Concrete backend details", es: "Detalles concretos del backend" },
-  "s04.li1.b": { en: "Idempotency under real concurrency", es: "Idempotencia bajo concurrencia real" },
-  "s04.li1.span": { en: "Every money or stock mutation requires an <code>Idempotency-Key</code>. The first check-then-insert version returned 500s under a genuine two-thread race — rewritten as <code>INSERT … ON CONFLICT DO NOTHING</code> and re-verified with the same race test: one movement, no error.", es: "Toda mutación de dinero o stock exige un <code>Idempotency-Key</code>. La primera versión check-then-insert devolvía 500 bajo una carrera real de dos hilos — se reescribió como <code>INSERT … ON CONFLICT DO NOTHING</code> y se volvió a verificar con el mismo test de carrera: un solo movimiento, sin error." },
-  "s04.li2.b": { en: "Pessimistic locking, fixed order", es: "Bloqueo pesimista, orden fijo" },
-  "s04.li2.span": { en: "<code>SELECT … FOR UPDATE</code> on product and stock balance, always acquired in the same order — concurrent sales serialize cleanly instead of deadlocking.", es: "<code>SELECT … FOR UPDATE</code> sobre producto y saldo de stock, siempre adquirido en el mismo orden — las ventas concurrentes se serializan limpio en vez de terminar en deadlock." },
-  "s04.li3.b": { en: "Permissions down to the field", es: "Permisos hasta el campo" },
-  "s04.li3.span": { en: "A cashier never receives cost or profit fields: they're stripped from responses by permission, and profit reports return 403 outright. Role checks live at the endpoint <i>and</i> in the DTOs.", es: "Un cajero nunca recibe campos de costo o ganancia: se eliminan de las respuestas por permiso, y los reportes de ganancia devuelven 403 directamente. El control de roles vive en el endpoint <i>y</i> en los DTOs." },
-  "s04.li4.b": { en: "Rate limiting without Redis", es: "Rate limiting sin Redis" },
-  "s04.li4.span": { en: "Login throttling derived from the existing audit log with partial indexes — correct across N instances with zero new infrastructure. Progressive delay per account (an attacker can't lock a victim out) plus temporary IP blocks. Building it surfaced that the naive client IP was the proxy's — fixed with a shared resolver, without which the whole feature would have been useless in production.", es: "El throttling de login se deriva del audit log existente con índices parciales — correcto con N instancias y cero infraestructura nueva. Demora progresiva por cuenta (un atacante no puede bloquearle la cuenta a una víctima) más bloqueos temporales por IP. Al construirlo apareció que la IP ingenua del cliente era la del proxy — se resolvió con un resolver compartido, sin el cual toda la funcionalidad habría sido inútil en producción." },
-  "s04.li5.b": { en: "Offline devices, signed identity", es: "Dispositivos offline, identidad firmada" },
-  "s04.li5.span": { en: "A register syncing offline sales can't use a browser session, so each device holds a backend-signed license (JWT) carrying its tenant and a grace window by subscription state. The tenant context comes from the <span class=\"hl\">signature, never from client input</span> — and a queued sale is never lost to an expired window.", es: "Una caja que sincroniza ventas offline no puede usar una sesión de navegador, así que cada dispositivo tiene una licencia firmada por el backend (JWT) con su tenant y una ventana de gracia según el estado de la suscripción. El contexto de tenant sale de la <span class=\"hl\">firma, nunca de lo que manda el cliente</span> — y una venta encolada nunca se pierde por una ventana vencida." },
-  "s04.li6.b": { en: "Sessions over token pairs", es: "Sesiones antes que pares de tokens" },
-  "s04.li6.span": { en: "Server-side sessions stored in Postgres: instant revocation, correct across multiple instances, one HttpOnly cookie with a 12-hour rolling timeout sized to a full POS shift. Chosen over JWT access/refresh — and the deviation from the original spec is itself documented.", es: "Sesiones server-side guardadas en Postgres: revocación instantánea, correctas con múltiples instancias, una sola cookie HttpOnly con timeout deslizante de 12 horas dimensionado para un turno completo de caja. Elegidas por sobre access/refresh JWT — y la desviación respecto de la spec original está, a su vez, documentada." },
+  /* etiquetas compartidas de las fichas */
+  "ficha.threat": { en: "Threat", es: "Amenaza" },
+  "ficha.defense": { en: "Proven defense", es: "Defensa probada" },
 
-  "s05.sheet": { en: "SHEET 05/09 · DECISIONS", es: "HOJA 05/09 · DECISIONES" },
-  "s05.title": { en: "49 decisions, written down with their why", es: "49 decisiones, escritas con su porqué" },
-  "s05.lede": { en: "Every significant choice is an ADR-style record: date, status, the decision, the reasoning, and which record supersedes it if it changed. Six months from now nobody has to reverse-engineer why the system is the way it is — the log answers it. When two specs contradict each other, the rule is to <b>escalate to a human, never resolve silently</b>.", es: "Cada elección significativa es un registro estilo ADR: fecha, estado, la decisión, el razonamiento y qué registro la reemplaza si cambió. Dentro de seis meses nadie tiene que hacer ingeniería inversa de por qué el sistema es como es — el log lo responde. Cuando dos specs se contradicen, la regla es <b>escalar a un humano, nunca resolver en silencio</b>." },
-  "s05.note": { en: "The habit pays off in unexpected places: periodic spec-sync sessions compare the documents against the real code, and once even caught two inconsistencies inside the decision log itself.", es: "El hábito rinde en lugares inesperados: sesiones periódicas de spec-sync comparan los documentos contra el código real, y una vez hasta detectaron dos inconsistencias dentro del propio log de decisiones." },
-  "s05.box1.bt": { en: "Monolith over microservices", es: "Monolito antes que microservicios" },
-  "s05.box1.span": { en: "Sale, stock, and cost form one transaction. Distribution would trade correctness for fashion.", es: "Venta, stock y costo forman una sola transacción. Distribuir sería cambiar correctitud por moda." },
-  "s05.box2.bt": { en: "Research before code", es: "Investigar antes de codear" },
-  "s05.box2.span": { en: "Supplier bonus units (\"12+1 free\") were resolved by reading the IAS 2 accounting standard and how SAP, Odoo, and NetSuite handle it — conclusion: the existing formula was already right. Zero code changed; one research doc written.", es: "Las unidades bonificadas del proveedor (\"12+1 de regalo\") se resolvieron leyendo la norma contable NIC 2 y cómo lo manejan SAP, Odoo y NetSuite — conclusión: la fórmula existente ya era correcta. Cero código cambiado; un documento de investigación escrito." },
-  "s05.box3.bt": { en: "Billing modeled on the industry", es: "Facturación modelada según la industria" },
-  "s05.box3.span": { en: "Immutable versioned plan prices (the Stripe pattern), payment snapshots, scheduled discounts — instead of a mutable price field that corrupts history.", es: "Precios de plan versionados e inmutables (el patrón de Stripe), snapshots de pago, descuentos programados — en vez de un campo de precio mutable que corrompe el historial." },
-  "s05.box4.bt": { en: "Staff panel, separate app", es: "Panel staff, app separada" },
-  "s05.box4.span": { en: "The internal admin panel is a separate bundle on its own subdomain behind Zero Trust access — admin code never ships to customer browsers.", es: "El panel interno de administración es un bundle separado en su propio subdominio detrás de acceso Zero Trust — el código de admin nunca llega al navegador de un cliente." },
+  /* ===== ficha 01 — aislamiento ===== */
+  "f01.num": { en: "CARD 01/07", es: "FICHA 01/07" },
+  "f01.q": { en: "What if one business queries another's data?", es: "¿Y si un negocio consulta los datos de otro?" },
+  "f01.threat": {
+    en: "A bug in a query, or a nightly job that forgot its tenant, returns the inventory and sales of <b>every business</b>. With a shared schema this accident gives no warning: everything works, until a customer sees data that isn't theirs.",
+    es: "Un bug en una query, o un job nocturno que olvidó su tenant, devuelve el inventario y las ventas de <b>todos los negocios</b>. Con esquema compartido este accidente no avisa: todo funciona, hasta que un cliente ve datos que no son suyos."
+  },
+  "f01.defense": {
+    en: 'Two independent layers: the application resolves the tenant on every request, and underneath, <b class="ink">PostgreSQL Row Level Security</b> with <code>FORCE</code> policies and a role without <code>BYPASSRLS</code>. Without context, the database returns <b class="ink">zero rows</b> — never someone else\'s.',
+    es: 'Dos capas independientes: la aplicación resuelve el tenant en cada request, y debajo <b class="ink">Row Level Security de PostgreSQL</b> con políticas <code>FORCE</code> y un rol sin <code>BYPASSRLS</code>. Sin contexto, la base devuelve <b class="ink">cero filas</b> — nunca las de otro.'
+  },
+  "f01.demoCap": { en: "SELECT * FROM products — «Almacén San Roque» tenant session", es: "SELECT * FROM products — sesión del tenant «Almacén San Roque»" },
+  "f01.btnRemove": { en: "Remove tenant context", es: "Quitar contexto de tenant" },
+  "f01.btnRestore": { en: "Restore context", es: "Restaurar contexto" },
+  "f01.col1": { en: "code", es: "código" },
+  "f01.col2": { en: "product", es: "producto" },
+  "f01.col3": { en: "stock", es: "stock" },
+  "f01.col4": { en: "price Gs.", es: "precio Gs." },
+  "f01.row3": { en: "PLU 15 · Milanesa (scale)", es: "PLU 15 · Milanesa (balanza)" },
+  "f01.rows": { en: "154 rows · only their business, always", es: "154 filas · solo su negocio, siempre" },
+  "f01.zero": { en: "0 rows", es: "0 filas" },
+  "f01.zeroSub": { en: "A visible failure — never a silent leak", es: "Falla visible — nunca una fuga silenciosa" },
+  "f01.zeroWhy": { en: "Background jobs must set an explicit sentinel context, or they read nothing.", es: "Los jobs de fondo deben fijar un contexto centinela explícito, o no leen nada." },
+  "f01.stamp": { en: "Verified · 42/42 in 403", es: "Verificado · 42/42 en 403" },
+  "f01.verif": {
+    en: '<b class="vt">Verification</b> — a suite authenticates as business A and hits all 42 endpoints with business B\'s identifiers. <b>My part:</b> both layers. I enabled RLS when the schema had 6 tables; bolting it on later, with 25, would have been much worse.',
+    es: '<b class="vt">Verificación</b> — una suite se autentica como el negocio A y pega a los 42 endpoints con identificadores del negocio B. <b>Mi parte:</b> las dos capas. Activé RLS cuando el esquema tenía 6 tablas; meterlo después, con 25, hubiera sido mucho peor.'
+  },
 
-  "s06.sheet": { en: "SHEET 06/09 · BACKUPS", es: "HOJA 06/09 · BACKUPS" },
-  "s06.title": { en: "The backup that earned its name", es: "El backup que se ganó el nombre" },
-  "s06.stamp": { en: "Restore tested", es: "Restore probado" },
-  "s06.lede": { en: "A nightly job dumps the database, compresses it, encrypts it with <b>age</b> public-key encryption — the private key never leaves the owner's machine — and ships it to Cloudflare R2 with checksums registered in the database. The working rule: <b class=\"hl\">an untested backup is not a backup</b>. Getting there took four documented iterations.", es: "Un job nocturno hace el dump de la base, lo comprime, lo cifra con <b>age</b> (cifrado de clave pública — la clave privada nunca sale de la máquina del dueño) y lo sube a Cloudflare R2 con checksums registrados en la base. La regla de trabajo: <b class=\"hl\">un backup no probado no es un backup</b>. Llegar ahí llevó cuatro iteraciones documentadas." },
-  "s06.log1.lbl": { en: "v1 — pg_dump vs. forced RLS", es: "v1 — pg_dump vs. RLS forzado" },
-  "s06.log1.st": { en: "[FAIL] in production", es: "[FALLÓ] en producción" },
-  "s06.log1.note": { en: "pg_dump disables row security for consistency, and the production role — under forced RLS, with no bypass — rightly refused. The local end-to-end test had passed only because the local user was a superuser. First lesson made explicit: test against production privileges, not developer ones.", es: "pg_dump desactiva row security por consistencia, y el rol de producción — bajo RLS forzado, sin bypass — se negó, con razón. El test end-to-end local había pasado solo porque el usuario local era superusuario. Primera lección explícita: probar con privilegios de producción, no de desarrollador." },
-  "s06.log2.lbl": { en: "v2 — toggle with guaranteed restore", es: "v2 — toggle con restauración garantizada" },
-  "s06.log2.st": { en: "[ OK ] complete or loud", es: "[ OK ] completo o ruidoso" },
-  "s06.log2.note": { en: "The script discovers the forced tables dynamically, relaxes them for the dump, and re-forces them under a trap that runs even on failure — proven with injected errors and a kill -9. The app role keeps RLS at all times. The dump is complete, or it fails loudly; never silently filtered.", es: "El script descubre las tablas forzadas dinámicamente, las relaja para el dump y las vuelve a forzar bajo un trap que corre incluso ante fallas — probado con errores inyectados y un kill -9. El rol de la app mantiene RLS en todo momento. El dump es completo, o falla haciendo ruido; nunca filtrado en silencio." },
-  "s06.log3.lbl": { en: "Dead man's switch", es: "Dead man's switch" },
-  "s06.log3.st": { en: "[ OK ] Healthchecks.io", es: "[ OK ] Healthchecks.io" },
-  "s06.log3.note": { en: "The job pings on success and on failure — and the <i>absence</i> of any ping is itself the alarm, which covers the case where the machine dies before reporting anything.", es: "El job hace ping al terminar bien y al fallar — y la <i>ausencia</i> de ping es en sí misma la alarma, lo que cubre el caso en que la máquina muere antes de reportar nada." },
-  "s06.log4.lbl": { en: "Real restore, from R2", es: "Restore real, desde R2" },
-  "s06.log4.st": { en: "[ OK ] verified", es: "[ OK ] verificado" },
-  "s06.log4.note": { en: "Downloaded, checksum-verified, decrypted, and restored onto a clean PostgreSQL: 4,553 sales, 154 products, 3 tenants, all 25 RLS tables enabled and forced — zero manual fixes. That drill also exposed that dumps were missing their FORCE statements; now every dump appends them itself, so a restore is self-contained by construction.", es: "Descargado, verificado por checksum, descifrado y restaurado sobre un PostgreSQL limpio: 4.553 ventas, 154 productos, 3 tenants, las 25 tablas RLS activadas y forzadas — cero arreglos manuales. Ese simulacro además expuso que a los dumps les faltaban sus sentencias FORCE; ahora cada dump las anexa por sí mismo, así que un restore es autocontenido por construcción." },
-  "s06.small": { en: "The whole subsystem carries its own local test harness: 37/37 scenarios, including injected failures and full restore against a local S3.", es: "Todo el subsistema tiene su propio harness de tests local: 37/37 escenarios, incluyendo fallas inyectadas y restore completo contra un S3 local." },
+  /* ===== ficha 02 — concurrencia ===== */
+  "f02.num": { en: "CARD 02/07", es: "FICHA 02/07" },
+  "f02.q": { en: "What if two tills sell the last unit at the same time?", es: "¿Y si dos cajas venden la última unidad al mismo tiempo?" },
+  "f02.threat": {
+    en: "Two sales read <code>stock = 1</code> at the same time, both go through, stock lands at −1 and afterwards nobody knows the true average cost.",
+    es: "Dos ventas leen <code>stock = 1</code> al mismo tiempo, las dos pasan, el stock queda en −1 y después nadie sabe cuál es el costo promedio verdadero."
+  },
+  "f02.defense": {
+    en: '<code>SELECT … FOR UPDATE</code> on product and balance, <b class="ink">always in the same order</b> — concurrent sales serialize without deadlocks. Every money or stock mutation demands an <code>Idempotency-Key</code>.',
+    es: '<code>SELECT … FOR UPDATE</code> sobre producto y saldo, <b class="ink">siempre en el mismo orden</b> — las ventas concurrentes serializan sin deadlocks. Toda mutación de dinero o stock exige un <code>Idempotency-Key</code>.'
+  },
+  "f02.term1": {
+    en: '<span class="k">v1 · check-then-insert</span> ……… real 2-thread race → 500s <span class="fail">[FAIL]</span>',
+    es: '<span class="k">v1 · check-then-insert</span> ……… carrera real de 2 hilos → 500s <span class="fail">[FAIL]</span>'
+  },
+  "f02.term2": {
+    en: '<span class="k">v2 · INSERT … ON CONFLICT DO NOTHING</span> … same race test → 1 sale, 0 errors <span class="ok">[ OK ]</span>',
+    es: '<span class="k">v2 · INSERT … ON CONFLICT DO NOTHING</span> … mismo test de carrera → 1 venta, 0 errores <span class="ok">[ OK ]</span>'
+  },
+  "f02.stamp": { en: "1 sale · 0 errors", es: "1 venta · 0 errores" },
+  "f02.verif": {
+    en: '<b class="vt">Verification</b> — a race test with two threads against a real Postgres (Testcontainers). <b>My part:</b> the first version returned 500s under the race; I rewrote it and kept that same test as a permanent regression.',
+    es: '<b class="vt">Verificación</b> — test de carrera con dos hilos contra un Postgres real (Testcontainers). <b>Mi parte:</b> la primera versión devolvía 500 bajo carrera; la reescribí y dejé ese mismo test como regresión permanente.'
+  },
 
-  "s07.sheet": { en: "SHEET 07/09 · INFRASTRUCTURE", es: "HOJA 07/09 · INFRAESTRUCTURA" },
-  "s07.title": { en: "Small budget, production discipline", es: "Presupuesto chico, disciplina de producción" },
-  "s07.lede": { en: "Everything runs on roughly <b>USD 50 a month</b>: the backend on Fly.io (São Paulo) with a managed PostgreSQL, and Cloudflare at the edge — DNS with strict TLS, Pages serving the frontend with a first-party <code>/api/*</code> proxy (no CORS, no third-party cookies), and R2 for encrypted backups. Memory was sized by measuring the real footprint, and the managed database was chosen over a cheaper self-run one deliberately: <b class=\"hl\">reliability of data over savings</b>.", es: "Todo corre con aproximadamente <b>USD 50 al mes</b>: el backend en Fly.io (São Paulo) con un PostgreSQL administrado, y Cloudflare en el edge — DNS con TLS estricto, Pages sirviendo el frontend con un proxy <code>/api/*</code> de primera parte (sin CORS, sin cookies de terceros) y R2 para los backups cifrados. La memoria se dimensionó midiendo el consumo real, y la base administrada se eligió por sobre una autogestionada más barata a propósito: <b class=\"hl\">confiabilidad de los datos antes que ahorro</b>." },
-  "s07.note": { en: "One environment until the first paying customer — with the requirement to stand up a separate staging before touching production after that, written down as a hard rule, not a good intention. Connection pooling runs in session mode because the tenant stamping requires it; the constraint is documented next to the config so nobody \"optimizes\" it into a data leak.", es: "Un solo entorno hasta el primer cliente que paga — con el requisito de levantar un staging separado antes de volver a tocar producción después de eso, escrito como regla dura, no como buena intención. El pooling de conexiones corre en modo sesión porque el sellado de tenant lo exige; la restricción está documentada al lado de la config para que nadie la \"optimice\" hacia una fuga de datos." },
-  "s07.box1.bt": { en: "Hosting", es: "Hosting" },
-  "s07.box1.span": { en: "Fly.io (São Paulo) · managed PostgreSQL · a separate tiny machine wakes up nightly just to run the backup.", es: "Fly.io (São Paulo) · PostgreSQL administrado · una máquina mínima aparte se despierta cada noche solo para correr el backup." },
-  "s07.box2.bt": { en: "Edge", es: "Edge" },
-  "s07.box2.span": { en: "Cloudflare DNS · Pages with /api proxy · R2 storage · Zero Trust access on the staff panel.", es: "Cloudflare DNS · Pages con proxy /api · almacenamiento R2 · acceso Zero Trust en el panel staff." },
-  "s07.box3.bt": { en: "CI/CD", es: "CI/CD" },
-  "s07.box3.span": { en: "GitHub Actions: full test suite with Testcontainers against a real Postgres, plus full-history secret scanning on every push.", es: "GitHub Actions: suite completa de tests con Testcontainers contra un Postgres real, más escaneo de secretos de todo el historial en cada push." },
-  "s07.box4.bt": { en: "CI earning its keep", es: "CI ganándose el sueldo" },
-  "s07.box4.span": { en: "The Linux runners caught a nanosecond-precision timestamp bug that never reproduced on macOS — an idempotency check that would have failed only in production.", es: "Los runners Linux atraparon un bug de precisión de nanosegundos en timestamps que nunca se reproducía en macOS — un chequeo de idempotencia que habría fallado solo en producción." },
+  /* ===== ficha 03 — offline ===== */
+  "f03.num": { en: "CARD 03/07", es: "FICHA 03/07" },
+  "f03.q": { en: "What if the internet drops mid-shift?", es: "¿Y si se corta internet a mitad del turno?" },
+  "f03.threat": {
+    en: "The till stops selling — or worse: it sells, and those sales get lost before reaching the server. And here internet and power cuts just happen; they're not a textbook scenario.",
+    es: "La caja deja de vender — o peor: vende, y esas ventas se pierden antes de llegar al servidor. Y acá los cortes de internet o de luz pasan nomás; no son un escenario de libro."
+  },
+  "f03.defense": {
+    en: 'Offline-first POS with a <b class="ink">local outbox</b>: sales queue up and sync when the connection comes back. Each device carries a <b class="ink">JWT license signed by the backend</b> with its tenant and a grace window based on subscription state — identity comes from the signature, never from client input.',
+    es: 'POS offline-first con <b class="ink">outbox local</b>: las ventas se encolan y sincronizan al volver la conexión. Cada dispositivo porta una <b class="ink">licencia JWT firmada por el backend</b> con su tenant y una ventana de gracia según el estado de la suscripción — la identidad sale de la firma, jamás del input del cliente.'
+  },
+  "f03.chip1": { en: "local sale", es: "venta local" },
+  "f03.chip3": { en: "signed sync", es: "sync firmado" },
+  "f03.chipNote": {
+    en: "A stock conflict never produces negative stock: it gets flagged and waits for manual resolution through a dedicated endpoint. A queued sale is never lost to an expired window.",
+    es: "Un conflicto de stock jamás produce stock negativo: queda marcado y espera resolución manual por endpoint dedicado. Una venta encolada nunca se pierde por ventana vencida."
+  },
+  "f03.stamp": { en: "No sale lost", es: "Ninguna venta perdida" },
+  "f03.verif": {
+    en: '<b class="vt">Verification</b> — the sync suite: idempotent replay, injected conflicts, expired licenses inside and outside the grace window. <b>My part:</b> the sync protocol, the signed licenses and the conflict policy.',
+    es: '<b class="vt">Verificación</b> — suite de sincronización: replay idempotente, conflictos inyectados, licencias vencidas dentro y fuera de gracia. <b>Mi parte:</b> el protocolo de sync, las licencias firmadas y la política de conflictos.'
+  },
 
-  "s08.sheet": { en: "SHEET 08/09 · PRACTICES", es: "HOJA 08/09 · PRÁCTICAS" },
-  "s08.title": { en: "Practices that leave a paper trail", es: "Prácticas que dejan rastro en papel" },
-  "s08.lede": { en: "The codebase is one artifact; the discipline around it is the other. Specs are the source of truth, state documents record what's done and what's known to be broken, and production actions go through a human. This is what lets the project move fast without losing the thread.", es: "El código es un artefacto; la disciplina alrededor es el otro. Las specs son la fuente de verdad, los documentos de estado registran qué está hecho y qué se sabe roto, y las acciones sobre producción pasan por un humano. Esto es lo que permite avanzar rápido sin perder el hilo." },
-  "s08.chk1.b": { en: "170+ backend tests", es: "170+ tests de backend" },
-  "s08.chk1.span": { en: "integration-heavy with Testcontainers against a real Postgres: adversarial cross-tenant suites, real two-thread race tests, RLS isolation checks.", es: "con peso en integración vía Testcontainers contra un Postgres real: suites adversariales cross-tenant, tests de carrera reales de dos hilos, chequeos de aislamiento RLS." },
-  "s08.chk2.b": { en: "Security audit, verified dynamically", es: "Auditoría de seguridad, verificada en vivo" },
-  "s08.chk2.span": { en: "an independent audit produced 7 findings, each proven by actually executing the attack, and each tracked to closure. One outcome: a boot guard that aborts startup on default or missing secrets, before migrations can run.", es: "una auditoría independiente produjo 7 hallazgos, cada uno probado ejecutando el ataque de verdad, y cada uno seguido hasta su cierre. Un resultado: un guardián de arranque que aborta el inicio ante secretos por defecto o faltantes, antes de que corran las migraciones." },
-  "s08.chk3.b": { en: "Spec-driven development", es: "Desarrollo guiado por specs" },
-  "s08.chk3.span": { en: "35 specification documents as the single source of truth; the API contract is binding for every implemented endpoint.", es: "35 documentos de especificación como única fuente de verdad; el contrato de API es vinculante para cada endpoint implementado." },
-  "s08.chk4.b": { en: "Living state documentation", es: "Documentación de estado viva" },
-  "s08.chk4.span": { en: "a decision log (49 entries), an implementation log (44), and a known-issues register (16, most closed with full forensics) that any collaborator — human or AI agent — reads before touching anything.", es: "un log de decisiones (49 entradas), un log de implementación (44) y un registro de issues conocidos (16, la mayoría cerrados con forense completo) que cualquier colaborador — humano o agente de IA — lee antes de tocar nada." },
-  "s08.chk5.b": { en: "Bug forensics culture", es: "Cultura de forense de bugs" },
-  "s08.chk5.span": { en: "one timestamp bug triggered a codebase-wide audit that found four more latent cases; the fix became a written convention plus a mandatory test assertion.", es: "un bug de timestamps disparó una auditoría de todo el código que encontró cuatro casos latentes más; el arreglo se volvió convención escrita más una aserción de test obligatoria." },
-  "s08.chk6.b": { en: "Human in the loop", es: "Humano en el circuito" },
-  "s08.chk6.span": { en: "no push, no merge, no deploy without explicit human confirmation — a standing rule of the AI-assisted workflow, not an afterthought.", es: "sin push, sin merge, sin deploy sin confirmación humana explícita — regla permanente del flujo asistido por IA, no una ocurrencia tardía." },
+  /* ===== ficha 04 — moneda / historia ===== */
+  "f04.num": { en: "CARD 04/07", es: "FICHA 04/07" },
+  "f04.q": { en: "What if the dollar moves after the sale?", es: "¿Y si el dólar cambia después de la venta?" },
+  "f04.threat": {
+    en: "If history gets recalculated with the new rate or the new price, old margins and reports stop adding up. And a client with bad intentions could send its own total.",
+    es: "Si la historia se recalcula con la tasa o el precio nuevo, los márgenes y reportes viejos dejan de cerrar. Y un cliente con malas intenciones podría mandar su propio total."
+  },
+  "f04.defense": {
+    en: 'The client sends only <code>productId</code> and <code>quantity</code>. The server computes and <b class="ink">freezes per line</b> the price, cost, name and exchange rate at the instant of the sale, in <code>numeric(19,4)</code> — never floating point. Changing a price today never rewrites the past.',
+    es: 'El cliente envía solo <code>productId</code> y <code>quantity</code>. El servidor calcula y <b class="ink">congela por línea</b> precio, costo, nombre y tasa de cambio al instante de la venta, en <code>numeric(19,4)</code> — nunca punto flotante. Cambiar un precio hoy jamás reescribe el pasado.'
+  },
+  "f04.stamp": { en: "Immutable history", es: "Historia inmutable" },
+  "f04.verif": {
+    en: '<b class="vt">Verification</b> — the demo tenant\'s reports (183 days, 4,551 sales) close against the frozen lines. <b>My part:</b> all the money is computed on the server; the client never sends amounts.',
+    es: '<b class="vt">Verificación</b> — los reportes del tenant demo (183 días, 4.551 ventas) cierran contra las líneas congeladas. <b>Mi parte:</b> toda la plata se calcula en el servidor; el cliente nunca manda montos.'
+  },
 
-  "s09.sheet": { en: "SHEET 09/09 · STACK", es: "HOJA 09/09 · STACK" },
-  "s09.title": { en: "Technology inventory", es: "Inventario tecnológico" },
-  "s09.h1": { en: "Backend", es: "Backend" },
-  "s09.h1.li3": { en: "REST · contract-first", es: "REST · contract-first" },
-  "s09.h2": { en: "Data", es: "Datos" },
-  "s09.h2.li2": { en: "Flyway · 23 migrations", es: "Flyway · 23 migraciones" },
-  "s09.h2.li3": { en: "PgBouncer · session mode", es: "PgBouncer · modo sesión" },
-  "s09.h3": { en: "Security", es: "Seguridad" },
-  "s09.h3.li1": { en: "Server-side sessions · CSRF", es: "Sesiones server-side · CSRF" },
-  "s09.h3.li2": { en: "RBAC · granular permissions", es: "RBAC · permisos granulares" },
-  "s09.h3.li3": { en: "Signed device licenses (JWT)", es: "Licencias de dispositivo firmadas (JWT)" },
-  "s09.h4": { en: "Infrastructure", es: "Infraestructura" },
-  "s09.h4.li3": { en: "Brevo · transactional email", es: "Brevo · email transaccional" },
-  "s09.h5": { en: "Quality", es: "Calidad" },
-  "s09.h5.li1": { en: "Testcontainers · 170+ tests", es: "Testcontainers · 170+ tests" },
-  "s09.h5.li3": { en: "37-test backup harness", es: "Harness de backups · 37 tests" },
-  "s09.h6": { en: "Operations", es: "Operaciones" },
-  "s09.h6.li1": { en: "age-encrypted backups → R2", es: "Backups cifrados con age → R2" },
-  "s09.h6.li2": { en: "Healthchecks.io dead man's switch", es: "Dead man's switch · Healthchecks.io" },
-  "s09.h6.li3": { en: "Runbooks · release notes", es: "Runbooks · notas de versión" },
+  /* ===== ficha 05 — arranque ===== */
+  "f05.num": { en: "CARD 05/07", es: "FICHA 05/07" },
+  "f05.q": { en: "What if it boots with default secrets?", es: "¿Y si arranca con secrets por defecto?" },
+  "f05.threat": {
+    en: "A rushed deploy with example credentials: the system starts, works, and sits open to anyone who has read the repository.",
+    es: "Un deploy apurado con credenciales de ejemplo: el sistema levanta, funciona, y queda abierto a cualquiera que haya leído el repositorio."
+  },
+  "f05.defense": {
+    en: 'A startup guard <b class="ink">aborts the boot</b> on default or missing secrets — before the migrations can run. It came out of an independent security audit: 7 findings, each proven by <b class="ink">executing the attack</b>, each closed. On top of that: gitleaks over the full history on every push.',
+    es: 'Un guard de arranque <b class="ink">aborta el boot</b> ante secrets default o ausentes — antes de que corran las migraciones. Nació de una auditoría de seguridad independiente: 7 hallazgos, cada uno probado <b class="ink">ejecutando el ataque</b>, cada uno cerrado. Además: gitleaks sobre el historial completo en cada push.'
+  },
+  "f05.stamp": { en: "7/7 findings closed", es: "7/7 hallazgos cerrados" },
+  "f05.verif": {
+    en: '<b class="vt">Verification</b> — each finding was closed by running the attack again, not by ticking a spreadsheet. <b>My part:</b> the startup guard and closing all 7.',
+    es: '<b class="vt">Verificación</b> — cada hallazgo se cerró ejecutando de nuevo el ataque, no marcando una planilla. <b>Mi parte:</b> el guard de arranque y el cierre de los 7.'
+  },
 
+  /* ===== ficha 06 — backup ===== */
+  "f06.num": { en: "CARD 06/07", es: "FICHA 06/07" },
+  "f06.q": { en: "What if the server dies tonight?", es: "¿Y si el servidor muere esta noche?" },
+  "f06.threat": {
+    en: 'Losing days of sales from dozens of businesses. I work with an old rule of the trade: <b class="ink">a backup that wasn\'t tested is not a backup</b>. Getting to a real one took me four iterations, and they\'re documented.',
+    es: 'Perder días de ventas de decenas de negocios. Trabajo con una regla vieja del oficio: <b class="ink">un backup que no se probó no es un backup</b>. Llegar a uno de verdad me tomó cuatro iteraciones, y están documentadas.'
+  },
+  "f06.defense": {
+    en: 'Nightly job: dump → compression → <b class="ink">age</b> encryption with a public key (the private one never touches the server) → R2, with checksums recorded in the database. The dump <b class="ink">completes or screams</b>: it never ends up silently filtered.',
+    es: 'Job nocturno: volcado → compresión → cifrado <b class="ink">age</b> con clave pública (la privada nunca toca el servidor) → R2, con checksums registrados en base. El dump <b class="ink">se completa o grita</b>: nunca queda filtrado en silencio.'
+  },
+  "f06.term1": {
+    en: '<span class="k">v1 · pg_dump vs forced RLS</span> …… production rejected it (local passed: it was superuser) <span class="fail">[FAIL]</span>',
+    es: '<span class="k">v1 · pg_dump vs RLS forzado</span> …… producción lo rechazó (local pasó: era superuser) <span class="fail">[FAIL]</span>'
+  },
+  "f06.term2": {
+    en: '<span class="k">v2 · toggle + guaranteed trap</span> … re-forces RLS even on failure · tested with kill −9 <span class="ok">[ OK ]</span>',
+    es: '<span class="k">v2 · toggle + trap garantizado</span> … re-fuerza RLS incluso ante fallo · probado con kill −9 <span class="ok">[ OK ]</span>'
+  },
+  "f06.term3": {
+    en: '<span class="k">local subsystem harness</span> …… 37/37 scenarios, with injected failures and restore to a local S3 <span class="ok">[ OK ]</span>',
+    es: '<span class="k">harness local del subsistema</span> …… 37/37 escenarios, con fallos inyectados y restore a S3 local <span class="ok">[ OK ]</span>'
+  },
+  "f06.stamp": { en: "Completes or screams", es: "Se completa o grita" },
+  "f06.verif": {
+    en: '<b class="vt">Verification</b> — the v1 [FAIL] left me a lesson in writing: test with production privileges, not with my developer ones. <b>My part:</b> the whole pipeline, from the cron to the encryption.',
+    es: '<b class="vt">Verificación</b> — el [FAIL] de la v1 me dejó una lección anotada: probar con los privilegios de producción, no con los míos de desarrollador. <b>Mi parte:</b> todo el pipeline, del cron al cifrado.'
+  },
+
+  /* ===== ficha 07 — silencio / restore ===== */
+  "f07.num": { en: "CARD 07/07", es: "FICHA 07/07" },
+  "f07.q": { en: "What if the backup never ran — and nobody noticed?", es: "¿Y si el backup nunca corrió — y nadie lo notó?" },
+  "f07.threat": {
+    en: 'The scariest case isn\'t the backup failing: it\'s the backup quietly not running and nobody finding out. The machine died before reporting, and the "daily backup" hasn\'t existed for three weeks.',
+    es: 'Lo que más miedo da no es que el backup falle: es que deje de correr y nadie se entere. La máquina murió antes de avisar, y el "backup diario" lleva tres semanas sin existir.'
+  },
+  "f07.defense": {
+    en: '<b class="ink">Dead man\'s switch</b> (Healthchecks.io): the job pings when it ends well and when it ends badly — and the <b class="ink">absence of a ping is the alarm</b>. The "died before reporting" case is covered by design.',
+    es: '<b class="ink">Dead man\'s switch</b> (Healthchecks.io): el job hace ping al terminar bien y al terminar mal — y la <b class="ink">ausencia de ping es la alarma</b>. El caso "murió antes de avisar" está cubierto por diseño.'
+  },
+  "f07.drillH": { en: "Restore drill · 2026-07-17 · from R2, cold", es: "Simulacro de restore · 2026-07-17 · desde R2, en frío" },
+  "f07.drill1": { en: "<b>4,553</b> sales", es: "<b>4.553</b> ventas" },
+  "f07.drill2": { en: "<b>154</b> products", es: "<b>154</b> productos" },
+  "f07.drill3": { en: "<b>3</b> tenants", es: "<b>3</b> tenants" },
+  "f07.drill4": { en: "<b>25/25</b> RLS tables enabled and forced", es: "<b>25/25</b> tablas RLS activas y forzadas" },
+  "f07.drill5": { en: "0 manual fixes", es: "0 fixes manuales" },
+  "f07.drillNote": {
+    en: "The drill also exposed that the dumps weren't including their FORCE statements — now every dump appends them itself: the restore is self-contained by construction.",
+    es: "El simulacro además expuso que los dumps no incluían sus FORCE — ahora cada dump se los agrega solo: el restore es autocontenido por construcción."
+  },
+  "f07.stamp": { en: "Restore tested · 25/25", es: "Restore probado · 25/25" },
+  "f07.verif": {
+    en: '<b class="vt">Verification</b> — downloaded, checksum verified, decrypted and restored onto a clean Postgres. <b>My part:</b> the switch, the drill and the fix it left behind.',
+    es: '<b class="vt">Verificación</b> — descargado, checksum verificado, descifrado y restaurado sobre un Postgres limpio. <b>Mi parte:</b> el switch, el drill y la corrección que dejó.'
+  },
+
+  /* ===== cómo se construye ===== */
+  "build.sheet": { en: "SHEET · HOW IT'S BUILT", es: "HOJA · CÓMO SE CONSTRUYE" },
+  "build.title": { en: "Why those defenses exist", es: "Por qué esas defensas existen" },
+  "build.lede": {
+    en: "None of the above came out of one inspired night. It came out of working with written specs, decisions recorded with their why, and one fixed rule: nothing reaches production without a human approving it.",
+    es: "Nada de lo de arriba salió de una noche inspirada. Salió de trabajar con specs escritas, decisiones anotadas con su porqué, y una regla fija: nada llega a producción sin que un humano lo apruebe."
+  },
+  "build.li1.b": { en: "Spec-driven development · 35 specs", es: "Spec-driven development · 35 specs" },
+  "build.li1.span": {
+    en: "I work with SDD: every part of the system is specified before it's coded, and those 35 specs are the source of truth. The written API rules — an endpoint that deviates updates the contract in the same commit. If two specs contradict each other, I escalate it; I don't resolve it silently on my own.",
+    es: "Trabajo con SDD: cada parte del sistema se especifica antes de codearse, y esas 35 specs son la fuente de verdad. La API escrita manda — un endpoint que se desvía actualiza el contrato en el mismo commit. Si dos specs se contradicen, lo escalo; no lo resuelvo por mi cuenta en silencio."
+  },
+  "build.li2.b": { en: "49 decisions with their why", es: "49 decisiones con su porqué" },
+  "build.li2.span": {
+    en: 'ADR-style records: date, status, reasoning, and what supersedes them if they change. Research before code: bonus units ("12+1") were settled by reading IAS 2 — zero code changed, one document written.',
+    es: 'Registros estilo ADR: fecha, estado, razonamiento, y quién las supera si cambian. Investigar antes de codear: las unidades bonificadas ("12+1") se resolvieron leyendo IAS 2 — cero código cambiado, un documento escrito.'
+  },
+  "build.li3.b": { en: "CI saw what my machine didn't", es: "El CI vio lo que mi máquina no" },
+  "build.li3.span": {
+    en: "GitHub Actions runs the tests with Testcontainers against a real Postgres. The Linux runners caught a timestamp-precision bug that never reproduced on macOS — it would have blown up only in production. Going over the rest of the code turned up 4 more cases of the same problem.",
+    es: "GitHub Actions corre los tests con Testcontainers contra un Postgres real. Los runners de Linux agarraron un bug de precisión de timestamps que en macOS no se reproducía nunca — habría explotado recién en producción. Revisando el resto del código aparecieron 4 casos más del mismo problema."
+  },
+  "build.li4.b": { en: "Human in the loop", es: "Humano en el loop" },
+  "build.li4.span": {
+    en: "The project is developed with AI assistance, under one condition that isn't negotiable: no push, merge or deploy goes out without my confirmation. The whole infrastructure costs about 50 dollars a month.",
+    es: "El proyecto se desarrolla con asistencia de IA, con una condición que no se negocia: ningún push, merge ni deploy sale sin mi confirmación. Toda la infraestructura cuesta unos 50 dólares al mes."
+  },
+
+  /* ===== estado ===== */
+  "estado.sheet": { en: "SHEET · PROJECT STATUS", es: "HOJA · ESTADO DEL PROYECTO" },
+  "estado.title": { en: "What's done, what's written, what's missing", es: "Qué está hecho, qué está escrito, qué falta" },
+  "estado.lede": {
+    en: "I prefer to separate what already runs in production from what's specified and not yet migrated. Mixing the two would be selling you something that doesn't exist.",
+    es: "Prefiero separar lo que ya corre en producción de lo que está escrito y todavía no migré. Mezclar las dos cosas sería venderte algo que no existe."
+  },
+  "estado.col1.h": { en: "[x] Implemented and verified", es: "[x] Implementado y verificado" },
+  "estado.col1.li1": { en: "· RLS on 25 tables · 42/42 adversarial", es: "· RLS en 25 tablas · 42/42 adversarial" },
+  "estado.col1.li2": { en: "· Idempotency and locks under a real race", es: "· Idempotencia y locks bajo carrera real" },
+  "estado.col1.li3": { en: "· Encrypted backups + restore drill 25/25", es: "· Backups cifrados + restore drill 25/25" },
+  "estado.col1.li4": { en: "· Offline sync with signed licenses", es: "· Offline sync con licencias firmadas" },
+  "estado.col1.li5": { en: "· Multi-currency with frozen rates", es: "· Multi-moneda con tasas congeladas" },
+  "estado.col1.li6": { en: "· Manual subscription payments (Phase 9)", es: "· Pago manual de suscripciones (Fase 9)" },
+  "estado.col1.li7": { en: "· Open-registration defense: per-IP rate limit, 30-day trial purge", es: "· Defensa del registro abierto: rate-limit por IP, purga de trials a 30 días" },
+  "estado.col2.h": { en: "[~] Specified, migrations pending", es: "[~] Especificado, migraciones pendientes" },
+  "estado.col2.li1": { en: "· Billing with versioned prices and payment snapshots (DEC-032/033/035/037)", es: "· Billing con precios versionados y snapshots de pago (DEC-032/033/035/037)" },
+  "estado.col2.li2": { en: "· Zero Trust over the staff panel — the separate app exists; the deploy behind Access is pending verification", es: "· Zero Trust sobre el panel staff — la app separada existe; el deploy tras Access está pendiente de verificación" },
+  "estado.col2.li3": { en: "· Full sale by weight: PLU and scale barcodes (spec 15)", es: "· Venta por peso completa: PLU y códigos de balanza (spec 15)" },
+  "estado.col3.h": { en: "[ ] Future, written as a rule", es: "[ ] Futuro, escrito como regla" },
+  "estado.col3.li1": { en: "· A separate staging before touching production with the first paying customer — hard rule, not good intention", es: "· Staging separado antes de tocar producción con el primer cliente pago — regla dura, no buena intención" },
+  "estado.col3.li2": { en: "· Public demo with a seeded tenant", es: "· Demo pública con tenant sembrado" },
+  "estado.col3.li3": { en: "· Access for AI agents via MCP (spec 19)", es: "· Acceso para agentes IA vía MCP (spec 19)" },
+
+  /* ===== stack ===== */
+  "stack.sheet": { en: "SHEET · TECHNICAL INVENTORY", es: "HOJA · INVENTARIO TÉCNICO" },
+  "stack.title": { en: "Technical inventory", es: "Inventario técnico" },
+  "stack.i4": { en: "Server-side sessions · CSRF · RBAC", es: "Sesiones server-side · CSRF · RBAC" },
+
+  /* ===== footer ===== */
   "footer.contacto": { en: "Contact", es: "Contacto" },
-  "footer.p": { en: "Available for work and projects in backend, APIs, and cloud infrastructure.", es: "Disponible para trabajo y proyectos de backend, APIs e infraestructura cloud." },
+  "footer.p": { en: "If you're left with a question the cards don't answer, write me.", es: "Si te quedó una pregunta que las fichas no responden, escribime." },
   "footer.small": { en: "Ryguasu is a proprietary product in active development. This page describes the engineering without exposing source code, credentials, internal URLs, schemas, or customer data.", es: "Ryguasu es un producto propietario en desarrollo activo. Esta página describe la ingeniería sin exponer código fuente, credenciales, URLs internas, esquemas ni datos de clientes." },
-  "footer.row1": { en: "Enrique Chyrnia · Backend & Infrastructure", es: "Enrique Chyrnia · Backend e infraestructura" },
+  "footer.row1": { en: "Enrique Chyrnia · Backend &amp; Infrastructure", es: "Enrique Chyrnia · Backend e infraestructura" },
   "footer.back": { en: "← Back to home", es: "← Volver al inicio" }
 };

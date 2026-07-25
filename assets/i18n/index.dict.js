@@ -21,7 +21,7 @@ window.SiteI18n.dict = {
   "hero.areaLabelKey": { en: "AREA", es: "ÁREA" },
   "hero.dateLabelKey": { en: "DATE", es: "FECHA" },
   "hero.brole": { en: "Backend · APIs & Integration · Cloud systems", es: "Backend · APIs & Integración · Sistemas cloud" },
-  "hero.blead": { en: 'I work on backend for web systems: APIs, integration with external services, data persistence, technical documentation, and deployment to cloud environments. I work <b class="hl">API-first</b> and document technical decisions along with their trade-offs.', es: 'Trabajo en backend para sistemas web: APIs, integración con servicios externos, persistencia de datos, documentación técnica y despliegue en entornos cloud. Trabajo <b class="hl">API-first</b> y dejo documentadas las decisiones técnicas con sus trade-offs.' },
+  "hero.blead": { en: 'I build backend for web systems: APIs, integration with external services, data, and cloud deployment. I work <b class="hl">API-first</b> and write down technical decisions with their trade-offs.', es: 'Hago backend para sistemas web: APIs, integración con servicios externos, datos y despliegue en cloud. Trabajo <b class="hl">API-first</b> y dejo anotadas las decisiones técnicas con sus trade-offs.' },
   "hero.photoAlt": { en: "Portrait of Enrique Chyrnia", es: "Retrato de Enrique Chyrnia" },
   "hero.pcap": { en: "ATTACHMENT · PHOTO 01", es: "ADJUNTO · FOTO 01" },
   "hero.fact1": { en: '<b>Backend</b> — APIs · integration · deployment', es: '<b>Backend</b> — APIs · integración · despliegue' },
@@ -30,15 +30,15 @@ window.SiteI18n.dict = {
 
   "s01.sheet": { en: "SHEET 01/04 · PROFILE", es: "HOJA 01/04 · PERFIL" },
   "s01.title": { en: 'Who I am and how I work', es: 'Quién soy y cómo trabajo' },
-  "s01.lede": { en: 'Software developer focused on <b>backend, APIs, and integration</b>. I like being involved in the whole cycle: modeling data, defining API contracts, building business logic, documenting, and deploying.', es: 'Desarrollador de software con foco en <b>backend, APIs e integración</b>. Me gusta participar de todo el ciclo: modelar datos, definir contratos de API, construir la lógica de negocio, documentar y desplegar.' },
-  "s01.note1": { en: 'I work <b class="hl">API-first</b>: contract first, code second, so frontend and backend can move forward in parallel without stepping on each other. I document technical decisions, alternatives, and trade-offs so the team can understand and maintain them.', es: 'Trabajo <b class="hl">API-first</b>: primero el contrato, después el código, para que frontend y backend avancen en paralelo sin pisarse. Documento decisiones técnicas, alternativas y trade-offs para que el equipo pueda entenderlas y mantenerlas.' },
-  "s01.note2": { en: "I'm currently still studying computer engineering; my experience comes from building, deploying, and testing real systems.", es: 'Actualmente sigo estudiando ingeniería informática; mi experiencia viene de construir, desplegar y probar sistemas reales.' },
+  "s01.lede": { en: 'Software developer focused on <b>backend, APIs, and integration</b>. I like being in the whole cycle, from modeling the data to seeing the system deployed and running.', es: 'Desarrollador de software con foco en <b>backend, APIs e integración</b>. Me gusta estar en todo el ciclo, desde modelar los datos hasta ver el sistema desplegado y andando.' },
+  "s01.note1": { en: 'I work <b class="hl">API-first</b>: contract first, code second, so frontend and backend can move forward in parallel without stepping on each other. Decisions get written down with their alternatives and trade-offs, so anyone on the team can pick them up later.', es: 'Trabajo <b class="hl">API-first</b>: primero el contrato, después el código, para que frontend y backend avancen en paralelo sin pisarse. Las decisiones quedan escritas con sus alternativas y trade-offs, para que cualquiera del equipo pueda retomarlas después.' },
+  "s01.note2": { en: "I'm still studying computer engineering; what I know comes from building and running real systems.", es: 'Sigo estudiando ingeniería informática; lo que sé viene de construir y operar sistemas reales.' },
   "s01.box1.bt": { en: "From requirement to deploy", es: "Del requerimiento al deploy" },
   "s01.box1.span": { en: "I'm involved from technical analysis through deployment, collaborating on decisions with the team and documenting them.", es: "Participo desde el análisis técnico hasta el despliegue, colaborando en las decisiones junto al equipo y dejándolas documentadas." },
   "s01.box2.bt": { en: "Backend & systems", es: "Backend & sistemas" },
   "s01.box2.span": { en: "Java/Spring backend modules in the cloud, contract-first REST APIs, and integrations with external services that support the product.", es: "Módulos backend Java/Spring en cloud, APIs REST contract-first e integraciones con servicios externos que sostienen el producto." },
   "s01.box3.bt": { en: "Technical honesty", es: "Honestidad técnica" },
-  "s01.box3.span": { en: "I flag what's missing or risky (security, tech debt) before it becomes a problem, and I document it.", es: "Señalo lo que falta o lo que es riesgo (seguridad, deuda) antes de que sea un problema, y lo dejo documentado." },
+  "s01.box3.span": { en: "If something's missing or risky (security, tech debt), I say so before it becomes a problem — and it goes on record.", es: "Si algo falta o es un riesgo (seguridad, deuda), lo digo antes de que sea un problema — y queda por escrito." },
 
   "s02.sheet": { en: "SHEET 02/04 · STACK", es: "HOJA 02/04 · STACK" },
   "s02.title": { en: "Technologies I work with", es: "Tecnologías que manejo" },
@@ -71,7 +71,7 @@ window.SiteI18n.dict = {
   "s03.title": { en: "Work experience — Backend & infrastructure", es: "Experiencia laboral — Backend e infraestructura" },
   "s03.jco": { en: "Private company · digital services industry", es: "Empresa privada · rubro servicios digitales" },
   "s03.jrole": { en: "Backend Developer", es: "Desarrollador Backend" },
-  "s03.note": { en: "I worked at a private company in the digital services industry, serving as the person responsible for backend and technical infrastructure on an operational platform with applications for users, professionals, and the internal team. My work covered three areas: backend architecture and cloud infrastructure, user registration, and the internal team's backoffice.", es: "Trabajé en una empresa privada del rubro servicios digitales, participando como encargado de backend e infraestructura técnica en una plataforma operativa con aplicaciones para usuarios, profesionales y equipo interno. Mi trabajo cubrió tres áreas: la arquitectura backend e infraestructura cloud, el registro de usuarios y el backoffice del equipo interno." },
+  "s03.note": { en: "I worked at a private company in the digital services industry, in charge of backend and technical infrastructure on an operational platform with applications for users, professionals, and the internal team. Three areas fell to me: backend architecture and cloud infrastructure, user registration, and the internal team's backoffice.", es: "Trabajé en una empresa privada del rubro servicios digitales, como encargado del backend y la infraestructura técnica de una plataforma operativa con aplicaciones para usuarios, profesionales y equipo interno. Me tocaron tres áreas: la arquitectura backend e infraestructura cloud, el registro de usuarios y el backoffice del equipo interno." },
   "s03.tag1": { en: "Modular backend & cloud infrastructure", es: "Backend modular e infraestructura cloud" },
   "s03.tag2": { en: "Onboarding & user registration", es: "Onboarding y registro de usuarios" },
   "s03.tag3": { en: "Operational backoffice", es: "Backoffice operativo" },
@@ -93,6 +93,6 @@ window.SiteI18n.dict = {
   "s04b.jgo": { en: "View project →", es: "Ver proyecto →" },
 
   "footer.contacto": { en: "Contact", es: "Contacto" },
-  "footer.p": { en: "Available for backend, APIs, and integration opportunities. Feel free to reach out about work, projects, or technical collaboration.", es: "Disponible para oportunidades de backend, APIs e integraciones. Podés escribirme por trabajo, proyectos o colaboración técnica." },
+  "footer.p": { en: "I'm open to backend, API, and integration work. Write me about jobs, projects, or anything technical.", es: "Estoy abierto a trabajo de backend, APIs e integraciones. Escribime nomás — por trabajo, proyectos o lo que sea técnico." },
   "footer.row1": { en: "Enrique Chyrnia · Backend · APIs · Architecture", es: "Enrique Chyrnia · Backend · APIs · Arquitectura" }
 };

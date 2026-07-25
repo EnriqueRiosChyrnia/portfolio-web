@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20fill%3D%27%23262a20%27%2F%3E%3Ctext%20x%3D%2732%27%20y%3D%2744%27%20font-family%3D%27Courier%20New%2CCourier%2Cmonospace%27%20font-weight%3D%27700%27%20font-size%3D%2730%27%20fill%3D%27%23f7f4e8%27%20text-anchor%3D%27middle%27%3EEC%3C%2Ftext%3E%3C%2Fsvg%3E">
-<title data-i18n-meta="meta.title">Fil-Grama (v2 · highlighted) — Enrique Chyrnia</title>
-<meta name="description" content="Fil-Grama case study: a social media analytics platform for agencies. Backend, Meta/TikTok integrations, automated reports, and product design." data-i18n-meta="meta.description">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20fill%3D%27%230F3F78%27%2F%3E%3Ctext%20x%3D%2732%27%20y%3D%2744%27%20font-family%3D%27Courier%20New%2CCourier%2Cmonospace%27%20font-weight%3D%27700%27%20font-size%3D%2730%27%20fill%3D%27%23EAF2FB%27%20text-anchor%3D%27middle%27%3EEC%3C%2Ftext%3E%3C%2Fsvg%3E">
+<title data-i18n-meta="meta.title">Fil-Grama — Enrique Chyrnia</title>
+<meta name="description" content="Fil-Grama case study: social media analytics for agencies. Backend, Meta and TikTok integrations, a daily capture job, reports and product design." data-i18n-meta="meta.description">
 <link rel="canonical" href="https://portfolio.fil-grama.com/fil-grama-report.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Enrique Chyrnia — Portfolio">
 <meta property="og:title" content="Fil-Grama — Product Case Study · Enrique Chyrnia" data-i18n-meta="meta.ogTitle">
-<meta property="og:description" content="Social media analytics platform for agencies: backend, Meta/TikTok integrations, automated reports, and product design." data-i18n-meta="meta.ogDescription">
+<meta property="og:description" content="Social media analytics for agencies: backend, Meta and TikTok integrations, a daily capture job, reports and product design." data-i18n-meta="meta.ogDescription">
 <meta property="og:url" content="https://portfolio.fil-grama.com/fil-grama-report.html">
 <meta property="og:image" content="https://portfolio.fil-grama.com/assets/og-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -19,47 +19,55 @@
 <meta property="og:locale" content="en_US" data-i18n-meta="meta.ogLocale">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Fil-Grama — Product Case Study · Enrique Chyrnia" data-i18n-meta="meta.twitterTitle">
-<meta name="twitter:description" content="Social media analytics platform for agencies: backend, Meta/TikTok integrations, automated reports, and product design." data-i18n-meta="meta.twitterDescription">
+<meta name="twitter:description" content="Social media analytics for agencies: backend, Meta and TikTok integrations, a daily capture job, reports and product design." data-i18n-meta="meta.twitterDescription">
 <meta name="twitter:image" content="https://portfolio.fil-grama.com/assets/og-card.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Vollkorn:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
+  /* Palatino es la serif de marca: macOS y Windows ya la traen instalada.
+     Vollkorn queda como respaldo web para el resto. */
+  @font-face{font-family:"GillFG";src:url("assets/filgrama/marca/gill-sans-mt.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+
   :root{
-    --desk:#43463e; --paper:#f7f4e6; --strip:#f2efdf;
-    --ink:#262a20; --faint:#6b6e5f; --rule:rgba(38,42,32,.28); --rule-soft:rgba(38,42,32,.16);
-    --bar:rgba(96,138,89,.075);
-    --ok:oklch(0.5 0.11 150); --warn:oklch(0.55 0.12 65); --red:oklch(0.52 0.13 28); --blue:oklch(0.45 0.08 250);
+    --desk:#16222F; --paper:#F4F7FB; --strip:#E7EEF7;
+    --ink:#141921; --faint:#647084; --rule:rgba(20,25,33,.28); --rule-soft:rgba(20,25,33,.15);
+    --bar:rgba(30,102,188,.075);
+    --blue:#1E66BC; --blue-d:#14529C; --blue-dd:#0F3F78;
+    --ok:#1F7A50; --warn:#B0761A; --red:#B4471F;
     --stripw:48px;
+    --serif:Palatino,"Palatino Linotype","Book Antiqua","Vollkorn",Georgia,serif;
+    --sans:"GillFG","Gill Sans MT","Gill Sans",sans-serif;
+    --mono:"IBM Plex Mono","Courier New",monospace;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;color:var(--ink);
-    font-family:"IBM Plex Mono","Courier New",monospace;
+    font-family:var(--mono);
     font-size:14.5px;line-height:26px;
     background:var(--desk);
-    background-image:radial-gradient(1400px 800px at 50% -10%,rgba(255,255,255,.05),transparent 60%);
+    background-image:radial-gradient(1400px 800px at 50% -10%,rgba(156,196,237,.07),transparent 60%);
     padding:0 14px 72px;min-height:100vh}
   p{margin:26px 0}
-  a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule)}
+  a{color:var(--blue-d);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(20,82,156,.4)}
   a:hover{color:var(--red);text-decoration-color:var(--red)}
-  ::selection{background:var(--ink);color:var(--paper)}
+  ::selection{background:var(--blue-dd);color:var(--paper)}
 
-  .topbar{position:sticky;top:0;z-index:30;background:#1d201a;border-bottom:1px solid rgba(247,244,230,.14);
+  .topbar{position:sticky;top:0;z-index:30;background:#0C1926;border-bottom:1px solid rgba(234,242,251,.14);
     margin:0 -14px 26px;padding:0 14px}
   .topbar .twrap{max-width:1220px;margin:0 auto;display:flex;align-items:center;gap:22px;height:50px;
-    color:#cfd3c2;font-size:11.5px;letter-spacing:.08em}
-  .topbar .tid{font-weight:700;color:#f7f4e6;white-space:nowrap}
-  .topbar .tid i{font-style:normal;color:#9fae8d}
+    color:#C6D3E2;font-size:11.5px;letter-spacing:.08em}
+  .topbar .tid{font-weight:700;color:#EAF2FB;white-space:nowrap}
+  .topbar .tid i{font-style:normal;color:#9CC4ED}
   nav.links{display:flex;gap:16px;flex:1;overflow:hidden}
-  nav.links a{color:#a9ad9b;text-decoration:none;text-transform:uppercase;white-space:nowrap}
-  nav.links a:hover{color:#f7f4e6}
+  nav.links a{color:#A3B3C6;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+  nav.links a:hover{color:#EAF2FB}
   .tbtn{font:inherit;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
-    color:#f7f4e6;background:transparent;border:1px solid rgba(247,244,230,.35);padding:5px 12px;
+    color:#EAF2FB;background:transparent;border:1px solid rgba(234,242,251,.35);padding:5px 12px;
     text-decoration:none;white-space:nowrap}
-  .tbtn:hover{background:#f7f4e6;color:#1d201a;text-decoration:none}
+  .tbtn:hover{background:#EAF2FB;color:#0C1926;text-decoration:none}
   .tbtn.lang-toggle{font-weight:700;letter-spacing:.05em}
-  @media(max-width:1040px){nav.links{display:none}}
+  @media(max-width:1100px){nav.links{display:none}}
   @media(max-width:640px){
     .twrap{gap:6px}
     .topbar .tid{overflow:hidden;text-overflow:ellipsis;max-width:26vw}
@@ -68,9 +76,9 @@
 
   /* ---- papel continuo ---- */
   .feed{position:relative;max-width:1220px;margin:0 auto;background:var(--paper);
-    box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 34px 60px -20px rgba(10,12,8,.55),0 4px 14px rgba(10,12,8,.3)}
+    box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 34px 60px -20px rgba(6,12,20,.6),0 4px 14px rgba(6,12,20,.32)}
   .strip{position:absolute;top:0;bottom:0;width:var(--stripw);background:var(--strip);z-index:2;
-    background-image:radial-gradient(circle at 50% 50%,var(--desk) 6px,rgba(15,17,12,.35) 6.5px,rgba(255,255,255,.4) 7.5px,transparent 8.5px);
+    background-image:radial-gradient(circle at 50% 50%,var(--desk) 6px,rgba(8,14,22,.35) 6.5px,rgba(255,255,255,.5) 7.5px,transparent 8.5px);
     background-size:var(--stripw) 56px;background-position:0 14px}
   .strip.l{left:0;border-right:1px dashed var(--rule)}
   .strip.r{right:0;border-left:1px dashed var(--rule)}
@@ -79,7 +87,7 @@
   @media(max-width:860px){
     :root{--stripw:30px}
     .strip{background-size:var(--stripw) 48px;
-      background-image:radial-gradient(circle at 50% 50%,var(--desk) 4.5px,rgba(15,17,12,.35) 5px,rgba(255,255,255,.4) 6px,transparent 7px)}
+      background-image:radial-gradient(circle at 50% 50%,var(--desk) 4.5px,rgba(8,14,22,.35) 5px,rgba(255,255,255,.5) 6px,transparent 7px)}
     .sheet{padding:0 22px 8px}
   }
 
@@ -89,153 +97,215 @@
   .tear::before{content:"";position:absolute;left:calc(-1 * var(--stripw));right:calc(-1 * var(--stripw));top:50%;height:1px;
     background:repeating-linear-gradient(90deg,var(--rule) 0 9px,transparent 9px 16px)}
   .tear::after{content:"";position:absolute;left:calc(-1 * var(--stripw));right:calc(-1 * var(--stripw));top:calc(50% + 1px);height:14px;
-    background:linear-gradient(180deg,rgba(38,42,32,.05),transparent)}
+    background:linear-gradient(180deg,rgba(20,25,33,.05),transparent)}
 
   /* cabecera de hoja */
-  .pgh{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  .pgh{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center;
     padding:0 0 12px;margin:26px 0;border-bottom:1px solid var(--rule-soft);
-    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+    font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
   .pgh b{font-weight:600;color:var(--ink)}
+  .qmark{width:27px;height:auto;vertical-align:-9px;margin-right:10px}
 
   section{padding:0 0 52px;scroll-margin-top:64px}
-  .title .tn{color:var(--faint);font-weight:500;text-shadow:none;margin-right:16px}
-  .title{font-size:clamp(17px,2.4vw,22px);line-height:26px;font-weight:700;margin:0 0 26px;letter-spacing:.04em;text-transform:uppercase;
-    text-shadow:.6px 0 0 currentColor}
-  .lede{max-width:72ch;margin:0}
-  .note{max-width:70ch;font-size:13.5px;color:#3c4033}
+  .title{display:inline-block;background:var(--blue-dd);color:var(--paper);padding:0 14px;
+    font-size:clamp(17px,2.4vw,21px);line-height:26px;font-weight:700;margin:0 0 26px;letter-spacing:.04em;text-transform:uppercase}
+  .title .tn{color:rgba(244,247,251,.55);font-weight:500;margin-right:16px}
+  .lede{font-family:var(--serif);font-size:17.5px;line-height:29px;max-width:66ch;margin:0}
+  .note{font-family:var(--serif);font-size:16.5px;line-height:28px;max-width:66ch;color:#2A3441}
   .small{font-size:12.5px;color:var(--faint)}
   b,strong{font-weight:700}
-  code{font-size:.95em;background:rgba(38,42,32,.08);padding:0 5px}
+  code{font-size:.95em;background:rgba(30,102,188,.09);padding:0 5px}
+  .hl{background:linear-gradient(100deg,transparent 0 1.5%,rgba(156,196,237,.62) 4% 96%,transparent 98.5%);padding:0 3px;margin:0 -1px}
 
   .two{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
   @media(max-width:820px){.two{grid-template-columns:1fr;gap:20px}}
 
-  /* listas tipo listado impreso */
   .ls{margin:0;padding:0;list-style:none}
   .ls li{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:0 0 25px;border-bottom:1px dotted var(--rule)}
   .ls .n{color:var(--faint);font-size:12px}
   .ls b{display:block;text-transform:uppercase;font-size:13.5px;letter-spacing:.04em}
-  .ls span{font-size:13.5px;color:#3c4033}
+  .ls span.d{font-family:var(--serif);font-size:16px;line-height:27px;color:#2A3441}
 
-  /* filas de estado con leader dots */
   .logrow{display:flex;align-items:baseline;gap:10px;padding:0;font-size:13.5px}
   .logrow .lbl{font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
   .logrow .dots{flex:1;border-bottom:2px dotted var(--rule);transform:translateY(-4px);min-width:30px}
   .logrow .st{font-weight:700;white-space:nowrap}
   .st.ok{color:var(--ok)} .st.pend{color:var(--warn)} .st.no{color:var(--faint)}
 
-  /* checklist */
-  .chk{margin:26px 0 0;padding:0;list-style:none}
-  .chk li{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:0;font-size:13.5px}
-  .chk .m{font-weight:700}
-  .chk .m.ok{color:var(--ok)} .chk .m.mid{color:var(--warn)} .chk .m.no{color:var(--faint)}
-  .chk b{text-transform:uppercase;font-size:13px;letter-spacing:.04em}
-  .chk span{color:#3c4033}
+  /* ficha de estado enmarcada */
+  .card{border:1.5px solid var(--ink);background:#FAFCFE;max-width:660px}
+  .card .ch{background:var(--blue-dd);color:#EAF2FB;font-family:var(--sans);font-size:13px;letter-spacing:.2em;text-transform:uppercase;padding:11px 18px}
+  .card .cb{padding:6px 18px 14px}
+  .card .cr{display:flex;align-items:baseline;gap:14px;padding:9px 0;border-bottom:1px dotted var(--rule);font-size:13.5px;line-height:24px}
+  .card .cr:last-child{border-bottom:0}
+  .card .m{flex:none;width:34px;font-weight:700}
+  .card .m.ok{color:var(--ok)} .card .m.mid{color:var(--warn)} .card .m.no{color:var(--faint)}
 
-  /* bloques con regla impresa */
-  .box{border:1.5px solid var(--ink);padding:20px 22px;background:#f7f4e6}
+  .box{border:1.5px solid var(--ink);padding:20px 22px;background:#FAFCFE}
   .box + .box{margin-top:26px}
   .box b.bt{display:block;text-transform:uppercase;font-size:12.5px;letter-spacing:.08em;margin-bottom:4px}
-  .box span{font-size:13.5px;color:#3c4033}
+  .box span{font-size:13.5px;color:#2A3441}
 
-  .panel{border:1.5px solid var(--ink);background:#faf8ee;padding:18px;margin-top:26px}
+  .panel{border:1.5px solid var(--ink);background:#FAFCFE;padding:18px;margin-top:26px}
   .panel .cap{font-size:12px;color:var(--faint);margin:12px 2px 0}
   .diagram{width:100%;height:auto;display:block}
   .diagram text{fill:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500}
-  .diagram .t-sm{font-size:11.5px;fill:#4a4e3f}
+  .diagram .t-sm{font-size:11.5px;fill:#394352}
   .diagram .t-w{font-weight:700}
   .diagram .lbl{fill:var(--faint);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
   .flow{stroke:var(--ink);stroke-width:1.5;fill:none;marker-end:url(#fl)}
-  .flow-d{stroke:oklch(0.52 0.13 28);stroke-width:1.5;fill:none;stroke-dasharray:5 5;marker-end:url(#flg)}
+  .flow-d{stroke:#B4471F;stroke-width:1.5;fill:none;stroke-dasharray:5 5;marker-end:url(#flg)}
 
-  .h3{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:52px 0 0;
-    text-shadow:.5px 0 0 currentColor}
+  .h3{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:52px 0 0}
   .h3::before{content:"— "}
 
-  /* inventario / stack */
   .inv{display:grid;grid-template-columns:repeat(3,1fr);gap:0 44px;margin-top:0}
   @media(max-width:820px){.inv{grid-template-columns:1fr 1fr}}
   @media(max-width:540px){.inv{grid-template-columns:1fr}}
-  .inv h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--faint);margin:26px 0 0;font-weight:600;
+  .inv h4{font-family:var(--sans);font-size:12.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--faint);margin:26px 0 0;font-weight:400;
     text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--rule)}
   .inv ul{margin:0;padding:0;list-style:none;font-size:13.5px}
   .inv li{padding:0}
   .inv li::before{content:"· ";color:var(--faint)}
 
+  /* ---- la ventana de la API ---- */
+  .winbtns{display:flex;align-items:center;gap:10px;margin:26px 0 0;font-size:12.5px}
+  .winbtn{font:inherit;font-size:12.5px;letter-spacing:.04em;cursor:pointer;padding:7px 14px;
+    background:transparent;color:var(--ink);border:1.5px solid rgba(20,25,33,.4)}
+  .winbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .win{--wpad:22px;--wgap:9px;position:relative;border:1.5px solid var(--ink);background:#FAFCFE;padding:20px var(--wpad) 0;margin-top:26px;overflow-x:auto}
+  .winplot{position:relative;min-width:min-content}
+  .winhead{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-bottom:14px}
+  .wingrid{display:flex;align-items:flex-end;gap:var(--wgap);height:196px}
+  .wcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+  .wv{font-size:10px;text-align:center;padding-bottom:5px;color:var(--blue-d)}
+  .wbar{background:var(--blue);border:1px solid var(--blue-dd);border-bottom:0}
+  .winfoot{display:flex;gap:var(--wgap);border-top:1.5px solid var(--ink);padding:7px 0 16px}
+  .wm{flex:1;text-align:center;font-size:10px;text-transform:uppercase;color:#394352}
+  .winband{display:none;position:absolute;left:0;
+    width:calc((100% + var(--wgap)) * 11 / 12 - var(--wgap));top:36px;height:66px;
+    border:1.5px dashed var(--blue-d);background:rgba(30,102,188,.06);
+    align-items:center;justify-content:center;text-align:center;
+    font-family:var(--sans);font-size:13px;letter-spacing:.11em;text-transform:uppercase;color:var(--blue-d);padding:0 12px}
+  .win[data-mode="api"] .winband{display:flex}
+  .win[data-mode="api"] .wcol:not(:last-child) .wbar{background:transparent;border-color:#C3D2E2}
+  .win[data-mode="api"] .wcol:not(:last-child) .wv{visibility:hidden}
+  .win[data-mode="api"] .wcol:not(:last-child) .wm{color:#A9B6C6}
+  @media(max-width:700px){
+    .win{--wgap:5px;--wpad:14px}
+    .wingrid{height:150px}
+    .winband{top:26px;height:56px;font-size:11px}
+    .wv{font-size:9px}
+  }
+
+  /* ---- la ronda del día ---- */
+  .ronda{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:start;margin-top:26px}
+  @media(max-width:860px){.ronda{grid-template-columns:1fr;gap:26px}}
+  .rbird{border:1.5px solid var(--ink);background:#FAFCFE;padding:14px 16px;margin-top:26px;display:flex;gap:16px;align-items:center}
+  .rbird img{width:104px;height:auto;display:block;flex:none}
+  .rbird .rb-t{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .rbtn{font:inherit;font-size:12.5px;letter-spacing:.04em;cursor:pointer;padding:8px 14px;margin-top:10px;
+    background:var(--blue-dd);color:#F4F7FB;border:1.5px solid var(--blue-dd)}
+  .rbtn[data-fase="run"]{opacity:.55;cursor:progress}
+  .rlog{border:1.5px solid var(--ink);background:#FAFCFE;padding:16px 18px;min-height:238px}
+  .rlog .rh{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:8px}
+  .jrow{display:none;gap:12px;font-size:12.5px;line-height:24px}
+  .jrow.on{display:flex;animation:jrow .22s ease both}
+  .jrow .jt{flex:none;color:var(--faint)}
+  .jrow .jx{flex:1}
+  .jrow.ok .jx{color:var(--ok)}
+  .rcaret{color:var(--blue-d);font-size:12.5px;animation:jblink 1s steps(2,end) infinite}
+  .rcaret[hidden]{display:none}
+  @keyframes jrow{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @keyframes jblink{0%,100%{opacity:1}50%{opacity:.2}}
+  @media(prefers-reduced-motion:reduce){.jrow.on{animation:none}.rcaret{animation:none}}
+
   /* recorrido */
   .tour-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
   @media(max-width:860px){.tour-grid{grid-template-columns:1fr}}
-  .tcard{border:1.5px solid var(--ink);background:#faf8ee;cursor:pointer;text-align:left;font:inherit;color:inherit;
+  .tcard{border:1.5px solid var(--ink);background:#FAFCFE;cursor:pointer;text-align:left;font:inherit;color:inherit;
     width:100%;padding:0;display:flex;flex-direction:column;transition:transform .14s ease,box-shadow .14s ease}
-  .tcard:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(38,42,32,.3)}
-  .tcard:focus-visible{outline:2px solid var(--red);outline-offset:2px}
-  .tshot{width:100%;height:290px;background:#efece0;display:flex;align-items:center;justify-content:center;
+  .tcard:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(20,25,33,.28)}
+  .tcard:focus-visible{outline:2px solid var(--blue-d);outline-offset:2px}
+  .tshot{width:100%;height:290px;background:#E9F0F8;display:flex;align-items:center;justify-content:center;
     padding:12px;border-bottom:1.5px solid var(--ink)}
   .tshot img{width:100%;height:100%;object-fit:contain;display:block}
   .tbody{padding:14px 18px 16px}
   .tname{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-  .tdesc{font-size:13px;color:#3c4033;margin-top:4px;line-height:1.55}
-  .tmeta{margin-top:10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .tdesc{font-family:var(--serif);font-size:15.5px;line-height:25px;color:#2A3441;margin-top:5px}
+  .tmeta{margin-top:10px;font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 
   .eras{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
   @media(max-width:760px){.eras{grid-template-columns:1fr}}
-  .era{border:1.5px solid var(--ink);background:#faf8ee;overflow:hidden}
+  .era{border:1.5px solid var(--ink);background:#FAFCFE;overflow:hidden}
   .era img{width:100%;display:block}
-  .era .cap{padding:10px 14px;font-size:12px;color:var(--faint);border-top:1.5px solid var(--ink)}
+  .era .cap{padding:10px 14px;font-family:var(--sans);font-size:13px;letter-spacing:.02em;color:var(--faint);border-top:1.5px solid var(--ink)}
   .era .cap b{color:var(--ink);text-transform:uppercase;letter-spacing:.06em;font-size:11.5px}
 
-  /* capturas */
   .shots{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
   @media(max-width:820px){.shots{grid-template-columns:1fr}}
-  .fig{border:1.5px solid var(--ink);background:#faf8ee}
+  .fig{border:1.5px solid var(--ink);background:#FAFCFE}
   .fig img{width:100%;display:block;border-bottom:1.5px solid var(--ink)}
-  .fig .cap{padding:10px 14px;font-size:12.5px;color:#3c4033}
-  .fig .cap b{text-transform:uppercase;font-size:11.5px;letter-spacing:.08em}
+  .fig .cap{padding:10px 14px;font-family:var(--serif);font-size:15px;line-height:25px;color:#2A3441}
+  .fig .cap b{font-family:var(--mono);text-transform:uppercase;font-size:11.5px;letter-spacing:.08em}
 
-  /* hero banner */
-  .banner{padding:52px 0}
+  /* hero */
+  .banner{padding:52px 0;position:relative}
   .jobhead{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
-    border-top:3px double var(--ink);border-bottom:3px double var(--ink);padding:12px 0;margin-bottom:26px;
+    border-top:3px double var(--ink);border-bottom:3px double var(--ink);padding:23px 0 12px;margin-bottom:26px;
     display:flex;flex-wrap:wrap;gap:6px 34px}
   .jobhead b{color:var(--ink);font-weight:600}
-  .bname{font-size:clamp(44px,8.5vw,96px);line-height:.98;font-weight:700;letter-spacing:-.01em;margin:0;
-    text-shadow:1.5px 0 0 currentColor;text-transform:uppercase}
-  .brole{font-size:clamp(14px,2vw,17px);margin:26px 0 0;font-weight:500;max-width:62ch;line-height:26px}
-  .blead{margin:26px 0 0;max-width:74ch}
-  .rol{margin-top:26px;border-left:3px solid var(--ink);padding:0 0 0 22px;max-width:76ch}
+  .herotop{display:flex;gap:40px;align-items:flex-start}
+  .herotxt{flex:1;min-width:0}
+  .bname{font-size:clamp(44px,8.2vw,92px);line-height:.95;font-weight:700;letter-spacing:-.012em;margin:0;
+    text-transform:uppercase;color:var(--blue-dd);text-shadow:1.5px 0 0 currentColor;
+    background:var(--paper);width:fit-content;padding-right:20px}
+  .heroqua{flex:none;width:272px;text-align:center}
+  .heroqua img{width:224px;height:auto;display:block;margin:0 auto}
+  .heroqua .qcap{font-family:var(--sans);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);
+    border-top:1px solid var(--rule);padding-top:7px;margin-top:2px}
+  @media(max-width:760px){.herotop{flex-direction:column;gap:20px}.heroqua{width:100%;text-align:left}.heroqua img{margin:0}}
+  .brole{font-family:var(--serif);font-size:19px;line-height:30px;margin:26px 0 0;max-width:54ch}
+  .rol{margin-top:26px;border-left:3px solid var(--blue);padding:0 0 0 22px;max-width:66ch}
   .rol b.rl{display:block;text-transform:uppercase;font-size:12px;letter-spacing:.12em;margin-bottom:0}
-  .rol p{margin:0;font-size:13.5px;color:#3c4033}
+  .rol p{margin:0;font-family:var(--serif);font-size:16.5px;line-height:28px;color:#2A3441}
   .factline{margin-top:26px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-    padding:12px 0;display:flex;flex-wrap:wrap;gap:8px 0;font-size:13px;letter-spacing:.04em}
+    padding:25px 0 12px;display:flex;flex-wrap:wrap;gap:8px 0;font-size:13px;letter-spacing:.04em}
   .factline span{white-space:nowrap}
   .factline b{font-weight:700}
   .factline i{font-style:normal;color:var(--faint);padding:0 14px}
 
-  /* footer / end of job */
+  .stamprow{display:flex;justify-content:flex-end;margin:0 0 26px}
+  .stamp{flex:none;align-self:center;border:3px double currentColor;padding:1px 14px;font-size:12.5px;font-weight:700;
+    letter-spacing:.22em;text-transform:uppercase;transform:rotate(-5deg);opacity:.85;white-space:nowrap}
+  .stamp.red{color:var(--red)} .stamp.amber{color:var(--warn)} .stamp.green{color:var(--ok)}
+
+  /* footer */
   .eoj{padding:52px 0}
   .eoj .stars{font-size:13px;letter-spacing:.3em;color:var(--faint);overflow:hidden;white-space:nowrap;margin-bottom:26px}
-  .eoj h3{font-size:22px;line-height:26px;text-transform:uppercase;margin:0;text-shadow:.6px 0 0 currentColor;letter-spacing:.02em}
+  .eoj h3{font-size:22px;line-height:26px;text-transform:uppercase;margin:0;letter-spacing:.02em;color:var(--blue-dd)}
   .eoj .mail{font-size:16px;font-weight:700;display:block;margin:0;width:fit-content}
   .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 20px;margin-top:52px;
-    padding-top:25px;border-top:1px solid var(--rule);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+    padding-top:25px;border-top:1px solid var(--rule);font-family:var(--sans);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
   .foot-row a{color:var(--faint)}
 
   /* modal */
-  .tour-modal-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(20,22,16,.66);display:flex;align-items:center;justify-content:center;padding:26px}
+  .tour-modal-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(12,25,38,.7);display:flex;align-items:center;justify-content:center;padding:26px}
   .tour-modal-backdrop[hidden]{display:none}
   .tour-modal{width:100%;max-width:1180px;height:min(84vh,860px);background:var(--paper);border:1.5px solid var(--ink);overflow:hidden;
-    display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(10,12,8,.55)}
-  .tour-modal-head{flex:none;display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:#1d201a;color:#f7f4e6}
+    display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(6,12,20,.6)}
+  .tour-modal-head{flex:none;display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:#0C1926;color:#EAF2FB}
   .tour-modal-head .th-txt{flex:1;min-width:0}
-  .tour-modal-eyebrow{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9fae8d}
+  .tour-modal-eyebrow{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9CC4ED}
   .tour-modal-title{font-size:15px;font-weight:700;margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
-  .tour-modal-desc{font-size:12px;color:#a9ad9b;margin-top:3px;max-width:70ch}
+  .tour-modal-desc{font-size:12px;color:#A3B3C6;margin-top:3px;max-width:70ch}
   .tour-modal-actions{flex:none;display:flex;gap:8px;align-items:center}
   .tour-mbtn{font:inherit;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;cursor:pointer;
-    padding:7px 12px;border:1px solid rgba(247,244,230,.35);background:transparent;color:#f7f4e6;text-decoration:none;
+    padding:7px 12px;border:1px solid rgba(234,242,251,.35);background:transparent;color:#EAF2FB;text-decoration:none;
     display:inline-flex;align-items:center;gap:6px}
-  .tour-mbtn:hover{background:#f7f4e6;color:#1d201a;text-decoration:none}
-  .tour-mbtn:focus-visible{outline:2px solid #9fae8d;outline-offset:2px}
+  .tour-mbtn:hover{background:#EAF2FB;color:#0C1926;text-decoration:none}
+  .tour-mbtn:focus-visible{outline:2px solid #9CC4ED;outline-offset:2px}
   .tour-modal-body{flex:1;position:relative;background:var(--paper)}
   .tour-modal-body iframe{width:100%;height:100%;border:0;display:block;position:relative;z-index:1}
   .tour-modal-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -247,27 +317,16 @@
   }
   @media(prefers-reduced-motion:reduce){.tcard{transition:none}}
 
-  /* ===== v2: resaltado de secciones ===== */
-  .title{display:inline-block;background:var(--ink);color:var(--paper);padding:0 14px;text-shadow:none}
-  .title .tn{color:rgba(247,244,230,.55)}
-  section.alt-blue{background-color:var(--paper);margin-left:-54px;margin-right:-54px;padding-left:54px;padding-right:54px;
-    background-image:repeating-linear-gradient(180deg,transparent 0 78px,rgba(90,115,150,.11) 78px 156px)}
-  @media(max-width:860px){section.alt-blue{margin-left:-22px;margin-right:-22px;padding-left:22px;padding-right:22px}}
-  .stamprow{display:flex;justify-content:flex-end;margin:0 0 26px}
-  .stamp{flex:none;align-self:center;border:3px double currentColor;padding:1px 14px;font-size:12.5px;font-weight:700;
-    letter-spacing:.22em;text-transform:uppercase;transform:rotate(-5deg);opacity:.85;white-space:nowrap}
-  .stamp.red{color:oklch(0.5 0.13 28)} .stamp.amber{color:oklch(0.55 0.12 65)} .stamp.green{color:oklch(0.5 0.11 150)}
-  .banner{position:relative}
-  .banner .stamp.hero{position:absolute;right:0;top:170px;transform:rotate(7deg);font-size:14px;padding:4px 18px}
-  @media(max-width:760px){.banner .stamp.hero{display:none}}
-  .hl{background:linear-gradient(100deg,transparent 0 1.5%,rgba(232,198,86,.5) 4% 96%,transparent 98.5%);padding:0 3px;margin:0 -1px}
   @media print{
     body{background:#fff;padding:0}
     .topbar{display:none!important}
     .feed{box-shadow:none;max-width:none}
     section{padding-bottom:28px;break-inside:avoid-page}
-    .panel,.fig,.box{break-inside:avoid}
+    .panel,.fig,.box,.win,.rlog,.card{break-inside:avoid}
     #recorrido{display:none!important}
+    .winbtns,.rbtn{display:none!important}
+    .jrow{display:flex!important}
+    .rcaret{display:none!important}
   }
 </style>
 </head>
@@ -278,6 +337,7 @@
     <span class="tid" data-i18n="topbar.tid">EC · ENRIQUE CHYRNIA <i>/ FIL-GRAMA.PRT</i></span>
     <nav class="links">
       <a href="#que-es" data-i18n="nav.problema">Problem</a>
+      <a href="#job" data-i18n="nav.job">Daily job</a>
       <a href="#arquitectura" data-i18n="nav.arquitectura">Architecture</a>
       <a href="#ingenieria" data-i18n="nav.ingenieria">Engineering</a>
       <a href="#integraciones" data-i18n="nav.integraciones">Integrations</a>
@@ -302,207 +362,288 @@
       <div class="jobhead">
         <span><b>JOB</b> FIL-GRAMA</span>
         <span><b>USER</b> E.CHYRNIA</span>
-        <span data-i18n="hero.type"><b>TYPE</b> PERSONAL PROJECT · ON THE WAY TO SAAS</span>
+        <span data-i18n="hero.type"><b>TYPE</b> MY OWN PROJECT · ON THE WAY TO SAAS</span>
         <span><b data-i18n="hero.dateLabel">DATE</b> <span id="today"></span></span>
       </div>
-      <div class="stamp red hero" aria-hidden="true" data-i18n="hero.stamp">Personal project</div>
-      <h1 class="bname">Fil-Grama</h1>
-      <p class="brole" data-i18n="hero.brole">Social media analytics for agencies — Instagram, Facebook, and TikTok in one place.</p>
-      <p class="blead" data-i18n="hero.blead">Social networks' APIs don't expose full historical series: each one only gives a limited data window. Fil-Grama runs a <b class="hl">daily job</b> that queries each client's connected accounts and stores metric snapshots in its own database — like a line printer logging everything, day by day, on continuous paper. With that history, it builds per-client dashboards, account comparisons, and PDF reports.</p>
+      <div class="herotop">
+        <div class="herotxt">
+          <h1 class="bname">Fil-Grama</h1>
+          <p class="brole" data-i18n="hero.brole">Social media analytics for agencies. Instagram, Facebook and TikTok in one place, with the history the networks don't keep for you.</p>
+        </div>
+        <div class="heroqua">
+          <img src="assets/filgrama/marca/codorniz.png" alt="The blue quail, Fil-Grama's symbol" data-i18n-attr="alt:hero.quailAlt">
+          <div class="qcap" data-i18n="hero.quailCap">The quail · the project's mark</div>
+        </div>
+      </div>
+      <p class="note" style="margin:26px 0 0" data-i18n="hero.blead">The three networks only hand back a short window of account metrics, roughly the last month. So Fil-Grama has a job that runs every morning, asks each connected account for its numbers and writes them into its own database. Whatever doesn't get saved that day is gone: the API won't return it later. The dashboards, the comparison between accounts and the PDF reports all read from that saved history.</p>
       <div class="rol">
         <b class="rl" data-i18n="hero.rolLabel">Role · Founder &amp; Developer</b>
-        <p data-i18n="hero.rolP">I defined the data model and architecture, designed the whole interface from wireframe to high fidelity, implemented backend and frontend, built the TikTok and Meta integrations, set up the infrastructure, and handle deployments.</p>
+        <p data-i18n="hero.rolP">I did the data model and the architecture, designed the 50 screens from wireframe to high fidelity, wrote backend and frontend, built the TikTok and Meta integrations, and I run the infrastructure and the deploys.</p>
       </div>
       <div class="factline">
         <span><b>167+</b> <span data-i18n="hero.fact1">tests</span></span><i>|</i>
         <span><b>14</b> <span data-i18n="hero.fact2">multi-tenant tables</span></span><i>|</i>
         <span><b>50</b> <span data-i18n="hero.fact3">screens designed</span></span><i>|</i>
         <span><b>3</b> <span data-i18n="hero.fact4">networks integrated</span></span><i>|</i>
-        <span class="hl" data-i18n="hero.fact5"><b>0</b> clients in production — so far</span>
+        <span class="hl" data-i18n="hero.fact5"><b>0</b> clients in production — still</span>
       </div>
     </header>
 
-    <!-- ============ 01 PROBLEMA ============ -->
+    <!-- ============ 01 PROBLEMA + LA VENTANA ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="que-es" data-screen-label="01 Problema">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s01.sheet">SHEET 01/09 · THE PROBLEM</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">01</span><span data-i18n="s01.title">Why Fil-Grama exists</span></h2>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s01.sheet">SHEET 01/10 · THE PROBLEM</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">01</span><span data-i18n="s01.title">Why I built Fil-Grama</span></h2>
       <div class="two">
         <div>
-          <p class="lede" data-i18n="s01.lede">An agency managing social accounts for several clients needs to compare performance across accounts and over time, but Instagram, Facebook, and TikTok don't offer long histories: each API only exposes a limited window. Without its own steady capture process, that history gets lost.</p>
-          <p class="note" style="margin-top:26px" data-i18n="s01.note">Fil-Grama captures it with a <b>daily job</b> that saves metric snapshots (reach, followers, interactions, engagement) in its own database, and uses that history to build <b>per-client dashboards</b>, <b>account comparisons</b>, and <b>PDF reports</b>.</p>
+          <p class="lede" data-i18n="s01.lede">An agency with five or six clients needs to compare accounts and see how each one moved over the months. The networks don't help there: every API gives a limited window and past that the data is simply not available. Without a capture process of your own, that history never exists.</p>
+          <p class="note" style="margin-top:26px" data-i18n="s01.note">Fil-Grama saves it day by day — reach, followers, interactions, engagement, per account, in its own tables. That's what the dashboards, the account comparison and the reports read from.</p>
         </div>
         <div>
-          <div class="box"><b class="bt" data-i18n="s01.box1.bt">Its own historical capture</b><span data-i18n="s01.box1.span">Daily snapshots per account, beyond the window each network provides.</span></div>
-          <div class="box"><b class="bt" data-i18n="s01.box2.bt">Multi-client, multi-network</b><span data-i18n="s01.box2.span">Every agency client with their accounts across all three networks in a single panel.</span></div>
-          <div class="box"><b class="bt" data-i18n="s01.box3.bt">Reports &amp; comparison</b><span data-i18n="s01.box3.span">Dashboards, account comparisons, and PDFs per client and date range.</span></div>
+          <div class="box"><b class="bt" data-i18n="s01.box1.bt">Its own capture</b><span data-i18n="s01.box1.span">A daily snapshot per account, beyond the window each network gives.</span></div>
+          <div class="box"><b class="bt" data-i18n="s01.box2.bt">Several clients, three networks</b><span data-i18n="s01.box2.span">Every client of the agency with their accounts in one panel.</span></div>
+          <div class="box"><b class="bt" data-i18n="s01.box3.bt">Reports and comparison</b><span data-i18n="s01.box3.span">Dashboards, comparison between accounts, PDF per client and date range.</span></div>
+        </div>
+      </div>
+
+      <p class="h3" data-i18n="s01.h3win">What the API returns, and what Fil-Grama kept</p>
+      <p class="note" data-i18n="s01.notewin">Same account, same metric. The difference is whether somebody was writing it down.</p>
+      <div class="winbtns">
+        <button type="button" class="winbtn" id="winApi" aria-pressed="false" data-i18n="win.btnApi">[ ] only the API</button>
+        <button type="button" class="winbtn" id="winFull" aria-pressed="true" data-i18n="win.btnFull">[x] with Fil-Grama</button>
+      </div>
+      <div class="win" id="win" data-mode="full">
+        <div class="winhead" data-i18n="win.head">ohmybunny · instagram · followers at month end</div>
+        <div class="winplot">
+        <div class="wingrid">
+          <div class="wcol"><span class="wv">1.180</span><div class="wbar" style="height:18.0%"></div></div>
+          <div class="wcol"><span class="wv">1.226</span><div class="wbar" style="height:22.6%"></div></div>
+          <div class="wcol"><span class="wv">1.290</span><div class="wbar" style="height:29.0%"></div></div>
+          <div class="wcol"><span class="wv">1.341</span><div class="wbar" style="height:34.1%"></div></div>
+          <div class="wcol"><span class="wv">1.402</span><div class="wbar" style="height:40.2%"></div></div>
+          <div class="wcol"><span class="wv">1.488</span><div class="wbar" style="height:48.8%"></div></div>
+          <div class="wcol"><span class="wv">1.553</span><div class="wbar" style="height:55.3%"></div></div>
+          <div class="wcol"><span class="wv">1.607</span><div class="wbar" style="height:60.7%"></div></div>
+          <div class="wcol"><span class="wv">1.690</span><div class="wbar" style="height:69.0%"></div></div>
+          <div class="wcol"><span class="wv">1.772</span><div class="wbar" style="height:77.2%"></div></div>
+          <div class="wcol"><span class="wv">1.861</span><div class="wbar" style="height:86.1%"></div></div>
+          <div class="wcol"><span class="wv">1.934</span><div class="wbar" style="height:93.4%"></div></div>
+        </div>
+        <div class="winfoot">
+          <span class="wm" data-i18n="win.m1">aug</span>
+          <span class="wm" data-i18n="win.m2">sep</span>
+          <span class="wm" data-i18n="win.m3">oct</span>
+          <span class="wm" data-i18n="win.m4">nov</span>
+          <span class="wm" data-i18n="win.m5">dec</span>
+          <span class="wm" data-i18n="win.m6">jan</span>
+          <span class="wm" data-i18n="win.m7">feb</span>
+          <span class="wm" data-i18n="win.m8">mar</span>
+          <span class="wm" data-i18n="win.m9">apr</span>
+          <span class="wm" data-i18n="win.m10">may</span>
+          <span class="wm" data-i18n="win.m11">jun</span>
+          <span class="wm" data-i18n="win.m12">jul</span>
+        </div>
+        <div class="winband" data-i18n="win.band">— no record · outside the API window —</div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:26px" data-i18n="s01.afterwin">The eleven months on the left are there because the job saved them. If I started the project today, that stretch would stay blank and there's no way to fill it in later.</p>
+    </section>
+
+    <!-- ============ 02 EL JOB DIARIO ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="job" data-screen-label="02 Job diario">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s02b.sheet">SHEET 02/10 · THE DAILY JOB</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">02</span><span data-i18n="s02b.title">The morning round</span></h2>
+      <div class="ronda">
+        <div>
+          <p class="lede" data-i18n="s02b.lede">One pass per account, once a day, six in the morning Asunción time. Every result gets written down, the failures too: which account, which error, at what time. An account that fails doesn't get retried in a loop; it's recorded in <code>sync_account_results</code> and the run keeps going.</p>
+          <div class="rbird">
+            <img id="rbirdImg" src="assets/filgrama/marca/codorniz.png" alt="Fil-Grama's blue quail" data-i18n-attr="alt:s02b.birdAlt">
+            <div>
+              <div class="rb-t" data-i18n="s02b.birdCap">This is the product's real loading indicator</div>
+              <button type="button" class="rbtn" id="rondaBtn" data-fase="idle" data-i18n="s02b.btnIdle">Run today's round</button>
+            </div>
+          </div>
+        </div>
+        <div class="rlog">
+          <div class="rh" data-i18n="s02b.logHead">sync_runs · run #412</div>
+          <div class="jrow" data-t="06:00:00"><span class="jt">06:00:00</span><span class="jx" data-i18n="job.r1">daily job · start · 3 accounts queued</span></div>
+          <div class="jrow ok" data-t="06:00:11"><span class="jt">06:00:11</span><span class="jx" data-i18n="job.r2">ohmybunny · instagram → snapshot saved (reach 3.412 · foll. 1.934)</span></div>
+          <div class="jrow ok" data-t="06:00:19"><span class="jt">06:00:19</span><span class="jx" data-i18n="job.r3">ohmybunny · facebook → snapshot saved (reach 861 · foll. 402)</span></div>
+          <div class="jrow ok" data-t="06:00:28"><span class="jt">06:00:28</span><span class="jx" data-i18n="job.r4">ohmybunny · tiktok → snapshot saved (views 12.907 · foll. 318)</span></div>
+          <div class="jrow" data-t="06:00:34"><span class="jt">06:00:34</span><span class="jx" data-i18n="job.r5">meta token refreshed · expires in 58 days</span></div>
+          <div class="jrow ok" data-t="06:00:41"><span class="jt">06:00:41</span><span class="jx" data-i18n="job.r6">done · 3 accounts · 0 errors · written to sync_runs</span></div>
+          <div class="rcaret" id="rcaret" hidden>█</div>
         </div>
       </div>
     </section>
 
-    <!-- ============ 02 ARQUITECTURA ============ -->
+    <!-- ============ 03 ARQUITECTURA ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="arquitectura" class="alt-blue" data-screen-label="02 Arquitectura">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s02.sheet">SHEET 02/09 · ARCHITECTURE</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">02</span><span data-i18n="s02.title">Modular backend, API contract as source of truth</span></h2>
-      <p class="lede" data-i18n="s02.lede">Backend in Java with Spring Boot, split into modules by domain (auth, clients, accounts, OAuth, Meta integration, metrics, sync, reports, media, storage). PostgreSQL with versioned migrations. The React frontend consumes the API contract through an auto-generated client (Orval), so backend and frontend never drift out of sync.</p>
+    <section id="arquitectura" data-screen-label="03 Arquitectura">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s02.sheet">SHEET 03/10 · ARCHITECTURE</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">03</span><span data-i18n="s02.title">Modular backend, contract as the source of truth</span></h2>
+      <p class="lede" data-i18n="s02.lede">Backend in Java with Spring Boot, split by domain: auth, clients, accounts, OAuth, Meta integration, metrics, sync, reports, media, storage. Postgres with versioned migrations. The React frontend doesn't hand-write its calls to the API — they're generated from the contract with Orval, so a change in the backend shows up as a type error while I'm working and not as a bug in production.</p>
 
       <div class="panel">
         <svg class="diagram" viewBox="0 0 1080 340" role="img" aria-label="Conceptual diagram of Fil-Grama's architecture" data-i18n-attr="aria-label:diag1.aria">
           <defs>
-            <marker id="fl" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#262a20"/></marker>
-            <marker id="flg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#9a4030"/></marker>
+            <marker id="fl" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#141921"/></marker>
+            <marker id="flg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#B4471F"/></marker>
           </defs>
           <text class="lbl" x="30" y="42" data-i18n="diag1.redes">Social networks</text>
-          <rect x="30" y="70" width="150" height="46" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="105" y="98" text-anchor="middle" data-i18n="diag1.tiktok">TikTok API</text>
-          <rect x="30" y="126" width="150" height="46" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="105" y="154" text-anchor="middle" class="t-sm" data-i18n="diag1.meta">Meta Graph API</text>
+          <rect x="30" y="70" width="150" height="46" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="105" y="98" text-anchor="middle" data-i18n="diag1.tiktok">TikTok API</text>
+          <rect x="30" y="126" width="150" height="46" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="105" y="154" text-anchor="middle" class="t-sm" data-i18n="diag1.meta">Meta Graph API</text>
           <path class="flow" d="M180 116 L 236 130"/>
           <path class="flow" d="M180 150 L 236 150"/>
-          <rect x="238" y="90" width="150" height="120" rx="2" fill="#eceadb" stroke="#262a20" stroke-width="1.5"/>
+          <rect x="238" y="90" width="150" height="120" rx="2" fill="#E2ECF7" stroke="#141921" stroke-width="1.5"/>
           <text x="313" y="140" text-anchor="middle" class="t-w" data-i18n="diag1.jobdiario">Daily job</text>
           <text x="313" y="160" text-anchor="middle" class="t-sm" data-i18n="diag1.syncmetricas">metrics sync</text>
           <text x="313" y="178" text-anchor="middle" class="t-sm" data-i18n="diag1.yoauth">and OAuth</text>
           <path class="flow" d="M388 150 L 444 150"/>
           <text class="lbl" x="446" y="42" data-i18n="diag1.backend">Backend</text>
-          <rect x="446" y="60" width="180" height="42" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="536" y="86" text-anchor="middle" class="t-sm" data-i18n="diag1.authcuentas">Auth · Accounts</text>
-          <rect x="446" y="112" width="180" height="42" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="536" y="138" text-anchor="middle" class="t-sm" data-i18n="diag1.metricasync">Metrics · Sync</text>
-          <rect x="446" y="164" width="180" height="42" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="536" y="190" text-anchor="middle" class="t-sm" data-i18n="diag1.reportesmedia">Reports · Media</text>
+          <rect x="446" y="60" width="180" height="42" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="536" y="86" text-anchor="middle" class="t-sm" data-i18n="diag1.authcuentas">Auth · Accounts</text>
+          <rect x="446" y="112" width="180" height="42" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="536" y="138" text-anchor="middle" class="t-sm" data-i18n="diag1.metricasync">Metrics · Sync</text>
+          <rect x="446" y="164" width="180" height="42" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="536" y="190" text-anchor="middle" class="t-sm" data-i18n="diag1.reportesmedia">Reports · Media</text>
           <text x="536" y="230" text-anchor="middle" class="t-sm" data-i18n="diag1.modulos">domain modules · Spring Boot</text>
           <path class="flow" d="M626 92 L 682 92"/>
           <path class="flow" d="M626 190 L 682 190"/>
           <text class="lbl" x="684" y="42" data-i18n="diag1.datosarchivos">Data &amp; files</text>
-          <rect x="684" y="62" width="150" height="50" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="759" y="87" text-anchor="middle" data-i18n="diag1.postgres">PostgreSQL</text><text x="759" y="103" text-anchor="middle" class="t-sm" data-i18n="diag1.metricasclientes">metrics · clients</text>
-          <rect x="684" y="166" width="150" height="50" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="759" y="191" text-anchor="middle" data-i18n="diag1.storages3">Storage S3</text><text x="759" y="207" text-anchor="middle" class="t-sm" data-i18n="diag1.r2minio">R2 prod · MinIO dev</text>
+          <rect x="684" y="62" width="150" height="50" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="759" y="87" text-anchor="middle" data-i18n="diag1.postgres">PostgreSQL</text><text x="759" y="103" text-anchor="middle" class="t-sm" data-i18n="diag1.metricasclientes">metrics · clients</text>
+          <rect x="684" y="166" width="150" height="50" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="759" y="191" text-anchor="middle" data-i18n="diag1.storages3">Storage S3</text><text x="759" y="207" text-anchor="middle" class="t-sm" data-i18n="diag1.r2minio">R2 prod · MinIO dev</text>
           <path class="flow" d="M834 87 L 890 87"/>
           <text class="lbl" x="892" y="42" data-i18n="diag1.cliente">Client</text>
-          <rect x="892" y="62" width="158" height="50" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="971" y="87" text-anchor="middle" class="t-sm" data-i18n="diag1.frontendreact">Frontend React</text><text x="971" y="103" text-anchor="middle" class="t-sm" data-i18n="diag1.dashreports">dashboards · reports</text>
-          <text x="30" y="284" class="t-sm" fill="#6b6e5f" data-i18n="diag1.footer1">JWT auth (access + rotated refresh) · embedded MCP server with read-only tools over reports</text>
-          <text x="30" y="308" class="t-sm" fill="#6b6e5f" data-i18n="diag1.footer2">Conceptual, simplified diagram. Reflects the backend's real modules without exposing infrastructure details.</text>
+          <rect x="892" y="62" width="158" height="50" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="971" y="87" text-anchor="middle" class="t-sm" data-i18n="diag1.frontendreact">Frontend React</text><text x="971" y="103" text-anchor="middle" class="t-sm" data-i18n="diag1.dashreports">dashboards · reports</text>
+          <text x="30" y="284" class="t-sm" fill="#647084" data-i18n="diag1.footer1">JWT auth (access + rotated refresh) · embedded MCP server with read-only tools over reports</text>
+          <text x="30" y="308" class="t-sm" fill="#647084" data-i18n="diag1.footer2">Conceptual, simplified diagram. It follows the backend's real modules, without infrastructure details.</text>
         </svg>
       </div>
 
       <p class="h3" data-i18n="s02.h3.tokens">Refresh token rotation</p>
-      <p class="note" data-i18n="s02.note.tokens">If a stolen refresh token gets reused, it's detected and its entire family is revoked — not just that token.</p>
+      <p class="note" data-i18n="s02.note.tokens">If a stolen refresh token gets reused, the whole family goes down, not just that token.</p>
       <div class="panel" style="margin-top:26px">
         <svg class="diagram" viewBox="0 0 1080 210" role="img" aria-label="Diagram of refresh token rotation with reuse detection" data-i18n-attr="aria-label:diag2.aria">
           <defs>
-            <marker id="fl2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#262a20"/></marker>
-            <marker id="flg2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#9a4030"/></marker>
+            <marker id="fl2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#141921"/></marker>
+            <marker id="flg2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#B4471F"/></marker>
           </defs>
-          <rect x="20" y="30" width="150" height="50" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="95" y="60" text-anchor="middle" data-i18n="diag2.login">Login</text>
+          <rect x="20" y="30" width="150" height="50" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="95" y="60" text-anchor="middle" data-i18n="diag2.login">Login</text>
           <path class="flow" marker-end="url(#fl2)" d="M170 55 L 226 55"/>
-          <rect x="228" y="30" width="190" height="50" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="323" y="55" text-anchor="middle" class="t-sm" data-i18n="diag2.access">Access (15 min)</text><text x="323" y="71" text-anchor="middle" class="t-sm" data-i18n="diag2.refreshfam">+ Refresh (family A)</text>
+          <rect x="228" y="30" width="190" height="50" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="323" y="55" text-anchor="middle" class="t-sm" data-i18n="diag2.access">Access (15 min)</text><text x="323" y="71" text-anchor="middle" class="t-sm" data-i18n="diag2.refreshfam">+ Refresh (family A)</text>
           <path class="flow" marker-end="url(#fl2)" d="M418 55 L 474 55"/>
-          <rect x="476" y="30" width="190" height="50" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="571" y="55" text-anchor="middle" class="t-sm" data-i18n="diag2.usarefresh">Uses refresh →</text><text x="571" y="71" text-anchor="middle" class="t-sm" data-i18n="diag2.rota">rotates: new access+refresh</text>
+          <rect x="476" y="30" width="190" height="50" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="571" y="55" text-anchor="middle" class="t-sm" data-i18n="diag2.usarefresh">Uses refresh →</text><text x="571" y="71" text-anchor="middle" class="t-sm" data-i18n="diag2.rota">rotates: new access+refresh</text>
           <path class="flow" marker-end="url(#fl2)" d="M266 80 L 266 130"/>
           <text x="278" y="112" class="t-sm" data-i18n="diag2.viejoreusado">old refresh reused</text>
-          <rect x="228" y="132" width="230" height="50" rx="2" fill="#f2e4de" stroke="#9a4030" stroke-width="1.5"/><text x="343" y="157" text-anchor="middle" class="t-sm" fill="#9a4030" data-i18n="diag2.reusodetectado">Reuse detected</text><text x="343" y="173" text-anchor="middle" class="t-sm" fill="#9a4030" data-i18n="diag2.yahabiarotado">token had already rotated</text>
+          <rect x="228" y="132" width="230" height="50" rx="2" fill="#F7E7DF" stroke="#B4471F" stroke-width="1.5"/><text x="343" y="157" text-anchor="middle" class="t-sm" fill="#B4471F" data-i18n="diag2.reusodetectado">Reuse detected</text><text x="343" y="173" text-anchor="middle" class="t-sm" fill="#B4471F" data-i18n="diag2.yahabiarotado">that token had already rotated</text>
           <path class="flow-d" marker-end="url(#flg2)" d="M458 157 L 700 157"/>
-          <rect x="702" y="132" width="220" height="50" rx="2" fill="#f7f4e6" stroke="#9a4030" stroke-width="1.5"/><text x="812" y="157" text-anchor="middle" class="t-sm" data-i18n="diag2.revocafamilia">Revokes entire family A</text><text x="812" y="173" text-anchor="middle" class="t-sm" data-i18n="diag2.todaslassesiones">every session in the chain</text>
+          <rect x="702" y="132" width="220" height="50" rx="2" fill="#FAFCFE" stroke="#B4471F" stroke-width="1.5"/><text x="812" y="157" text-anchor="middle" class="t-sm" data-i18n="diag2.revocafamilia">Family A revoked</text><text x="812" y="173" text-anchor="middle" class="t-sm" data-i18n="diag2.todaslassesiones">every session in the chain</text>
           <path class="flow" marker-end="url(#fl2)" d="M922 157 L 978 157"/>
-          <rect x="980" y="132" width="80" height="50" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="1020" y="163" text-anchor="middle" class="t-w">401</text>
-          <text x="20" y="200" class="t-sm" fill="#6b6e5f" data-i18n="diag2.footer">Each token family has its own rotation chain; reuse of an already-rotated token is the signal of theft.</text>
+          <rect x="980" y="132" width="80" height="50" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="1020" y="163" text-anchor="middle" class="t-w">401</text>
+          <text x="20" y="200" class="t-sm" fill="#647084" data-i18n="diag2.footer">A refresh token that already rotated shouldn't come back. If it does, I treat it as stolen.</text>
         </svg>
       </div>
 
       <p class="h3" data-i18n="s02.h3.datamodel">Data model — core</p>
-      <p class="note" data-i18n="s02.note.datamodel">14 tables in the schema; this is the core relevant to the dashboard and the daily job.</p>
+      <p class="note" data-i18n="s02.note.datamodel">There are 14 tables in the schema. This is the part the dashboard and the daily job depend on.</p>
       <div class="panel" style="margin-top:26px">
         <svg class="diagram" viewBox="0 0 1080 300" role="img" aria-label="Simplified entity-relationship diagram of the core data model" data-i18n-attr="aria-label:diag3.aria">
-          <rect x="20" y="20" width="180" height="56" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="110" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.clients">clients</text><text x="110" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.clientsdesc">timezone · archived</text>
-          <rect x="20" y="120" width="180" height="56" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="110" y="145" text-anchor="middle" class="t-w" data-i18n="diag3.users">users</text><text x="110" y="163" text-anchor="middle" class="t-sm" data-i18n="diag3.usersdesc">admin/employee role</text>
+          <rect x="20" y="20" width="180" height="56" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="110" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.clients">clients</text><text x="110" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.clientsdesc">timezone · archived</text>
+          <rect x="20" y="120" width="180" height="56" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="110" y="145" text-anchor="middle" class="t-w" data-i18n="diag3.users">users</text><text x="110" y="163" text-anchor="middle" class="t-sm" data-i18n="diag3.usersdesc">admin/employee role</text>
           <path class="flow" d="M110 176 L 110 210"/>
-          <rect x="20" y="212" width="180" height="40" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="110" y="237" text-anchor="middle" class="t-sm" data-i18n="diag3.priority">employee_client_priority</text>
+          <rect x="20" y="212" width="180" height="40" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="110" y="237" text-anchor="middle" class="t-sm" data-i18n="diag3.priority">employee_client_priority</text>
           <path class="flow" d="M200 48 L 256 48"/>
-          <rect x="258" y="20" width="190" height="56" rx="2" fill="#eceadb" stroke="#262a20" stroke-width="1.5"/><text x="353" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.social">social_accounts</text><text x="353" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.socialdesc">IG · FB · TikTok</text>
+          <rect x="258" y="20" width="190" height="56" rx="2" fill="#E2ECF7" stroke="#141921" stroke-width="1.5"/><text x="353" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.social">social_accounts</text><text x="353" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.socialdesc">IG · FB · TikTok</text>
           <path class="flow" d="M448 48 L 504 48"/>
-          <rect x="506" y="20" width="150" height="56" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="581" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.posts">posts</text><text x="581" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.postsdesc">per account</text>
+          <rect x="506" y="20" width="150" height="56" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="581" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.posts">posts</text><text x="581" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.postsdesc">per account</text>
           <path class="flow" d="M353 76 L 353 130"/>
-          <rect x="258" y="132" width="190" height="56" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="353" y="157" text-anchor="middle" class="t-sm" data-i18n="diag3.accountsnap">account_metric_snapshots</text><text x="353" y="175" text-anchor="middle" class="t-sm" data-i18n="diag3.accountsnapdesc">append-only, daily</text>
+          <rect x="258" y="132" width="190" height="56" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="353" y="157" text-anchor="middle" class="t-sm" data-i18n="diag3.accountsnap">account_metric_snapshots</text><text x="353" y="175" text-anchor="middle" class="t-sm" data-i18n="diag3.accountsnapdesc">append-only, daily</text>
           <path class="flow" d="M581 76 L 581 130"/>
-          <rect x="506" y="132" width="150" height="56" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="581" y="157" text-anchor="middle" class="t-sm" data-i18n="diag3.postsnap">post_metric_snapshots</text><text x="581" y="175" text-anchor="middle" class="t-sm" data-i18n="diag3.postsnapdesc">append-only</text>
-          <rect x="700" y="20" width="170" height="56" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="785" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.syncruns">sync_runs</text><text x="785" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.syncrunsdesc">one daily job</text>
+          <rect x="506" y="132" width="150" height="56" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="581" y="157" text-anchor="middle" class="t-sm" data-i18n="diag3.postsnap">post_metric_snapshots</text><text x="581" y="175" text-anchor="middle" class="t-sm" data-i18n="diag3.postsnapdesc">append-only</text>
+          <rect x="700" y="20" width="170" height="56" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="785" y="45" text-anchor="middle" class="t-w" data-i18n="diag3.syncruns">sync_runs</text><text x="785" y="63" text-anchor="middle" class="t-sm" data-i18n="diag3.syncrunsdesc">one daily job</text>
           <path class="flow" d="M785 76 L 785 130"/>
-          <rect x="700" y="132" width="170" height="56" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/><text x="785" y="157" text-anchor="middle" class="t-sm" data-i18n="diag3.syncresults">sync_account_results</text><text x="785" y="175" text-anchor="middle" class="t-sm" data-i18n="diag3.syncresultsdesc">per account, per run</text>
-          <text x="20" y="272" class="t-sm" fill="#6b6e5f" data-i18n="diag3.footer">Everything hangs off client_id — the axis designed to become multi-tenant without a rewrite.</text>
+          <rect x="700" y="132" width="170" height="56" rx="2" fill="#FAFCFE" stroke="#141921" stroke-width="1.5"/><text x="785" y="157" text-anchor="middle" class="t-sm" data-i18n="diag3.syncresults">sync_account_results</text><text x="785" y="175" text-anchor="middle" class="t-sm" data-i18n="diag3.syncresultsdesc">per account, per run</text>
+          <text x="20" y="272" class="t-sm" fill="#647084" data-i18n="diag3.footer">Every table carries client_id. That's what lets it turn multi-tenant later without redoing the model.</text>
         </svg>
       </div>
     </section>
 
-    <!-- ============ 03 INGENIERÍA ============ -->
+    <!-- ============ 04 INGENIERÍA ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="ingenieria" data-screen-label="03 Ingeniería">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s03.sheet">SHEET 03/09 · ENGINEERING</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">03</span><span data-i18n="s03.title">Concrete backend details</span></h2>
+    <section id="ingenieria" data-screen-label="04 Ingeniería">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s03.sheet">SHEET 04/10 · ENGINEERING</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">04</span><span data-i18n="s03.title">Backend details</span></h2>
       <ul class="ls">
-        <li><span class="n">001</span><div><b data-i18n="s03.li1.b">167+ tests</b><span data-i18n="s03.li1.span">Includes e2e tests with Testcontainers against a real Postgres, not just mocks.</span></div></li>
-        <li><span class="n">002</span><div><b data-i18n="s03.li2.b">Refresh tokens with rotation</b><span data-i18n="s03.li2.span">If a stolen token gets reused, it's detected and <span class="hl">the entire family gets revoked</span>, not just that token.</span></div></li>
-        <li><span class="n">003</span><div><b data-i18n="s03.li3.b">OAuth tokens encrypted at rest</b><span data-i18n="s03.li3.span">AES-GCM; never stored or exposed in plain text.</span></div></li>
-        <li><span class="n">004</span><div><b data-i18n="s03.li4.b">Errors in RFC 7807</b><span data-i18n="s03.li4.span">A single exception handler; consistent <code>problem+json</code> across the whole API.</span></div></li>
-        <li><span class="n">005</span><div><b data-i18n="s03.li5.b">Multi-tenant from the data model</b><span data-i18n="s03.li5.span">14 tables with <code>client_id</code>, designed to scale to SaaS without a rewrite.</span></div></li>
+        <li><span class="n">001</span><div><b data-i18n="s03.li1.b">167+ tests</b><span class="d" data-i18n="s03.li1.span">Includes e2e against a real Postgres with Testcontainers, not only mocks. They take longer to run and they caught things mocks never would have.</span></div></li>
+        <li><span class="n">002</span><div><b data-i18n="s03.li2.b">Refresh tokens with rotation</b><span class="d" data-i18n="s03.li2.span">If a stolen token gets reused, I detect it and <span class="hl">revoke the whole family</span>, not just that token.</span></div></li>
+        <li><span class="n">003</span><div><b data-i18n="s03.li3.b">OAuth tokens encrypted at rest</b><span class="d" data-i18n="s03.li3.span">AES-GCM. They never sit in the database in plain text and they never come back out through the API.</span></div></li>
+        <li><span class="n">004</span><div><b data-i18n="s03.li4.b">Errors in RFC 7807</b><span class="d" data-i18n="s03.li4.span">One exception handler, the same <code>problem+json</code> shape everywhere. The frontend reads one format and nothing else.</span></div></li>
+        <li><span class="n">005</span><div><b data-i18n="s03.li5.b">Multi-tenant from the model</b><span class="d" data-i18n="s03.li5.span">14 tables with <code>client_id</code>. It took me a few passes to get the model right, and it's the reason going SaaS doesn't mean rewriting it.</span></div></li>
       </ul>
     </section>
 
-    <!-- ============ 04 INTEGRACIONES ============ -->
+    <!-- ============ 05 INTEGRACIONES ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="integraciones" class="alt-blue" data-screen-label="04 Integraciones">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s04.sheet">SHEET 04/09 · INTEGRATIONS</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">04</span><span data-i18n="s04.title">TikTok and Meta, with their real status</span></h2>
+    <section id="integraciones" data-screen-label="05 Integraciones">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s04.sheet">SHEET 05/10 · INTEGRATIONS</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">05</span><span data-i18n="s04.title">TikTok and Meta, real status</span></h2>
       <div class="stamprow"><span class="stamp amber" aria-hidden="true" data-i18n="s04.stamp">Sandbox</span></div>
-      <p class="lede" data-i18n="s04.lede">Integrations implemented in sandbox mode; approval for Meta's metrics APIs is in progress. I report the status as it is, without inflating it: this is a product under construction.</p>
+      <p class="lede" data-i18n="s04.lede">Both integrations are written. Neither one is running against real client accounts yet, and the reason is different in each case.</p>
       <div style="margin-top:26px">
         <div class="logrow"><span class="lbl" data-i18n="s04.tiktok.lbl">TikTok — OAuth + metrics</span><span class="dots"></span><span class="st ok" data-i18n="s04.tiktok.st">[ OK ] full sandbox</span></div>
-        <p class="note" style="margin:0 0 26px" data-i18n="s04.tiktok.note">End-to-end OAuth with PKCE, token refresh with rotation, and a branded QR connection flow. It's the most mature integration: the only one fully tested, from authorization through reading metrics. The publishing API requires a separate TikTok audit, not yet enabled.</p>
+        <p class="note" style="margin:0 0 26px" data-i18n="s04.tiktok.note">OAuth end to end with PKCE, token refresh with rotation, and a QR flow for connecting an account. It's the one I tested from top to bottom, from authorizing to reading metrics. Publishing needs a separate audit from TikTok that I haven't asked for yet.</p>
         <div class="logrow"><span class="lbl" data-i18n="s04.meta.lbl">Meta — Instagram / Facebook</span><span class="dots"></span><span class="st pend" data-i18n="s04.meta.st">[PEND] App Review</span></div>
-        <p class="note" style="margin:0" data-i18n="s04.meta.note">Implemented in code (OAuth, metrics reading), but Meta requires App Review with Advanced Access and business verification before enabling it for real client accounts. Right now it runs in Development mode, only with my own test accounts, while approval moves forward.</p>
+        <p class="note" style="margin:0" data-i18n="s04.meta.note">The code is there, OAuth and metrics reading, but Meta asks for App Review with Advanced Access plus business verification before you can touch real accounts. Today it runs in Development mode with my own test accounts. What's missing is the paperwork, not the code.</p>
       </div>
     </section>
 
-    <!-- ============ 05 ESTADO ============ -->
+    <!-- ============ 06 ESTADO ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="roadmap" data-screen-label="05 Estado">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s05.sheet">SHEET 05/09 · STATUS</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">05</span><span data-i18n="s05.title">Actively in development, on the way to SaaS</span></h2>
+    <section id="roadmap" data-screen-label="06 Estado">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s05.sheet">SHEET 06/10 · STATUS</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">06</span><span data-i18n="s05.title">Where it stands</span></h2>
       <div class="stamprow"><span class="stamp red" aria-hidden="true" data-i18n="s05.stamp">Under construction</span></div>
-      <p class="lede" data-i18n="s05.lede">Fil-Grama doesn't have real clients running in production yet: the focus is on getting the foundation right — architecture, integrations, infrastructure — before adding users. The next major milestone is getting the Meta integration fully enabled.</p>
-      <ul class="chk">
-        <li><span class="m ok">[x]</span><div><b data-i18n="s05.chk1.b">Backend and frontend deployed</b> — <span data-i18n="s05.chk1.span">VPS on Vultr + Cloudflare Pages, running.</span></div></li>
-        <li><span class="m ok">[x]</span><div><b data-i18n="s05.chk2.b">TikTok integrated</b> — <span data-i18n="s05.chk2.span">OAuth and metrics reading in sandbox.</span></div></li>
-        <li><span class="m mid">[~]</span><div><b data-i18n="s05.chk3.b">Meta under review</b> — <span data-i18n="s05.chk3.span">App Review and business verification in progress.</span></div></li>
-        <li><span class="m mid">[~]</span><div><b data-i18n="s05.chk4.b">Automated reports</b> — <span data-i18n="s05.chk4.span">PDF generation per client and date range.</span></div></li>
-        <li><span class="m no">[ ]</span><div><b data-i18n="s05.chk5.b">Content publishing</b> — <span data-i18n="s05.chk5.span">pending TikTok's API audit.</span></div></li>
-        <li><span class="m no">[ ]</span><div><b data-i18n="s05.chk6.b">Multi-tenant SaaS</b> — <span data-i18n="s05.chk6.span">evolving from an internal tool into a product.</span></div></li>
-      </ul>
+      <p class="lede" data-i18n="s05.lede">There are no clients in production yet. I'd rather have the base settled before someone else's data lives in there: integrations enabled, a boring deploy, backups I actually restored. Next one up is Meta approved.</p>
+      <div class="card" style="margin-top:26px">
+        <div class="ch" data-i18n="s05.cardHead">Declared status · jul 2026</div>
+        <div class="cb">
+          <div class="cr"><span class="m ok">[x]</span><span data-i18n="s05.chk1">Backend and frontend deployed — VPS on Vultr and Cloudflare Pages, running.</span></div>
+          <div class="cr"><span class="m ok">[x]</span><span data-i18n="s05.chk2">TikTok integrated — OAuth with PKCE and metrics reading in sandbox.</span></div>
+          <div class="cr"><span class="m mid">[~]</span><span data-i18n="s05.chk3">Meta in App Review — business verification in progress.</span></div>
+          <div class="cr"><span class="m mid">[~]</span><span data-i18n="s05.chk4">Automated reports — PDF per client and date range.</span></div>
+          <div class="cr"><span class="m no">[ ]</span><span data-i18n="s05.chk5">Content publishing — waiting on TikTok's audit.</span></div>
+          <div class="cr"><span class="m no">[ ]</span><span data-i18n="s05.chk6">Multi-tenant SaaS — from a tool of mine to a product.</span></div>
+        </div>
+      </div>
     </section>
 
-    <!-- ============ 06 INFRAESTRUCTURA ============ -->
+    <!-- ============ 07 INFRAESTRUCTURA ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="infra" class="alt-blue" data-screen-label="06 Infraestructura">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s06.sheet">SHEET 06/09 · INFRASTRUCTURE</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">06</span><span data-i18n="s06.title">How it's deployed</span></h2>
+    <section id="infra" data-screen-label="07 Infraestructura">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s06.sheet">SHEET 07/10 · INFRASTRUCTURE</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">07</span><span data-i18n="s06.title">How it's deployed</span></h2>
       <div class="two">
         <div>
-          <p class="lede" data-i18n="s06.lede">I rented the server, set up the connections, and deployed both parts of the system: <b>backend on a Vultr VPS</b>, with Docker Compose behind Caddy as a reverse proxy and PostgreSQL, and <b>frontend on Cloudflare Pages</b>, with automatic deployment on every push to the main branch.</p>
-          <p class="note" style="margin-top:26px" data-i18n="s06.note">For development I use a Cloudflare tunnel to the local backend: I test against a real domain without exposing the dev machine. For security, this page doesn't include IPs, credentials, tokens, or internal URLs.</p>
+          <p class="lede" data-i18n="s06.lede">I rented the server, wired the connections and deployed both halves myself: <b>backend on a Vultr VPS</b>, Docker Compose behind Caddy with Postgres, and <b>frontend on Cloudflare Pages</b>, which redeploys on every push to main.</p>
+          <p class="note" style="margin-top:26px" data-i18n="s06.note">For development I open a Cloudflare tunnel to the local backend, so I test against a real domain without exposing my machine. Backups run and every so often I restore one: a backup you never tested isn't a backup. This page has no IPs, credentials, tokens or internal URLs.</p>
         </div>
         <div>
           <div class="box"><b class="bt" data-i18n="s06.box1.bt">Backend</b><span>VPS Vultr · Docker Compose · Caddy · PostgreSQL</span></div>
-          <div class="box"><b class="bt" data-i18n="s06.box2.bt">Frontend</b><span data-i18n="s06.box2.span">Cloudflare Pages · automatic deployment via git push</span></div>
+          <div class="box"><b class="bt" data-i18n="s06.box2.bt">Frontend</b><span data-i18n="s06.box2.span">Cloudflare Pages · redeploy on git push</span></div>
           <div class="box"><b class="bt" data-i18n="s06.box3.bt">Storage</b><span data-i18n="s06.box3.span">Cloudflare R2 (S3-compatible) in prod · MinIO in dev</span></div>
         </div>
       </div>
     </section>
 
-    <!-- ============ 07 RECORRIDO ============ -->
+    <!-- ============ 08 RECORRIDO ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="recorrido" data-screen-label="07 Recorrido">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s07.sheet">SHEET 07/09 · TOUR</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">07</span><span data-i18n="s07.title">The flows and screens, browsable</span></h2>
-      <p class="lede" data-i18n="s07.lede">A curated selection from the 50 designed screens: analytics, account comparison, posts, reports, and platform. Each one opens interactively, exactly as designed, in desktop and mobile.</p>
+    <section id="recorrido" data-screen-label="08 Recorrido">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s07.sheet">SHEET 08/10 · TOUR</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">08</span><span data-i18n="s07.title">The screens, browsable</span></h2>
+      <p class="lede" data-i18n="s07.lede">A selection out of the 50 screens I designed: analytics, comparison between accounts, posts, reports, platform. Each card opens the real screen, desktop and mobile.</p>
       <div class="tour-grid" id="tourHeroGrid"></div>
 
       <p class="h3" data-i18n="s07.h3">From wireframe to high fidelity</p>
-      <p class="note" data-i18n="s07.note">The same screen (Audience): structure first, visual identity after.</p>
+      <p class="note" data-i18n="s07.note">The same screen, Audience, before and after the visual pass.</p>
       <div class="eras">
         <div class="era">
           <img src="assets/filgrama/diseno/audiencia-wireframe.jpg" alt="Low-fidelity wireframe of the Audience screen" loading="lazy" data-i18n-attr="alt:s07.era1.alt">
@@ -510,44 +651,44 @@
         </div>
         <div class="era">
           <img src="assets/filgrama/diseno/audiencia-hifi.jpg" alt="High-fidelity version of the Audience screen" loading="lazy" data-i18n-attr="alt:s07.era2.alt">
-          <div class="cap" data-i18n="s07.era2.cap"><b>Phase 2 · High fidelity</b> — palette, typography, and components applied.</div>
+          <div class="cap" data-i18n="s07.era2.cap"><b>Phase 2 · High fidelity</b> — palette, type and components applied.</div>
         </div>
       </div>
     </section>
 
-    <!-- ============ 08 PRODUCTO ============ -->
+    <!-- ============ 09 PRODUCTO ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="pantallas" class="alt-blue" data-screen-label="08 Producto">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s08.sheet">SHEET 08/09 · PRODUCT</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">08</span><span data-i18n="s08.title">Real screenshots of the platform running</span></h2>
+    <section id="pantallas" data-screen-label="09 Producto">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s08.sheet">SHEET 09/10 · PRODUCT</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">09</span><span data-i18n="s08.title">Screenshots of it running</span></h2>
       <div class="stamprow"><span class="stamp green" aria-hidden="true" data-i18n="s08.stamp">In production</span></div>
-      <p class="lede" data-i18n="s08.lede">The app running in production, <span class="hl">not mockups</span>: per-client dashboard, a post's detail view, account comparison, and the report generator exportable to PDF.</p>
+      <p class="lede" data-i18n="s08.lede">The app in production, <span class="hl">not mockups</span>: the client dashboard, a post in detail, the comparison between accounts, and the report generator that exports to PDF.</p>
       <div class="shots">
         <div class="fig">
-          <img src="assets/filgrama/dashboard-cliente.jpg" alt="Client dashboard in Fil-Grama with reach, interactions, engagement, and follower metrics" data-i18n-attr="alt:s08.fig1.alt">
-          <div class="cap" data-i18n="s08.fig1.cap"><b>Fig. 01</b> — Per-client dashboard: reach, interactions, engagement, and followers, with history built by the daily job.</div>
+          <img src="assets/filgrama/dashboard-cliente.jpg" alt="Client dashboard in Fil-Grama with reach, interactions, engagement and follower metrics" data-i18n-attr="alt:s08.fig1.alt">
+          <div class="cap" data-i18n="s08.fig1.cap"><b>Fig. 01</b> — Client dashboard: reach, interactions, engagement and followers, over the history the daily job built.</div>
         </div>
         <div class="fig">
           <img src="assets/filgrama/detalle-publicacion.jpg" alt="Detail view of an Instagram post with its comment metric over time" data-i18n-attr="alt:s08.fig2.alt">
-          <div class="cap" data-i18n="s08.fig2.cap"><b>Fig. 02</b> — Post detail: real content from the Instagram API, with a metric's evolution over time.</div>
+          <div class="cap" data-i18n="s08.fig2.cap"><b>Fig. 02</b> — Post detail: real content from the Instagram API, with one metric's evolution over time.</div>
         </div>
         <div class="fig">
           <img src="assets/filgrama/comparar-cuentas.jpg" alt="Reach and follower comparison between a client's connected accounts, in a bar chart" data-i18n-attr="alt:s08.fig3.alt">
-          <div class="cap" data-i18n="s08.fig3.cap"><b>Fig. 03</b> — Compare accounts: reach, followers, interactions, and engagement side by side, in table or bar view.</div>
+          <div class="cap" data-i18n="s08.fig3.cap"><b>Fig. 03</b> — Compare accounts: reach, followers, interactions and engagement side by side, as a table or bars.</div>
         </div>
         <div class="fig">
           <img src="assets/filgrama/reporte-automatico.jpg" alt="Automated per-client report generator with KPIs by social network, exportable to PDF or Markdown" data-i18n-attr="alt:s08.fig4.alt">
-          <div class="cap" data-i18n="s08.fig4.cap"><b>Fig. 04</b> — Automated report: KPIs by network with variation vs. the previous period, exportable to PDF or Markdown.</div>
+          <div class="cap" data-i18n="s08.fig4.cap"><b>Fig. 04</b> — Automated report: KPIs by network with the change against the previous period, exported to PDF or Markdown.</div>
         </div>
       </div>
-      <p class="small" style="margin-top:26px" data-i18n="s08.small">Screenshots taken from Oh My Bunny — my own venture, which I use as a production test account while Meta's approval moves forward. The numbers are low because it's a real, recently connected account, not a demo with inflated data.</p>
+      <p class="small" style="margin-top:26px" data-i18n="s08.small">The screenshots come from Oh My Bunny, my own venture. I use it as a real test account while Meta's approval moves along. The numbers are small because the account is small and was connected recently.</p>
     </section>
 
-    <!-- ============ 09 STACK ============ -->
+    <!-- ============ 10 STACK ============ -->
     <div class="tear" aria-hidden="true"></div>
-    <section id="stack" data-screen-label="09 Stack">
-      <div class="pgh"><span><b>FIL-GRAMA.PRT</b></span><span data-i18n="s09.sheet">SHEET 09/09 · STACK</span><span>GREENBAR · 132 COL</span></div>
-      <h2 class="title"><span class="tn">09</span><span data-i18n="s09.title">Technology inventory</span></h2>
+    <section id="stack" data-screen-label="10 Stack">
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s09.sheet">SHEET 10/10 · STACK</span><span>BLUEBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">10</span><span data-i18n="s09.title">Tech inventory</span></h2>
       <div class="inv">
         <div><h4 data-i18n="s09.h1">Backend</h4><ul><li>Java · Spring Boot</li><li data-i18n="s09.h1.li2">REST APIs · JWT</li></ul></div>
         <div><h4 data-i18n="s09.h2">Data</h4><ul><li data-i18n="s09.h2.li1">PostgreSQL · Flyway</li><li data-i18n="s09.h2.li2">Relational modeling</li></ul></div>
@@ -563,9 +704,9 @@
     <footer class="eoj" data-screen-label="Contacto">
       <div class="stars">*** *** *** *** END OF JOB *** *** *** ***</div>
       <h3 data-i18n="footer.contacto">Contact</h3>
-      <p style="max-width:60ch;margin:0" data-i18n="footer.p">Available for work and projects in backend, APIs, and cloud infrastructure.</p>
+      <p style="max-width:60ch;margin:0" data-i18n="footer.p">Write me if you need backend, API integration or cloud infrastructure work.</p>
       <a class="mail" href="mailto:www.enririos@gmail.com">www.enririos@gmail.com</a>
-      <p class="small" style="margin:26px 0 0;max-width:76ch" data-i18n="footer.small">Fil-Grama is a personal project in active development, with no clients running in production yet. This page doesn't include IPs, credentials, tokens, or internal admin URLs.</p>
+      <p class="small" style="margin:26px 0 0;max-width:76ch" data-i18n="footer.small">Fil-Grama is my own project, still in development, with no clients in production. This page leaves out IPs, credentials, tokens and internal admin URLs.</p>
       <div class="foot-row">
         <span data-i18n="footer.row1">Enrique Chyrnia · Founder &amp; Developer</span>
         <a href="index.html" data-i18n="footer.back">← Back to home</a>
@@ -602,6 +743,59 @@
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
 document.getElementById('today').textContent=new Date().toISOString().slice(0,10);
+</script>
+
+<script>
+/* la ventana de la API */
+(function(){
+  var win=document.getElementById('win');
+  var bApi=document.getElementById('winApi');
+  var bFull=document.getElementById('winFull');
+  function set(mode){
+    win.setAttribute('data-mode',mode);
+    bApi.setAttribute('aria-pressed',mode==='api'?'true':'false');
+    bFull.setAttribute('aria-pressed',mode==='full'?'true':'false');
+  }
+  bApi.addEventListener('click',function(){set('api');});
+  bFull.addEventListener('click',function(){set('full');});
+})();
+
+/* la ronda del día */
+(function(){
+  var btn=document.getElementById('rondaBtn');
+  var bird=document.getElementById('rbirdImg');
+  var caret=document.getElementById('rcaret');
+  var rows=Array.prototype.slice.call(document.querySelectorAll('.jrow'));
+  var timer=null;
+  var QUIETA='assets/filgrama/marca/codorniz.png';
+  var GIF='assets/filgrama/marca/codorniz-piramide.gif';
+  function label(k){return window.SiteI18n?window.SiteI18n.t(k):null;}
+  function setLabel(k,fallback){var v=label(k);btn.textContent=(v&&v!==k)?v:fallback;}
+  function stop(){if(timer){clearInterval(timer);timer=null;}}
+  btn.addEventListener('click',function(){
+    stop();
+    rows.forEach(function(r){r.classList.remove('on');});
+    bird.src=GIF;
+    caret.hidden=false;
+    btn.setAttribute('data-fase','run');
+    btn.setAttribute('data-i18n','s02b.btnRun');
+    setLabel('s02b.btnRun','writing it down…');
+    var i=0;
+    timer=setInterval(function(){
+      if(i>=rows.length){
+        stop();
+        bird.src=QUIETA;
+        caret.hidden=true;
+        btn.setAttribute('data-fase','done');
+        btn.setAttribute('data-i18n','s02b.btnDone');
+        setLabel('s02b.btnDone','run it again');
+        return;
+      }
+      rows[i].classList.add('on');
+      i++;
+    },430);
+  });
+})();
 </script>
 
 <script>
@@ -735,7 +929,7 @@ document.getElementById('today').textContent=new Date().toISOString().slice(0,10
   var sheet=document.querySelector('.sheet');
   var raf=null;
   function snap(){
-    var els=document.querySelectorAll('.sheet > section > *, .sheet > header > *, .sheet > footer > *');
+    var els=document.querySelectorAll('.sheet > section > *, .sheet > header > *, .sheet > footer > *, .two > div > *, .inv > div');
     els.forEach(function(el){el.style.paddingBottom='';});
     var top=sheet.getBoundingClientRect().top;
     els.forEach(function(el){

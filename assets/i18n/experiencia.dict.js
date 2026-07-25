@@ -59,11 +59,11 @@
     },
     "hero.stamp": { en: "Anonymized", es: "Anonimizado" },
     "hero.f1": { en: "Role", es: "Rol" },
-    "hero.f2": { en: "Engagement", es: "Vínculo" },
+    "hero.f2": { en: "Engagement", es: "Contrato" },
     "hero.f3": { en: "Fronts", es: "Frentes" },
     "hero.f4": { en: "Stack", es: "Stack" },
     "hero.v1": { en: "Backend developer", es: "Backend developer" },
-    "hero.v2": { en: "employee, under contract", es: "relación de dependencia" },
+    "hero.v2": { en: "employee, under contract", es: "empleado, no freelance" },
     "hero.v3": { en: "3 (backend · registration · panel)", es: "3 (backend · registro · panel)" },
     "hero.lede": {
       en: "I was the person responsible for the backend and the infrastructure of a platform in production: a user app, a professional app, and a panel for the internal team. It's anonymized because it's work under contract — no names, no code, no screens, no real topology. What's left is how I solved each thing.",

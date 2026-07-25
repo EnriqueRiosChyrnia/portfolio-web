@@ -135,15 +135,15 @@
   /* hero */
   .banner{padding:52px 0;position:relative}
   .jobhead{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
-    border-top:3px double var(--ink);border-bottom:3px double var(--ink);padding:12px 0;margin-bottom:26px;
+    border-top:3px double var(--ink);border-bottom:3px double var(--ink);padding:23px 0 12px;margin-bottom:26px;
     display:flex;flex-wrap:wrap;gap:6px 34px}
   .jobhead b{color:var(--ink);font-weight:600}
   .bname{font-size:clamp(40px,7.5vw,88px);line-height:.98;font-weight:700;letter-spacing:-.01em;margin:0;
-    text-shadow:1.5px 0 0 currentColor;text-transform:uppercase}
+    text-shadow:1.5px 0 0 currentColor;text-transform:uppercase;background:var(--paper);width:fit-content;padding-right:20px}
   .brole{font-size:clamp(14px,2vw,17px);margin:26px 0 0;font-weight:500;max-width:62ch;line-height:26px}
   .blead{margin:26px 0 0;max-width:74ch}
   .factline{margin-top:26px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-    padding:12px 0;display:flex;flex-wrap:wrap;gap:8px 0;font-size:13px;letter-spacing:.04em}
+    padding:25px 0 12px;display:flex;flex-wrap:wrap;gap:8px 0;font-size:13px;letter-spacing:.04em}
   .factline span{white-space:nowrap}
   .factline b{font-weight:700}
   .factline i{font-style:normal;color:var(--faint);padding:0 14px}
@@ -234,7 +234,7 @@
         <div>
           <h1 class="bname">Enrique<br>Chyrnia</h1>
           <p class="brole" data-i18n="hero.brole">Backend · APIs &amp; Integration · Cloud systems</p>
-          <p class="blead" data-i18n="hero.blead">I work on backend for web systems: APIs, integration with external services, data persistence, technical documentation, and deployment to cloud environments. I work <b class="hl">API-first</b> and document technical decisions along with their trade-offs.</p>
+          <p class="blead" data-i18n="hero.blead">I build backend for web systems: APIs, integration with external services, data, and cloud deployment. I work <b class="hl">API-first</b> and write down technical decisions with their trade-offs.</p>
         </div>
         <div class="attachwrap">
           <div class="photo">
@@ -262,14 +262,14 @@
       <h2 class="title"><span class="tn">01</span><span data-i18n="s01.title">Who I am and how I work</span></h2>
       <div class="two">
         <div>
-          <p class="lede" data-i18n="s01.lede">Software developer focused on <b>backend, APIs, and integration</b>. I like being involved in the whole cycle: modeling data, defining API contracts, building business logic, documenting, and deploying.</p>
-          <p class="note" style="margin-top:16px" data-i18n="s01.note1">I work <b class="hl">API-first</b>: contract first, code second, so frontend and backend can move forward in parallel without stepping on each other. I document technical decisions, alternatives, and trade-offs so the team can understand and maintain them.</p>
-          <p class="note" style="margin-top:12px" data-i18n="s01.note2">I'm currently still studying computer engineering; my experience comes from building, deploying, and testing real systems.</p>
+          <p class="lede" data-i18n="s01.lede">Software developer focused on <b>backend, APIs, and integration</b>. I like being in the whole cycle, from modeling the data to seeing the system deployed and running.</p>
+          <p class="note" style="margin-top:16px" data-i18n="s01.note1">I work <b class="hl">API-first</b>: contract first, code second, so frontend and backend can move forward in parallel without stepping on each other. Decisions get written down with their alternatives and trade-offs, so anyone on the team can pick them up later.</p>
+          <p class="note" style="margin-top:12px" data-i18n="s01.note2">I'm still studying computer engineering; what I know comes from building and running real systems.</p>
         </div>
         <div>
           <div class="box"><b class="bt" data-i18n="s01.box1.bt">From requirement to deploy</b><span data-i18n="s01.box1.span">I'm involved from technical analysis through deployment, collaborating on decisions with the team and documenting them.</span></div>
           <div class="box"><b class="bt" data-i18n="s01.box2.bt">Backend &amp; systems</b><span data-i18n="s01.box2.span">Java/Spring backend modules in the cloud, contract-first REST APIs, and integrations with external services that support the product.</span></div>
-          <div class="box"><b class="bt" data-i18n="s01.box3.bt">Technical honesty</b><span data-i18n="s01.box3.span">I flag what's missing or risky (security, tech debt) before it becomes a problem, and I document it.</span></div>
+          <div class="box"><b class="bt" data-i18n="s01.box3.bt">Technical honesty</b><span data-i18n="s01.box3.span">If something's missing or risky (security, tech debt), I say so before it becomes a problem — and it goes on record.</span></div>
         </div>
       </div>
     </section>
@@ -300,7 +300,7 @@
           <span class="jco" data-i18n="s03.jco">Private company · digital services industry</span>
           <span class="jrole" data-i18n="s03.jrole">Backend Developer</span>
         </div>
-        <p class="note" data-i18n="s03.note">I worked at a private company in the digital services industry, serving as the person responsible for backend and technical infrastructure on an operational platform with applications for users, professionals, and the internal team. My work covered three areas: backend architecture and cloud infrastructure, user registration, and the internal team's backoffice.</p>
+        <p class="note" data-i18n="s03.note">I worked at a private company in the digital services industry, in charge of backend and technical infrastructure on an operational platform with applications for users, professionals, and the internal team. Three areas fell to me: backend architecture and cloud infrastructure, user registration, and the internal team's backoffice.</p>
         <div class="tags">
           <span data-i18n="s03.tag1">Modular backend &amp; cloud infrastructure</span>
           <span data-i18n="s03.tag2">Onboarding &amp; user registration</span>
@@ -355,7 +355,7 @@
     <footer class="eoj" data-screen-label="Contacto">
       <div class="stars">*** *** *** *** END OF JOB *** *** *** ***</div>
       <h3 id="contacto" data-i18n="footer.contacto">Contact</h3>
-      <p style="max-width:60ch;margin:0" data-i18n="footer.p">Available for backend, APIs, and integration opportunities. Feel free to reach out about work, projects, or technical collaboration.</p>
+      <p style="max-width:60ch;margin:0" data-i18n="footer.p">I'm open to backend, API, and integration work. Write me about jobs, projects, or anything technical.</p>
       <a class="mail" href="mailto:www.enririos@gmail.com">www.enririos@gmail.com</a>
       <div class="foot-row">
         <span data-i18n="footer.row1">Enrique Chyrnia · Backend · APIs · Architecture</span>
@@ -377,7 +377,7 @@ document.getElementById('today').textContent=new Date().toISOString().slice(0,10
   var sheet=document.querySelector('.sheet');
   var raf=null;
   function snap(){
-    var els=document.querySelectorAll('.sheet > section > *, .sheet > header > *, .sheet > footer > *');
+    var els=document.querySelectorAll('.sheet > section > *, .sheet > header > *, .sheet > footer > *, .two > div > *, .bgrid > div > *, .inv > div, .job > *');
     els.forEach(function(el){el.style.paddingBottom='';});
     var top=sheet.getBoundingClientRect().top;
     els.forEach(function(el){

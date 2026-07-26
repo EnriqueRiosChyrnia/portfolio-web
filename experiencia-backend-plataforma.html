@@ -255,11 +255,12 @@
         </div>
         <div class="fields" style="margin-top:26px">
           <div><span class="fl" data-i18n="hero.f1">Role</span><span class="dot"></span><span data-i18n="hero.v1">Backend developer</span></div>
+          <div><span class="fl" data-i18n="hero.f5">Period</span><span class="dot"></span><span data-i18n="hero.v5">January 2026 &ndash; present</span></div>
           <div><span class="fl" data-i18n="hero.f2">Engagement</span><span class="dot"></span><span data-i18n="hero.v2">employee, under contract</span></div>
           <div><span class="fl" data-i18n="hero.f3">Fronts</span><span class="dot"></span><span data-i18n="hero.v3">3 (backend · registration · panel)</span></div>
           <div><span class="fl" data-i18n="hero.f4">Stack</span><span class="dot"></span><span>Java · Spring · Postgres · AWS</span></div>
         </div>
-        <p class="lede" style="margin-top:26px" data-i18n="hero.lede">I was the person responsible for the backend and the infrastructure of a platform in production: a user app, a professional app, and a panel for the internal team. It's anonymized because it's work under contract — no names, no code, no screens, no real topology. What's left is how I solved each thing.</p>
+        <p class="lede" style="margin-top:26px" data-i18n="hero.lede">I'm the person responsible for the backend and the infrastructure of a platform in production: a user app, a professional app, and a panel for the internal team. It's anonymized because it's work under contract — no names, no code, no screens, no real topology. What's left is how I solved each thing.</p>
         <div class="callout" style="margin-top:26px">
           <span class="cl" data-i18n="hero.cl">What I actually did</span>
           <p data-i18n="hero.cp">I designed and built the backend architecture: separation by context, a database per module, the API entry layer, file storage, caching, external integrations behind abstractions, the technical documentation, infrastructure as code, and the cloud deployment.</p>
@@ -385,10 +386,10 @@
 
         <div class="tbl">
           <div class="tr th"><div data-i18n="tbl.h1">Check</div><div data-i18n="tbl.h2">Evidence</div></div>
-          <div class="tr"><div data-i18n="tbl.r1a">The image doesn't force the local profile</div><div class="ev" data-i18n="tbl.r1b">no environment variables in the Dockerfile</div></div>
+          <div class="tr"><div data-i18n="tbl.r1a">The image works in any environment</div><div class="ev" data-i18n="tbl.r1b">the Dockerfile doesn't pin the profile: whoever starts it decides</div></div>
           <div class="tr alt"><div data-i18n="tbl.r2a">The port comes from the environment</div><div class="ev" data-i18n="tbl.r2b">one config line, with a default for development</div></div>
           <div class="tr"><div data-i18n="tbl.r3a">Credentials and endpoints by variable</div><div class="ev" data-i18n="tbl.r3b">database, storage, integrations and admin — nothing in the repo</div></div>
-          <div class="tr alt"><div data-i18n="tbl.r4a">Health check stays public with the lock on</div><div class="ev" data-i18n="tbl.r4b">integration test: 200 with no credentials</div></div>
+          <div class="tr alt"><div data-i18n="tbl.r4a">The health check stays open on purpose</div><div class="ev" data-i18n="tbl.r4b">integration test: it answers 200 with no credentials</div></div>
           <div class="tr"><div data-i18n="tbl.r5a">The signed webhook gets in without a login</div><div class="ev" data-i18n="tbl.r5b">valid signature 200, anything else doesn't pass</div></div>
           <div class="tr alt"><div data-i18n="tbl.r6a">The internal panel, closed</div><div class="ev" data-i18n="tbl.r6b">401 with no credentials · 200 with the right ones · 401 with the wrong ones</div></div>
         </div>

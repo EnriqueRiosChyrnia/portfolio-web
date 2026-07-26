@@ -59,6 +59,8 @@
     },
     "hero.stamp": { en: "Anonymized", es: "Anonimizado" },
     "hero.f1": { en: "Role", es: "Rol" },
+    "hero.f5": { en: "Period", es: "Período" },
+    "hero.v5": { en: "January 2026 – present", es: "enero 2026 – actualidad" },
     "hero.f2": { en: "Engagement", es: "Contrato" },
     "hero.f3": { en: "Fronts", es: "Frentes" },
     "hero.f4": { en: "Stack", es: "Stack" },
@@ -66,8 +68,8 @@
     "hero.v2": { en: "employee, under contract", es: "empleado, no freelance" },
     "hero.v3": { en: "3 (backend · registration · panel)", es: "3 (backend · registro · panel)" },
     "hero.lede": {
-      en: "I was the person responsible for the backend and the infrastructure of a platform in production: a user app, a professional app, and a panel for the internal team. It's anonymized because it's work under contract — no names, no code, no screens, no real topology. What's left is how I solved each thing.",
-      es: "Fui el responsable del backend y de la infraestructura de una plataforma en producción: app de usuarios, app de profesionales y un panel para el equipo interno. Va anonimizado porque es trabajo bajo contrato — no hay nombres, ni código, ni pantallas, ni la topología de verdad. Lo que sí queda es cómo resolví cada cosa."
+      en: "I'm the person responsible for the backend and the infrastructure of a platform in production: a user app, a professional app, and a panel for the internal team. It's anonymized because it's work under contract — no names, no code, no screens, no real topology. What's left is how I solved each thing.",
+      es: "Soy el responsable del backend y de la infraestructura de una plataforma en producción: app de usuarios, app de profesionales y un panel para el equipo interno. Va anonimizado porque es trabajo bajo contrato — no hay nombres, ni código, ni pantallas, ni la topología de verdad. Lo que sí queda es cómo resolví cada cosa."
     },
     "hero.cl": { en: "What I actually did", es: "Lo que hice en concreto" },
     "hero.cp": {
@@ -213,8 +215,8 @@
     /* ── planilla ── */
     "tbl.h1": { en: "Check", es: "Control" },
     "tbl.h2": { en: "Evidence", es: "Evidencia" },
-    "tbl.r1a": { en: "The image doesn't force the local profile", es: "La imagen no fuerza el perfil local" },
-    "tbl.r1b": { en: "no environment variables in the Dockerfile", es: "sin variables de entorno en el Dockerfile" },
+    "tbl.r1a": { en: "The image works in any environment", es: "La imagen sirve para cualquier entorno" },
+    "tbl.r1b": { en: "the Dockerfile doesn't pin the profile: whoever starts it decides", es: "el Dockerfile no fija el perfil: lo decide quien la arranca" },
     "tbl.r2a": { en: "The port comes from the environment", es: "El puerto lo pone el entorno" },
     "tbl.r2b": { en: "one config line, with a default for development", es: "una línea de config, con default para desarrollo" },
     "tbl.r3a": { en: "Credentials and endpoints by variable", es: "Credenciales y endpoints por variable" },
@@ -222,8 +224,8 @@
       en: "database, storage, integrations and admin — nothing in the repo",
       es: "base, storage, integraciones y admin — nada en el repo"
     },
-    "tbl.r4a": { en: "Health check stays public with the lock on", es: "El chequeo de salud sigue público con el candado puesto" },
-    "tbl.r4b": { en: "integration test: 200 with no credentials", es: "test de integración: 200 sin credenciales" },
+    "tbl.r4a": { en: "The health check stays open on purpose", es: "El chequeo de salud queda abierto a propósito" },
+    "tbl.r4b": { en: "integration test: it answers 200 with no credentials", es: "test de integración: responde 200 sin credenciales" },
     "tbl.r5a": { en: "The signed webhook gets in without a login", es: "El webhook firmado entra sin login" },
     "tbl.r5b": { en: "valid signature 200, anything else doesn't pass", es: "firma válida 200, lo demás no pasa" },
     "tbl.r6a": { en: "The internal panel, closed", es: "El panel interno, cerrado" },

@@ -3,11 +3,11 @@ window.SiteI18n.dict = {
   "meta.title": { en: "Enrique Chyrnia — Portfolio · Software Development", es: "Enrique Chyrnia — Portfolio · Desarrollo de Software" },
   "meta.description": { en: "Backend · APIs & Integration · Cloud systems. Professional portfolio of Enrique Chyrnia: real cases of development, integration, and deployment.", es: "Backend · APIs & Integración · Sistemas cloud. Portfolio profesional de Enrique Chyrnia: casos reales de desarrollo, integración y despliegue." },
   "meta.ogTitle": { en: "Enrique Chyrnia — Portfolio · Software Development", es: "Enrique Chyrnia — Portfolio · Desarrollo de Software" },
-  "meta.ogDescription": { en: "Backend · APIs & Integration · Cloud systems. Real cases of development, integration, and deployment.", es: "Backend · APIs & Integración · Sistemas cloud. Casos reales de desarrollo, integración y despliegue." },
+  "meta.ogDescription": { en: "Backend, APIs and cloud infrastructure. Work case at Mas Que Bien Service, plus my own products: Ryguasu, a multi-tenant POS SaaS in production, and Fil-Grama, social media analytics.", es: "Backend, APIs e infraestructura cloud. Caso de trabajo en Mas Que Bien Service, más mis productos propios: Ryguasu, un SaaS multi-tenant de punto de venta en producción, y Fil-Grama, analytics de redes sociales." },
   "meta.ogImageAlt": { en: "Enrique Chyrnia — Backend · APIs & Integration · Cloud systems", es: "Enrique Chyrnia — Backend · APIs & Integración · Sistemas cloud" },
   "meta.ogLocale": { en: "en_US", es: "es_AR" },
   "meta.twitterTitle": { en: "Enrique Chyrnia — Portfolio · Software Development", es: "Enrique Chyrnia — Portfolio · Desarrollo de Software" },
-  "meta.twitterDescription": { en: "Backend · APIs & Integration · Cloud systems. Real cases of development, integration, and deployment.", es: "Backend · APIs & Integración · Sistemas cloud. Casos reales de desarrollo, integración y despliegue." },
+  "meta.twitterDescription": { en: "Backend, APIs and cloud infrastructure. Work case at Mas Que Bien Service, plus my own products: Ryguasu, a multi-tenant POS SaaS in production, and Fil-Grama, social media analytics.", es: "Backend, APIs e infraestructura cloud. Caso de trabajo en Mas Que Bien Service, más mis productos propios: Ryguasu, un SaaS multi-tenant de punto de venta en producción, y Fil-Grama, analytics de redes sociales." },
 
   "topbar.tid": { en: 'EC · ENRIQUE CHYRNIA <i>/ PORTFOLIO.PRT · COVER SHEET</i>', es: 'EC · ENRIQUE CHYRNIA <i>/ PORTFOLIO.PRT · CARÁTULA</i>' },
   "nav.perfil": { en: "Profile", es: "Perfil" },

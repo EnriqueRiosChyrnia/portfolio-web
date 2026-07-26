@@ -69,14 +69,14 @@ window.SiteI18n.dict = {
 
   "s03.sheet": { en: "SHEET 03/04 · EXPERIENCE", es: "HOJA 03/04 · EXPERIENCIA" },
   "s03.title": { en: "Work experience — Backend & infrastructure", es: "Experiencia laboral — Backend e infraestructura" },
-  "s03.jco": { en: "Private company · digital services industry", es: "Empresa privada · rubro servicios digitales" },
+  "s03.jco": { en: "Mas Que Bien Service · digital services", es: "Mas Que Bien Service · servicios digitales" },
   "s03.jdates": { en: "January 2026 – present", es: "enero 2026 – actualidad" },
   "s03.jrole": { en: "Backend Developer", es: "Desarrollador Backend" },
-  "s03.note": { en: "I work at a private company in the digital services industry, in charge of backend and technical infrastructure on an operational platform with applications for users, professionals, and the internal team. Three areas fell to me: backend architecture and cloud infrastructure, user registration, and the internal team's backoffice.", es: "Trabajo en una empresa privada del rubro servicios digitales, como encargado del backend y la infraestructura técnica de una plataforma operativa con aplicaciones para usuarios, profesionales y equipo interno. Me tocaron tres áreas: la arquitectura backend e infraestructura cloud, el registro de usuarios y el backoffice del equipo interno." },
+  "s03.note": { en: "I work at <b>Mas Que Bien Service</b>, in charge of backend and technical infrastructure on an operational platform with applications for users, professionals, and the internal team. Three areas fell to me: backend architecture and cloud infrastructure, user registration, and the internal team's backoffice.", es: "Trabajo en <b>Mas Que Bien Service</b>, como encargado del backend y la infraestructura técnica de una plataforma operativa con aplicaciones para usuarios, profesionales y equipo interno. Me tocaron tres áreas: la arquitectura backend e infraestructura cloud, el registro de usuarios y el backoffice del equipo interno." },
   "s03.tag1": { en: "Modular backend & cloud infrastructure", es: "Backend modular e infraestructura cloud" },
   "s03.tag2": { en: "Onboarding & user registration", es: "Onboarding y registro de usuarios" },
   "s03.tag3": { en: "Operational backoffice", es: "Backoffice operativo" },
-  "s03.disc": { en: "For confidentiality, this case is presented anonymized: it doesn't include real names, source code, internal data, credentials, private screens, or exact architecture.", es: "Por confidencialidad, este caso está presentado de forma anonimizada: no incluye nombres reales, código fuente, datos internos, credenciales, pantallas privadas ni arquitectura exacta." },
+  "s03.disc": { en: "The case is published without internal material: no source code, no screenshots, no real topology, no credentials and no internal product names. The diagrams were redrawn and simplified.", es: "El caso se publica sin material interno: sin código fuente, sin capturas, sin la topología real, sin credenciales y sin los nombres de los productos internos. Los diagramas están redibujados y simplificados." },
   "s03.jgo": { en: "View work experience →", es: "Ver experiencia laboral →" },
 
   "s04.sheet": { en: "SHEET 04/04 · PERSONAL PROJECTS", es: "HOJA 04/04 · PROYECTOS PROPIOS" },

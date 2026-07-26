@@ -57,8 +57,10 @@
       en: "Backend and infrastructure for a platform in production",
       es: "Backend e infraestructura de una plataforma en producción"
     },
-    "hero.stamp": { en: "Anonymized", es: "Anonimizado" },
+    "hero.stamp": { en: "No internal material", es: "Sin material interno" },
     "hero.f1": { en: "Role", es: "Rol" },
+    "hero.f6": { en: "Company", es: "Empresa" },
+    "hero.v6": { en: "Mas Que Bien Service", es: "Mas Que Bien Service" },
     "hero.f5": { en: "Period", es: "Período" },
     "hero.v5": { en: "January 2026 – present", es: "enero 2026 – actualidad" },
     "hero.f2": { en: "Engagement", es: "Contrato" },
@@ -68,8 +70,8 @@
     "hero.v2": { en: "employee, under contract", es: "empleado, no freelance" },
     "hero.v3": { en: "3 (backend · registration · panel)", es: "3 (backend · registro · panel)" },
     "hero.lede": {
-      en: "I'm the person responsible for the backend and the infrastructure of a platform in production: a user app, a professional app, and a panel for the internal team. It's anonymized because it's work under contract — no names, no code, no screens, no real topology. What's left is how I solved each thing.",
-      es: "Soy el responsable del backend y de la infraestructura de una plataforma en producción: app de usuarios, app de profesionales y un panel para el equipo interno. Va anonimizado porque es trabajo bajo contrato — no hay nombres, ni código, ni pantallas, ni la topología de verdad. Lo que sí queda es cómo resolví cada cosa."
+      en: "I'm the person responsible for the backend and the infrastructure of a platform in production at <b>Mas Que Bien Service</b>: a user app, a professional app, and a panel for the internal team. What you won't find here is code, screenshots, real topology or internal product names — that belongs to the company. What's left is how I solved each thing.",
+      es: "Soy el responsable del backend y de la infraestructura de una plataforma en producción en <b>Mas Que Bien Service</b>: app de usuarios, app de profesionales y un panel para el equipo interno. Lo que no vas a encontrar acá es código, capturas, la topología real ni los nombres de los productos internos — eso es de la empresa. Lo que sí queda es cómo resolví cada cosa."
     },
     "hero.cl": { en: "What I actually did", es: "Lo que hice en concreto" },
     "hero.cp": {
@@ -416,8 +418,8 @@
       es: "Escribime por trabajo de backend, APIs o infraestructura en la nube."
     },
     "footer.disc": {
-      en: "Real work experience, presented anonymized. Names, diagrams, screens, data and technical detail were simplified or redrawn so nothing private belonging to third parties is exposed.",
-      es: "Experiencia laboral real, presentada anonimizada. Nombres, diagramas, pantallas, datos y detalles técnicos fueron simplificados o redibujados para no exponer información privada de terceros."
+      en: "Real work experience at Mas Que Bien Service. It doesn't include source code, screenshots, real topology, credentials, endpoints or internal product names: the diagrams were redrawn and simplified on purpose.",
+      es: "Experiencia laboral real en Mas Que Bien Service. No incluye código fuente, capturas, la topología real, credenciales, endpoints ni los nombres de los productos internos: los diagramas están redibujados y simplificados a propósito."
     },
     "footer.row1": {
       en: "Enrique Chyrnia · Backend · APIs · Infrastructure",
@@ -428,18 +430,18 @@
     /* ── arquitectura distribuida (frente 1) ── */
     "s02.h3c": { en: "How the services are laid out", es: "Cómo están repartidos los servicios" },
     "s02.b1t": { en: "Seven services, one door", es: "Siete servicios, una sola puerta" },
-    "s02.b1s": { en: "Seven backend services, each running as its own container task and owning its database — all on a single managed instance, so the isolation doesn't multiply the bill. Client, provider and staff apps come in through one gateway that checks the token and routes.", es: "Siete servicios de backend, cada uno corriendo como su propia tarea de contenedor y dueño de su base — todas sobre una sola instancia administrada, así el aislamiento no multiplica la factura. Las apps de cliente, prestador y staff entran por una única puerta que verifica el token y reparte." },
+    "s02.b1s": { en: "Seven backend services, each running as its own <b>ECS Fargate</b> task and owning its database — all on a single <b>RDS</b> instance, so the isolation doesn't multiply the bill. Client, provider and staff apps come in through one gateway that checks the token and routes.", es: "Siete servicios de backend, cada uno corriendo como su propia tarea de <b>ECS Fargate</b> y dueño de su base — todas sobre una sola instancia de <b>RDS</b>, así el aislamiento no multiplica la factura. Las apps de cliente, prestador y staff entran por una única puerta que verifica el token y reparte." },
     "s02.b2t": { en: "One role per service", es: "Un rol por servicio" },
-    "s02.b2s": { en: "Every service assumes its own cloud role with only the permissions it needs: most touch nothing outside their own data, and only the one that runs document checks reaches the vision and OCR services. If one is compromised, the blast radius stays inside it.", es: "Cada servicio asume su propio rol en la nube con los permisos justos: la mayoría no toca nada fuera de sus datos, y solo el que corre las verificaciones de documentos llega a los servicios de visión y OCR. Si uno se compromete, el daño queda adentro de ese." },
+    "s02.b2s": { en: "Every service assumes its own <b>IAM</b> role with only the permissions it needs: most touch nothing outside their own data, and only the one that runs document checks reaches the vision and OCR services. If one is compromised, the blast radius stays inside it.", es: "Cada servicio asume su propio rol de <b>IAM</b> con los permisos justos: la mayoría no toca nada fuera de sus datos, y solo el que corre las verificaciones de documentos llega a los servicios de visión y OCR. Si uno se compromete, el daño queda adentro de ese." },
     "s02.b3t": { en: "No keys in the repository", es: "Ninguna clave en el repositorio" },
-    "s02.b3s": { en: "Secrets live in a managed secrets store and each task gets temporary credentials at runtime. Configuration comes from the environment, so the same image runs in every environment without a rebuild.", es: "Los secretos viven en un gestor administrado y cada tarea recibe credenciales temporales en tiempo de ejecución. La configuración entra por el entorno, así la misma imagen corre en todos lados sin reconstruirse." },
+    "s02.b3s": { en: "Secrets live in <b>Secrets Manager</b> and each task gets temporary credentials at runtime through <b>STS</b>. Configuration comes from the environment, so the same image runs in every environment without a rebuild.", es: "Los secretos viven en <b>Secrets Manager</b> y cada tarea recibe credenciales temporales en tiempo de ejecución vía <b>STS</b>. La configuración entra por el entorno, así la misma imagen corre en todos lados sin reconstruirse." },
     "s02.b4t": { en: "Two regions, on purpose", es: "Dos regiones, a propósito" },
     "s02.b4s": { en: "The system runs in the cloud region closest to its users. Only the document-and-face checks cross to a second region, because the managed services they need aren't offered in the first one — about 150 ms round trip, paid by that call alone and not by the rest of the platform.", es: "El sistema corre en la región de nube más cercana a sus usuarios. Solo las verificaciones de documento y rostro cruzan a una segunda región, porque los servicios administrados que necesitan no existen en la primera — unos 150 ms de ida y vuelta, que paga esa llamada sola y no el resto de la plataforma." },
     "s02.co2l": { en: "Matching by distance, and a price that stops moving", es: "Emparejar por distancia, y un precio que deja de moverse" },
     "s02.co2p": { en: "One of the services matches requests to nearby providers using geospatial queries in the database, and offers the job in waves: small batches, ordered by a scoring rule, each with a deadline to accept. When a request is confirmed the price, tax and commission are frozen into an immutable snapshot — a rate change tomorrow never rewrites what was already agreed. I took part in defining that structure and its flow.", es: "Uno de los servicios empareja los pedidos con prestadores cercanos usando consultas geoespaciales en la base, y ofrece el trabajo por oleadas: grupos chicos, ordenados por una regla de puntaje, cada uno con un plazo para aceptar. Cuando el pedido se confirma, el precio, el impuesto y la comisión quedan congelados en una copia inmutable — que mañana cambie una tarifa nunca reescribe lo ya acordado. Participé en la definición de esa estructura y de su flujo." },
     "s05.h2l4": { en: "Geospatial queries", es: "Consultas geoespaciales" },
-    "s05.h3l4": { en: "Container tasks · one role each", es: "Tareas de contenedor · un rol cada una" },
-    "s05.h3l5": { en: "Managed secrets · temporary credentials", es: "Secretos administrados · credenciales temporales" },
+    "s05.h3l4": { en: "ECS Fargate · one IAM role each", es: "ECS Fargate · un rol IAM cada uno" },
+    "s05.h3l5": { en: "Secrets Manager · STS temporary credentials", es: "Secrets Manager · credenciales temporales STS" },
     "s05.h4l4": { en: "Federated identity · staff tokens", es: "Identidad federada · tokens de staff" },
     "s05.h4l5": { en: "Payments behind swappable adapters", es: "Pagos detrás de adaptadores intercambiables" }
 

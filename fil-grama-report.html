@@ -130,6 +130,8 @@
   .logrow .lbl{font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
   .logrow .dots{flex:1;border-bottom:2px dotted var(--rule);transform:translateY(-4px);min-width:30px}
   .logrow .st{font-weight:700;white-space:nowrap}
+  /* bajo 640px el estado no entra en la misma línea que el rótulo: pasa abajo */
+  @media(max-width:640px){.logrow{flex-wrap:wrap;gap:0 10px}.logrow .dots{min-width:20px}.logrow .st{width:100%}}
   .st.ok{color:var(--ok)} .st.pend{color:var(--warn)} .st.no{color:var(--faint)}
 
   /* ficha de estado enmarcada */
@@ -275,6 +277,8 @@
   .factline span{white-space:nowrap}
   .factline b{font-weight:700}
   .factline i{font-style:normal;color:var(--faint);padding:0 14px}
+  /* bajo 640px cada dato va en su propia línea: en nowrap no entran y desbordan la hoja */
+  @media(max-width:640px){.factline{flex-direction:column;gap:4px 0}.factline span{white-space:normal}.factline i{display:none}}
 
   .stamprow{display:flex;justify-content:flex-end;margin:0 0 26px}
   .stamp{flex:none;align-self:center;border:3px double currentColor;padding:1px 14px;font-size:12.5px;font-weight:700;
@@ -371,7 +375,7 @@
           <p class="brole" data-i18n="hero.brole">Social media analytics for agencies. Instagram, Facebook and TikTok in one place, with the history the networks don't keep for you.</p>
         </div>
         <div class="heroqua">
-          <img src="assets/filgrama/marca/codorniz.png" alt="The blue quail, Fil-Grama's symbol" data-i18n-attr="alt:hero.quailAlt">
+          <img src="assets/filgrama/marca/codorniz.png" alt="The blue quail, Fil-Grama's symbol" data-i18n-attr="alt:hero.quailAlt" loading="lazy" decoding="async">
           <div class="qcap" data-i18n="hero.quailCap">The quail · the project's mark</div>
         </div>
       </div>
@@ -392,7 +396,7 @@
     <!-- ============ 01 PROBLEMA + LA VENTANA ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="que-es" data-screen-label="01 Problema">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s01.sheet">SHEET 01/10 · THE PROBLEM</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s01.sheet">SHEET 01/10 · THE PROBLEM</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">01</span><span data-i18n="s01.title">Why I built Fil-Grama</span></h2>
       <div class="two">
         <div>
@@ -452,13 +456,13 @@
     <!-- ============ 02 EL JOB DIARIO ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="job" data-screen-label="02 Job diario">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s02b.sheet">SHEET 02/10 · THE DAILY JOB</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s02b.sheet">SHEET 02/10 · THE DAILY JOB</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">02</span><span data-i18n="s02b.title">The morning round</span></h2>
       <div class="ronda">
         <div>
           <p class="lede" data-i18n="s02b.lede">One pass per account, once a day, six in the morning Asunción time. Every result gets written down, the failures too: which account, which error, at what time. An account that fails doesn't get retried in a loop; it's recorded in <code>sync_account_results</code> and the run keeps going.</p>
           <div class="rbird">
-            <img id="rbirdImg" src="assets/filgrama/marca/codorniz.png" alt="Fil-Grama's blue quail" data-i18n-attr="alt:s02b.birdAlt">
+            <img id="rbirdImg" src="assets/filgrama/marca/codorniz.png" alt="Fil-Grama's blue quail" data-i18n-attr="alt:s02b.birdAlt" loading="lazy" decoding="async">
             <div>
               <div class="rb-t" data-i18n="s02b.birdCap">This is the product's real loading indicator</div>
               <button type="button" class="rbtn" id="rondaBtn" data-fase="idle" data-i18n="s02b.btnIdle">Run today's round</button>
@@ -481,7 +485,7 @@
     <!-- ============ 03 ARQUITECTURA ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="arquitectura" data-screen-label="03 Arquitectura">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s02.sheet">SHEET 03/10 · ARCHITECTURE</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s02.sheet">SHEET 03/10 · ARCHITECTURE</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">03</span><span data-i18n="s02.title">Modular backend, contract as the source of truth</span></h2>
       <p class="lede" data-i18n="s02.lede">Backend in Java with Spring Boot, split by domain: auth, clients, accounts, OAuth, Meta integration, metrics, sync, reports, media, storage. Postgres with versioned migrations. The React frontend doesn't hand-write its calls to the API — they're generated from the contract with Orval, so a change in the backend shows up as a type error while I'm working and not as a bug in production.</p>
 
@@ -570,7 +574,7 @@
     <!-- ============ 04 INGENIERÍA ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="ingenieria" data-screen-label="04 Ingeniería">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s03.sheet">SHEET 04/10 · ENGINEERING</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s03.sheet">SHEET 04/10 · ENGINEERING</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">04</span><span data-i18n="s03.title">Backend details</span></h2>
       <ul class="ls">
         <li><span class="n">001</span><div><b data-i18n="s03.li1.b">167+ tests</b><span class="d" data-i18n="s03.li1.span">Includes e2e against a real Postgres with Testcontainers, not only mocks. They take longer to run and they caught things mocks never would have.</span></div></li>
@@ -584,7 +588,7 @@
     <!-- ============ 05 INTEGRACIONES ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="integraciones" data-screen-label="05 Integraciones">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s04.sheet">SHEET 05/10 · INTEGRATIONS</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s04.sheet">SHEET 05/10 · INTEGRATIONS</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">05</span><span data-i18n="s04.title">TikTok and Meta, real status</span></h2>
       <div class="stamprow"><span class="stamp amber" aria-hidden="true" data-i18n="s04.stamp">Sandbox</span></div>
       <p class="lede" data-i18n="s04.lede">Both integrations are written. Neither one is running against real client accounts yet, and the reason is different in each case.</p>
@@ -599,7 +603,7 @@
     <!-- ============ 06 ESTADO ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="roadmap" data-screen-label="06 Estado">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s05.sheet">SHEET 06/10 · STATUS</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s05.sheet">SHEET 06/10 · STATUS</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">06</span><span data-i18n="s05.title">Where it stands</span></h2>
       <div class="stamprow"><span class="stamp red" aria-hidden="true" data-i18n="s05.stamp">Under construction</span></div>
       <p class="lede" data-i18n="s05.lede">There are no clients in production yet. I'd rather have the base settled before someone else's data lives in there: integrations enabled, a boring deploy, backups I actually restored. Next one up is Meta approved.</p>
@@ -619,7 +623,7 @@
     <!-- ============ 07 INFRAESTRUCTURA ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="infra" data-screen-label="07 Infraestructura">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s06.sheet">SHEET 07/10 · INFRASTRUCTURE</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s06.sheet">SHEET 07/10 · INFRASTRUCTURE</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">07</span><span data-i18n="s06.title">How it's deployed</span></h2>
       <div class="two">
         <div>
@@ -637,7 +641,7 @@
     <!-- ============ 08 RECORRIDO ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="recorrido" data-screen-label="08 Recorrido">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s07.sheet">SHEET 08/10 · TOUR</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s07.sheet">SHEET 08/10 · TOUR</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">08</span><span data-i18n="s07.title">The screens, browsable</span></h2>
       <p class="lede" data-i18n="s07.lede">A selection out of the 50 screens I designed: analytics, comparison between accounts, posts, reports, platform. Each card opens the real screen, desktop and mobile.</p>
       <div class="tour-grid" id="tourHeroGrid"></div>
@@ -659,25 +663,25 @@
     <!-- ============ 09 PRODUCTO ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="pantallas" data-screen-label="09 Producto">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s08.sheet">SHEET 09/10 · PRODUCT</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s08.sheet">SHEET 09/10 · PRODUCT</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">09</span><span data-i18n="s08.title">Screenshots of it running</span></h2>
       <div class="stamprow"><span class="stamp green" aria-hidden="true" data-i18n="s08.stamp">In production</span></div>
       <p class="lede" data-i18n="s08.lede">The app in production, <span class="hl">not mockups</span>: the client dashboard, a post in detail, the comparison between accounts, and the report generator that exports to PDF.</p>
       <div class="shots">
         <div class="fig">
-          <img src="assets/filgrama/dashboard-cliente.jpg" alt="Client dashboard in Fil-Grama with reach, interactions, engagement and follower metrics" data-i18n-attr="alt:s08.fig1.alt">
+          <img src="assets/filgrama/dashboard-cliente.jpg" alt="Client dashboard in Fil-Grama with reach, interactions, engagement and follower metrics" data-i18n-attr="alt:s08.fig1.alt" loading="lazy" decoding="async">
           <div class="cap" data-i18n="s08.fig1.cap"><b>Fig. 01</b> — Client dashboard: reach, interactions, engagement and followers, over the history the daily job built.</div>
         </div>
         <div class="fig">
-          <img src="assets/filgrama/detalle-publicacion.jpg" alt="Detail view of an Instagram post with its comment metric over time" data-i18n-attr="alt:s08.fig2.alt">
+          <img src="assets/filgrama/detalle-publicacion.jpg" alt="Detail view of an Instagram post with its comment metric over time" data-i18n-attr="alt:s08.fig2.alt" loading="lazy" decoding="async">
           <div class="cap" data-i18n="s08.fig2.cap"><b>Fig. 02</b> — Post detail: real content from the Instagram API, with one metric's evolution over time.</div>
         </div>
         <div class="fig">
-          <img src="assets/filgrama/comparar-cuentas.jpg" alt="Reach and follower comparison between a client's connected accounts, in a bar chart" data-i18n-attr="alt:s08.fig3.alt">
+          <img src="assets/filgrama/comparar-cuentas.jpg" alt="Reach and follower comparison between a client's connected accounts, in a bar chart" data-i18n-attr="alt:s08.fig3.alt" loading="lazy" decoding="async">
           <div class="cap" data-i18n="s08.fig3.cap"><b>Fig. 03</b> — Compare accounts: reach, followers, interactions and engagement side by side, as a table or bars.</div>
         </div>
         <div class="fig">
-          <img src="assets/filgrama/reporte-automatico.jpg" alt="Automated per-client report generator with KPIs by social network, exportable to PDF or Markdown" data-i18n-attr="alt:s08.fig4.alt">
+          <img src="assets/filgrama/reporte-automatico.jpg" alt="Automated per-client report generator with KPIs by social network, exportable to PDF or Markdown" data-i18n-attr="alt:s08.fig4.alt" loading="lazy" decoding="async">
           <div class="cap" data-i18n="s08.fig4.cap"><b>Fig. 04</b> — Automated report: KPIs by network with the change against the previous period, exported to PDF or Markdown.</div>
         </div>
       </div>
@@ -687,7 +691,7 @@
     <!-- ============ 10 STACK ============ -->
     <div class="tear" aria-hidden="true"></div>
     <section id="stack" data-screen-label="10 Stack">
-      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt=""><b>FIL-GRAMA.PRT</b></span><span data-i18n="s09.sheet">SHEET 10/10 · STACK</span><span>BLUEBAR · 132 COL</span></div>
+      <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s09.sheet">SHEET 10/10 · STACK</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">10</span><span data-i18n="s09.title">Tech inventory</span></h2>
       <div class="inv">
         <div><h4 data-i18n="s09.h1">Backend</h4><ul><li>Java · Spring Boot</li><li data-i18n="s09.h1.li2">REST APIs · JWT</li></ul></div>
@@ -706,6 +710,7 @@
       <h3 data-i18n="footer.contacto">Contact</h3>
       <p style="max-width:60ch;margin:0" data-i18n="footer.p">Write me if you need backend, API integration or cloud infrastructure work.</p>
       <a class="mail" href="mailto:www.enririos@gmail.com">www.enririos@gmail.com</a>
+        <a class="mail" href="https://www.linkedin.com/in/enrique-rios4/" target="_blank" rel="noopener">linkedin.com/in/enrique-rios4</a>
       <p class="small" style="margin:26px 0 0;max-width:76ch" data-i18n="footer.small">Fil-Grama is my own project, still in development, with no clients in production. This page leaves out IPs, credentials, tokens and internal admin URLs.</p>
       <div class="foot-row">
         <span data-i18n="footer.row1">Enrique Chyrnia · Founder &amp; Developer</span>

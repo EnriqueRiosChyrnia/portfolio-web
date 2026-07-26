@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://portfolio.fil-grama.com/assets/og-card.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Archivo+Narrow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Archivo+Narrow:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
     --desk:#2b241d; --folder:#f1e3c6; --edge:#ead4ab; --vellum:#f7eedb; --slip:#fcf7eb;
@@ -117,6 +117,8 @@
   /* ── fields with dotted leaders ── */
   .fields{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;font-family:var(--mono);font-size:12.5px;line-height:26px}
   @media(max-width:700px){.fields{grid-template-columns:1fr}}
+  /* el sello no puede encogerse: bajo 700px pasa abajo del título en vez de desbordar */
+  @media(max-width:700px){.hrow{flex-wrap:wrap;gap:0}.hrow .stamp{margin-top:8px}}
   .fields > div{display:flex;align-items:baseline;gap:8px}
   .fields .fl{font-family:var(--disp);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:600;white-space:nowrap}
   .fields .dot{flex:1;border-bottom:1px dotted rgba(63,45,29,.5);transform:translateY(-4px)}
@@ -247,7 +249,7 @@
           <span><b data-i18n="pgh.file">Experience file</b> · <span data-i18n="hero.piece">cover</span></span>
           <span><span data-i18n="hero.exp">Exp. 001/EC</span> · <span id="today"></span></span>
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:26px;background:var(--folder)">
+        <div class="hrow" style="display:flex;justify-content:space-between;align-items:flex-start;gap:26px;background:var(--folder)">
           <h1 class="bname" data-i18n="hero.h1">Backend and infrastructure for a platform in production</h1>
           <div class="stamp" style="flex-shrink:0;margin-top:14px" data-i18n="hero.stamp">Anonymized</div>
         </div>
@@ -336,12 +338,8 @@
         <p class="h3" data-i18n="s02.h3a">How the backend is split</p>
         <p class="note" data-i18n="s02.p1">I split it by context, not by technical layer. Every context carries the same three folders: <span class="mono">web</span> with controllers and DTOs, which doesn't know the database exists; <span class="mono">application</span> with the use cases and the rules; <span class="mono">infrastructure</span> with JPA, storage and config. I copied the shape of the microservices we'd migrate to later, so the move would be mechanical.</p>
 
-        <div class="callout" style="margin-top:26px">
-          <span class="cl" data-i18n="s02.cl">The decision that paid off</span>
-          <p data-i18n="s02.cp">One class decides approvals. The rest of the code never knows whether something is approved automatically or by a person: it asks the policy and moves on. When human review arrived I swapped that implementation and nothing else.</p>
-        </div>
 
-        <p class="note" style="margin-top:26px" data-i18n="s02.p2">File storage goes in through an interface. On my machine I ran an S3-compatible store in Docker; in the cloud it's the real service. Three config properties change and the code stays put. In the database I keep the file's key, never the bytes.</p>
+        <p class="note" style="margin-top:26px" data-i18n="s02.p2">File storage goes in through one interface. In production the files live in <b>Amazon S3</b>; on my machine I run <b>MinIO</b> in Docker against that same interface. Three config properties change and the code stays put. In the database I keep the file's key, never the bytes.</p>
 
         <div class="anexo">
           <svg class="diagram" viewBox="0 0 660 206" role="img" aria-label="Contexts and the storage port with its two adapters" data-i18n-attr="aria-label:diag2.aria">
@@ -370,7 +368,7 @@
             <path d="M582 68 L582 92" stroke="#9a4a24" stroke-width="1.2" marker-end="url(#ar)"/>
             <rect x="392" y="100" width="126" height="48" fill="none" stroke="#4a3520" stroke-width="1.2"/>
             <text x="455" y="120" text-anchor="middle" font-size="11" data-i18n="diag2.local">on my machine</text>
-            <text x="455" y="137" text-anchor="middle" font-size="10.5" fill="#7a5a36">Docker</text>
+            <text x="455" y="137" text-anchor="middle" font-size="10.5" fill="#7a5a36">MinIO</text>
             <rect x="534" y="100" width="126" height="48" fill="none" stroke="#4a3520" stroke-width="1.2"/>
             <text x="597" y="120" text-anchor="middle" font-size="11" data-i18n="diag2.nube">in the cloud</text>
             <text x="597" y="137" text-anchor="middle" font-size="10.5" fill="#7a5a36" data-i18n="diag2.real">the real service</text>
@@ -402,6 +400,23 @@
             <div class="sl" data-i18n="slip.label">Pasted from the terminal</div>
             <div class="sb" data-i18n="slip.body">86 unit tests · 18 integration tests · 0 failures<br><span class="ox">three branches in parallel, merged in one go</span> — the conflict I expected in the config never happened, and I still checked it by hand</div>
           </div>
+        </div>
+
+        <div class="h3" data-i18n="s02.h3c">How the services are laid out</div>
+        <div class="two" style="margin-top:0">
+          <div>
+            <div class="box"><span class="bt" data-i18n="s02.b1t">Seven services, one door</span><span class="bs" data-i18n="s02.b1s">Seven backend services, each running as its own container task and owning its database — all on a single managed instance, so the isolation doesn't multiply the bill. Client, provider and staff apps come in through one gateway that checks the token and routes.</span></div>
+            <div class="box"><span class="bt" data-i18n="s02.b2t">One role per service</span><span class="bs" data-i18n="s02.b2s">Every service assumes its own cloud role with only the permissions it needs: most touch nothing outside their own data, and only the one that runs document checks reaches the vision and OCR services. If one is compromised, the blast radius stays inside it.</span></div>
+          </div>
+          <div>
+            <div class="box"><span class="bt" data-i18n="s02.b3t">No keys in the repository</span><span class="bs" data-i18n="s02.b3s">Secrets live in a managed secrets store and each task gets temporary credentials at runtime. Configuration comes from the environment, so the same image runs in every environment without a rebuild.</span></div>
+            <div class="box"><span class="bt" data-i18n="s02.b4t">Two regions, on purpose</span><span class="bs" data-i18n="s02.b4s">The system runs in the cloud region closest to its users. Only the document-and-face checks cross to a second region, because the managed services they need aren't offered in the first one — about 150 ms round trip, paid by that call alone and not by the rest of the platform.</span></div>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:26px">
+          <div class="cl" data-i18n="s02.co2l">Matching by distance, and a price that stops moving</div>
+          <p data-i18n="s02.co2p">One of the services matches requests to nearby providers using geospatial queries in the database, and offers the job in waves: small batches, ordered by a scoring rule, each with a deadline to accept. When a request is confirmed the price, tax and commission are frozen into an immutable snapshot — a rate change tomorrow never rewrites what was already agreed. I took part in defining that structure and its flow.</p>
         </div>
 
         <div class="tags">
@@ -505,11 +520,11 @@
         <div class="titlerow"><span class="title"><span class="tn">05</span><span data-i18n="s05.title">What I used, and what for</span></span></div>
         <div class="inv">
           <div><h4 data-i18n="s05.h1">Backend</h4><ul><li>Java · Spring Boot</li><li data-i18n="s05.h1l2">REST APIs · OpenAPI</li><li data-i18n="s05.h1l3">Validation · DTO mapping</li></ul></div>
-          <div><h4 data-i18n="s05.h2">Data</h4><ul><li>PostgreSQL</li><li data-i18n="s05.h2l2">A database per module</li><li data-i18n="s05.h2l3">Modelling · versioned migrations</li></ul></div>
-          <div><h4 data-i18n="s05.h3">Cloud &amp; infrastructure</h4><ul><li>AWS · Docker</li><li>Terraform</li><li data-i18n="s05.h3l3">Config per environment</li></ul></div>
-          <div><h4 data-i18n="s05.h4">Integrations</h4><ul><li data-i18n="s05.h4l1">External APIs · signed webhooks</li><li data-i18n="s05.h4l2">Object storage</li><li data-i18n="s05.h4l3">Providers behind an interface</li></ul></div>
+          <div><h4 data-i18n="s05.h2">Data</h4><ul><li>PostgreSQL · PostGIS</li><li data-i18n="s05.h2l2">A database per module</li><li data-i18n="s05.h2l3">Modelling · versioned migrations</li><li data-i18n="s05.h2l4">Geospatial queries</li></ul></div>
+          <div><h4 data-i18n="s05.h3">Cloud &amp; infrastructure</h4><ul><li>AWS · Docker</li><li>Terraform</li><li data-i18n="s05.h3l3">Config per environment</li><li data-i18n="s05.h3l4">Container tasks · one role each</li><li data-i18n="s05.h3l5">Managed secrets · temporary credentials</li></ul></div>
+          <div><h4 data-i18n="s05.h4">Integrations</h4><ul><li data-i18n="s05.h4l1">External APIs · signed webhooks</li><li data-i18n="s05.h4l2">Object storage</li><li data-i18n="s05.h4l3">Providers behind an interface</li><li data-i18n="s05.h4l4">Federated identity · staff tokens</li><li data-i18n="s05.h4l5">Payments behind swappable adapters</li></ul></div>
           <div><h4 data-i18n="s05.h5">Testing</h4><ul><li data-i18n="s05.h5l1">Unit · controller slices</li><li data-i18n="s05.h5l2">Integration with real containers</li><li data-i18n="s05.h5l3">Full flow, end to end</li></ul></div>
-          <div><h4 data-i18n="s05.h6">Operations</h4><ul><li data-i18n="s05.h6l1">Queues · asynchronous work</li><li data-i18n="s05.h6l2">Roles · auditing</li><li data-i18n="s05.h6l3">Decisions written down</li></ul></div>
+          <div><h4 data-i18n="s05.h6">Operations</h4><ul><li data-i18n="s05.h6l1">Message queues · asynchronous work</li><li data-i18n="s05.h6l2">Roles · auditing</li><li data-i18n="s05.h6l3">Decisions written down</li></ul></div>
         </div>
       </section>
 
@@ -542,6 +557,7 @@
         <h3 data-i18n="footer.contacto">Contact</h3>
         <p style="max-width:58ch" data-i18n="footer.p">Write me about backend, API or cloud infrastructure work.</p>
         <a class="mail" href="mailto:www.enririos@gmail.com">www.enririos@gmail.com</a>
+        <a class="mail" href="https://www.linkedin.com/in/enrique-rios4/" target="_blank" rel="noopener">linkedin.com/in/enrique-rios4</a>
         <p class="disc" style="margin-top:26px" data-i18n="footer.disc">Real work experience, presented anonymized. Names, diagrams, screens, data and technical detail were simplified or redrawn so nothing private belonging to third parties is exposed.</p>
         <div class="foot">
           <span data-i18n="footer.row1">Enrique Chyrnia · Backend · APIs · Infrastructure</span>

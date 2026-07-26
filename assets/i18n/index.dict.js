@@ -64,7 +64,7 @@ window.SiteI18n.dict = {
   "s02.h5.li3": { en: "CI/CD", es: "CI/CD" },
   "s02.h6": { en: "Frontend (secondary)", es: "Frontend (secundario)" },
   "s02.h6.li1": { en: "TypeScript", es: "TypeScript" },
-  "s02.h6.li2": { en: "React · Next.js", es: "React · Next.js" },
+  "s02.h6.li2": { en: "React · Vite", es: "React · Vite" },
   "s02.note": { en: "<b>About the frontend:</b> it's a secondary contribution; on several modules the interface was built by someone else on the team while my focus was the backend. <b>PostGIS</b> is PostgreSQL's geospatial extension (proximity search and location-based filters).", es: "<b>Sobre el frontend:</b> es un aporte secundario; en varios módulos la interfaz la desarrolló otra persona del equipo y mi foco fue el backend. <b>PostGIS</b> es la extensión geoespacial de PostgreSQL (búsquedas por cercanía y filtros por ubicación)." },
 
   "s03.sheet": { en: "SHEET 03/04 · EXPERIENCE", es: "HOJA 03/04 · EXPERIENCIA" },

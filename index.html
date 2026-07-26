@@ -147,6 +147,8 @@
   .factline span{white-space:nowrap}
   .factline b{font-weight:700}
   .factline i{font-style:normal;color:var(--faint);padding:0 14px}
+  /* bajo 640px cada dato va en su propia línea: en nowrap no entran y desbordan la hoja */
+  @media(max-width:640px){.factline{flex-direction:column;gap:4px 0}.factline span{white-space:normal}.factline i{display:none}}
   .bgrid{display:grid;grid-template-columns:1fr 300px;gap:50px;align-items:start}
   @media(max-width:860px){.bgrid{grid-template-columns:1fr}}
   /* foto adjunta con clip */
@@ -172,6 +174,9 @@
   .job .jrole{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
   .job .jstamp{margin-left:auto}
   @media(max-width:700px){.job .jstamp{margin-left:0}}
+  /* en pantallas muy angostas la foto y los sellos no pueden mantener su ancho fijo */
+  @media(max-width:360px){.photo{width:100%}.photo .stamp.onphoto{right:0}
+    .stamp{white-space:normal}}
   .job p{margin:13px 0 0}
   .tags{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font-size:12.5px;letter-spacing:.04em}
   .tags span::before{content:"[ "}
@@ -285,7 +290,7 @@
         <div><h4 data-i18n="s02.h3">Data &amp; persistence</h4><ul><li data-i18n="s02.h3.li1">PostgreSQL</li><li data-i18n="s02.h3.li2">PostGIS · geospatial</li><li data-i18n="s02.h3.li3">Object storage · Redis</li></ul></div>
         <div><h4 data-i18n="s02.h4">Security &amp; identity</h4><ul><li data-i18n="s02.h4.li1">JWT · roles</li><li data-i18n="s02.h4.li2">Spring Security</li><li data-i18n="s02.h4.li3">Federated authentication (OAuth/OIDC)</li></ul></div>
         <div><h4 data-i18n="s02.h5">Cloud, deployment &amp; DevOps</h4><ul><li data-i18n="s02.h5.li1">AWS · Docker</li><li data-i18n="s02.h5.li2">Terraform</li><li data-i18n="s02.h5.li3">CI/CD</li></ul></div>
-        <div><h4 data-i18n="s02.h6">Frontend (secondary)</h4><ul><li data-i18n="s02.h6.li1">TypeScript</li><li data-i18n="s02.h6.li2">React · Next.js</li></ul></div>
+        <div><h4 data-i18n="s02.h6">Frontend (secondary)</h4><ul><li data-i18n="s02.h6.li1">TypeScript</li><li data-i18n="s02.h6.li2">React · Vite</li></ul></div>
       </div>
       <p class="note" style="margin-top:22px;font-size:13px" data-i18n="s02.note"><b>About the frontend:</b> it's a secondary contribution; on several modules the interface was built by someone else on the team while my focus was the backend. <b>PostGIS</b> is PostgreSQL's geospatial extension (proximity search and location-based filters).</p>
     </section>
@@ -357,6 +362,7 @@
       <h3 id="contacto" data-i18n="footer.contacto">Contact</h3>
       <p style="max-width:60ch;margin:0" data-i18n="footer.p">I'm open to backend, API, and integration work. Write me about jobs, projects, or anything technical.</p>
       <a class="mail" href="mailto:www.enririos@gmail.com">www.enririos@gmail.com</a>
+        <a class="mail" href="https://www.linkedin.com/in/enrique-rios4/" target="_blank" rel="noopener">linkedin.com/in/enrique-rios4</a>
       <div class="foot-row">
         <span data-i18n="footer.row1">Enrique Chyrnia · Backend · APIs · Architecture</span>
         <span>© <span id="yr"></span> · Portfolio</span>

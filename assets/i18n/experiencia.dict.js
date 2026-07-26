@@ -121,14 +121,9 @@
       en: "I split it by context, not by technical layer. Every context carries the same three folders: <span class=\"mono\">web</span> with controllers and DTOs, which doesn't know the database exists; <span class=\"mono\">application</span> with the use cases and the rules; <span class=\"mono\">infrastructure</span> with JPA, storage and config. I copied the shape of the microservices we'd migrate to later, so the move would be mechanical.",
       es: "Lo partí por contexto y no por capa técnica. Cada contexto tiene sus tres carpetas: <span class=\"mono\">web</span> con controllers y DTOs, que no sabe que existe la base; <span class=\"mono\">application</span> con los casos de uso y las reglas; <span class=\"mono\">infrastructure</span> con JPA, storage y config. Le copié la forma a los microservicios a los que después había que migrar, así el pase era mecánico."
     },
-    "s02.cl": { en: "The decision that paid off", es: "La decisión que más me sirvió" },
-    "s02.cp": {
-      en: "One class decides approvals. The rest of the code never knows whether something is approved automatically or by a person: it asks the policy and moves on. When human review arrived I swapped that implementation and nothing else.",
-      es: "Una sola clase decide las aprobaciones. El resto del código nunca sabe si algo se aprueba automático o lo aprueba una persona: le pregunta a la política y sigue. Cuando entró la revisión humana cambié esa implementación y listo."
-    },
     "s02.p2": {
-      en: "File storage goes in through an interface. On my machine I ran an S3-compatible store in Docker; in the cloud it's the real service. Three config properties change and the code stays put. In the database I keep the file's key, never the bytes.",
-      es: "El almacenamiento de archivos entra por una interfaz. En mi máquina levantaba un storage compatible con S3 en Docker; en la nube es el servicio real. Cambian tres propiedades de configuración y el código queda igual. En la base guardo la clave del archivo, nunca el binario."
+      en: "File storage goes in through one interface. In production the files live in <b>Amazon S3</b>; on my machine I run <b>MinIO</b> in Docker against that same interface. Three config properties change and the code stays put. In the database I keep the file's key, never the bytes.",
+      es: "El almacenamiento de archivos entra por una sola interfaz. En producción los archivos viven en <b>Amazon S3</b>; en mi máquina levanto <b>MinIO</b> en Docker contra esa misma interfaz. Cambian tres propiedades de configuración y el código queda igual. En la base guardo la clave del archivo, nunca el binario."
     },
     "s02.h3b": { en: "The sheet I fill in before deploying", es: "La planilla que lleno antes de subir" },
     "s02.p3": {
@@ -200,14 +195,14 @@
       en: "controllers · DTOs · errors. no database here",
       es: "controllers · DTOs · errores. no toca la base"
     },
-    "diag2.app": { en: "use cases · rules · approval policy", es: "casos de uso · reglas · política de aprobación" },
+    "diag2.app": { en: "use cases · business rules", es: "casos de uso · reglas de negocio" },
     "diag2.infra": { en: "persistence · adapters · configuration", es: "persistencia · adaptadores · configuración" },
     "diag2.adentro": { en: "Depends inward", es: "Depende hacia adentro" },
     "diag2.interfaz": { en: "storage interface", es: "interfaz de almacenamiento" },
     "diag2.unasola": { en: "one only, the implementation changes", es: "una sola, la implementación cambia" },
     "diag2.local": { en: "on my machine", es: "en mi máquina" },
-    "diag2.nube": { en: "in the cloud", es: "en la nube" },
-    "diag2.real": { en: "the real service", es: "servicio real" },
+    "diag2.nube": { en: "in production", es: "en producción" },
+    "diag2.real": { en: "Amazon S3", es: "Amazon S3" },
     "diag2.tres": { en: "3 config properties", es: "3 propiedades de config" },
     "diag2.nocambia": { en: "the code doesn't change between them", es: "el código no cambia entre una y otra" },
     "diag2.cap": {
@@ -368,7 +363,7 @@
     "s05.h5l2": { en: "Integration with real containers", es: "Integración con contenedores reales" },
     "s05.h5l3": { en: "Full flow, end to end", es: "Flujo completo, de punta a punta" },
     "s05.h6": { en: "Operations", es: "Operación" },
-    "s05.h6l1": { en: "Queues · asynchronous work", es: "Colas · trabajo asincrónico" },
+    "s05.h6l1": { en: "Message queues · asynchronous work", es: "Colas de mensajes · trabajo asincrónico" },
     "s05.h6l2": { en: "Roles · auditing", es: "Roles · auditoría" },
     "s05.h6l3": { en: "Decisions written down", es: "Decisiones escritas" },
 
@@ -427,5 +422,24 @@
       es: "Enrique Chyrnia · Backend · APIs · Infraestructura"
     },
     "footer.back": { en: "← Back to home", es: "← Volver al inicio" }
+    ,
+    /* ── arquitectura distribuida (frente 1) ── */
+    "s02.h3c": { en: "How the services are laid out", es: "Cómo están repartidos los servicios" },
+    "s02.b1t": { en: "Seven services, one door", es: "Siete servicios, una sola puerta" },
+    "s02.b1s": { en: "Seven backend services, each running as its own container task and owning its database — all on a single managed instance, so the isolation doesn't multiply the bill. Client, provider and staff apps come in through one gateway that checks the token and routes.", es: "Siete servicios de backend, cada uno corriendo como su propia tarea de contenedor y dueño de su base — todas sobre una sola instancia administrada, así el aislamiento no multiplica la factura. Las apps de cliente, prestador y staff entran por una única puerta que verifica el token y reparte." },
+    "s02.b2t": { en: "One role per service", es: "Un rol por servicio" },
+    "s02.b2s": { en: "Every service assumes its own cloud role with only the permissions it needs: most touch nothing outside their own data, and only the one that runs document checks reaches the vision and OCR services. If one is compromised, the blast radius stays inside it.", es: "Cada servicio asume su propio rol en la nube con los permisos justos: la mayoría no toca nada fuera de sus datos, y solo el que corre las verificaciones de documentos llega a los servicios de visión y OCR. Si uno se compromete, el daño queda adentro de ese." },
+    "s02.b3t": { en: "No keys in the repository", es: "Ninguna clave en el repositorio" },
+    "s02.b3s": { en: "Secrets live in a managed secrets store and each task gets temporary credentials at runtime. Configuration comes from the environment, so the same image runs in every environment without a rebuild.", es: "Los secretos viven en un gestor administrado y cada tarea recibe credenciales temporales en tiempo de ejecución. La configuración entra por el entorno, así la misma imagen corre en todos lados sin reconstruirse." },
+    "s02.b4t": { en: "Two regions, on purpose", es: "Dos regiones, a propósito" },
+    "s02.b4s": { en: "The system runs in the cloud region closest to its users. Only the document-and-face checks cross to a second region, because the managed services they need aren't offered in the first one — about 150 ms round trip, paid by that call alone and not by the rest of the platform.", es: "El sistema corre en la región de nube más cercana a sus usuarios. Solo las verificaciones de documento y rostro cruzan a una segunda región, porque los servicios administrados que necesitan no existen en la primera — unos 150 ms de ida y vuelta, que paga esa llamada sola y no el resto de la plataforma." },
+    "s02.co2l": { en: "Matching by distance, and a price that stops moving", es: "Emparejar por distancia, y un precio que deja de moverse" },
+    "s02.co2p": { en: "One of the services matches requests to nearby providers using geospatial queries in the database, and offers the job in waves: small batches, ordered by a scoring rule, each with a deadline to accept. When a request is confirmed the price, tax and commission are frozen into an immutable snapshot — a rate change tomorrow never rewrites what was already agreed. I took part in defining that structure and its flow.", es: "Uno de los servicios empareja los pedidos con prestadores cercanos usando consultas geoespaciales en la base, y ofrece el trabajo por oleadas: grupos chicos, ordenados por una regla de puntaje, cada uno con un plazo para aceptar. Cuando el pedido se confirma, el precio, el impuesto y la comisión quedan congelados en una copia inmutable — que mañana cambie una tarifa nunca reescribe lo ya acordado. Participé en la definición de esa estructura y de su flujo." },
+    "s05.h2l4": { en: "Geospatial queries", es: "Consultas geoespaciales" },
+    "s05.h3l4": { en: "Container tasks · one role each", es: "Tareas de contenedor · un rol cada una" },
+    "s05.h3l5": { en: "Managed secrets · temporary credentials", es: "Secretos administrados · credenciales temporales" },
+    "s05.h4l4": { en: "Federated identity · staff tokens", es: "Identidad federada · tokens de staff" },
+    "s05.h4l5": { en: "Payments behind swappable adapters", es: "Pagos detrás de adaptadores intercambiables" }
+
   });
 })();

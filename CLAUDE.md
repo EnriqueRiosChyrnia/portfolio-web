@@ -43,6 +43,7 @@ portfolio-web/
 ├── fil-grama-report.html               Caso de estudio Fil-Grama (~760 líneas, la página más completa)
 ├── experiencia-backend-plataforma.html Experiencia laboral anonimizada (~450 líneas)
 ├── ryguasu.html                        Caso de estudio backend Ryguasu (fichas amenaza→defensa, ver §6.4)
+├── emurv.html                          Caso de estudio EmuRV — emulador RISC-V de tesis (~700 líneas, ver §6.5)
 ├── assets/
 │   ├── og-card.jpg                     Imagen OG compartida por todas las páginas (1200×630)
 │   ├── i18n/
@@ -50,11 +51,15 @@ portfolio-web/
 │   │   ├── index.dict.js               Diccionario de index.html
 │   │   ├── experiencia.dict.js         Diccionario de experiencia-backend-plataforma.html
 │   │   ├── fil-grama-report.dict.js    Diccionario de fil-grama-report.html (incluye SITE_SCREENS_I18N)
-│   │   └── ryguasu.dict.js             Diccionario de ryguasu.html
+│   │   ├── ryguasu.dict.js             Diccionario de ryguasu.html
+│   │   └── emurv.dict.js               Diccionario de emurv.html (292 claves)
 │   ├── filgrama/                       Capturas reales de Fil-Grama (jpg)
 │   │   └── diseno/                     Capturas de la fase de diseño (wireframes, hi-fi)
-│   └── ryguasu/
-│       └── pos-almacen-san-roque-2x.png  Captura del POS (foto "adjunta con cinta" + lightbox)
+│   ├── ryguasu/
+│   │   └── pos-almacen-san-roque-2x.png  Captura del POS (foto "adjunta con cinta" + lightbox)
+│   └── emurv/
+│       ├── emurv-demo.html             Demo interactiva embebida en iframe (~500 KB, bundle autocontenido)
+│       └── *.jpg                       10 capturas de la app (temas y modales), montadas como "pantallas"
 ├── handoff/                            Handoff del rediseño de ryguasu.html (referencia visual + VOZ.md)
 ├── uploads/Foto_1.JPG                  Retrato del hero en index
 └── Diseño Fil-Grama/                   Mocks interactivos .dc.html (se abren en el modal del tour)
@@ -74,7 +79,15 @@ portfolio-web/
 
 ### 3.1 Paleta de colores exacta
 
-Variables `:root` (idénticas en todas las páginas):
+**Cada página puede tener su propia paleta dentro del mismo chasis.** `index.html` y
+`ryguasu.html` usan la paleta base de abajo; `fil-grama-report.html` tiene la suya (papel frío
+`#F4F7FB`, escritorio `#16222F`, acento azul `#1E66BC`, más Palatino y Gill Sans);
+`emurv.html` mantiene el papel crema pero cambia el escritorio a `#2b2733`, la topbar a `#1c1926`
+y suma el acento violeta `--acc:oklch(0.44 0.18 292)` con su banda `--acc-bar:rgba(96,64,196,.115)`.
+Lo que **no** cambia nunca: la grilla de 26px, las tiras tractoras, las perforaciones, el
+`jobhead`, los `.pgh`, el footer `END OF JOB`, la topbar y el i18n.
+
+Variables `:root` de la paleta base (index, ryguasu):
 
 ```css
 --desk:#43463e;                 /* escritorio oscuro detrás del papel */
@@ -113,8 +126,9 @@ azul de secciones alternas `rgba(90,115,150,.11)`, fondo rojo suave de cajas de 
   punteada horizontal que se extiende hasta dentro de las tiras
   (`left:calc(-1 * var(--stripw))`) + sombra tenue debajo.
 - **`section.alt-blue`** = hoja alternativa con bandas azules en vez de verdes. Usa márgenes
-  negativos `-54px` para sangrar a todo el ancho.
-  **Convención: las secciones alternan — impares normales (verde), pares `alt-blue`.**
+  negativos `-54px` para sangrar a todo el ancho. En `emurv.html` la variante se llama
+  **`section.alt-violet`** y usa `--acc-bar` (violeta): mismo mecanismo, otro color.
+  **Convención: las secciones alternan — impares normales (verde), pares `alt-blue`/`alt-violet`.**
 - **`.stamp`** = sello de goma: `border:3px double currentColor`, mayúsculas con tracking amplio,
   `transform:rotate(-5deg)`, variantes `.red/.amber/.green`. En el hero se posiciona absoluto
   (`.banner .stamp.hero`, rotado +7°, oculto bajo 760px). Dentro de secciones va en un
@@ -170,6 +184,20 @@ modificarlo.** Este script es lo que produce el "encuadre perfecto del texto" co
 | `.tour-grid` + `.tcard` + modal | Recorrido interactivo de pantallas — solo fil-grama (ver §6.3) |
 | `.job` + `.jhead/.jco/.jrole/.jstamp` + `.jgo` | Card de proyecto/trabajo — solo index |
 | `.eoj` | Footer `*** END OF JOB ***`: `.stars`, h3 Contact, `.mail`, nota `.small`, `.foot-row` con `© <span id="yr">` |
+
+Componentes **exclusivos de `emurv.html`** (el "lenguaje de listado de máquina", ver §6.5):
+
+| Clase | Qué es |
+|---|---|
+| `.listing` | Listado de ensamblado: grid `104px 104px 1fr` (dirección · palabra · fuente), `white-space:nowrap` y `min-width:680px` con `overflow-x:auto` — un listado no reacomoda líneas, scrollea. `.lrow.pc` = línea por ejecutarse (fondo violeta + barra izquierda); `.lrow.bp` = breakpoint (punto rojo con `::before`); `.lfoot` = pie con el resumen del ensamblado |
+| `.regdump` | Volcado de registros: grid `120px 132px 132px 1fr`, `.rrow.on` + `.chg` para el que cambió en el último paso. Comparte `.lfoot` |
+| `.mmap` | Mapa de memoria: grid `132px 148px 1fr`, direcciones en `--acc` |
+| `.verd` | Tabla de veredicto de compliance: grid `1fr 84px 84px 92px 120px`, `.vr.tot` con doble regla arriba, marcas `.mk.ok` `[ PASS ]`/`[ MATCH ]` y `.mk.ex` `[ EXCL ]` |
+| `.btab` | Tabla de benchmark: grid `1fr 108px×4`, `.me` resalta la columna de EmuRV |
+| `.chart` | Marco del gráfico SVG de rendimiento (barras de rango en escala logarítmica) |
+| `.diagbox` | Diagnóstico del ensamblador tal cual sale por stderr: marco rojo, `<pre>` preformateado |
+| `.screen` + `.shot` + `.screens` | Captura montada como "pantalla oscura" sobre el papel: marco `#1e2227` con barra de título (`.sbar`, `.sdot`, `.sname`) y caption en papel debajo. `.shot.wide` ocupa las dos columnas |
+| `.demowrap` + `.demobar` + `.dbtn` | Marco a sangre (`margin:0 -54px`) para el iframe de la demo interactiva, con barra oscura y botón "abrir a pantalla completa" |
 
 ### 3.6 Responsive y print
 
@@ -317,11 +345,16 @@ cuando es lo normal (backend, POS, outbox, spec) y se traducen cuando existe té
 Secciones: Banner (con retrato `uploads/Foto_1.JPG`) → `#perfil` (01 Perfil) → `#stack`
 (02 Stack, alt-blue, grid `.inv`) → `#experiencia` (03 Experiencia, card `.job` que linkea a
 experiencia-backend-plataforma.html) → `#proyectos-propios` (04 Proyectos propios, alt-blue,
-**dos cards `.job`**: Fil-Grama [claves `s04.*`, stamp ámbar "In development"] y Ryguasu
-[claves `s04b.*`, stamp verde "Backend in production"]) → footer.
+**tres cards `.job`**: Fil-Grama [claves `s04.*`, stamp ámbar "In development"], Ryguasu
+[claves `s04b.*`, stamp verde "Backend in production"] y EmuRV [claves `s04c.*`, stamp verde
+"Compliance verified"]) → footer.
 
 **Para registrar un proyecto nuevo:** agregar otra `.job` en `#proyectos-propios` (se apilan con
-`margin-top:26px`) + claves `s04c.*` en `index.dict.js`, siguiendo el patrón de `s04b.*`.
+`margin-top:26px`) + claves `s04d.*` en `index.dict.js`, siguiendo el patrón de `s04c.*`, y sumar
+el proyecto a `meta.ogDescription`/`meta.twitterDescription`, que enumeran los productos propios.
+
+> Nota: `index.dict.js` arrastra una clave huérfana `s04.note` que el HTML ya no usa (viene de
+> antes). Si aparece como "unused" en la validación de §5.2, es esperado.
 
 ### 6.2 `experiencia-backend-plataforma.html` — Experiencia laboral
 
@@ -418,13 +451,93 @@ producto, julio 2026 — no exagerar ni redondear hacia arriba):
 internas, esquema SQL literal, datos de clientes, nombres del equipo. El footer ya declara esta
 política.
 
+### 6.5 `emurv.html` — Caso de estudio EmuRV (trabajo final de grado)
+
+Proyecto propio de tesis (repo del producto: `~/Documents/UNI/Tesis/EmuRV-TFG`, **privado** mientras
+la tesis está en evaluación). **Entorno educativo de escritorio para ensamblador RISC-V**
+(RV32IMAFDC, conmutable a RV64IM), hecho para reemplazar a emu8086 en Microprocesadores de la FIUNI.
+Rust + Tauri 2 sobre Unicorn Engine, frontend TypeScript + CodeMirror 6. Autoría **completa** de
+Enrique (núcleo, ensamblador, dispositivos, CLI, servidor GDB, frontend y suites de pruebas).
+
+**Identidad propia (decisión del autor, julio 2026):** "papel + lenguaje de listado de máquina" en
+dosis alta. Mantiene el chasis del sitio y le suma: bandas **violeta** en las hojas pares
+(`.alt-violet`), escritorio y topbar violáceos, el **wordmark real bi-tono** en el hero (SVG inline,
+"Emu" en `--acc` y "RV" en `--ink`), los componentes de salida de máquina de §3.5 y las capturas
+montadas como **pantallas oscuras** sobre el papel. El encaje conceptual: los listados de
+ensamblador se imprimían literalmente en este papel.
+
+Estructura (`EMURV.PRT`, 9 hojas):
+
+| id / bloque | alt-violet | Contenido |
+|---|---|---|
+| banner | — | JOB EMURV · wordmark + sello violeta "Verificado contra el modelo oficial" · factline: 78/78, 72/72, 440 tests, 28–120× RARS |
+
+> **Regla de jerga (decisión del autor):** arriba de la hoja 06 no se nombra a **Sail** ni se habla
+> de *firmas*: el hero, la factline, la tarjeta del home y los metas dicen "modelo (de referencia)
+> oficial de RISC-V" y "resultados idénticos". El término exacto aparece recién en `s06.lede`, donde
+> se explica qué es, y de ahí en adelante (`s06.v2cap`, `s09.h5.li4`). Si agregás contenido nuevo,
+> respetá esa frontera.
+| `#origen` (01) | no | emu8086 vs RISC-V; el hueco de mercado (RARS/Ripes/CPUlator); "leé esta página como backend" |
+| `#demo` (02) | sí | **Demo interactiva** en iframe a sangre (`assets/emurv/emurv-demo.html`) |
+| `#maquina` (03) | no | Tauri/Rust/Unicorn, diagrama SVG, `source_map`, el bug del `loop: j loop` y el tramo adaptativo · `.listing` + `.regdump` |
+| `#ensamblador` (04) | sí | Keystone no tiene RISC-V → ensamblador propio · `.diagbox` con errores reales · oráculo contra GNU `as` · ELF in/out |
+| `#dispositivos` (05) | no | `.mmap` (mapa de memoria RARS-compatible) · polling y el límite de Unicorn · W^X · Tetris como prueba de aceptación |
+| `#validacion` (06) | sí | **La hoja principal:** dos `.verd` (riscv-tests 78/78 · RISCOF vs Sail 72/72), exclusiones con causa raíz, el hallazgo `fmin` de Unicorn, y el error de conteo de tests que yo mismo arrastraba |
+| `#rendimiento` (07) | no | `.chart` (barras de rango, escala log) + `.btab` · lectura honesta · el episodio de las tres cifras con n=1 · limitaciones declaradas |
+| `#interfaz` (08) | sí | 10 capturas en `.screens` · temas y contraste AA por test · la decisión de idioma declarada |
+| `#estado` (09) | no | `.inv` (stack) + `.status` de 3 columnas: hecho / construido-sin-verificar / falta |
+
+Nav de la topbar: 8 links (demo, maquina, ensamblador, dispositivos, validacion, rendimiento,
+interfaz, estado). El script al pie es sólo el snap a grilla 26px + el hook `SiteI18nRender` que lo
+vuelve a correr al cambiar de idioma. **Un solo SVG con markers** (`fl`), más el SVG del gráfico
+(sin markers).
+
+**Sobre la demo (`assets/emurv/emurv-demo.html`):** es un bundle autocontenido (~500 KB) hecho en
+Claude Design; un intérprete JS reconstruye la interfaz y ejecuta **sólo los tres programas de las
+pestañas** (hola-mundo, suma-interactiva, sprites). **El editor es de solo lectura** y el resto del
+catálogo aparece marcado «solo en la app»; la demo pide ≥1000 px de ancho. La hoja 02 dice todo eso
+explícitamente — **no prometer más que eso** (verificado en el navegador: ensambla y da
+`a0=0x10010000`, `a7=4` tras dos pasos, igual que el `.regdump` de la hoja 03).
+
+**Hechos verdaderos de EmuRV** (verificados contra `EmuRV-TFG/docs/`, corte 2026-07-25 — no inflar):
+
+- RV32IMAFDC + RV64IM conmutable; ensamblador propio (Keystone no soporta RISC-V: verificado en los
+  headers de 0.9.2, el enum `ks_arch` no tiene `KS_ARCH_RISCV`); desensamblador propio; ELF32
+  export/import; variante `--reubicable`.
+- **riscv-tests oficiales (RT-2, 2026-07-22): 82 vendorizados, 78 ejecutables, 78 pasan, 0 fallan.**
+  4 exclusiones con causa raíz: `fence_i` y `rvc` (W^X), `fmin` ×2 (defecto de Unicorn 2.1.5, que
+  sigue sobre QEMU 5.0.1 — semántica IEEE 754-2008; QEMU lo arregló en la 6.0).
+- **RISCOF vs Sail 0.13 (RT-3, 2026-07-22): 74 tests, 72 match, 2 mismatch por diseño**
+  (`cebreak-01` porque `ebreak` es del depurador, `Fencei` por W^X). I 38/38, M 8/8, C 26/27,
+  Zifencei 0/1.
+- **Benchmark (RT-4, 2026-07-22, Apple M4 Pro, mediana de 5):** aritmética 718,4 · memoria 257,1 ·
+  llamadas 299,4 · mixto 160,2 M instr/s. QEMU 3289,5/4342,1/1090,5/4805,8 · Spike
+  881,8/992,0/982,1/992,0 · RARS 6,0/5,6/5,8/5,7. → 28–120× RARS, 81 % de Spike en ALU pura.
+- **Tetris:** mediana 811 FPS, rango 799–838, n=5 (remedido 2026-07-25) contra ~30 Hz que consume la
+  UI → ~27× de margen. Las tres cifras históricas (835/797/832) eran corridas con n=1: no hubo
+  regresión, hubo una métrica mal reportada.
+- **Tests: 271 Rust + 50 CLI + 119 UI = 440**, cero fallos, clippy limpio (+8 `#[ignore]`). El «10
+  CLI» que circulaba estaba mal: contaba un solo binario.
+- Mapa de memoria RARS-compatible: `.text` 0x00400000 (R+X), `.data` 0x10010000, heap 0x10040000,
+  sp 0x7FFFFFF0, framebuffer 0x90000000, paleta 0x90020000, vsync 0x90030000, teclado 0xFFFF0000/4.
+- CLI headless con exit codes semánticos, servidor GDB (protocolo gdbserver), CI GitHub Actions
+  4 jobs en verde con compuerta de peso del bundle, 32 puntos de roadmap, 10 lecciones, 15 ejemplos,
+  5 temas + tema del usuario con contraste AA verificado por test.
+- **Pendiente de verdad:** el estudio de usabilidad SUS con estudiantes (materiales listos, falta
+  aval del tutor y participantes), el instalador Windows en máquina real, Linux, interrupciones de
+  hardware (CLINT/PLIC — Unicorn no las expone), CoreMark, firma/notarización.
+
+**Qué NO exponer:** código fuente del repo, y nada que contradiga el estado real. La página declara
+que el repo es privado y que cada cifra sale de un documento de resultados con su fecha y condición
+de medición.
+
 ---
 
 ## 7. Diagramas SVG (receta para agregar más)
 
 Los diagramas son **SVG inline** dentro de `<div class="panel">`, dibujados a mano con cajas y
-flechas. Referencias: 3 en fil-grama (`#arquitectura`). (ryguasu.html tuvo 2 hasta el rediseño
-de 2026-07; la versión actual no lleva diagramas.)
+flechas. Referencias: 3 en fil-grama (`#arquitectura`) y 1 en emurv (`#maquina`, markers `fl`).
+(ryguasu.html tuvo 2 hasta el rediseño de 2026-07; la versión actual no lleva diagramas.)
 
 Reglas:
 

@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20fill%3D%27%23262a20%27%2F%3E%3Ctext%20x%3D%2732%27%20y%3D%2744%27%20font-family%3D%27Courier%20New%2CCourier%2Cmonospace%27%20font-weight%3D%27700%27%20font-size%3D%2730%27%20fill%3D%27%23f7f4e8%27%20text-anchor%3D%27middle%27%3EEC%3C%2Ftext%3E%3C%2Fsvg%3E">
+<title data-i18n-meta="meta.title">EmuRV — RISC-V Emulator (Thesis) · Enrique Chyrnia</title>
+<meta name="description" content="EmuRV: a RISC-V assembly teaching environment built in Rust + Tauri on Unicorn Engine. Own assembler, MMIO devices, GDB stub — and 78/78 official riscv-tests plus 72/72 results identical to RISC-V’s official reference model." data-i18n-meta="meta.description">
+<link rel="canonical" href="https://portfolio.fil-grama.com/emurv.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Enrique Chyrnia — Portfolio">
+<meta property="og:title" content="EmuRV — RISC-V Emulator (Thesis) · Enrique Chyrnia" data-i18n-meta="meta.ogTitle">
+<meta property="og:description" content="A RISC-V teaching emulator held to a production correctness standard: 78/78 official riscv-tests, 72/72 results identical to RISC-V’s official model, 28–120× RARS. Rust, Tauri, Unicorn Engine. Runnable demo in the browser." data-i18n-meta="meta.ogDescription">
+<meta property="og:url" content="https://portfolio.fil-grama.com/emurv.html">
+<meta property="og:image" content="https://portfolio.fil-grama.com/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Enrique Chyrnia — Backend · APIs &amp; Integration · Cloud systems" data-i18n-meta="meta.ogImageAlt">
+<meta property="og:locale" content="en_US" data-i18n-meta="meta.ogLocale">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EmuRV — RISC-V Emulator (Thesis) · Enrique Chyrnia" data-i18n-meta="meta.twitterTitle">
+<meta name="twitter:description" content="A RISC-V teaching emulator held to a production correctness standard: 78/78 official riscv-tests, 72/72 results identical to RISC-V’s official model, 28–120× RARS. Rust, Tauri, Unicorn Engine. Runnable demo in the browser." data-i18n-meta="meta.twitterDescription">
+<meta name="twitter:image" content="https://portfolio.fil-grama.com/assets/og-card.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* identidad EmuRV: mismo papel del sitio, escritorio y acento violeta */
+    --desk:#2b2733; --paper:#f7f4e6; --strip:#f2efdf;
+    --ink:#262a20; --faint:#6b6e5f; --rule:rgba(38,42,32,.28); --rule-soft:rgba(38,42,32,.16);
+    --bar:rgba(96,138,89,.075);
+    --ok:oklch(0.5 0.11 150); --warn:oklch(0.55 0.12 65); --red:oklch(0.52 0.13 28);
+    --acc:oklch(0.44 0.18 292); --acc-bar:rgba(96,64,196,.115); --acc-soft:rgba(96,64,196,.1);
+    --screen:#1e2227; --screen-bar:#171a1f; --screen-rule:#3a424d; --screen-txt:#8b97a5;
+    --stripw:48px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;color:var(--ink);
+    font-family:"IBM Plex Mono","Courier New",monospace;
+    font-size:14.5px;line-height:26px;
+    background:var(--desk);
+    background-image:radial-gradient(1400px 800px at 50% -10%,rgba(255,255,255,.055),transparent 60%);
+    padding:0 14px 72px;min-height:100vh}
+  p{margin:26px 0}
+  a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--rule)}
+  a:hover{color:var(--acc);text-decoration-color:var(--acc)}
+  ::selection{background:var(--acc);color:var(--paper)}
+
+  .topbar{position:sticky;top:0;z-index:30;background:#1c1926;border-bottom:1px solid rgba(247,244,230,.14);
+    margin:0 -14px 26px;padding:0 14px}
+  .topbar .twrap{max-width:1220px;margin:0 auto;display:flex;align-items:center;gap:22px;height:50px;
+    color:#cfd3c2;font-size:11.5px;letter-spacing:.08em}
+  .topbar .tid{font-weight:700;color:#f7f4e6;white-space:nowrap}
+  .topbar .tid i{font-style:normal;color:#a99ade}
+  nav.links{display:flex;gap:16px;flex:1;overflow:hidden}
+  nav.links a{color:#a9ad9b;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+  nav.links a:hover{color:#f7f4e6}
+  .tbtn{font:inherit;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+    color:#f7f4e6;background:transparent;border:1px solid rgba(247,244,230,.35);padding:5px 12px;
+    text-decoration:none;white-space:nowrap}
+  .tbtn:hover{background:#f7f4e6;color:#1c1926;text-decoration:none}
+  .tbtn.lang-toggle{font-weight:700;letter-spacing:.05em}
+  @media(max-width:1040px){nav.links{display:none}}
+  @media(max-width:640px){
+    .twrap{gap:6px}
+    .topbar .tid{overflow:hidden;text-overflow:ellipsis;max-width:26vw}
+    .tbtn{padding:4px 7px;font-size:10.5px}
+  }
+
+  /* ---- papel continuo ---- */
+  .feed{position:relative;max-width:1220px;margin:0 auto;background:var(--paper);
+    box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 34px 60px -20px rgba(8,6,14,.55),0 4px 14px rgba(8,6,14,.3)}
+  .strip{position:absolute;top:0;bottom:0;width:var(--stripw);background:var(--strip);z-index:2;
+    background-image:radial-gradient(circle at 50% 50%,var(--desk) 6px,rgba(12,10,18,.35) 6.5px,rgba(255,255,255,.4) 7.5px,transparent 8.5px);
+    background-size:var(--stripw) 56px;background-position:0 14px}
+  .strip.l{left:0;border-right:1px dashed var(--rule)}
+  .strip.r{right:0;border-left:1px dashed var(--rule)}
+  .sheet{position:relative;margin:0 var(--stripw);padding:0 54px 8px;
+    background-image:repeating-linear-gradient(180deg,transparent 0 78px,var(--bar) 78px 156px)}
+  @media(max-width:860px){
+    :root{--stripw:30px}
+    .strip{background-size:var(--stripw) 48px;
+      background-image:radial-gradient(circle at 50% 50%,var(--desk) 4.5px,rgba(12,10,18,.35) 5px,rgba(255,255,255,.4) 6px,transparent 7px)}
+    .sheet{padding:0 22px 8px}
+  }
+
+  /* ---- perforación entre hojas ---- */
+  .tear{position:relative;height:52px;margin:0 -54px}
+  @media(max-width:860px){.tear{margin:0 -22px}}
+  .tear::before{content:"";position:absolute;left:calc(-1 * var(--stripw));right:calc(-1 * var(--stripw));top:50%;height:1px;
+    background:repeating-linear-gradient(90deg,var(--rule) 0 9px,transparent 9px 16px)}
+  .tear::after{content:"";position:absolute;left:calc(-1 * var(--stripw));right:calc(-1 * var(--stripw));top:calc(50% + 1px);height:14px;
+    background:linear-gradient(180deg,rgba(38,42,32,.05),transparent)}
+
+  /* cabecera de hoja */
+  .pgh{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    padding:0 0 12px;margin:26px 0;border-bottom:1px solid var(--rule-soft);
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .pgh b{font-weight:600;color:var(--ink)}
+
+  section{padding:0 0 52px;scroll-margin-top:64px}
+  .title{display:inline-block;background:var(--ink);color:var(--paper);padding:0 14px;
+    font-size:clamp(17px,2.4vw,22px);line-height:26px;font-weight:700;margin:0 0 26px;
+    letter-spacing:.04em;text-transform:uppercase}
+  .title .tn{color:rgba(247,244,230,.55);font-weight:500;margin-right:16px}
+  /* hojas pares: banda violeta — la identidad de EmuRV dentro del papel del sitio */
+  section.alt-violet{background-color:var(--paper);margin-left:-54px;margin-right:-54px;padding-left:54px;padding-right:54px;
+    background-image:repeating-linear-gradient(180deg,transparent 0 78px,var(--acc-bar) 78px 156px)}
+  @media(max-width:860px){section.alt-violet{margin-left:-22px;margin-right:-22px;padding-left:22px;padding-right:22px}}
+
+  .lede{max-width:72ch;margin:0}
+  .note{max-width:70ch;font-size:13.5px;color:#3c4033}
+  .small{font-size:12.5px;color:var(--faint)}
+  b,strong{font-weight:700}
+  b.ink{color:var(--ink)}
+  b.soft{color:#3c4033}
+  b.tacc{color:var(--acc)}
+  b.tred{color:var(--red)}
+  b.tok{color:var(--ok)}
+  code{font-size:.95em;background:rgba(38,42,32,.08);padding:0 5px}
+  .hl{background:linear-gradient(180deg,transparent 8%,rgba(232,198,86,.5) 8%,rgba(232,198,86,.5) 88%,transparent 88%);
+    padding:0 3px}
+
+  .two{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
+  @media(max-width:820px){.two{grid-template-columns:1fr;gap:20px}}
+  .h3{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:52px 0 0}
+  .h3::before{content:"— "}
+
+  /* ---- sellos ---- */
+  .stamp{display:inline-block;border:3px double currentColor;font-weight:700;text-transform:uppercase;white-space:nowrap}
+  .stamp.acc{color:var(--acc)}
+  .stamp.green{color:var(--ok)}
+  .stamp.hero{padding:2px 14px;font-size:12.5px;letter-spacing:.18em;transform:rotate(-5deg);text-align:center;white-space:normal}
+  .stamprow{display:flex;justify-content:flex-end;margin-top:26px}
+  .stamprow .stamp{padding:1px 14px;font-size:12px;letter-spacing:.18em;transform:rotate(-3deg)}
+
+  /* ---- hero banner ---- */
+  .banner{padding:52px 0;position:relative}
+  .jobhead{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+    border-top:3px double var(--ink);border-bottom:3px double var(--ink);padding:23px 0 12px;margin-bottom:26px;
+    display:flex;flex-wrap:wrap;gap:6px 34px}
+  .jobhead b{color:var(--ink);font-weight:600}
+  .hero-grid{display:grid;grid-template-columns:1fr 230px;gap:44px;align-items:start}
+  @media(max-width:820px){.hero-grid{grid-template-columns:1fr;gap:26px}}
+  .bname{font-size:clamp(44px,8vw,92px);line-height:.98;font-weight:700;letter-spacing:-.01em;margin:0;
+    text-shadow:1.5px 0 0 currentColor;text-transform:uppercase;width:fit-content}
+  .brole{margin:12px 0 0;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .blead{margin:26px 0 0;max-width:74ch;font-size:clamp(15px,1.6vw,17px)}
+  .rol{margin-top:26px;border-left:3px solid var(--acc);padding:0 0 0 22px;max-width:76ch}
+  .rol b.rl{display:block;text-transform:uppercase;font-size:12px;letter-spacing:.12em}
+  .rol p{margin:0;font-size:13.5px;color:#3c4033}
+  .hero-side{display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:10px}
+  .hero-side .wm{width:100%;max-width:214px;height:auto;flex:none;transform:rotate(-3deg)}
+  .factline{margin-top:26px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:25px 0 12px;display:flex;flex-wrap:wrap;gap:8px 0;font-size:13px;letter-spacing:.04em}
+  .factline span{white-space:nowrap}
+  .factline b{font-weight:700}
+  .factline i{font-style:normal;color:var(--faint);padding:0 14px}
+  @media(max-width:640px){.factline{flex-direction:column;gap:2px 0}.factline span{white-space:normal}.factline i{display:none}}
+
+  /* ---- caja enmarcada ---- */
+  .box{border:1.5px solid var(--ink);padding:20px 22px;background:#faf8ee}
+  .box + .box{margin-top:26px}
+  .box b.bt{display:block;text-transform:uppercase;font-size:12.5px;letter-spacing:.08em;margin-bottom:4px}
+  .box span{font-size:13.5px;color:#3c4033}
+  .box.acc{border-color:var(--acc)}
+  .box.acc b.bt{color:var(--acc)}
+
+  /* ---- panel de diagrama ---- */
+  .panel{border:1.5px solid var(--ink);background:#faf8ee;padding:18px;margin-top:26px}
+  .panel .cap{font-size:12px;color:var(--faint);margin:12px 2px 0}
+  .diagram{width:100%;height:auto;display:block}
+  .diagram text{fill:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500}
+  .diagram .t-sm{font-size:11.5px;fill:#3c4033}
+  .diagram .t-w{font-weight:700}
+  .diagram .lbl{fill:var(--faint);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .flow{stroke:var(--ink);stroke-width:1.5;fill:none;marker-end:url(#fl)}
+
+  /* ============ COMPONENTES PROPIOS DE EMURV ============ */
+
+  /* listado de ensamblado: dirección · palabra · fuente */
+  .listing{border:1.5px solid var(--ink);background:#faf8ee;margin-top:26px;overflow-x:auto}
+  /* un listado de máquina no reacomoda líneas: si no entra, scrollea — como el papel real */
+  .listing .lhead,.listing .lrow{display:grid;grid-template-columns:104px 104px 1fr;gap:0 20px;
+    padding:0 18px;min-width:680px;white-space:nowrap}
+  .listing .lhead{padding-top:12px;padding-bottom:12px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--faint);border-bottom:1px solid var(--rule)}
+  .listing .lrow{font-size:13px;line-height:26px;position:relative}
+  .listing .lrow:first-of-type{padding-top:13px}
+  .listing .lrow:last-of-type{padding-bottom:13px}
+  .listing .a{color:var(--faint)}
+  .listing .w{color:#3c4033}
+  .listing .s b{color:var(--acc)}
+  .listing .s i{font-style:normal;color:var(--faint)}
+  /* la línea por ejecutarse y el breakpoint, como en la app */
+  .listing .lrow.pc{background:var(--acc-soft);box-shadow:inset 3px 0 0 var(--acc)}
+  .listing .lrow.bp::before{content:"●";position:absolute;left:6px;color:var(--red);font-size:11px}
+  .listing .lfoot,.regdump .lfoot{padding:12px 18px;border-top:1px solid var(--rule);font-size:11.5px;color:var(--faint);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .listing .lfoot{min-width:680px}
+  .regdump .lfoot{min-width:540px}
+
+  /* volcado de registros */
+  .regdump{border:1.5px solid var(--ink);background:#faf8ee;margin-top:26px;overflow-x:auto}
+  .regdump .rhead,.regdump .rrow{display:grid;grid-template-columns:120px 132px 132px 1fr;gap:0 20px;
+    padding:0 18px;min-width:540px}
+  .regdump .rhead{padding-top:12px;padding-bottom:12px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--faint);border-bottom:1px solid var(--rule)}
+  .regdump .rrow{font-size:13px;line-height:26px}
+  .regdump .rrow:first-of-type{padding-top:13px}
+  .regdump .rrow:last-of-type{padding-bottom:13px}
+  .regdump .rn i{font-style:normal;color:var(--faint);font-size:11px}
+  .regdump .dec{color:#3c4033}
+  .regdump .chg{color:var(--acc);font-weight:700;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+  .regdump .rrow.on{background:var(--acc-soft)}
+
+  /* diagnóstico del ensamblador, tal cual sale */
+  .diagbox{border:1.5px solid var(--red);background:#f2e4de;margin-top:26px;padding:14px 18px;overflow-x:auto}
+  .diagbox pre{margin:0;font:inherit;font-size:12.5px;line-height:24px;color:#7d3325;white-space:pre;min-width:460px}
+  .diagbox pre b{color:#8f2f1c}
+  .diagbox .dcap{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);
+    margin:0 0 8px;font-weight:700}
+
+  /* mapa de memoria */
+  .mmap{margin-top:26px;overflow-x:auto}
+  .mmap .mh,.mmap .mr{display:grid;grid-template-columns:132px 148px 1fr;gap:0 20px;min-width:560px}
+  .mmap .mh{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+    padding-bottom:6px;border-bottom:1px solid var(--rule)}
+  .mmap .mr{font-size:13px;line-height:26px;border-bottom:1px dotted rgba(38,42,32,.25);padding:6px 0}
+  .mmap .mr b{color:var(--acc);font-weight:700}
+  .mmap .mr span.d{color:#3c4033;font-size:12.5px}
+
+  /* tabla de veredicto (compliance) */
+  .verd{margin-top:26px;overflow-x:auto}
+  .verd .vh,.verd .vr{display:grid;grid-template-columns:1fr 84px 84px 92px 120px;gap:0 16px;min-width:560px}
+  .verd .vh{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    padding-bottom:6px;border-bottom:1px solid var(--rule)}
+  .verd .vr{font-size:13px;line-height:26px;padding:5px 0;border-bottom:1px dotted rgba(38,42,32,.25)}
+  .verd .vr.tot{border-bottom:none;border-top:3px double var(--ink);font-weight:700;margin-top:4px}
+  .verd .n{text-align:right}
+  .verd .mk{font-weight:700;font-size:11.5px;letter-spacing:.06em;white-space:nowrap}
+  .verd .mk.ok{color:var(--ok)} .verd .mk.ex{color:var(--warn)}
+  .verd .vcap{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 10px;font-weight:700}
+
+  /* gráfico de rendimiento */
+  .chart{border:1.5px solid var(--ink);background:#faf8ee;padding:18px 18px 12px;margin-top:26px}
+  .chart svg{width:100%;height:auto;display:block}
+  .chart text{fill:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:13px}
+  .chart .cname{font-weight:700;font-size:13.5px}
+  .chart .csub{fill:var(--faint);font-size:11px;letter-spacing:.06em}
+  .chart .cval{fill:#3c4033;font-size:12px}
+  .chart .cax{fill:var(--faint);font-size:11px;letter-spacing:.08em}
+  .chart .cap{font-size:12px;color:var(--faint);margin:10px 2px 0}
+
+  /* tabla de benchmark */
+  .btab{margin-top:26px;overflow-x:auto}
+  .btab .bh,.btab .br{display:grid;grid-template-columns:1fr 108px 108px 108px 108px;gap:0 16px;min-width:600px}
+  .btab .bh{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    padding-bottom:6px;border-bottom:1px solid var(--rule)}
+  .btab .br{font-size:13px;line-height:26px;padding:5px 0;border-bottom:1px dotted rgba(38,42,32,.25)}
+  .btab .n{text-align:right}
+  .btab .me{color:var(--acc);font-weight:700}
+
+  /* pantallas montadas sobre el papel */
+  .screens{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
+  @media(max-width:820px){.screens{grid-template-columns:1fr}}
+  .shot{margin:0}
+  .shot.wide{grid-column:1/-1}
+  .screen{border:1.5px solid var(--ink);background:var(--screen);
+    box-shadow:0 10px 24px -12px rgba(20,16,32,.55)}
+  .screen .sbar{display:flex;align-items:center;gap:9px;padding:6px 12px;background:var(--screen-bar);
+    border-bottom:1px solid var(--screen-rule)}
+  .screen .sdot{width:8px;height:8px;border-radius:50%;background:var(--screen-rule);flex:none}
+  .screen .sname{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--screen-txt);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .screen img{display:block;width:100%;height:auto}
+  .shot figcaption{font-size:12.5px;color:#3c4033;margin-top:12px;line-height:24px}
+  .shot figcaption b{text-transform:uppercase;font-size:11px;letter-spacing:.08em;color:var(--ink)}
+
+  /* ---- demo embebida ---- */
+  .demowrap{margin:26px -54px 0;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);background:var(--screen)}
+  @media(max-width:860px){.demowrap{margin-left:-22px;margin-right:-22px}}
+  .demobar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 18px;background:var(--screen-bar);
+    border-bottom:1px solid var(--screen-rule)}
+  .demobar .sdot{width:8px;height:8px;border-radius:50%;background:var(--screen-rule);flex:none}
+  .demobar .dname{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--screen-txt);flex:1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dbtn{font:inherit;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:#d7dde5;background:transparent;border:1px solid var(--screen-rule);padding:4px 11px;
+    text-decoration:none;white-space:nowrap}
+  .dbtn:hover{background:#9b8cff;border-color:#9b8cff;color:#16122b;text-decoration:none}
+  .demowrap iframe{display:block;width:100%;height:780px;border:0;background:var(--screen)}
+  @media(max-width:1024px){.demowrap iframe{height:560px}}
+  /* angosto: el nombre no se recorta a una letra, pasa a su propia línea sobre el botón */
+  @media(max-width:700px){.demobar{gap:8px 12px}.demobar .sdot{display:none}
+    .demobar .dname{flex:1 1 100%;white-space:normal;overflow:visible}}
+  .demonote{font-size:12.5px;color:var(--faint);margin:14px 0 0}
+
+  /* ---- listas y estados ---- */
+  .ls{margin:26px 0 0;padding:0;list-style:none}
+  .ls li{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:0 0 25px;border-bottom:1px dotted var(--rule)}
+  .ls li + li{padding-top:25px}
+  .ls .n{color:var(--faint);font-size:12px}
+  .ls b{display:block;text-transform:uppercase;font-size:13.5px;letter-spacing:.04em}
+  .ls span.d{font-size:13.5px;color:#3c4033}
+
+  .logrow{display:flex;align-items:baseline;gap:10px;padding:0;font-size:13.5px}
+  .logrow .lbl{font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+  .logrow .dots{flex:1;border-bottom:2px dotted var(--rule);transform:translateY(-4px);min-width:30px}
+  .logrow .st{font-weight:700;white-space:nowrap}
+  /* bajo 640px el estado baja de línea y el rótulo —acá son frases largas— tiene que poder cortarse */
+  @media(max-width:640px){.logrow{flex-wrap:wrap;gap:0 10px}.logrow .dots{min-width:20px}
+    .logrow .lbl{white-space:normal}.logrow .st{width:100%}}
+  .st.ok{color:var(--ok)} .st.pend{color:var(--warn)} .st.no{color:var(--faint)}
+
+  .status{display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;margin-top:26px}
+  @media(max-width:820px){.status{grid-template-columns:1fr}}
+  .scol{border-top:3px double var(--ink);padding-top:10px}
+  .scol .sh{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .sh.ok{color:var(--ok)} .sh.mid{color:var(--warn)} .sh.no{color:var(--faint)}
+  .scol ul{margin:12px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7;color:#3c4033;
+    display:flex;flex-direction:column;gap:6px}
+
+  /* inventario técnico */
+  .inv{display:grid;grid-template-columns:repeat(3,1fr);gap:0 44px;margin-top:0}
+  @media(max-width:820px){.inv{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.inv{grid-template-columns:1fr}}
+  .inv h4{font-size:12px;text-transform:uppercase;letter-spacing:.18em;color:var(--faint);margin:26px 0 0;font-weight:400;
+    text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--rule)}
+  .inv ul{margin:0;padding:0;list-style:none;font-size:13.5px}
+  .inv li{padding:0}
+  .inv li::before{content:"· ";color:var(--faint)}
+
+  /* footer / end of job */
+  .eoj{padding:52px 0}
+  .eoj .stars{font-size:13px;letter-spacing:.3em;color:var(--faint);overflow:hidden;white-space:nowrap;margin-bottom:26px}
+  .eoj h3{font-size:22px;line-height:26px;text-transform:uppercase;margin:0;text-shadow:.6px 0 0 currentColor;letter-spacing:.02em}
+  .eoj .mail{font-size:16px;font-weight:700;display:block;margin:0;width:fit-content}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 20px;margin-top:52px;
+    padding-top:25px;border-top:1px solid var(--rule);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .foot-row a{color:var(--faint)}
+
+  @media print{
+    body{background:#fff;padding:0}
+    .topbar{display:none!important}
+    #demo{display:none!important}
+    .feed{box-shadow:none;max-width:none}
+    section{padding-bottom:28px;break-inside:avoid-page}
+    .box,.panel,.listing,.regdump,.chart,.diagbox,.shot,.verd{break-inside:avoid}
+    .screen{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="twrap">
+    <span class="tid" data-i18n="topbar.tid">EC · ENRIQUE CHYRNIA <i>/ EMURV.PRT</i></span>
+    <nav class="links">
+      <a href="#demo" data-i18n="nav.demo">Demo</a>
+      <a href="#maquina" data-i18n="nav.maquina">The machine</a>
+      <a href="#ensamblador" data-i18n="nav.ensamblador">Assembler</a>
+      <a href="#dispositivos" data-i18n="nav.dispositivos">Devices</a>
+      <a href="#validacion" data-i18n="nav.validacion">Validation</a>
+      <a href="#rendimiento" data-i18n="nav.rendimiento">Performance</a>
+      <a href="#interfaz" data-i18n="nav.interfaz">Interface</a>
+      <a href="#estado" data-i18n="nav.estado">Status</a>
+    </nav>
+    <a class="tbtn" href="index.html" data-i18n="topbar.home">← Home</a>
+    <button class="tbtn lang-toggle" id="langToggle" type="button" onclick="SiteI18n.toggle()" title="Cambiar el sitio a español" aria-label="Cambiar el sitio a español">🌐 ES</button>
+    <button class="tbtn" onclick="window.print()">PDF</button>
+  </div>
+</div>
+
+<div class="feed">
+  <div class="strip l"></div>
+  <div class="strip r"></div>
+  <div class="sheet">
+
+    <!-- ============ HERO ============ -->
+    <header class="banner" data-screen-label="Hero — EmuRV">
+      <div class="jobhead">
+        <span><b>JOB</b> EMURV</span>
+        <span><b>USER</b> E.CHYRNIA</span>
+        <span data-i18n="hero.type"><b>TYPE</b> THESIS PROTOTYPE · RISC-V EMULATOR</span>
+        <span><b data-i18n="hero.dateLabel">DATE</b> <span id="today"></span></span>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <h1 class="bname" data-snap="1">EmuRV</h1>
+          <p class="brole" data-snap="1" data-i18n="hero.brole">Rust · Tauri 2 · Unicorn Engine · RV32IMAFDC / RV64IM</p>
+          <p class="blead" data-snap="1" data-i18n="hero.blead">EmuRV is a desktop environment for learning <b>RISC-V assembly</b>: write, assemble, run or step, and watch the registers and memory change. It exists to replace emu8086 in a computer engineering degree, and its error messages are written in the student's own language. The interesting part isn't the interface — it's that a teaching tool was held to <b class="hl">the correctness standard of a production emulator</b>: the official RISC-V suites and the formal golden model of the specification.</p>
+          <div class="rol" data-snap="1">
+            <b class="rl" data-i18n="hero.rolLabel">Role · Whole system (undergraduate thesis)</b>
+            <p data-i18n="hero.rolP">Sole author: the Rust core, the assembler, the emulated devices, the CLI, the GDB stub, the frontend and the test suites. Built with AI assistance under one rule — every decision is recorded with its why, and nothing lands without me reviewing it. FIUNI, Computer Engineering.</p>
+          </div>
+        </div>
+        <div class="hero-side">
+          <svg class="wm" viewBox="0 0 337.1 114" role="img" aria-label="EmuRV wordmark" data-i18n-attr="aria-label:hero.wmAria">
+            <g transform="matrix(0.10541 0 0 -0.10541 7.7757 94.9459)">
+              <path fill="#7a5fd8" d="M97.0 0V730H522.0V641H195.0V424H487.0V338H195.0V89H522.0V0Z M657.0 0V550H741.0V475H744.0Q748.0 513 772.5 536.5Q797.0 560 835.0 560Q872.0 560 897.0 538.0Q922.0 516 933.0 479Q939.0 517 964.0 538.5Q989.0 560 1027.0 560Q1079.0 560 1111.0 520.5Q1143.0 481 1143.0 418V0H1053.0V417Q1053.0 448 1037.5 466.5Q1022.0 485 996.0 485Q970.0 485 955.0 467.0Q940.0 449 940.0 417V0H860.0V417Q860.0 448 845.0 466.5Q830.0 485 804.0 485Q778.0 485 762.5 467.0Q747.0 449 747.0 417V0Z M1499.0 -10Q1402.0 -10 1344.0 47.0Q1286.0 104 1286.0 202V550H1385.0V202Q1385.0 144 1415.5 110.5Q1446.0 77 1499.0 77Q1553.0 77 1584.0 110.5Q1615.0 144 1615.0 202V550H1714.0V202Q1714.0 104 1655.5 47.0Q1597.0 -10 1499.0 -10Z"/>
+              <path fill="#262a20" d="M1889.0 0V730H2115.0Q2182.0 730 2232.0 703.5Q2282.0 677 2310.0 629.5Q2338.0 582 2338.0 518Q2338.0 444 2300.5 391.0Q2263.0 338 2201.0 316L2348.0 0H2239.0L2100.0 305H1987.0V0ZM1987.0 393H2115.0Q2171.0 393 2203.5 427.0Q2236.0 461 2236.0 517Q2236.0 574 2203.0 608.0Q2170.0 642 2115.0 642H1987.0Z M2633.0 0 2446.0 730H2548.0L2669.0 238Q2681.0 191 2689.5 147.5Q2698.0 104 2702.0 81Q2705.0 104 2714.5 148.0Q2724.0 192 2735.0 239L2852.0 730H2954.0L2766.0 0Z"/>
+            </g>
+          </svg>
+          <div class="stamp acc hero" data-i18n="hero.stamp">Verified vs the official model</div>
+        </div>
+      </div>
+      <div class="factline">
+        <span><b>78/78</b> <span data-i18n="hero.fact1">official riscv-tests</span></span><i>|</i>
+        <span><b>72/72</b> <span data-i18n="hero.fact2">results identical to RISC-V’s official model</span></span><i>|</i>
+        <span><b>440</b> <span data-i18n="hero.fact3">automated tests</span></span><i>|</i>
+        <span><b>28–120×</b> <span data-i18n="hero.fact4">faster than RARS</span></span>
+      </div>
+    </header>
+
+    <!-- ============ 01 ORIGEN ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="origen" data-screen-label="01 Origen">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s01.sheet">SHEET 01/09 · WHY IT EXISTS</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">01</span><span data-i18n="s01.title">The 8086 in the room</span></h2>
+      <div class="two">
+        <div>
+          <p class="lede" data-i18n="s01.p1">In the Microprocessors course you learn assembly on <b>emu8086</b>: a 16-bit Intel 8086 emulator, Windows-only, from the DOS era. It does the job — until you try to write something that reacts to a keypress while it runs. My own experience with that wall is where this thesis starts.</p>
+          <p class="note" data-i18n="s01.p2">RISC-V is the obvious replacement: an open specification, current, and the one the industry is actually adopting. But the RISC-V tools built for teaching are aging or closed — <b class="ink">RARS</b> is Java, <b class="ink">Ripes</b> is Qt, <b class="ink">CPUlator</b> is a closed web app. None of them is a modern native desktop application with real-time I/O. That gap is the whole reason EmuRV exists.</p>
+        </div>
+        <div>
+          <div class="box acc">
+            <b class="bt" data-i18n="s01.box1.bt">What it does, in one line</b>
+            <span data-i18n="s01.box1.span">Edit → assemble → run or step → watch registers and memory. Errors by <b>line and column</b>, in Spanish. A built-in 10-lesson course, 15 commented examples, and a graphics screen you can actually play a game on.</span>
+          </div>
+          <div class="box">
+            <b class="bt" data-i18n="s01.box2.bt">Read this page as backend</b>
+            <span data-i18n="s01.box2.span">Almost nothing here is about the interface. What follows is an assembler I had to write from scratch, an execution loop that has to stay interruptible, a memory policy — and above all the only question that really matters for an emulator: <b>how do you know it's correct?</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="stamprow"><span class="stamp acc" data-i18n="s01.stamp">Thesis prototype · v0.1.0</span></div>
+    </section>
+
+    <!-- ============ 02 DEMO ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="demo" class="alt-violet" data-screen-label="02 Demo">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s02.sheet">SHEET 02/09 · RUN IT HERE</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">02</span><span data-i18n="s02.title">Try it right here</span></h2>
+      <p class="lede" data-i18n="s02.lede">Below is a working EmuRV, running in your browser. It is <b>not a video and not a mockup</b>: press <b class="tacc">Ensamblar</b>, then <b class="tacc">Paso</b>, and watch the registers light up as they change. Click the editor's left margin to drop a breakpoint. Run «Suma interactiva» and type into the console when it asks, or open the «Sprites» tab to watch the 320×240 screen get drawn. Switch the theme, open the lessons, read the help.</p>
+      <p class="note" style="margin:26px 0 0" data-i18n="s02.note">Honest about what this is: a faithful in-browser reconstruction of the interface, with a JavaScript interpreter underneath that genuinely assembles and executes <b>the three programs on the tabs</b> — here the editor is read-only, and the rest of the catalogue is labelled «solo en la app». The desktop application runs on <b class="ink">Unicorn Engine</b> with the full RV32IMAFDC repertoire, your own programs, ELF import and export, a GDB stub and detachable windows. Everything on the sheets that follow describes the real one.</p>
+      <div class="demowrap" data-snap="1">
+        <div class="demobar">
+          <span class="sdot" aria-hidden="true"></span>
+          <span class="dname" data-i18n="s02.barName">EmuRV — interactive demo · in-browser build</span>
+          <a class="dbtn" href="assets/emurv/emurv-demo.html" target="_blank" rel="noopener" data-i18n="s02.open">Open full screen ↗</a>
+        </div>
+        <iframe src="assets/emurv/emurv-demo.html" loading="lazy" title="EmuRV interactive demo" data-i18n-attr="title:s02.iframeTitle"></iframe>
+      </div>
+      <p class="demonote" data-i18n="s02.width">The demo needs a window at least 1000 px wide to fit the editor and the panels side by side. On a narrow screen it will say so — open it full screen, or come back from a laptop.</p>
+    </section>
+
+    <!-- ============ 03 LA MÁQUINA ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="maquina" data-screen-label="03 La máquina">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s03.sheet">SHEET 03/09 · THE MACHINE</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">03</span><span data-i18n="s03.title">What happens when you press Step</span></h2>
+      <p class="lede" data-i18n="s03.lede">A Tauri 2 shell, a Rust core, and the CPU itself borrowed from <b>Unicorn Engine</b> — the emulation engine carved out of QEMU. The emulation lives in its own thread and never talks to the UI directly: the interface sends commands and receives events (<code>paused</code>, <code>output</code>, <code>registers_update</code>). Between the two sits the piece everything else depends on.</p>
+
+      <div class="panel">
+        <svg class="diagram" viewBox="0 0 1080 300" role="img" aria-label="Architecture diagram: the editor sends the source to the assembler, which produces bytes and a source_map; the machine runs on Unicorn Engine and drives the MMIO devices" data-i18n-attr="aria-label:diag1.aria">
+          <defs>
+            <marker id="fl" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 Z" fill="#262a20"/></marker>
+          </defs>
+          <text class="lbl" x="135" y="20" text-anchor="middle" data-i18n="diag1.lbl1">Frontend · TypeScript</text>
+          <text class="lbl" x="520" y="20" text-anchor="middle" data-i18n="diag1.lbl2">Core · Rust · own thread</text>
+          <text class="lbl" x="920" y="20" text-anchor="middle" data-i18n="diag1.lbl3">MMIO devices</text>
+
+          <rect x="40" y="48" width="190" height="58" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/>
+          <text x="135" y="72" text-anchor="middle" class="t-w" data-i18n="diag1.b1a">Editor</text>
+          <text x="135" y="90" text-anchor="middle" class="t-sm" data-i18n="diag1.b1b">CodeMirror 6 · breakpoints</text>
+
+          <rect x="290" y="48" width="200" height="58" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/>
+          <text x="390" y="72" text-anchor="middle" class="t-w" data-i18n="diag1.b2a">Own assembler</text>
+          <text x="390" y="90" text-anchor="middle" class="t-sm" data-i18n="diag1.b2b">errors at line:column</text>
+
+          <rect x="550" y="48" width="200" height="58" rx="2" fill="#eceadb" stroke="#262a20" stroke-width="1.5"/>
+          <text x="650" y="72" text-anchor="middle" class="t-w" data-i18n="diag1.b3a">Machine · Unicorn</text>
+          <text x="650" y="90" text-anchor="middle" class="t-sm" data-i18n="diag1.b3b">adaptive slice ~40 ms</text>
+
+          <rect x="800" y="26" width="240" height="40" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/>
+          <text x="920" y="51" text-anchor="middle" class="t-sm" data-i18n="diag1.d1">Screen 320×240 · 0x9000_0000</text>
+          <rect x="800" y="57" width="240" height="40" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/>
+          <text x="920" y="82" text-anchor="middle" class="t-sm" data-i18n="diag1.d2">Keyboard · 0xFFFF_0000</text>
+          <rect x="800" y="88" width="240" height="40" rx="2" fill="#f7f4e6" stroke="#262a20" stroke-width="1.5"/>
+          <text x="920" y="113" text-anchor="middle" class="t-sm" data-i18n="diag1.d3">Console · ecall (a7)</text>
+
+          <path class="flow" d="M230,77 H286"/>
+          <path class="flow" d="M490,77 H546"/>
+          <path class="flow" d="M750,77 H796"/>
+          <path class="flow" d="M750,77 C770,77 776,46 796,46"/>
+          <path class="flow" d="M750,77 C770,77 776,108 796,108"/>
+
+          <rect x="290" y="170" width="460" height="56" rx="2" fill="#eceadb" stroke="#262a20" stroke-width="1.5"/>
+          <text x="520" y="194" text-anchor="middle" class="t-w" data-i18n="diag1.sm1">source_map · line ↔ address ↔ pc</text>
+          <text x="520" y="212" text-anchor="middle" class="t-sm" data-i18n="diag1.sm2">ties the editor's breakpoint to the program counter</text>
+
+          <path class="flow" d="M390,106 V164"/>
+          <path class="flow" d="M650,170 V112"/>
+          <path class="flow" d="M290,198 H150 V112"/>
+
+          <text class="t-sm" x="0" y="256" fill="#6b6e5f" data-i18n="diag1.n1">The UI never touches the machine: it sends commands and receives events. That is what keeps «Stop» responsive while a program is running.</text>
+          <text class="t-sm" x="0" y="274" fill="#6b6e5f" data-i18n="diag1.n2">Conceptual, simplified diagram — the real core also holds the ELF importer, the disassembler, the trap handler and the GDB stub.</text>
+        </svg>
+        <div class="cap" data-i18n="diag1.cap">One step of execution, from the editor line to the emulated device.</div>
+      </div>
+
+      <h3 class="h3" data-i18n="s03.h3a">The source_map, first</h3>
+      <p class="note" data-i18n="s03.p1">Assembling doesn't just produce bytes: it produces a <b class="ink">bidirectional table between source line and address</b>. Every 32-bit word emitted knows which line it came from — including the ones expanded out of a pseudo-instruction — and every line knows its first word. That table is what lets a click on the editor's margin become a real breakpoint, and what highlights the line that is about to execute. It had to be designed first, because everything else hangs off it.</p>
+
+      <div class="listing" data-snap="1">
+        <div class="lhead"><span data-i18n="s03.lh1">Address</span><span data-i18n="s03.lh2">Word</span><span data-i18n="s03.lh3">Source · hola-mundo.asm</span></div>
+        <div class="lrow pc"><span class="a">00400000</span><span class="w">10010537</span><span class="s"><b>lui</b>&nbsp;&nbsp;&nbsp;a0, 0x10010 <i data-i18n="s03.c1">← «la a0, saludo» expands into two</i></span></div>
+        <div class="lrow"><span class="a">00400004</span><span class="w">00050513</span><span class="s"><b>addi</b>&nbsp;&nbsp;a0, a0, 0</span></div>
+        <div class="lrow"><span class="a">00400008</span><span class="w">00400893</span><span class="s"><b>addi</b>&nbsp;&nbsp;a7, zero, 4 <i data-i18n="s03.c2">← service 4: print string</i></span></div>
+        <div class="lrow"><span class="a">0040000c</span><span class="w">00000073</span><span class="s"><b>ecall</b></span></div>
+        <div class="lrow bp"><span class="a">00400010</span><span class="w">00a00893</span><span class="s"><b>addi</b>&nbsp;&nbsp;a7, zero, 10 <i data-i18n="s03.c3">← breakpoint on the editor line</i></span></div>
+        <div class="lrow"><span class="a">00400014</span><span class="w">00000073</span><span class="s"><b>ecall</b></span></div>
+        <div class="lfoot"><span data-i18n="s03.lf1">Assembled: 24 bytes of code · ready to run</span><span data-i18n="s03.lf2">.text base 0x00400000</span></div>
+      </div>
+
+      <h3 class="h3" data-i18n="s03.h3b">The bug that shaped the execution loop</h3>
+      <p class="note" data-i18n="s03.p2">The first version called Unicorn once and let it run to the end, with a timeout to interrupt it. Then a student program of the form <code>loop: j loop</code> left the «Stop» button dead: <b class="ink">Unicorn's timeout does not cut a tight loop with no syscalls in it</b>. The instruction count does cut it, so execution was rewritten into bounded slices, checking for the stop signal between them.</p>
+      <p class="note" style="margin:26px 0 0" data-i18n="s03.p3">A fixed slice of one million instructions cost speed. The current version makes the slice <b class="ink">adaptive</b>: it aims at roughly 40 ms of wall time per check, and drops back to the floor when the graphics screen is on, so frames keep their cadence. That single change moved the engine from 129–309 to <b class="tacc">160–718 M instructions per second</b> without losing any perceptible responsiveness. The register refresh was decoupled too — emitting one event per slice would have been about 500 events a second at the UI.</p>
+
+      <div class="regdump" data-snap="1">
+        <div class="rhead"><span data-i18n="s03.rh1">Register</span><span data-i18n="s03.rh2">Hexadecimal</span><span data-i18n="s03.rh3">Decimal</span><span data-i18n="s03.rh4">Last step</span></div>
+        <div class="rrow"><span class="rn">pc</span><span>0x00400008</span><span class="dec">4194312</span><span></span></div>
+        <div class="rrow on"><span class="rn">a0 <i>x10</i></span><span>0x10010000</span><span class="dec">268500992</span><span class="chg" data-i18n="s03.chg">◀ changed</span></div>
+        <div class="rrow"><span class="rn">sp <i>x2</i></span><span>0x7ffffff0</span><span class="dec">2147483632</span><span></span></div>
+        <div class="rrow"><span class="rn">a7 <i>x17</i></span><span>0x00000000</span><span class="dec">0</span><span></span></div>
+        <div class="rrow"><span class="rn">zero <i>x0</i></span><span>0x00000000</span><span class="dec">0</span><span></span></div>
+        <div class="lfoot"><span data-i18n="s03.rf1">After two steps: «la a0, saludo» has landed. The changed register is highlighted — that flash is the whole didactic point.</span></div>
+      </div>
+    </section>
+
+    <!-- ============ 04 ENSAMBLADOR ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="ensamblador" class="alt-violet" data-screen-label="04 Ensamblador">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s04.sheet">SHEET 04/09 · THE ASSEMBLER</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">04</span><span data-i18n="s04.title">The assembler I did not plan to write</span></h2>
+      <p class="lede" data-i18n="s04.lede">The thesis brief closed the stack up front, and it said <b>Keystone</b> for assembly. Keystone's RISC-V support turned out not to be incomplete — it is <b class="tred">nonexistent</b>. I checked the 0.9.2 headers directly: the <code>ks_arch</code> enum has no <code>KS_ARCH_RISCV</code> entry at all, in any official release. That is a risk that fires on day one of a project, and the plan B was to write the assembler myself.</p>
+      <p class="note" style="margin:26px 0 0" data-i18n="s04.p1">Which turned out to be the better outcome anyway, for two reasons the brief could not have anticipated: <b class="ink">total control of the source_map</b>, and diagnostics written for a beginner rather than for a toolchain. A third-party assembler would have handed me an English error with a byte offset.</p>
+
+      <div class="diagbox" data-snap="1">
+        <div class="dcap" data-i18n="s04.dcap">stderr · emurv-cli asm hola.s</div>
+        <pre>hola.s: línea 7, columna 9: <b>instrucción desconocida: «sumar»</b>. EmuRV soporta RV32IM
+        (enteros y multiplicación/división de 32 bits) y Zicsr (csrr/csrw/…)
+hola.s: línea 12, columna 14: <b>«li» carga constantes numéricas; para direcciones
+        de etiquetas usá «la»</b>
+emurv-cli: el ensamblado falló con 2 error(es)</pre>
+      </div>
+      <p class="small" style="margin:14px 0 0" data-i18n="s04.dnote">Real output, not an illustration. Every diagnostic carries line, column and — where the mistake has a common cause — the fix. In the app the same errors appear underlined in the editor.</p>
+
+      <h3 class="h3" data-i18n="s04.h3a">How I know the encodings are right</h3>
+      <p class="note" data-i18n="s04.p2">An assembler that emits a wrong word produces a program that runs and gives the wrong answer — the worst possible failure for a teaching tool. So the encodings are not checked by hand: an <b class="ink">oracle test suite assembles the same source with GNU <code>as</code></b> and compares the emitted words one by one. That oracle covers floating point (F and D), the atomics (A), the compressed 2-byte instructions (C) and the RV64IM repertoire against <code>as -march=rv64im</code>.</p>
+
+      <ul class="ls">
+        <li><span class="n">001</span><span><b data-i18n="s04.li1.b">Full repertoire, switchable width</b><span class="d" data-i18n="s04.li1.d">RV32IMAFDC — integers, multiply/divide, single and double floating point with the <code>f0</code>–<code>f31</code> file, atomics, and hand-written compressed instructions. A selector in the toolbar switches the machine to RV64: <code>ld</code>/<code>sd</code>, <code>lwu</code>, the «W» instructions and 6-bit shift amounts. RV32 stays untouched, and a 64-bit instruction inside an RV32 program produces a teaching error rather than a wrong result.</span></span></li>
+        <li><span class="n">002</span><span><b data-i18n="s04.li2.b">Directives a real project needs</b><span class="d" data-i18n="s04.li2.d"><code>.include</code> resolved relative to the including file, <code>.macro</code> with named parameters, <code>.eqv</code>/<code>.equ</code> constants, and <code>%hi()</code>/<code>%lo()</code> so a student can see what <code>la</code> actually expands to. Multi-file programs work in the app and from the CLI.</span></span></li>
+        <li><span class="n">003</span><span><b data-i18n="s04.li3.b">Standard ELF32, in and out</b><span class="d" data-i18n="s04.li3.d">Export produces a real ELF32 RISC-V that other tools load — Ripes, <code>objdump</code>. Import is the other direction: open a binary and the editor switches to read-only disassembly mode, with run, step and breakpoints working on the listing. A C program compiled with <code>riscv64-elf-gcc</code> loads too; an ELF with the wrong base address is rejected with a message that names the exact flag that is missing.</span></span></li>
+        <li><span class="n">004</span><span><b data-i18n="s04.li4.b">A relocatable variant, because someone will ask</b><span class="d" data-i18n="s04.li4.d"><code>asm --reubicable</code> emits symbol references PC-relative (<code>auipc</code>) instead of absolute and marks the ELF <code>ET_DYN</code>, for a loader that places it somewhere else. The default stays absolute: that is the one that matches EmuRV's memory map when you inspect it elsewhere.</span></span></li>
+      </ul>
+      <div class="stamprow"><span class="stamp acc" data-i18n="s04.stamp">Verified against GNU as</span></div>
+    </section>
+
+    <!-- ============ 05 DISPOSITIVOS ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="dispositivos" data-screen-label="05 Dispositivos">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s05.sheet">SHEET 05/09 · DEVICES &amp; REAL TIME</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">05</span><span data-i18n="s05.title">Devices, and the game that justifies them</span></h2>
+      <p class="lede" data-i18n="s05.lede">The whole memory map is <b>compatible with RARS</b> — the same base addresses, the same keyboard semantics. That is not nostalgia: it means the Spanish-language teaching material that already exists for RARS runs on EmuRV unchanged.</p>
+
+      <div class="mmap" data-snap="1">
+        <div class="mh"><span data-i18n="s05.mh1">Address</span><span data-i18n="s05.mh2">Region</span><span data-i18n="s05.mh3">Notes</span></div>
+        <div class="mr"><b>0x0040_0000</b><span>.text</span><span class="d" data-i18n="s05.m1">Code. Mapped R+X — not writable, on purpose.</span></div>
+        <div class="mr"><b>0x1001_0000</b><span>.data</span><span class="d" data-i18n="s05.m2">Data. Not executable.</span></div>
+        <div class="mr"><b>0x1004_0000</b><span data-i18n="s05.m3n">heap</span><span class="d" data-i18n="s05.m3">Grows upward from <code>sbrk</code> (syscall 9). No free.</span></div>
+        <div class="mr"><b>0x7FFF_FFF0</b><span data-i18n="s05.m4n">stack (sp)</span><span class="d" data-i18n="s05.m4">Initial stack pointer, 8 MB mapped below it.</span></div>
+        <div class="mr"><b>0x9000_0000</b><span data-i18n="s05.m5n">framebuffer</span><span class="d" data-i18n="s05.m5">320×240, one byte per pixel — VGA mode 13h.</span></div>
+        <div class="mr"><b>0x9002_0000</b><span data-i18n="s05.m6n">palette</span><span class="d" data-i18n="s05.m6">256 RGB888 colours; the program can rewrite them.</span></div>
+        <div class="mr"><b>0x9003_0000</b><span>vsync</span><span class="d" data-i18n="s05.m7">Writing 1 means «frame ready».</span></div>
+        <div class="mr"><b>0xFFFF_0000</b><span data-i18n="s05.m8n">keyboard · control</span><span class="d" data-i18n="s05.m8">Bit 0 set means a key is waiting. Same address as RARS/MARS.</span></div>
+        <div class="mr"><b>0xFFFF_0004</b><span data-i18n="s05.m9n">keyboard · data</span><span class="d" data-i18n="s05.m9">The oldest key code — reading it consumes the key. Queue of 64.</span></div>
+      </div>
+
+      <h3 class="h3" data-i18n="s05.h3a">Polling, and why it isn't a shortcut</h3>
+      <p class="note" data-i18n="s05.p1">All the I/O is polling, and that is a <b class="ink">documented structural limitation, not a simplification</b>: Unicorn's own FAQ states that it does not expose hardware interrupts. Building a CLINT and a PLIC on top of a CPU-only engine that officially does not support them is real architecture work, and it is written down as future work rather than quietly implied. What does exist is a keyboard the program can poll without ever blocking, plus syscalls 30 (system time in ms) and 32 (sleep, interruptible by «Stop»).</p>
+      <p class="note" style="margin:26px 0 0" data-i18n="s05.p2">The <code>.text</code> region being read-only is a deliberate teaching policy — W^X. Jumping into data or patching your own code stops with a message that explains what happened rather than corrupting silently. Keep that decision in mind: it comes back with a cost on the next sheet.</p>
+
+      <h3 class="h3" data-i18n="s05.h3b">Tetris as an acceptance test</h3>
+      <p class="note" data-i18n="s05.p2b">The example that closes the lesson series is a <b class="ink">port to RV32IM of an 8086 Tetris</b> from the same Microprocessors course — the exact program that was painful on emu8086. Board in memory, bitmaps, collisions, line clears, scoring, drawn as coloured blocks on the 320×240 screen and played with the keyboard. Its game logic and the resulting pixels are checked by a test oracle, not by me looking at it.</p>
+      <div class="two" style="margin-top:26px">
+        <div>
+          <div class="logrow"><span class="lbl" data-i18n="s05.l1">Full-repaint frame rate (Rust side)</span><span class="dots"></span><span class="st ok">811 FPS</span></div>
+          <div class="logrow"><span class="lbl" data-i18n="s05.l2">What the UI actually consumes</span><span class="dots"></span><span class="st no">~30 Hz</span></div>
+          <div class="logrow"><span class="lbl" data-i18n="s05.l3">Headroom over what the screen needs</span><span class="dots"></span><span class="st ok">~27×</span></div>
+          <div class="logrow"><span class="lbl" data-i18n="s05.l4">Hardware interrupts (CLINT / PLIC)</span><span class="dots"></span><span class="st pend">[FUTURE]</span></div>
+        </div>
+        <div>
+          <div class="box">
+            <b class="bt" data-i18n="s05.box.bt">Worst case, on purpose</b>
+            <span data-i18n="s05.box.span">That 811 is the median of five runs (range 799–838), measured on the production path: a <b>complete repaint</b> of the framebuffer every frame plus the frame-close syscall. Nothing is skipped to make the number look better.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 06 VALIDACIÓN ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="validacion" class="alt-violet" data-screen-label="06 Validación">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s06.sheet">SHEET 06/09 · HOW I KNOW IT'S CORRECT</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">06</span><span data-i18n="s06.title">Two verdicts I did not write myself</span></h2>
+      <p class="lede" data-i18n="s06.lede">My own tests can only tell me the emulator agrees with what I believed when I wrote it. So the correctness argument rests on two suites that come from outside the project: the <b>official riscv-tests</b>, and <b>riscv-arch-test through RISCOF</b>, which compares my machine's output against <b class="tacc">Sail — the formal golden model of RISC-V International</b>. Every number below is reproducible from a script in the repository.</p>
+
+      <div class="verd" data-snap="1">
+        <div class="vcap" data-i18n="s06.v1cap">Verdict A · riscv-tests, official self-checking suites · commit 34e6b6d1 · 2026-07-22</div>
+        <div class="vh"><span data-i18n="s06.v1h1">Suite · -march</span><span class="n" data-i18n="s06.vh.tests">Tests</span><span class="n" data-i18n="s06.vh.pass">Pass</span><span class="n" data-i18n="s06.vh.excl">Excluded</span><span data-i18n="s06.vh.mark">Result</span></div>
+        <div class="vr"><span>rv32ui · rv32i_zicsr_zifencei</span><span class="n">42</span><span class="n">41</span><span class="n">1</span><span class="mk ok">[ PASS ]</span></div>
+        <div class="vr"><span>rv32um · rv32im_zicsr</span><span class="n">8</span><span class="n">8</span><span class="n">—</span><span class="mk ok">[ PASS ]</span></div>
+        <div class="vr"><span>rv32ua · rv32ia_zicsr</span><span class="n">10</span><span class="n">10</span><span class="n">—</span><span class="mk ok">[ PASS ]</span></div>
+        <div class="vr"><span>rv32uc · rv32ic_zicsr</span><span class="n">1</span><span class="n">0</span><span class="n">1</span><span class="mk ex">[ EXCL ]</span></div>
+        <div class="vr"><span>rv32uf · rv32if_zicsr</span><span class="n">11</span><span class="n">10</span><span class="n">1</span><span class="mk ok">[ PASS ]</span></div>
+        <div class="vr"><span>rv32ud · rv32ifd_zicsr</span><span class="n">10</span><span class="n">9</span><span class="n">1</span><span class="mk ok">[ PASS ]</span></div>
+        <div class="vr tot"><span data-i18n="s06.v1tot">Total — 78/78 of the executable tests</span><span class="n">82</span><span class="n">78</span><span class="n">4</span><span class="mk ok">0 FAIL</span></div>
+      </div>
+
+      <div class="verd" data-snap="1">
+        <div class="vcap" data-i18n="s06.v2cap">Verdict B · RISCOF 1.25.3 vs Sail 0.13 · signature compared word for word · 2026-07-22</div>
+        <div class="vh"><span data-i18n="s06.v2h1">Suite rv32i_m/</span><span class="n" data-i18n="s06.vh.tests">Tests</span><span class="n" data-i18n="s06.vh.match">Match</span><span class="n" data-i18n="s06.vh.mis">Mismatch</span><span data-i18n="s06.vh.mark">Result</span></div>
+        <div class="vr"><span>I — base integer</span><span class="n">38</span><span class="n">38</span><span class="n">—</span><span class="mk ok">[ MATCH ]</span></div>
+        <div class="vr"><span>M — multiply / divide</span><span class="n">8</span><span class="n">8</span><span class="n">—</span><span class="mk ok">[ MATCH ]</span></div>
+        <div class="vr"><span>C — compressed</span><span class="n">27</span><span class="n">26</span><span class="n">1</span><span class="mk ex">[ 1 BY DESIGN ]</span></div>
+        <div class="vr"><span>Zifencei</span><span class="n">1</span><span class="n">0</span><span class="n">1</span><span class="mk ex">[ 1 BY DESIGN ]</span></div>
+        <div class="vr tot"><span data-i18n="s06.v2tot">Total — 72/72 of the compatible tests, identical signature</span><span class="n">74</span><span class="n">72</span><span class="n">2</span><span class="mk ok">100 %</span></div>
+      </div>
+
+      <h3 class="h3" data-i18n="s06.h3a">The four exclusions and the two mismatches, named</h3>
+      <p class="note" data-i18n="s06.p1">A result with an asterisk is worth nothing if the asterisk is not spelled out, so here they are, each traced to root cause rather than waved away.</p>
+      <div class="two" style="margin-top:26px">
+        <div>
+          <div class="box">
+            <b class="bt" data-i18n="s06.b1.bt">fence_i · rvc · Fencei — my W^X policy</b>
+            <span data-i18n="s06.b1.span">These tests <b>write instructions into <code>.text</code> and jump into data</b> — self-modifying code is precisely what they are testing. The official environment links everything into one RWX segment. EmuRV maps <code>.text</code> read-only by the teaching decision on the previous sheet, and stops with «the program tried to write to an address that doesn't belong to .data». Incompatible by design; the compressed decoding itself is covered by my own oracle against GNU <code>as</code>.</span>
+          </div>
+          <div class="box">
+            <b class="bt" data-i18n="s06.b2.bt">cebreak-01 — <code>ebreak</code> belongs to the debugger</b>
+            <span data-i18n="s06.b2.span">The test expects <code>c.ebreak</code> to be delegated to the guest's trap handler. In EmuRV <code>ebreak</code> <b>is</b> the software breakpoint mechanism of the UI, so it never reaches the guest. Same shape of conflict: a deliberate decision, not a semantics defect.</span>
+          </div>
+        </div>
+        <div>
+          <div class="box acc">
+            <b class="bt" data-i18n="s06.b3.bt">fmin — a defect in the engine underneath</b>
+            <span data-i18n="s06.b3.span">This one is not mine and it is the finding I am most pleased with. An isolated probe against the machine showed <code>fmax.s(1.0, sNaN)</code> returning a canonical qNaN instead of <code>1.0</code>. That is the IEEE 754-2008 semantics, superseded by the RISC-V F v2.2 spec: <b>QEMU fixed it in 6.0, but Unicorn 2.x is still based on QEMU 5.0.1</b>. Subtest 20 of <code>fmin.S</code> detects exactly that case. Documented as an inherited limitation — with the version chain that explains it.</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="h3" data-i18n="s06.h3b">And underneath, the ordinary discipline</h3>
+      <div class="two" style="margin-top:26px">
+        <div>
+          <div class="logrow"><span class="lbl" data-i18n="s06.l1">Rust core, against the real machine</span><span class="dots"></span><span class="st ok">271</span></div>
+          <div class="logrow"><span class="lbl" data-i18n="s06.l2">CLI</span><span class="dots"></span><span class="st ok">50</span></div>
+          <div class="logrow"><span class="lbl" data-i18n="s06.l3">Interface</span><span class="dots"></span><span class="st ok">119</span></div>
+          <div class="logrow"><span class="lbl" data-i18n="s06.l4">Total, zero failures · clippy with no warnings</span><span class="dots"></span><span class="st ok">440</span></div>
+          <div class="logrow"><span class="lbl" data-i18n="s06.l5">CI jobs green (macOS build + bundle weight gate)</span><span class="dots"></span><span class="st ok">4/4</span></div>
+        </div>
+        <div>
+          <div class="box">
+            <b class="bt" data-i18n="s06.b4.bt">Counting them properly</b>
+            <span data-i18n="s06.b4.span">That total used to be reported as «271 + 10 + 119». The 10 was wrong: it counted a single test binary and silently dropped three others. I found it doing a documentation reconciliation pass, re-ran the whole suite and corrected every document that carried the figure. A number nobody had questioned was wrong for weeks — which is exactly why the reconciliation pass exists.</span>
+          </div>
+        </div>
+      </div>
+      <div class="stamprow"><span class="stamp green" data-i18n="s06.stamp">78/78 · 72/72 · 0 fail</span></div>
+    </section>
+
+    <!-- ============ 07 RENDIMIENTO ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="rendimiento" data-screen-label="07 Rendimiento">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s07.sheet">SHEET 07/09 · PERFORMANCE</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">07</span><span data-i18n="s07.title">Measured against the reference, not against itself</span></h2>
+      <p class="lede" data-i18n="s07.lede">Four RV32IM kernels, the <b>same algorithm on four emulators</b>, ~500 M instructions per run, median of five, and equivalence verified first — all four produce the same numeric result per kernel. Comparing an emulator only against its own previous version proves nothing.</p>
+
+      <div class="chart" data-snap="1">
+        <svg viewBox="0 0 1080 284" role="img" aria-label="Logarithmic chart of throughput in millions of instructions per second: QEMU 1090 to 4806, Spike 882 to 992, EmuRV 160 to 718, RARS 5.6 to 6.0" data-i18n-attr="aria-label:chart.aria">
+          <line x1="200" y1="46" x2="200" y2="228" stroke="rgba(38,42,32,.16)" stroke-width="1"/>
+          <line x1="400" y1="46" x2="400" y2="228" stroke="rgba(38,42,32,.16)" stroke-width="1"/>
+          <line x1="600" y1="46" x2="600" y2="228" stroke="rgba(38,42,32,.16)" stroke-width="1"/>
+          <line x1="800" y1="46" x2="800" y2="228" stroke="rgba(38,42,32,.16)" stroke-width="1"/>
+          <line x1="1000" y1="46" x2="1000" y2="228" stroke="rgba(38,42,32,.16)" stroke-width="1"/>
+          <line x1="200" y1="228" x2="1000" y2="228" stroke="rgba(38,42,32,.28)" stroke-width="1"/>
+
+          <text class="cname" x="20" y="82">QEMU</text>
+          <text class="csub" x="20" y="98" data-i18n="chart.qemu">system-mode, TCG</text>
+          <rect x="807.5" y="66" width="128.9" height="16" fill="#262a20"/>
+          <line x1="807.5" y1="62" x2="807.5" y2="86" stroke="#262a20" stroke-width="2"/>
+          <line x1="936.4" y1="62" x2="936.4" y2="86" stroke="#262a20" stroke-width="2"/>
+          <text class="cval" x="948" y="79">1 091 – 4 806</text>
+
+          <text class="cname" x="20" y="124">Spike</text>
+          <text class="csub" x="20" y="140" data-i18n="chart.spike">the ecosystem's reference ISS</text>
+          <rect x="789.1" y="108" width="10.2" height="16" fill="#262a20"/>
+          <line x1="789.1" y1="104" x2="789.1" y2="128" stroke="#262a20" stroke-width="2"/>
+          <line x1="799.3" y1="104" x2="799.3" y2="128" stroke="#262a20" stroke-width="2"/>
+          <text class="cval" x="811" y="121">882 – 992</text>
+
+          <text class="cname" x="20" y="166" fill="#4b2fb0">EmuRV</text>
+          <text class="csub" x="20" y="182" data-i18n="chart.emurv">with the didactic hooks on</text>
+          <rect x="640.9" y="150" width="130.4" height="16" fill="#4b2fb0"/>
+          <line x1="640.9" y1="146" x2="640.9" y2="170" stroke="#4b2fb0" stroke-width="2"/>
+          <line x1="771.3" y1="146" x2="771.3" y2="170" stroke="#4b2fb0" stroke-width="2"/>
+          <text class="cval" x="783" y="163" fill="#4b2fb0">160 – 718</text>
+
+          <text class="cname" x="20" y="208">RARS</text>
+          <text class="csub" x="20" y="224" data-i18n="chart.rars">its own category: teaching</text>
+          <rect x="349.6" y="192" width="6" height="16" fill="#262a20"/>
+          <line x1="349.6" y1="188" x2="349.6" y2="212" stroke="#262a20" stroke-width="2"/>
+          <line x1="355.6" y1="188" x2="355.6" y2="212" stroke="#262a20" stroke-width="2"/>
+          <text class="cval" x="367" y="205">5,6 – 6,0</text>
+
+          <text class="cax" x="200" y="248" text-anchor="middle">1</text>
+          <text class="cax" x="400" y="248" text-anchor="middle">10</text>
+          <text class="cax" x="600" y="248" text-anchor="middle">100</text>
+          <text class="cax" x="800" y="248" text-anchor="middle">1 000</text>
+          <text class="cax" x="1000" y="248" text-anchor="middle">10 000</text>
+          <text class="cax" x="600" y="272" text-anchor="middle" data-i18n="chart.axis">Millions of instructions per second — LOGARITHMIC SCALE</text>
+          <text class="cax" x="20" y="30" data-i18n="chart.title">Band across the four kernels · median of 5 runs each · Apple M4 Pro</text>
+        </svg>
+        <div class="cap" data-i18n="chart.cap">Each bar spans the slowest and fastest of the four kernels for that emulator. A logarithmic axis is the only honest way to hold 5.6 and 4 806 in the same picture — the exact numbers are in the table below.</div>
+      </div>
+
+      <div class="btab" data-snap="1">
+        <div class="bh"><span data-i18n="s07.bh1">Kernel · RV32IM</span><span class="n">EmuRV</span><span class="n">QEMU</span><span class="n">Spike</span><span class="n">RARS</span></div>
+        <div class="br"><span data-i18n="s07.k1">arithmetic — pure ALU</span><span class="n me">718,4</span><span class="n">3 289,5</span><span class="n">881,8</span><span class="n">6,0</span></div>
+        <div class="br"><span data-i18n="s07.k2">memory — lw/sw over 4 KiB</span><span class="n me">257,1</span><span class="n">4 342,1</span><span class="n">992,0</span><span class="n">5,6</span></div>
+        <div class="br"><span data-i18n="s07.k3">calls — call/ret + stack</span><span class="n me">299,4</span><span class="n">1 090,5</span><span class="n">982,1</span><span class="n">5,8</span></div>
+        <div class="br"><span data-i18n="s07.k4">mixed — LCG + memory + mul</span><span class="n me">160,2</span><span class="n">4 805,8</span><span class="n">992,0</span><span class="n">5,7</span></div>
+      </div>
+      <p class="small" style="margin:14px 0 0" data-i18n="s07.tabnote">Millions of instructions per second, median of 5. EmuRV 0.1.0 (Unicorn 2.1.5) · QEMU 11.0.2 · Spike 1.1.1-dev · RARS 1.6 on OpenJDK 25, with its 0.133 s JVM startup discounted.</p>
+
+      <h3 class="h3" data-i18n="s07.h3a">Reading it honestly</h3>
+      <div class="two" style="margin-top:26px">
+        <div>
+          <p class="note" style="margin:0" data-i18n="s07.p1">Against <b class="ink">RARS</b> — its actual category, the same didactic job — EmuRV is <b class="tacc">28 to 120× faster</b>. Against <b class="ink">Spike</b>, the reference instruction-set simulator of the ecosystem, it lands in the same order of magnitude: 81 % of Spike on pure ALU. Against plain QEMU it is 0.7 to 1.5 orders behind.</p>
+          <p class="note" data-i18n="s07.p2">That remaining gap is <b>bought, not lost</b>: an interruptibility check every ~40 ms, the observation hooks that make the keyboard, the screen and the syscalls visible, and a wall time that includes process start and assembling the source. The engine's own ceiling with no slicing, on the same machine, was 1 293 M instr/s when it was last remeasured. The requirement in the spec was 10 — it clears it by 16 to 72× in the worst kernel, and the author's decision was to stop chasing speed there.</p>
+        </div>
+        <div>
+          <div class="box acc">
+            <b class="bt" data-i18n="s07.b1.bt">Three numbers for one metric</b>
+            <span data-i18n="s07.b1.span">My own documentation carried three different frame rates for the same benchmark — 835, 797 and 832 — and I spent a while looking for the regression between them. There wasn't one. All three were <b>single runs</b> of a bench with ±2.5 % spread. Five control runs gave 799, 804, 811, 814, 838: the three historical figures all sit inside the normal band. The fix wasn't to the code, it was to the method — every figure now ships with its median, its range and its <i>n</i>.</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="h3" data-i18n="s07.h3b">Limitations I am declaring before you find them</h3>
+      <ul class="ls">
+        <li><span class="n">001</span><span><b data-i18n="s07.li1.b">Nominal instruction count</b><span class="d" data-i18n="s07.li1.d">Deterministic loops counted over the listing, not retired by a hardware counter. The same criterion is applied to all four emulators, so the ratios hold even if an absolute is off.</span></span></li>
+        <li><span class="n">002</span><span><b data-i18n="s07.li2.b">Synthetic microkernels, not CoreMark</b><span class="d" data-i18n="s07.li2.d">The bare-metal CoreMark port per target was deferred by an explicit effort gate. It does not change the order-of-magnitude conclusion, and the harness is ready for it.</span></span></li>
+        <li><span class="n">003</span><span><b data-i18n="s07.li3.b">One machine, and QEMU in system mode</b><span class="d" data-i18n="s07.li3.d">Everything ran on a single Apple M4 Pro, so the <b>ratios between emulators are the citable part, not the absolutes</b>. QEMU had to run in system mode because macOS Homebrew ships no user-mode build; Spike and QEMU execute bare-metal ELF while EmuRV and RARS execute the same assembly source.</span></span></li>
+        <li><span class="n">004</span><span><b data-i18n="s07.li4.b">emu8086 is a documentary comparison</b><span class="d" data-i18n="s07.li4.d">The emulator EmuRV replaces is a step-by-step interpreter that redraws its UI per instruction, publishes no performance figures, and needs a Windows machine to run. I am not going to invent a number for it.</span></span></li>
+      </ul>
+    </section>
+
+    <!-- ============ 08 INTERFAZ ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="interfaz" class="alt-violet" data-screen-label="08 Interfaz">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s08.sheet">SHEET 08/09 · THE INTERFACE</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">08</span><span data-i18n="s08.title">The part the student actually touches</span></h2>
+      <p class="lede" data-i18n="s08.lede">Everything themeable lives in CSS design tokens, so a theme is one block of variable overrides and no duplicated CSS. Five themes ship with the app plus one the user builds, and <b>the contrast of all five is verified by an automated test</b> — body text and editor syntax both, against WCAG AA. A theme that fails the test does not ship.</p>
+
+      <div class="screens">
+        <figure class="shot wide">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">EmuRV — tema Educativo (default)</span></div>
+            <img src="assets/emurv/tema-educativo.jpg" alt="EmuRV main window: toolbar, file tabs, editor with the executing line highlighted and a breakpoint, and the Screen, Registers, Memory and Debug panels, console and status bar" data-i18n-attr="alt:s08.f1alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f1b">Main view.</b> <span data-i18n="s08.f1cap">Editor on the left, machine on the right. Registers are always visible and come first; Memory folds; Debug starts collapsed and reveals itself the moment you set your first breakpoint. Each of those panels can be torn off into its own OS window with the ⧉ button, and stays synchronised with the running program.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Tema Retro-CRT</span></div>
+            <img src="assets/emurv/tema-retro-crt.jpg" alt="EmuRV with the Retro-CRT theme: amber phosphor on black with scanlines" data-i18n-attr="alt:s08.f2alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f2b">Retro-CRT.</b> <span data-i18n="s08.f2cap">Amber phosphor and scanlines. The editor's syntax colours follow the theme tokens too — CodeMirror reads the same variables.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Tema Pergamino</span></div>
+            <img src="assets/emurv/tema-pergamino.jpg" alt="EmuRV with the Pergamino theme: warm light paper" data-i18n-attr="alt:s08.f3alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f3b">Pergamino.</b> <span data-i18n="s08.f3cap">The light theme, for a projector in a lit classroom — the case where a dark IDE stops being readable from the back row.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Tema Retro Kawaii</span></div>
+            <img src="assets/emurv/tema-retro-kawaii.jpg" alt="EmuRV with the Retro Kawaii theme: pastel vaporwave palette" data-i18n-attr="alt:s08.f4alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f4b">Retro Kawaii.</b> <span data-i18n="s08.f4cap">Pastel vaporwave. It passes the same AA test as the rest — that constraint is what kept the pastels from going unreadable.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Tema Disquete 90s</span></div>
+            <img src="assets/emurv/tema-disquete-90s.jpg" alt="EmuRV with the Disquete 90s theme: nineties desktop beige with coloured title bars" data-i18n-attr="alt:s08.f5alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f5b">Disquete 90s.</b> <span data-i18n="s08.f5cap">Nineties desktop beige, coloured title bars. Same tokens, a different decade.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Modal · Editar tema</span></div>
+            <img src="assets/emurv/modal-editar-tema.jpg" alt="EmuRV theme editor: a colour control per design token, with a live preview and a WCAG AA contrast warning" data-i18n-attr="alt:s08.f6alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f6b">Build your own.</b> <span data-i18n="s08.f6cap">One colour control per token — surfaces, text, accent, states and editor syntax — with live preview, export/import as JSON, and a contrast warning that <b>informs without blocking</b>: it is your theme.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Modal · Lecciones</span></div>
+            <img src="assets/emurv/modal-lecciones.jpg" alt="EmuRV lessons modal: two-column curriculum with the lesson list and progress bar on the left and the selected lesson's objectives on the right" data-i18n-attr="alt:s08.f7alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f7b">Ten lessons.</b> <span data-i18n="s08.f7cap">Registers → arithmetic → memory (endianness in front of you) → conditionals → loops → functions and the stack → syscalls → multi-file → MMIO and real time → traps, your first mini-kernel. Opening one loads its code into the editor. All ten also run from the terminal, and the CI keeps watch on them.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Modal · Ayuda</span></div>
+            <img src="assets/emurv/modal-ayuda.jpg" alt="EmuRV help modal: two-column reference with a scroll-spy index covering syscalls, memory map, MMIO keyboard, directives and debugging" data-i18n-attr="alt:s08.f8alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f8b">The reference, inside the app.</b> <span data-i18n="s08.f8cap">Syscalls, memory map, MMIO keyboard, directives, debugging — with a scroll-spy index, so nobody has to leave the tool to look up an <code>a7</code> value.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Ventana angosta</span></div>
+            <img src="assets/emurv/ventana-angosta.jpg" alt="EmuRV in a narrow window: toolbar buttons collapse to icon-only and the controls rewrap" data-i18n-attr="alt:s08.f9alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f9b">Any window width.</b> <span data-i18n="s08.f9cap">The toolbar buttons drop to icon-only and the controls rewrap instead of being cut off — a laptop in a classroom is not a 27-inch display.</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="screen">
+            <div class="sbar"><span class="sdot" aria-hidden="true"></span><span class="sname">Tema personalizado</span></div>
+            <img src="assets/emurv/tema-personalizado.jpg" alt="EmuRV showing a user-built custom theme" data-i18n-attr="alt:s08.f10alt" loading="lazy">
+          </div>
+          <figcaption><b data-i18n="s08.f10b">A user's theme.</b> <span data-i18n="s08.f10cap">Unlike the built-ins, its values never enter <code>tokens.css</code>: they are CSS variables applied live on <code>:root</code> and saved on the machine.</span></figcaption>
+        </figure>
+      </div>
+
+      <h3 class="h3" data-i18n="s08.h3a">One language decision, stated rather than hidden</h3>
+      <p class="note" data-i18n="s08.p1">The interface has an ES/EN selector. The <b>assembler and runtime diagnostics, and the lesson content, stay in Spanish even in English mode</b>. That is a declared scope decision — the Spanish material is the didactic contribution of the thesis, and translating it would have meant maintaining two versions of the thing being evaluated. It is written down as a decision, not left as an oversight for someone to discover.</p>
+    </section>
+
+    <!-- ============ 09 ESTADO Y STACK ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="estado" data-screen-label="09 Estado y stack">
+      <div class="pgh"><span><b>EMURV.PRT</b></span><span data-i18n="s09.sheet">SHEET 09/09 · STACK &amp; HONEST STATUS</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title"><span class="tn">09</span><span data-i18n="s09.title">Inventory, and what is still missing</span></h2>
+
+      <div class="inv">
+        <div>
+          <h4 data-i18n="s09.h1">Core</h4>
+          <ul>
+            <li>Rust · Tauri 2</li>
+            <li>Unicorn Engine 2.1.5</li>
+            <li data-i18n="s09.h1.li3">Own RV32IMAFDC / RV64IM assembler</li>
+            <li data-i18n="s09.h1.li4">Own disassembler</li>
+            <li data-i18n="s09.h1.li5">ELF32 export and import (crate <code>object</code>)</li>
+            <li data-i18n="s09.h1.li6">Emulation on a dedicated thread</li>
+          </ul>
+          <h4 data-i18n="s09.h2">Devices</h4>
+          <ul>
+            <li data-i18n="s09.h2.li1">Framebuffer VGA 13h · 320×240</li>
+            <li data-i18n="s09.h2.li2">MMIO keyboard, RARS-compatible</li>
+            <li data-i18n="s09.h2.li3">Tone generator (off by default)</li>
+            <li data-i18n="s09.h2.li4">Syscalls in the RARS convention</li>
+            <li data-i18n="s09.h2.li5">Zicsr · user trap handler</li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="s09.h3">Interface</h4>
+          <ul>
+            <li>TypeScript · Vite</li>
+            <li>CodeMirror 6 <span data-i18n="s09.h3.li2">(own RISC-V mode)</span></li>
+            <li data-i18n="s09.h3.li3">CSS design tokens · 5 themes + user theme</li>
+            <li>IBM Plex Sans · JetBrains Mono <span data-i18n="s09.h3.li4">(self-hosted, OFL)</span></li>
+            <li data-i18n="s09.h3.li5">Detachable panel windows</li>
+            <li data-i18n="s09.h3.li6">ES / EN with persistence</li>
+          </ul>
+          <h4 data-i18n="s09.h4">Tooling</h4>
+          <ul>
+            <li data-i18n="s09.h4.li1"><code>emurv-cli</code> — headless assemble / run / disasm / debug</li>
+            <li data-i18n="s09.h4.li2">GDB remote stub (gdbserver protocol)</li>
+            <li data-i18n="s09.h4.li3">Semantic exit codes, for automatic grading</li>
+            <li data-i18n="s09.h4.li4">GitHub Actions · 4 jobs · bundle weight gate</li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="s09.h5">Verification</h4>
+          <ul>
+            <li data-i18n="s09.h5.li1">440 automated tests, zero failures</li>
+            <li data-i18n="s09.h5.li2">Encoding oracle against GNU <code>as</code></li>
+            <li data-i18n="s09.h5.li3">riscv-tests · 78/78 executable</li>
+            <li data-i18n="s09.h5.li4">RISCOF vs Sail · 72/72 signatures</li>
+            <li data-i18n="s09.h5.li5">Automated WCAG AA contrast test</li>
+            <li data-i18n="s09.h5.li6">Reproducible benchmark (script + CSV)</li>
+          </ul>
+          <h4 data-i18n="s09.h6">Written record</h4>
+          <ul>
+            <li data-i18n="s09.h6.li1">32 roadmap points, each with its plan</li>
+            <li data-i18n="s09.h6.li2">Engineering log with the decisions and their why</li>
+            <li data-i18n="s09.h6.li3">Documentary reconciliation against evidence</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="h3" data-i18n="s09.h3a">Where it really stands</h3>
+      <p class="note" data-i18n="s09.p1">The thesis is in progress. Separating what is verified from what is merely built is the whole point of the exercise.</p>
+      <div class="status">
+        <div class="scol">
+          <div class="sh ok" data-i18n="s09.c1h">[x] Built and verified</div>
+          <ul>
+            <li data-i18n="s09.c1.li1">· RV32IMAFDC + switchable RV64IM</li>
+            <li data-i18n="s09.c1.li2">· Official compliance, twice over</li>
+            <li data-i18n="s09.c1.li3">· Screen, keyboard, sound, sprites, traps</li>
+            <li data-i18n="s09.c1.li4">· CLI, GDB stub, CI in green</li>
+            <li data-i18n="s09.c1.li5">· Benchmark against QEMU, Spike and RARS</li>
+            <li data-i18n="s09.c1.li6">· 10 lessons and 15 examples, watched by tests</li>
+          </ul>
+        </div>
+        <div class="scol">
+          <div class="sh mid" data-i18n="s09.c2h">[~] Built, not verified</div>
+          <ul>
+            <li data-i18n="s09.c2.li1">· <b>Windows:</b> the NSIS installer cross-compiles and runs in CI, but it has never been opened on a real Windows machine — so I do not claim it works</li>
+            <li data-i18n="s09.c2.li2">· <b>Linux:</b> the code is portable and the build leg exists, marked experimental; not validated</li>
+            <li data-i18n="s09.c2.li3">· macOS on Apple Silicon is the only platform I have actually tested</li>
+          </ul>
+        </div>
+        <div class="scol">
+          <div class="sh no" data-i18n="s09.c3h">[ ] Missing, and named</div>
+          <ul>
+            <li data-i18n="s09.c3.li1">· <b>The usability study with students</b> — protocol and questionnaires ready; it needs the supervisor's sign-off and participants. It is what the committee actually grades</li>
+            <li data-i18n="s09.c3.li2">· Hardware interrupts: CLINT and PLIC over an engine that does not expose them</li>
+            <li data-i18n="s09.c3.li3">· CoreMark, code signing and notarisation, versioned releases</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stamprow"><span class="stamp acc" data-i18n="s09.stamp">Thesis in progress</span></div>
+    </section>
+
+    <!-- ============ END OF JOB ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <footer class="eoj" data-screen-label="Contacto">
+      <div class="stars">*** *** *** *** END OF JOB *** *** *** ***</div>
+      <h3 data-i18n="footer.contacto">Contact</h3>
+      <p style="max-width:60ch" data-i18n="footer.p">Happy to go deeper into any of this — the assembler, the compliance run, or the benchmark method.</p>
+      <a class="mail" href="mailto:www.enririos@gmail.com">www.enririos@gmail.com</a>
+      <a class="mail" href="https://www.linkedin.com/in/enrique-rios4/" target="_blank" rel="noopener">linkedin.com/in/enrique-rios4</a>
+      <p class="small" style="margin:26px 0 0;max-width:76ch" data-i18n="footer.small">EmuRV is an undergraduate thesis prototype at FIUNI, Computer Engineering. The repository is private while the thesis is under evaluation; this page describes the engineering and reproduces published figures without exposing source code. Every number here comes from a result document in the repository, with its date and its measurement conditions.</p>
+      <div class="foot-row">
+        <span data-i18n="footer.row1">Enrique Chyrnia · Backend &amp; Infrastructure</span>
+        <a href="index.html" data-i18n="footer.back">← Back to home</a>
+        <span>© <span id="yr"></span></span>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script src="assets/i18n/core.js"></script>
+<script src="assets/i18n/emurv.dict.js"></script>
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+document.getElementById('today').textContent=new Date().toISOString().slice(0,10);
+</script>
+<script>
+(function(){
+  var raf=null;
+  function snap(){
+    var sheet=document.querySelector('.sheet');
+    if(!sheet)return;
+    var els=sheet.querySelectorAll(':scope > header > *, :scope > section > *, :scope > footer > *, [data-snap]');
+    els.forEach(function(el){el.style.paddingBottom='';});
+    var top=sheet.getBoundingClientRect().top;
+    els.forEach(function(el){
+      var base=parseFloat(getComputedStyle(el).paddingBottom)||0;
+      var b=el.getBoundingClientRect().bottom-top;
+      var add=(26-(b%26))%26;
+      if(add>0.4&&add<25.6) el.style.paddingBottom=(base+add)+'px';
+    });
+  }
+  function req(){if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){raf=null;snap();});}
+  window.addEventListener('resize',req);
+  window.addEventListener('load',req);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(req);
+  document.addEventListener('load',function(e){if(e.target&&e.target.tagName==='IMG')req();},true);
+  req();setTimeout(req,300);setTimeout(req,800);
+
+  // Tras cada cambio de idioma: re-encajar la grilla (los textos cambian de alto).
+  // Los dos reintentos son defensivos, no arreglan un bug observado: esta página tiene
+  // 10 capturas lazy y el iframe de la demo, que pueden reflowear después de la primera
+  // pasada. Mismo criterio que los setTimeout de respaldo de la carga.
+  window.SiteI18nRender=function(){req();setTimeout(req,120);setTimeout(req,420);};
+})();
+</script>
+</body>
+</html>

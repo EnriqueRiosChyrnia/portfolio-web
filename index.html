@@ -360,7 +360,7 @@
           <span class="jrole" data-i18n="s04c.jrole">Undergraduate thesis · whole system</span>
           <span class="stamp green jstamp" aria-hidden="true" data-i18n="s04c.stamp">Compliance verified</span>
         </div>
-        <p class="note" data-i18n="s04c.noteFull">A desktop environment for learning RISC-V assembly, built to replace emu8086 in an engineering degree: an assembler of my own with errors by line and column, emulated devices (320×240 screen, MMIO keyboard), a headless CLI and a GDB stub. <span class="hl">Held to the correctness standard of a production emulator</span>: 78/78 official riscv-tests, 72/72 results identical to RISC-V’s official reference model, and 28–120× the speed of RARS. <b>Runnable demo in the browser.</b></p>
+        <p class="note" data-i18n="s04c.noteFull">A desktop environment for learning RISC-V assembly. I wrote the assembler with line-and-column diagnostics, emulated devices (320×240 screen and MMIO keyboard), a headless CLI and a GDB stub. Validation: 78/78 official riscv-tests, 72/72 results matching the official RISC-V reference model, and 28–120× RARS in the benchmark. <b>Browser demo available.</b></p>
         <div class="tags">
           <span>Rust · Tauri 2</span>
           <span>Unicorn Engine</span>
@@ -390,7 +390,7 @@
 </div>
 
 <script src="assets/i18n/core.js"></script>
-<script src="assets/i18n/index.dict.js"></script>
+<script src="assets/i18n/index.dict.js?v=emurv-20261124"></script>
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
 document.getElementById('today').textContent=new Date().toISOString().slice(0,10);

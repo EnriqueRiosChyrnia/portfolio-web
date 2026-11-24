@@ -11,18 +11,12 @@ window.SiteI18n.dict = {
     en: "EmuRV — RISC-V Emulator (Thesis) · Enrique Chyrnia",
     es: "EmuRV — Emulador RISC-V (tesis) · Enrique Chyrnia"
   },
-  "meta.description": {
-    en: "EmuRV: a RISC-V assembly teaching environment built in Rust + Tauri on Unicorn Engine. Own assembler, MMIO devices, GDB stub — and 78/78 official riscv-tests plus 72/72 results identical to RISC-V’s official reference model.",
-    es: "EmuRV: entorno educativo de ensamblador RISC-V hecho en Rust + Tauri sobre Unicorn Engine. Ensamblador propio, dispositivos MMIO, servidor GDB — y 78/78 riscv-tests oficiales más 72/72 resultados idénticos al modelo de referencia oficial de RISC-V."
-  },
+  "meta.description": {"en": "EmuRV: a RISC-V assembly teaching environment built with Rust, Tauri and Unicorn Engine. Includes a custom assembler, MMIO devices and a GDB stub. Results: 78/78 official riscv-tests and 72/72 matches with the official RISC-V reference model.", "es": "EmuRV: entorno educativo de ensamblador RISC-V desarrollado con Rust, Tauri y Unicorn Engine. Incluye ensamblador propio, dispositivos MMIO y servidor GDB. Resultados: 78/78 riscv-tests oficiales y 72/72 coincidencias con el modelo de referencia oficial de RISC-V."},
   "meta.ogTitle": {
     en: "EmuRV — RISC-V Emulator (Thesis) · Enrique Chyrnia",
     es: "EmuRV — Emulador RISC-V (tesis) · Enrique Chyrnia"
   },
-  "meta.ogDescription": {
-    en: "A RISC-V teaching emulator held to a production correctness standard: 78/78 official riscv-tests, 72/72 results identical to RISC-V’s official model, 28–120× RARS. Rust, Tauri, Unicorn Engine. Runnable demo in the browser.",
-    es: "Un emulador educativo RISC-V medido con la vara de corrección de uno de producción: 78/78 riscv-tests oficiales, 72/72 resultados idénticos al modelo oficial de RISC-V, 28–120× RARS. Rust, Tauri, Unicorn Engine. Demo ejecutable en el navegador."
-  },
+  "meta.ogDescription": {"en": "RISC-V teaching emulator: 78/78 official riscv-tests, 72/72 matches with the official RISC-V model and benchmark results of 28–120× RARS. Built with Rust, Tauri and Unicorn Engine. Includes a browser demo.", "es": "Emulador educativo RISC-V: 78/78 riscv-tests oficiales, 72/72 coincidencias con el modelo oficial de RISC-V y resultados de benchmark de 28–120× RARS. Desarrollado con Rust, Tauri y Unicorn Engine. Incluye una demo para navegador."},
   "meta.ogImageAlt": {
     en: "Enrique Chyrnia — Backend · APIs & Integration · Cloud systems",
     es: "Enrique Chyrnia — Backend · APIs e integración · Sistemas en la nube"
@@ -32,10 +26,7 @@ window.SiteI18n.dict = {
     en: "EmuRV — RISC-V Emulator (Thesis) · Enrique Chyrnia",
     es: "EmuRV — Emulador RISC-V (tesis) · Enrique Chyrnia"
   },
-  "meta.twitterDescription": {
-    en: "A RISC-V teaching emulator held to a production correctness standard: 78/78 official riscv-tests, 72/72 results identical to RISC-V’s official model, 28–120× RARS. Rust, Tauri, Unicorn Engine. Runnable demo in the browser.",
-    es: "Un emulador educativo RISC-V medido con la vara de corrección de uno de producción: 78/78 riscv-tests oficiales, 72/72 resultados idénticos al modelo oficial de RISC-V, 28–120× RARS. Rust, Tauri, Unicorn Engine. Demo ejecutable en el navegador."
-  },
+  "meta.twitterDescription": {"en": "RISC-V teaching emulator: 78/78 official riscv-tests, 72/72 matches with the official RISC-V model and benchmark results of 28–120× RARS. Built with Rust, Tauri and Unicorn Engine. Includes a browser demo.", "es": "Emulador educativo RISC-V: 78/78 riscv-tests oficiales, 72/72 coincidencias con el modelo oficial de RISC-V y resultados de benchmark de 28–120× RARS. Desarrollado con Rust, Tauri y Unicorn Engine. Incluye una demo para navegador."},
 
   /* ---------- topbar / nav ---------- */
   "topbar.tid": {
@@ -62,20 +53,14 @@ window.SiteI18n.dict = {
     en: "Rust · Tauri 2 · Unicorn Engine · RV32IMAFDC / RV64IM",
     es: "Rust · Tauri 2 · Unicorn Engine · RV32IMAFDC / RV64IM"
   },
-  "hero.blead": {
-    en: 'EmuRV is a desktop environment for learning <b>RISC-V assembly</b>: write, assemble, run or step, and watch the registers and memory change. It exists to replace emu8086 in a computer engineering degree, and its error messages are written in the student\'s own language. The interesting part isn\'t the interface — it\'s that a teaching tool was held to <b class="hl">the correctness standard of a production emulator</b>: the official RISC-V suites and the formal golden model of the specification.',
-    es: 'EmuRV es un entorno de escritorio para aprender <b>ensamblador RISC-V</b>: escribís, ensamblás, ejecutás o vas paso a paso, y mirás cómo cambian los registros y la memoria. Existe para reemplazar a emu8086 en una carrera de Ingeniería en Computación, y sus mensajes de error están escritos en el idioma del estudiante. Lo interesante no es la interfaz: es que a una herramienta educativa se la midió con <b class="hl">la vara de corrección de un emulador de producción</b> — las suites oficiales de RISC-V y el modelo formal dorado de la especificación.'
-  },
+  "hero.blead": {"en": "EmuRV is a desktop environment for learning <b>RISC-V assembly</b>. Students can write, assemble and run programs, step through instructions and inspect registers and memory. I built it as an alternative to emu8086 for the Microprocessors course, with error messages in Spanish. I checked execution against the official RISC-V suites and reference model.", "es": "EmuRV es un entorno de escritorio para aprender <b>ensamblador RISC-V</b>. Permite escribir, ensamblar y ejecutar programas, avanzar por instrucciones e inspeccionar los registros y la memoria. Lo desarrollé como alternativa a emu8086 para la materia Microprocesadores, con mensajes de error en español. Contrasté la ejecución con las suites oficiales y el modelo de referencia de RISC-V."},
   "hero.rolLabel": {
     en: "Role · Whole system (undergraduate thesis)",
     es: "Rol · Sistema completo (trabajo final de grado)"
   },
-  "hero.rolP": {
-    en: "Sole author: the Rust core, the assembler, the emulated devices, the CLI, the GDB stub, the frontend and the test suites. Built with AI assistance under one rule — every decision is recorded with its why, and nothing lands without me reviewing it. FIUNI, Computer Engineering.",
-    es: "Autor único: el núcleo en Rust, el ensamblador, los dispositivos emulados, el CLI, el servidor GDB, el frontend y las suites de pruebas. Desarrollado con asistencia de IA bajo una sola regla: cada decisión queda registrada con su porqué, y nada entra sin que yo lo revise. FIUNI, Ingeniería en Computación."
-  },
-  "hero.stamp": { en: "Verified vs the official model", es: "Verificado contra el modelo oficial" },
-  "hero.wmAria": { en: "EmuRV wordmark", es: "Logotipo de EmuRV" },
+  "hero.rolP": {"en": "I built the Rust core, assembler, emulated devices, CLI, GDB stub, frontend and test suites. I used AI assistance, recorded the technical decisions and reviewed changes before integrating them. Undergraduate thesis at FIUNI, Ingeniería Informática.", "es": "Desarrollé el núcleo en Rust, el ensamblador, los dispositivos emulados, el CLI, el servidor GDB, el frontend y las suites de pruebas. Usé asistencia de IA, registré las decisiones técnicas y revisé los cambios antes de integrarlos. Trabajo final de grado de Ingeniería Informática en la FIUNI."},
+  "hero.stamp": { en: "RISC-V learning environment", es: "Entorno educativo RISC-V" },
+  "hero.introAria": { en: "EmuRV mechanical assembly startup animation", es: "Animación de inicio de EmuRV con ensamble mecánico" },
   "hero.fact1": { en: "official riscv-tests", es: "riscv-tests oficiales" },
   "hero.fact2": { en: "results identical to RISC-V’s official model", es: "resultados idénticos al modelo oficial de RISC-V" },
   "hero.fact3": { en: "automated tests", es: "pruebas automatizadas" },
@@ -83,38 +68,23 @@ window.SiteI18n.dict = {
 
   /* ---------- 01 origen ---------- */
   "s01.sheet": { en: "SHEET 01/09 · WHY IT EXISTS", es: "HOJA 01/09 · POR QUÉ EXISTE" },
-  "s01.title": { en: "The 8086 in the room", es: "El 8086 en el aula" },
-  "s01.p1": {
-    en: 'In the Microprocessors course you learn assembly on <b>emu8086</b>: a 16-bit Intel 8086 emulator, Windows-only, from the DOS era. It does the job — until you try to write something that reacts to a keypress while it runs. My own experience with that wall is where this thesis starts.',
-    es: 'En la materia Microprocesadores se aprende ensamblador con <b>emu8086</b>: un emulador del Intel 8086 de 16 bits, solo para Windows, de la época del DOS. Cumple — hasta que querés escribir algo que reaccione a una tecla mientras corre. Esa pared, que choqué yo mismo, es donde arranca esta tesis.'
-  },
-  "s01.p2": {
-    en: 'RISC-V is the obvious replacement: an open specification, current, and the one the industry is actually adopting. But the RISC-V tools built for teaching are aging or closed — <b class="ink">RARS</b> is Java, <b class="ink">Ripes</b> is Qt, <b class="ink">CPUlator</b> is a closed web app. None of them is a modern native desktop application with real-time I/O. That gap is the whole reason EmuRV exists.',
-    es: 'RISC-V es el reemplazo evidente: una especificación abierta, vigente, y la que la industria está adoptando de verdad. Pero las herramientas RISC-V pensadas para enseñar están envejecidas o cerradas — <b class="ink">RARS</b> es Java, <b class="ink">Ripes</b> es Qt, <b class="ink">CPUlator</b> es una web cerrada. Ninguna es una aplicación de escritorio nativa moderna con E/S en tiempo real. Ese hueco es toda la razón de ser de EmuRV.'
-  },
-  "s01.box1.bt": { en: "What it does, in one line", es: "Qué hace, en una línea" },
+  "s01.title": {"en": "Why I built EmuRV", "es": "Por qué desarrollé EmuRV"},
+  "s01.p1": {"en": "The Microprocessors course uses <b>emu8086</b>, a Windows-only emulator for the 16-bit Intel 8086 from the DOS era. While working with it, I had difficulty running a program that could respond to keyboard input during execution. That experience led to this thesis.", "es": "En Microprocesadores se usa <b>emu8086</b>, un emulador del Intel 8086 de 16 bits para Windows, de la época del DOS. Al trabajar con él, encontré dificultades para ejecutar un programa que respondiera al teclado mientras corría. Esa experiencia dio origen a esta tesis."},
+  "s01.p2": {"en": "I chose RISC-V because its instruction-set specification is open. I reviewed <b>RARS</b> (Java), <b>Ripes</b> (Qt) and <b>CPUlator</b> (a closed web application). With EmuRV I wanted a desktop application with interactive I/O and teaching material in Spanish.", "es": "Elegí RISC-V porque su especificación de instrucciones es abierta. Revisé <b>RARS</b> (Java), <b>Ripes</b> (Qt) y <b>CPUlator</b> (una aplicación web cerrada). Con EmuRV busqué desarrollar una aplicación de escritorio con entrada y salida interactivas y material didáctico en español."},
+  "s01.box1.bt": {"en": "Programming and debugging", "es": "Programación y depuración"},
   "s01.box1.span": {
     en: 'Edit → assemble → run or step → watch registers and memory. Errors by <b>line and column</b>, in Spanish. A built-in 10-lesson course, 15 commented examples, and a graphics screen you can actually play a game on.',
     es: 'Editar → ensamblar → ejecutar o paso a paso → mirar registros y memoria. Errores por <b>línea y columna</b>, en español. Un curso de 10 lecciones adentro de la app, 15 ejemplos comentados y una pantalla gráfica donde de verdad se puede jugar.'
   },
-  "s01.box2.bt": { en: "Read this page as backend", es: "Leé esta página como backend" },
-  "s01.box2.span": {
-    en: 'Almost nothing here is about the interface. What follows is an assembler I had to write from scratch, an execution loop that has to stay interruptible, a memory policy — and above all the only question that really matters for an emulator: <b>how do you know it\'s correct?</b>',
-    es: 'Casi nada de acá es sobre la interfaz. Lo que sigue es un ensamblador que tuve que escribir desde cero, un lazo de ejecución que tiene que seguir siendo interrumpible, una política de memoria — y sobre todo la única pregunta que de verdad importa en un emulador: <b>¿cómo sabés que es correcto?</b>'
-  },
+  "s01.box2.bt": {"en": "Implementation details", "es": "Detalles de implementación"},
+  "s01.box2.span": {"en": "I wrote the assembler, kept the execution loop interruptible and defined the memory policy. The following sections explain those decisions and how I tested the emulator’s results.", "es": "Escribí el ensamblador, mantuve interrumpible el bucle de ejecución y definí la política de memoria. Las siguientes secciones explican esas decisiones y cómo comprobé los resultados del emulador."},
   "s01.stamp": { en: "Thesis prototype · v0.1.0", es: "Prototipo de tesis · v0.1.0" },
 
   /* ---------- 02 demo ---------- */
   "s02.sheet": { en: "SHEET 02/09 · RUN IT HERE", es: "HOJA 02/09 · PROBALO ACÁ" },
-  "s02.title": { en: "Try it right here", es: "Probalo acá mismo" },
-  "s02.lede": {
-    en: 'Below is a working EmuRV, running in your browser. It is <b>not a video and not a mockup</b>: press <b class="tacc">Ensamblar</b>, then <b class="tacc">Paso</b>, and watch the registers light up as they change. Click the editor\'s left margin to drop a breakpoint. Run «Suma interactiva» and type into the console when it asks, or open the «Sprites» tab to watch the 320×240 screen get drawn. Switch the theme, open the lessons, read the help.',
-    es: 'Acá abajo hay un EmuRV funcionando, corriendo en tu navegador. <b>No es un video ni un mockup</b>: apretá <b class="tacc">Ensamblar</b>, después <b class="tacc">Paso</b>, y mirá cómo se encienden los registros al cambiar. Hacé click en el margen izquierdo del editor para poner un breakpoint. Corré «Suma interactiva» y escribí en la consola cuando te lo pida, o abrí la pestaña «Sprites» para ver cómo se dibuja la pantalla de 320×240. Cambiá el tema, abrí las lecciones, leé la ayuda.'
-  },
-  "s02.note": {
-    en: 'Honest about what this is: a faithful in-browser reconstruction of the interface, with a JavaScript interpreter underneath that genuinely assembles and executes <b>the three programs on the tabs</b> — here the editor is read-only, and the rest of the catalogue is labelled «solo en la app». The desktop application runs on <b class="ink">Unicorn Engine</b> with the full RV32IMAFDC repertoire, your own programs, ELF import and export, a GDB stub and detachable windows. Everything on the sheets that follow describes the real one.',
-    es: 'Honesto sobre qué es esto: una reconstrucción fiel en el navegador de la interfaz, con un intérprete en JavaScript abajo que de verdad ensambla y ejecuta <b>los tres programas de las pestañas</b> — acá el editor es de solo lectura, y el resto del catálogo aparece marcado «solo en la app». La aplicación de escritorio corre sobre <b class="ink">Unicorn Engine</b> con el repertorio RV32IMAFDC completo, tus propios programas, import y export de ELF, servidor GDB y ventanas desacoplables. Todo lo que viene en las hojas siguientes describe a la de verdad.'
-  },
+  "s02.title": {"en": "Interactive browser demo", "es": "Demo interactiva en el navegador"},
+  "s02.lede": {"en": "Press <b class=\"tacc\">Ensamblar</b>, then <b class=\"tacc\">Paso</b>, to see the registers change. Click the editor’s left margin to add a breakpoint. In «Suma interactiva», enter a value in the console when prompted; «Sprites» draws on the 320×240 screen. You can also change the theme and open the lessons and help.", "es": "Presioná <b class=\"tacc\">Ensamblar</b> y después <b class=\"tacc\">Paso</b> para ver cómo cambian los registros. Hacé clic en el margen izquierdo del editor para agregar un breakpoint. En «Suma interactiva», ingresá un valor en la consola cuando lo pida; «Sprites» dibuja en la pantalla de 320×240. También podés cambiar el tema y abrir las lecciones y la ayuda."},
+  "s02.note": {"en": "This browser version recreates the interface and uses a JavaScript interpreter for <b>the three programs on the tabs</b>. The editor is read-only; other examples are marked «solo en la app». The desktop application uses <b>Unicorn Engine</b>, supports RV32IMAFDC, runs your own programs and includes ELF import/export, a GDB stub and detachable windows. The engineering sections describe that desktop application.", "es": "Esta versión para navegador reproduce la interfaz y usa un intérprete JavaScript para <b>los tres programas de las pestañas</b>. El editor es de solo lectura; los demás ejemplos están marcados «solo en la app». La aplicación de escritorio usa <b>Unicorn Engine</b>, soporta RV32IMAFDC, ejecuta tus propios programas e incluye importación y exportación ELF, servidor GDB y ventanas desacoplables. Las secciones técnicas describen esa aplicación de escritorio."},
   "s02.barName": {
     en: "EmuRV — interactive demo · in-browser build",
     es: "EmuRV — demo interactiva · versión para navegador"
@@ -129,10 +99,7 @@ window.SiteI18n.dict = {
   /* ---------- 03 la máquina ---------- */
   "s03.sheet": { en: "SHEET 03/09 · THE MACHINE", es: "HOJA 03/09 · LA MÁQUINA" },
   "s03.title": { en: "What happens when you press Step", es: "Qué pasa cuando apretás Paso" },
-  "s03.lede": {
-    en: 'A Tauri 2 shell, a Rust core, and the CPU itself borrowed from <b>Unicorn Engine</b> — the emulation engine carved out of QEMU. The emulation lives in its own thread and never talks to the UI directly: the interface sends commands and receives events (<code>paused</code>, <code>output</code>, <code>registers_update</code>). Between the two sits the piece everything else depends on.',
-    es: 'Una cáscara Tauri 2, un núcleo en Rust, y la CPU tomada prestada de <b>Unicorn Engine</b> — el motor de emulación que se recortó de QEMU. La emulación vive en su propio hilo y nunca le habla directo a la interfaz: la UI manda comandos y recibe eventos (<code>paused</code>, <code>output</code>, <code>registers_update</code>). Entre las dos está la pieza de la que depende todo lo demás.'
-  },
+  "s03.lede": {"en": "The application uses Tauri 2, a Rust core and <b>Unicorn Engine</b>, the CPU emulation engine derived from QEMU. Emulation runs on a separate thread. The interface sends commands and receives events such as <code>paused</code>, <code>output</code> and <code>registers_update</code>.", "es": "La aplicación usa Tauri 2, un núcleo en Rust y <b>Unicorn Engine</b>, el motor de emulación de CPU derivado de QEMU. La emulación corre en un hilo separado. La interfaz envía comandos y recibe eventos como <code>paused</code>, <code>output</code> y <code>registers_update</code>."},
   "diag1.aria": {
     en: "Architecture diagram: the editor sends the source to the assembler, which produces bytes and a source_map; the machine runs on Unicorn Engine and drives the MMIO devices",
     es: "Diagrama de arquitectura: el editor manda el fuente al ensamblador, que produce bytes y un source_map; la máquina corre sobre Unicorn Engine y maneja los dispositivos MMIO"
@@ -167,10 +134,7 @@ window.SiteI18n.dict = {
     es: "Un paso de ejecución, de la línea del editor al dispositivo emulado."
   },
   "s03.h3a": { en: "The source_map, first", es: "Primero, el source_map" },
-  "s03.p1": {
-    en: 'Assembling doesn\'t just produce bytes: it produces a <b class="ink">bidirectional table between source line and address</b>. Every 32-bit word emitted knows which line it came from — including the ones expanded out of a pseudo-instruction — and every line knows its first word. That table is what lets a click on the editor\'s margin become a real breakpoint, and what highlights the line that is about to execute. It had to be designed first, because everything else hangs off it.',
-    es: 'Ensamblar no produce solamente bytes: produce una <b class="ink">tabla bidireccional entre línea del fuente y dirección</b>. Cada palabra de 32 bits emitida sabe de qué línea salió — incluidas las que expandió una pseudo-instrucción — y cada línea sabe cuál es su primera palabra. Esa tabla es lo que convierte un click en el margen del editor en un breakpoint de verdad, y lo que resalta la línea por ejecutarse. Había que diseñarla primero, porque de ella cuelga todo lo demás.'
-  },
+  "s03.p1": {"en": "The assembler produces bytes and a <b>bidirectional mapping between source lines and addresses</b>. It records the source line of each emitted 32-bit word, including pseudo-instruction expansions, and the first word of each line. The debugger uses that mapping to set breakpoints from the editor margin and highlight the next instruction.", "es": "El ensamblador produce bytes y una <b>tabla bidireccional entre líneas del fuente y direcciones</b>. Registra la línea de cada palabra de 32 bits emitida, incluidas las expansiones de pseudoinstrucciones, y la primera palabra de cada línea. El depurador usa esa tabla para fijar breakpoints desde el margen del editor y resaltar la próxima instrucción."},
   "s03.lh1": { en: "Address", es: "Dirección" },
   "s03.lh2": { en: "Word", es: "Palabra" },
   "s03.lh3": { en: "Source · hola-mundo.asm", es: "Fuente · hola-mundo.asm" },
@@ -182,7 +146,7 @@ window.SiteI18n.dict = {
     es: "Programa ensamblado: 24 bytes de código · listo para ejecutar"
   },
   "s03.lf2": { en: ".text base 0x00400000", es: "base de .text 0x00400000" },
-  "s03.h3b": { en: "The bug that shaped the execution loop", es: "El bug que le dio forma al lazo de ejecución" },
+  "s03.h3b": {"en": "Keeping the Stop button responsive", "es": "Cómo mantuve la respuesta de Detener"},
   "s03.p2": {
     en: 'The first version called Unicorn once and let it run to the end, with a timeout to interrupt it. Then a student program of the form <code>loop: j loop</code> left the «Stop» button dead: <b class="ink">Unicorn\'s timeout does not cut a tight loop with no syscalls in it</b>. The instruction count does cut it, so execution was rewritten into bounded slices, checking for the stop signal between them.',
     es: 'La primera versión llamaba a Unicorn una vez y lo dejaba correr hasta el final, con un timeout para interrumpirlo. Después un programa de alumno del tipo <code>loop: j loop</code> dejó muerto al botón «Detener»: <b class="ink">el timeout de Unicorn no corta un bucle apretado sin syscalls adentro</b>. El límite por cantidad de instrucciones sí lo corta, así que la ejecución se reescribió en tramos acotados, chequeando la señal de detener entre uno y otro.'
@@ -196,25 +160,13 @@ window.SiteI18n.dict = {
   "s03.rh3": { en: "Decimal", es: "Decimal" },
   "s03.rh4": { en: "Last step", es: "Último paso" },
   "s03.chg": { en: "◀ changed", es: "◀ cambió" },
-  "s03.rf1": {
-    en: "After two steps: «la a0, saludo» has landed. The changed register is highlighted — that flash is the whole didactic point.",
-    es: "Después de dos pasos: «la a0, saludo» ya cayó. El registro que cambió queda resaltado — ese destello es todo el punto didáctico."
-  },
+  "s03.rf1": {"en": "After two steps, «la a0, saludo» has executed. The changed register is highlighted so the student can follow the effect of the instruction.", "es": "Después de dos pasos se ejecutó «la a0, saludo». El registro modificado queda resaltado para que el estudiante pueda seguir el efecto de la instrucción."},
 
   /* ---------- 04 ensamblador ---------- */
   "s04.sheet": { en: "SHEET 04/09 · THE ASSEMBLER", es: "HOJA 04/09 · EL ENSAMBLADOR" },
-  "s04.title": {
-    en: "The assembler I did not plan to write",
-    es: "El ensamblador que no pensaba escribir"
-  },
-  "s04.lede": {
-    en: 'The thesis brief closed the stack up front, and it said <b>Keystone</b> for assembly. Keystone\'s RISC-V support turned out not to be incomplete — it is <b class="tred">nonexistent</b>. I checked the 0.9.2 headers directly: the <code>ks_arch</code> enum has no <code>KS_ARCH_RISCV</code> entry at all, in any official release. That is a risk that fires on day one of a project, and the plan B was to write the assembler myself.',
-    es: 'El brief de la tesis cerraba el stack de entrada, y decía <b>Keystone</b> para ensamblar. Resultó que el soporte RISC-V de Keystone no está incompleto: es <b class="tred">inexistente</b>. Lo verifiqué directo en los headers de la 0.9.2: el enum <code>ks_arch</code> no tiene ninguna entrada <code>KS_ARCH_RISCV</code>, en ninguna release oficial. Es el tipo de riesgo que estalla el día uno del proyecto, y el plan B fue escribir el ensamblador yo.'
-  },
-  "s04.p1": {
-    en: 'Which turned out to be the better outcome anyway, for two reasons the brief could not have anticipated: <b class="ink">total control of the source_map</b>, and diagnostics written for a beginner rather than for a toolchain. A third-party assembler would have handed me an English error with a byte offset.',
-    es: 'Que igual terminó siendo el mejor desenlace, por dos razones que el brief no podía anticipar: <b class="ink">control total del source_map</b> y diagnósticos escritos para un principiante y no para un toolchain. Un ensamblador de terceros me hubiera devuelto un error en inglés con un offset en bytes.'
-  },
+  "s04.title": {"en": "Writing the assembler", "es": "El desarrollo del ensamblador"},
+  "s04.lede": {"en": "The thesis plan specified <b>Keystone</b> for assembly. I checked the 0.9.2 headers and found no <code>KS_ARCH_RISCV</code> entry in <code>ks_arch</code>. Without official RISC-V support, I wrote the assembler myself.", "es": "El plan de tesis proponía <b>Keystone</b> para ensamblar. Revisé los headers de la versión 0.9.2 y no encontré una entrada <code>KS_ARCH_RISCV</code> en <code>ks_arch</code>. Al no contar con soporte oficial para RISC-V, escribí el ensamblador."},
+  "s04.p1": {"en": "That let me control the <b>source_map</b> and write beginner-oriented diagnostics with line and column positions in Spanish, instead of relying on English errors reported as byte offsets.", "es": "Eso me permitió controlar el <b>source_map</b> y escribir diagnósticos para principiantes, con línea y columna en español, sin depender de errores en inglés indicados como desplazamientos en bytes."},
   "s04.dcap": { en: "stderr · emurv-cli asm hola.s", es: "stderr · emurv-cli asm hola.s" },
   "s04.dnote": {
     en: "Real output, not an illustration. Every diagnostic carries line, column and — where the mistake has a common cause — the fix. In the app the same errors appear underlined in the editor.",
@@ -225,7 +177,7 @@ window.SiteI18n.dict = {
     en: 'An assembler that emits a wrong word produces a program that runs and gives the wrong answer — the worst possible failure for a teaching tool. So the encodings are not checked by hand: an <b class="ink">oracle test suite assembles the same source with GNU <code>as</code></b> and compares the emitted words one by one. That oracle covers floating point (F and D), the atomics (A), the compressed 2-byte instructions (C) and the RV64IM repertoire against <code>as -march=rv64im</code>.',
     es: 'Un ensamblador que emite una palabra mal produce un programa que corre y da un resultado equivocado — el peor fallo posible en una herramienta educativa. Así que los encodings no se revisan a mano: una <b class="ink">suite de oráculo ensambla el mismo fuente con GNU <code>as</code></b> y compara las palabras emitidas una por una. Ese oráculo cubre coma flotante (F y D), las atómicas (A), las comprimidas de 2 bytes (C) y el repertorio RV64IM contra <code>as -march=rv64im</code>.'
   },
-  "s04.li1.b": { en: "Full repertoire, switchable width", es: "Repertorio completo, ancho conmutable" },
+  "s04.li1.b": {"en": "Instruction support and RV32/RV64 selection", "es": "Instrucciones y selección RV32/RV64"},
   "s04.li1.d": {
     en: 'RV32IMAFDC — integers, multiply/divide, single and double floating point with the <code>f0</code>–<code>f31</code> file, atomics, and hand-written compressed instructions. A selector in the toolbar switches the machine to RV64: <code>ld</code>/<code>sd</code>, <code>lwu</code>, the «W» instructions and 6-bit shift amounts. RV32 stays untouched, and a 64-bit instruction inside an RV32 program produces a teaching error rather than a wrong result.',
     es: 'RV32IMAFDC — enteros, multiplicación y división, coma flotante simple y doble con el banco <code>f0</code>–<code>f31</code>, atómicas y comprimidas escritas a mano. Un selector en la barra cambia la máquina a RV64: <code>ld</code>/<code>sd</code>, <code>lwu</code>, las instrucciones «W» y corrimientos con <code>shamt</code> de 6 bits. RV32 queda intacto, y una instrucción de 64 bits dentro de un programa RV32 da un error didáctico en vez de un resultado equivocado.'
@@ -235,15 +187,12 @@ window.SiteI18n.dict = {
     en: '<code>.include</code> resolved relative to the including file, <code>.macro</code> with named parameters, <code>.eqv</code>/<code>.equ</code> constants, and <code>%hi()</code>/<code>%lo()</code> so a student can see what <code>la</code> actually expands to. Multi-file programs work in the app and from the CLI.',
     es: '<code>.include</code> resuelto relativo al archivo que lo contiene, <code>.macro</code> con parámetros nombrados, constantes <code>.eqv</code>/<code>.equ</code>, y <code>%hi()</code>/<code>%lo()</code> para que el estudiante vea en qué expande realmente un <code>la</code>. Los programas multi-archivo funcionan en la app y por línea de comandos.'
   },
-  "s04.li3.b": { en: "Standard ELF32, in and out", es: "ELF32 estándar, para los dos lados" },
+  "s04.li3.b": {"en": "ELF32 import and export", "es": "Importación y exportación ELF32"},
   "s04.li3.d": {
     en: 'Export produces a real ELF32 RISC-V that other tools load — Ripes, <code>objdump</code>. Import is the other direction: open a binary and the editor switches to read-only disassembly mode, with run, step and breakpoints working on the listing. A C program compiled with <code>riscv64-elf-gcc</code> loads too; an ELF with the wrong base address is rejected with a message that names the exact flag that is missing.',
     es: 'La exportación produce un ELF32 RISC-V de verdad que otras herramientas cargan — Ripes, <code>objdump</code>. La importación es el camino inverso: abrís un binario y el editor pasa a modo desensamblado de solo lectura, con ejecutar, paso y breakpoints funcionando sobre el listado. Un programa en C compilado con <code>riscv64-elf-gcc</code> también carga; un ELF con otras direcciones se rechaza con un mensaje que nombra exactamente el flag que falta.'
   },
-  "s04.li4.b": {
-    en: "A relocatable variant, because someone will ask",
-    es: "Una variante reubicable, porque alguien lo va a pedir"
-  },
+  "s04.li4.b": {"en": "Relocatable ELF output", "es": "Exportación ELF reubicable"},
   "s04.li4.d": {
     en: '<code>asm --reubicable</code> emits symbol references PC-relative (<code>auipc</code>) instead of absolute and marks the ELF <code>ET_DYN</code>, for a loader that places it somewhere else. The default stays absolute: that is the one that matches EmuRV\'s memory map when you inspect it elsewhere.',
     es: '<code>asm --reubicable</code> emite las referencias a símbolos en forma PC-relativa (<code>auipc</code>) en vez de absoluta y marca el ELF <code>ET_DYN</code>, para un cargador que lo ubique en otro lado. El default sigue siendo absoluto: es el que coincide con el mapa de memoria de EmuRV cuando lo inspeccionás en otra herramienta.'
@@ -252,14 +201,8 @@ window.SiteI18n.dict = {
 
   /* ---------- 05 dispositivos ---------- */
   "s05.sheet": { en: "SHEET 05/09 · DEVICES &amp; REAL TIME", es: "HOJA 05/09 · DISPOSITIVOS Y TIEMPO REAL" },
-  "s05.title": {
-    en: "Devices, and the game that justifies them",
-    es: "Los dispositivos, y el juego que los justifica"
-  },
-  "s05.lede": {
-    en: 'The whole memory map is <b>compatible with RARS</b> — the same base addresses, the same keyboard semantics. That is not nostalgia: it means the Spanish-language teaching material that already exists for RARS runs on EmuRV unchanged.',
-    es: 'Todo el mapa de memoria es <b>compatible con RARS</b> — las mismas direcciones base, la misma semántica de teclado. No es nostalgia: significa que el material didáctico en español que ya existe para RARS corre en EmuRV sin tocarle una línea.'
-  },
+  "s05.title": {"en": "Emulated devices and Tetris", "es": "Dispositivos emulados y Tetris"},
+  "s05.lede": {"en": "The memory map uses <b>RARS-compatible</b> base addresses and keyboard behavior. This lets existing Spanish-language teaching material use those same addresses in EmuRV.", "es": "El mapa de memoria usa direcciones base y comportamiento de teclado <b>compatibles con RARS</b>. Esto permite reutilizar en EmuRV esas mismas direcciones del material didáctico en español."},
   "s05.mh1": { en: "Address", es: "Dirección" },
   "s05.mh2": { en: "Region", es: "Región" },
   "s05.mh3": { en: "Notes", es: "Notas" },
@@ -299,37 +242,22 @@ window.SiteI18n.dict = {
     en: "The oldest key code — reading it consumes the key. Queue of 64.",
     es: "El código de la tecla más vieja — leerlo la consume. Cola de 64."
   },
-  "s05.h3a": { en: "Polling, and why it isn't a shortcut", es: "Polling, y por qué no es un atajo" },
-  "s05.p1": {
-    en: 'All the I/O is polling, and that is a <b class="ink">documented structural limitation, not a simplification</b>: Unicorn\'s own FAQ states that it does not expose hardware interrupts. Building a CLINT and a PLIC on top of a CPU-only engine that officially does not support them is real architecture work, and it is written down as future work rather than quietly implied. What does exist is a keyboard the program can poll without ever blocking, plus syscalls 30 (system time in ms) and 32 (sleep, interruptible by «Stop»).',
-    es: 'Toda la E/S es por polling, y eso es una <b class="ink">limitación estructural documentada, no una simplificación</b>: el propio FAQ de Unicorn declara que no expone interrupciones de hardware. Construir un CLINT y un PLIC encima de un motor CPU-only que oficialmente no las soporta es trabajo de arquitectura de verdad, y quedó escrito como trabajo futuro en vez de insinuado por lo bajo. Lo que sí existe es un teclado que el programa consulta sin bloquearse nunca, más las syscalls 30 (tiempo del sistema en ms) y 32 (dormir, interrumpible con «Detener»).'
-  },
-  "s05.p2": {
-    en: 'The <code>.text</code> region being read-only is a deliberate teaching policy — W^X. Jumping into data or patching your own code stops with a message that explains what happened rather than corrupting silently. Keep that decision in mind: it comes back with a cost on the next sheet.',
-    es: 'Que la región <code>.text</code> sea de solo lectura es una política didáctica deliberada — W^X. Saltar a los datos o parchear tu propio código detiene la ejecución con un mensaje que explica qué pasó, en vez de corromper en silencio. Acordate de esa decisión: vuelve, con su costo, en la hoja siguiente.'
-  },
+  "s05.h3a": {"en": "Polling and hardware interrupt limitations", "es": "Polling y límites de las interrupciones de hardware"},
+  "s05.p1": {"en": "I/O uses polling because Unicorn does not expose hardware interrupts. CLINT and PLIC support remains future work. The program can poll the keyboard without blocking, use syscall 30 for system time in milliseconds and syscall 32 to sleep; «Stop» can interrupt that sleep.", "es": "La entrada y salida usan polling porque Unicorn no expone interrupciones de hardware. El soporte de CLINT y PLIC queda como trabajo futuro. El programa puede consultar el teclado sin bloquearse, usar la syscall 30 para obtener el tiempo en milisegundos y la 32 para dormir; «Detener» puede interrumpir esa espera."},
+  "s05.p2": {"en": "I made <code>.text</code> read-only as part of the W^X teaching policy. Jumping into data or modifying code stops execution with an explanatory message. This policy also causes incompatibilities with some official tests, detailed in the validation section.", "es": "Definí <code>.text</code> como solo lectura dentro de la política didáctica W^X. Saltar a los datos o modificar el código detiene la ejecución con un mensaje explicativo. Esta política también genera incompatibilidades con algunos tests oficiales, detalladas en la sección de validación."},
   "s05.h3b": { en: "Tetris as an acceptance test", es: "El Tetris como prueba de aceptación" },
-  "s05.p2b": {
-    en: 'The example that closes the lesson series is a <b class="ink">port to RV32IM of an 8086 Tetris</b> from the same Microprocessors course — the exact program that was painful on emu8086. Board in memory, bitmaps, collisions, line clears, scoring, drawn as coloured blocks on the 320×240 screen and played with the keyboard. Its game logic and the resulting pixels are checked by a test oracle, not by me looking at it.',
-    es: 'El ejemplo que cierra la serie de lecciones es un <b class="ink">port a RV32IM de un Tetris de 8086</b> de la misma materia Microprocesadores — justo el programa que dolía en emu8086. Tablero en memoria, bitmaps, colisiones, líneas completas, puntaje, dibujado como bloques de color en la pantalla de 320×240 y jugable con el teclado. Su lógica de juego y los píxeles resultantes los verifica un oráculo de tests, no yo mirándolo.'
-  },
+  "s05.p2b": {"en": "The final lesson example is a <b>RV32IM port of an 8086 Tetris</b> from the Microprocessors course. It includes the in-memory board, bitmaps, collision detection, line clears and scoring, draws colored blocks on the 320×240 screen and accepts keyboard input. Automated test oracles check the game logic and resulting pixels.", "es": "El ejemplo final de las lecciones es un <b>port a RV32IM de un Tetris de 8086</b> de Microprocesadores. Incluye el tablero en memoria, bitmaps, detección de colisiones, líneas completas y puntaje; dibuja bloques de color en la pantalla de 320×240 y recibe entrada del teclado. Oráculos de pruebas automatizadas verifican la lógica del juego y los píxeles resultantes."},
   "s05.l1": { en: "Full-repaint frame rate (Rust side)", es: "Cuadros por segundo con repintado completo (lado Rust)" },
   "s05.l2": { en: "What the UI actually consumes", es: "Lo que la interfaz consume de verdad" },
   "s05.l3": { en: "Headroom over what the screen needs", es: "Margen sobre lo que la pantalla necesita" },
   "s05.l4": { en: "Hardware interrupts (CLINT / PLIC)", es: "Interrupciones de hardware (CLINT / PLIC)" },
-  "s05.box.bt": { en: "Worst case, on purpose", es: "El peor caso, a propósito" },
-  "s05.box.span": {
-    en: 'That 811 is the median of five runs (range 799–838), measured on the production path: a <b>complete repaint</b> of the framebuffer every frame plus the frame-close syscall. Nothing is skipped to make the number look better.',
-    es: 'Ese 811 es la mediana de cinco corridas (rango 799–838), medido sobre el camino de producción: un <b>repintado completo</b> del framebuffer por cuadro más la syscall de cierre de cuadro. No se saltea nada para que el número quede lindo.'
-  },
+  "s05.box.bt": {"en": "Full-frame repaint measurement", "es": "Medición con repintado completo"},
+  "s05.box.span": {"en": "The 811 FPS figure is the median of five runs, ranging from 799–838. Each frame uses the production path: a <b>complete framebuffer repaint</b> followed by the frame-close syscall.", "es": "Los 811 FPS son la mediana de cinco corridas, con un rango de 799–838. Cada cuadro usa el camino de producción: <b>repintado completo del framebuffer</b> seguido de la syscall de cierre de cuadro."},
 
   /* ---------- 06 validación ---------- */
   "s06.sheet": { en: "SHEET 06/09 · HOW I KNOW IT'S CORRECT", es: "HOJA 06/09 · CÓMO SÉ QUE ES CORRECTO" },
-  "s06.title": { en: "Two verdicts I did not write myself", es: "Dos veredictos que no escribí yo" },
-  "s06.lede": {
-    en: 'My own tests can only tell me the emulator agrees with what I believed when I wrote it. So the correctness argument rests on two suites that come from outside the project: the <b>official riscv-tests</b>, and <b>riscv-arch-test through RISCOF</b>, which compares my machine\'s output against <b class="tacc">Sail — the formal golden model of RISC-V International</b>. Every number below is reproducible from a script in the repository.',
-    es: 'Mis propios tests solo pueden decirme que el emulador coincide con lo que yo creía cuando lo escribí. Por eso el argumento de corrección se apoya en dos suites que vienen de afuera del proyecto: los <b>riscv-tests oficiales</b> y <b>riscv-arch-test vía RISCOF</b>, que compara la salida de mi máquina contra <b class="tacc">Sail — el modelo formal dorado de RISC-V International</b>. Cada número de acá abajo se reproduce con un script del repositorio.'
-  },
+  "s06.title": {"en": "Testing against the official RISC-V suites", "es": "Pruebas con las suites oficiales de RISC-V"},
+  "s06.lede": {"en": "Alongside my own tests, I ran the <b>official riscv-tests</b> and <b>riscv-arch-test through RISCOF</b>. RISCOF compares the emulator’s output with <b>Sail, the formal reference model from RISC-V International</b>. Repository scripts reproduce the results below.", "es": "Además de mis propios tests, ejecuté los <b>riscv-tests oficiales</b> y <b>riscv-arch-test mediante RISCOF</b>. RISCOF compara la salida del emulador con <b>Sail, el modelo formal de referencia de RISC-V International</b>. Los scripts del repositorio permiten reproducir estos resultados."},
   "s06.v1cap": {
     en: "Verdict A · riscv-tests, official self-checking suites · commit 34e6b6d1 · 2026-07-22",
     es: "Veredicto A · riscv-tests, suites oficiales self-checking · commit 34e6b6d1 · 2026-07-22"
@@ -354,14 +282,8 @@ window.SiteI18n.dict = {
     en: "Total — 72/72 of the compatible tests, identical signature",
     es: "Total — 72/72 de los tests compatibles, firma idéntica"
   },
-  "s06.h3a": {
-    en: "The four exclusions and the two mismatches, named",
-    es: "Las cuatro exclusiones y los dos mismatches, con nombre y apellido"
-  },
-  "s06.p1": {
-    en: "A result with an asterisk is worth nothing if the asterisk is not spelled out, so here they are, each traced to root cause rather than waved away.",
-    es: "Un resultado con asterisco no vale nada si el asterisco no está explicado, así que acá están, cada uno rastreado hasta la causa raíz en vez de barrido bajo la alfombra."
-  },
+  "s06.h3a": {"en": "Four exclusions and two mismatches", "es": "Cuatro exclusiones y dos resultados distintos"},
+  "s06.p1": {"en": "I traced each exclusion and mismatch to its cause. Some come from EmuRV’s memory and debugging policies; another comes from the underlying engine.", "es": "Rastreé la causa de cada exclusión y resultado distinto. Algunos provienen de las políticas de memoria y depuración de EmuRV; otro, del motor de emulación."},
   "s06.b1.bt": {
     en: "fence_i · rvc · Fencei — my W^X policy",
     es: "fence_i · rvc · Fencei — mi política W^X"
@@ -374,19 +296,10 @@ window.SiteI18n.dict = {
     en: "cebreak-01 — <code>ebreak</code> belongs to the debugger",
     es: "cebreak-01 — <code>ebreak</code> es del depurador"
   },
-  "s06.b2.span": {
-    en: 'The test expects <code>c.ebreak</code> to be delegated to the guest\'s trap handler. In EmuRV <code>ebreak</code> <b>is</b> the software breakpoint mechanism of the UI, so it never reaches the guest. Same shape of conflict: a deliberate decision, not a semantics defect.',
-    es: 'El test espera que <code>c.ebreak</code> se delegue al manejador de traps del programa. En EmuRV <code>ebreak</code> <b>es</b> el mecanismo de breakpoints por software de la interfaz, así que nunca llega al invitado. Mismo tipo de conflicto: una decisión deliberada, no un defecto de semántica.'
-  },
-  "s06.b3.bt": {
-    en: "fmin — a defect in the engine underneath",
-    es: "fmin — un defecto del motor de abajo"
-  },
-  "s06.b3.span": {
-    en: 'This one is not mine and it is the finding I am most pleased with. An isolated probe against the machine showed <code>fmax.s(1.0, sNaN)</code> returning a canonical qNaN instead of <code>1.0</code>. That is the IEEE 754-2008 semantics, superseded by the RISC-V F v2.2 spec: <b>QEMU fixed it in 6.0, but Unicorn 2.x is still based on QEMU 5.0.1</b>. Subtest 20 of <code>fmin.S</code> detects exactly that case. Documented as an inherited limitation — with the version chain that explains it.',
-    es: 'Este no es mío y es el hallazgo que más me gusta. Una sonda aislada contra la máquina mostró que <code>fmax.s(1.0, sNaN)</code> devuelve un qNaN canónico en vez de <code>1.0</code>. Esa es la semántica IEEE 754-2008, superada por la spec RISC-V F v2.2: <b>QEMU lo corrigió en la 6.0, pero Unicorn 2.x sigue basado en QEMU 5.0.1</b>. El subtest 20 de <code>fmin.S</code> detecta exactamente ese caso. Documentado como limitación heredada — con la cadena de versiones que lo explica.'
-  },
-  "s06.h3b": { en: "And underneath, the ordinary discipline", es: "Y abajo, la disciplina de todos los días" },
+  "s06.b2.span": {"en": "The test expects <code>c.ebreak</code> to reach the guest program’s trap handler. EmuRV uses <code>ebreak</code> for the interface’s software breakpoints, so it intercepts the instruction before the guest handler. That debugging policy causes the mismatch.", "es": "El test espera que <code>c.ebreak</code> llegue al manejador de traps del programa. EmuRV usa <code>ebreak</code> para los breakpoints por software de la interfaz e intercepta la instrucción antes del manejador del programa. Esa política de depuración provoca la diferencia."},
+  "s06.b3.bt": {"en": "fmin: an inherited Unicorn limitation", "es": "fmin: una limitación heredada de Unicorn"},
+  "s06.b3.span": {"en": "An isolated probe showed <code>fmax.s(1.0, sNaN)</code> returning a canonical qNaN instead of <code>1.0</code>. This follows IEEE 754-2008 semantics, superseded by RISC-V F v2.2. <b>QEMU fixed the behavior in 6.0, while Unicorn 2.x remains based on QEMU 5.0.1</b>. Subtest 20 of <code>fmin.S</code> detects the case; I documented it as an inherited engine limitation.", "es": "Una prueba aislada mostró que <code>fmax.s(1.0, sNaN)</code> devuelve un qNaN canónico en lugar de <code>1.0</code>. Ese comportamiento sigue IEEE 754-2008, superado por RISC-V F v2.2. <b>QEMU lo corrigió en la versión 6.0, mientras Unicorn 2.x sigue basado en QEMU 5.0.1</b>. El subtest 20 de <code>fmin.S</code> detecta el caso; lo documenté como una limitación heredada del motor."},
+  "s06.h3b": {"en": "Automated tests and CI", "es": "Pruebas automatizadas e integración continua"},
   "s06.l1": {
     en: "Rust core, against the real machine",
     es: "Núcleo Rust, contra la máquina real"
@@ -402,22 +315,13 @@ window.SiteI18n.dict = {
     es: "Jobs de CI en verde (build macOS + compuerta de peso del bundle)"
   },
   "s06.b4.bt": { en: "Counting them properly", es: "Contarlos bien" },
-  "s06.b4.span": {
-    en: 'That total used to be reported as «271 + 10 + 119». The 10 was wrong: it counted a single test binary and silently dropped three others. I found it doing a documentation reconciliation pass, re-ran the whole suite and corrected every document that carried the figure. A number nobody had questioned was wrong for weeks — which is exactly why the reconciliation pass exists.',
-    es: 'Ese total se venía reportando como «271 + 10 + 119». El 10 estaba mal: contaba un solo binario de pruebas y se comía otros tres en silencio. Lo encontré haciendo un barrido de reconciliación documental, volví a correr la suite completa y corregí todos los documentos que arrastraban la cifra. Un número que nadie había cuestionado estuvo mal durante semanas — que es exactamente para lo que existe el barrido.'
-  },
+  "s06.b4.span": {"en": "The documentation reported «271 + 10 + 119» tests. The 10 counted one test binary and omitted three others. During a documentation review, I found the error, reran the full suite and corrected the affected reports.", "es": "La documentación informaba «271 + 10 + 119» pruebas. El 10 contaba un solo binario de tests y omitía otros tres. Encontré el error al revisar la documentación, volví a ejecutar la suite completa y corregí los informes afectados."},
   "s06.stamp": { en: "78/78 · 72/72 · 0 fail", es: "78/78 · 72/72 · 0 fallos" },
 
   /* ---------- 07 rendimiento ---------- */
   "s07.sheet": { en: "SHEET 07/09 · PERFORMANCE", es: "HOJA 07/09 · RENDIMIENTO" },
-  "s07.title": {
-    en: "Measured against the reference, not against itself",
-    es: "Medido contra la referencia, no contra sí mismo"
-  },
-  "s07.lede": {
-    en: 'Four RV32IM kernels, the <b>same algorithm on four emulators</b>, ~500 M instructions per run, median of five, and equivalence verified first — all four produce the same numeric result per kernel. Comparing an emulator only against its own previous version proves nothing.',
-    es: 'Cuatro kernels RV32IM, el <b>mismo algoritmo en cuatro emuladores</b>, ~500 M de instrucciones por corrida, mediana de cinco, y equivalencia verificada primero: los cuatro producen el mismo resultado numérico por kernel. Comparar un emulador solo contra su propia versión anterior no prueba nada.'
-  },
+  "s07.title": {"en": "Performance against QEMU, Spike and RARS", "es": "Rendimiento frente a QEMU, Spike y RARS"},
+  "s07.lede": {"en": "I ran four RV32IM kernels using the <b>same algorithm on four emulators</b>, with roughly 500 M instructions per run and the median of five runs. Before timing them, I checked that all four produced the same numerical result for each kernel.", "es": "Ejecuté cuatro kernels RV32IM con el <b>mismo algoritmo en cuatro emuladores</b>, unas 500 M de instrucciones por corrida y la mediana de cinco corridas. Antes de medirlos, comprobé que los cuatro produjeran el mismo resultado numérico por kernel."},
   "chart.aria": {
     en: "Logarithmic chart of throughput in millions of instructions per second: QEMU 1090 to 4806, Spike 882 to 992, EmuRV 160 to 718, RARS 5.6 to 6.0",
     es: "Gráfico logarítmico de rendimiento en millones de instrucciones por segundo: QEMU de 1090 a 4806, Spike de 882 a 992, EmuRV de 160 a 718, RARS de 5,6 a 6,0"
@@ -434,10 +338,7 @@ window.SiteI18n.dict = {
     en: "Millions of instructions per second — LOGARITHMIC SCALE",
     es: "Millones de instrucciones por segundo — ESCALA LOGARÍTMICA"
   },
-  "chart.cap": {
-    en: "Each bar spans the slowest and fastest of the four kernels for that emulator. A logarithmic axis is the only honest way to hold 5.6 and 4 806 in the same picture — the exact numbers are in the table below.",
-    es: "Cada barra va del kernel más lento al más rápido de ese emulador. Un eje logarítmico es la única forma honesta de meter 5,6 y 4 806 en la misma imagen — los números exactos están en la tabla de abajo."
-  },
+  "chart.cap": {"en": "Each bar spans the slowest and fastest kernel for that emulator. The logarithmic scale fits values from 5.6 to 4 806 on the same chart; the table gives the exact measurements.", "es": "Cada barra va del kernel más lento al más rápido de ese emulador. La escala logarítmica permite representar valores de 5,6 a 4 806 en el mismo gráfico; la tabla muestra las mediciones exactas."},
   "s07.bh1": { en: "Kernel · RV32IM", es: "Kernel · RV32IM" },
   "s07.k1": { en: "arithmetic — pure ALU", es: "aritmética — ALU pura" },
   "s07.k2": { en: "memory — lw/sw over 4 KiB", es: "memoria — lw/sw sobre 4 KiB" },
@@ -447,24 +348,12 @@ window.SiteI18n.dict = {
     en: "Millions of instructions per second, median of 5. EmuRV 0.1.0 (Unicorn 2.1.5) · QEMU 11.0.2 · Spike 1.1.1-dev · RARS 1.6 on OpenJDK 25, with its 0.133 s JVM startup discounted.",
     es: "Millones de instrucciones por segundo, mediana de 5. EmuRV 0.1.0 (Unicorn 2.1.5) · QEMU 11.0.2 · Spike 1.1.1-dev · RARS 1.6 sobre OpenJDK 25, con su arranque de JVM de 0,133 s descontado."
   },
-  "s07.h3a": { en: "Reading it honestly", es: "Cómo leerlo con honestidad" },
-  "s07.p1": {
-    en: 'Against <b class="ink">RARS</b> — its actual category, the same didactic job — EmuRV is <b class="tacc">28 to 120× faster</b>. Against <b class="ink">Spike</b>, the reference instruction-set simulator of the ecosystem, it lands in the same order of magnitude: 81 % of Spike on pure ALU. Against plain QEMU it is 0.7 to 1.5 orders behind.',
-    es: 'Contra <b class="ink">RARS</b> —su categoría real, la misma función didáctica— EmuRV es <b class="tacc">28 a 120× más rápido</b>. Contra <b class="ink">Spike</b>, el simulador de referencia del ecosistema, queda en el mismo orden de magnitud: 81 % de Spike en ALU pura. Contra QEMU puro está 0,7 a 1,5 órdenes por debajo.'
-  },
-  "s07.p2": {
-    en: 'That remaining gap is <b>bought, not lost</b>: an interruptibility check every ~40 ms, the observation hooks that make the keyboard, the screen and the syscalls visible, and a wall time that includes process start and assembling the source. The engine\'s own ceiling with no slicing, on the same machine, was 1 293 M instr/s when it was last remeasured. The requirement in the spec was 10 — it clears it by 16 to 72× in the worst kernel, and the author\'s decision was to stop chasing speed there.',
-    es: 'Esa diferencia que queda está <b>comprada, no perdida</b>: un chequeo de interrumpibilidad cada ~40 ms, los hooks de observación que hacen visibles el teclado, la pantalla y las syscalls, y un tiempo de pared que incluye el arranque del proceso y el ensamblado del fuente. El techo del motor sin tramos, en la misma máquina, dio 1 293 M instr/s en la última remedición. El requisito de la especificación era 10: lo supera por 16 a 72× en el peor kernel, y la decisión del autor fue dejar de perseguir velocidad ahí.'
-  },
+  "s07.h3a": {"en": "What the measurements show", "es": "Qué muestran las mediciones"},
+  "s07.p1": {"en": "EmuRV ran <b>28 to 120× faster than RARS</b>, which serves the same teaching purpose. It reached 81 % of Spike’s throughput on pure ALU work. Compared with plain QEMU, it was 0.7 to 1.5 orders of magnitude slower.", "es": "EmuRV fue <b>28 a 120× más rápido que RARS</b>, que cumple la misma función didáctica. Alcanzó el 81 % de la velocidad de Spike en ALU pura. Frente a QEMU puro quedó entre 0,7 y 1,5 órdenes de magnitud por debajo."},
+  "s07.p2": {"en": "The measurements include an interruptibility check roughly every 40 ms, observation hooks for the keyboard, screen and syscalls, process startup and source assembly. Without execution slices, the engine reached 1 293 M instr/s on the same machine. The specification required 10 M instr/s; measured performance was 16 to 72× that target. I kept the responsiveness checks instead of pursuing more throughput.", "es": "Las mediciones incluyen una comprobación de interrupción cada 40 ms aproximadamente, los hooks de teclado, pantalla y syscalls, el arranque del proceso y el ensamblado. Sin tramos de ejecución, el motor alcanzó 1 293 M instr/s en la misma máquina. La especificación pedía 10 M instr/s; el rendimiento medido fue de 16 a 72× ese objetivo. Conservé los controles de respuesta en lugar de seguir buscando más velocidad."},
   "s07.b1.bt": { en: "Three numbers for one metric", es: "Tres números para una sola métrica" },
-  "s07.b1.span": {
-    en: 'My own documentation carried three different frame rates for the same benchmark — 835, 797 and 832 — and I spent a while looking for the regression between them. There wasn\'t one. All three were <b>single runs</b> of a bench with ±2.5 % spread. Five control runs gave 799, 804, 811, 814, 838: the three historical figures all sit inside the normal band. The fix wasn\'t to the code, it was to the method — every figure now ships with its median, its range and its <i>n</i>.',
-    es: 'Mi propia documentación arrastraba tres cuadros por segundo distintos para el mismo banco —835, 797 y 832— y estuve un rato buscando la regresión entre ellos. No había ninguna. Los tres eran <b>corridas únicas</b> de un banco con ±2,5 % de dispersión. Cinco corridas de control dieron 799, 804, 811, 814, 838: las tres cifras históricas caen dentro de la banda normal. La corrección no fue al código, fue al método — ahora toda cifra sale con su mediana, su rango y su <i>n</i>.'
-  },
-  "s07.h3b": {
-    en: "Limitations I am declaring before you find them",
-    es: "Limitaciones que declaro antes de que las encuentres"
-  },
+  "s07.b1.span": {"en": "My documentation had three frame rates for the same benchmark: 835, 797 and 832. Each came from a single run, with ±2.5 % variation. Five control runs returned 799, 804, 811, 814 and 838, placing those earlier figures within normal variation. I corrected the reporting method to include the median, range and <i>n</i>.", "es": "Mi documentación tenía tres cifras de cuadros por segundo para el mismo benchmark: 835, 797 y 832. Cada una provenía de una corrida única, con ±2,5 % de dispersión. Cinco corridas de control dieron 799, 804, 811, 814 y 838; las cifras anteriores estaban dentro de la variación normal. Corregí el método de reporte para incluir la mediana, el rango y el <i>n</i>."},
+  "s07.h3b": {"en": "Benchmark limitations", "es": "Limitaciones del benchmark"},
   "s07.li1.b": { en: "Nominal instruction count", es: "Cuenta nominal de instrucciones" },
   "s07.li1.d": {
     en: "Deterministic loops counted over the listing, not retired by a hardware counter. The same criterion is applied to all four emulators, so the ratios hold even if an absolute is off.",
@@ -481,21 +370,12 @@ window.SiteI18n.dict = {
     es: 'Todo corrió en una sola Apple M4 Pro, así que <b>lo citable son los cocientes entre emuladores, no los absolutos</b>. QEMU tuvo que correr en system mode porque el brew de macOS no trae la versión user-mode; Spike y QEMU ejecutan ELF bare-metal mientras que EmuRV y RARS ejecutan el mismo fuente en ensamblador.'
   },
   "s07.li4.b": { en: "emu8086 is a documentary comparison", es: "Con emu8086 la comparación es documental" },
-  "s07.li4.d": {
-    en: "The emulator EmuRV replaces is a step-by-step interpreter that redraws its UI per instruction, publishes no performance figures, and needs a Windows machine to run. I am not going to invent a number for it.",
-    es: "El emulador al que EmuRV reemplaza es un intérprete paso a paso que redibuja su interfaz por instrucción, no publica cifras de rendimiento y necesita una máquina Windows para correr. No le voy a inventar un número."
-  },
+  "s07.li4.d": {"en": "emu8086 is a step-by-step interpreter that redraws its interface per instruction, needs Windows and publishes no performance figures. I did not assign it a throughput value in this comparison.", "es": "emu8086 es un intérprete paso a paso que redibuja su interfaz por instrucción, requiere Windows y no publica cifras de rendimiento. No le asigné un valor de velocidad en esta comparación."},
 
   /* ---------- 08 interfaz ---------- */
   "s08.sheet": { en: "SHEET 08/09 · THE INTERFACE", es: "HOJA 08/09 · LA INTERFAZ" },
-  "s08.title": {
-    en: "The part the student actually touches",
-    es: "La parte que el estudiante toca de verdad"
-  },
-  "s08.lede": {
-    en: 'Everything themeable lives in CSS design tokens, so a theme is one block of variable overrides and no duplicated CSS. Five themes ship with the app plus one the user builds, and <b>the contrast of all five is verified by an automated test</b> — body text and editor syntax both, against WCAG AA. A theme that fails the test does not ship.',
-    es: 'Todo lo temable vive en design tokens CSS, así que un tema es un bloque de variables sobrescritas y cero CSS duplicado. La app trae cinco temas más el que arma el usuario, y <b>el contraste de los cinco lo verifica un test automatizado</b> — texto y sintaxis del editor, contra WCAG AA. Un tema que no pasa el test no entra.'
-  },
+  "s08.title": {"en": "Editor, panels and themes", "es": "Editor, paneles y temas"},
+  "s08.lede": {"en": "Themes use CSS design tokens, with one set of variable overrides per theme and no duplicated CSS. The app includes five themes and a user theme. <b>Automated tests check WCAG AA contrast</b> for text and editor syntax in all five built-in themes; a failing theme is not included in a release.", "es": "Los temas usan design tokens CSS, con un bloque de variables por tema y sin duplicar CSS. La app incluye cinco temas y uno personalizable. <b>Pruebas automatizadas comprueban el contraste WCAG AA</b> del texto y la sintaxis del editor en los cinco temas incluidos; un tema que falla no se incorpora a una entrega."},
   "s08.f1alt": {
     en: "EmuRV main window: toolbar, file tabs, editor with the executing line highlighted and a breakpoint, and the Screen, Registers, Memory and Debug panels, console and status bar",
     es: "Ventana principal de EmuRV: barra de herramientas, pestañas de archivos, editor con la línea en ejecución resaltada y un breakpoint, y los paneles de Pantalla, Registros, Memoria y Depuración, consola y barra de estado"
@@ -528,19 +408,13 @@ window.SiteI18n.dict = {
     es: "EmuRV con el tema Retro Kawaii: paleta pastel vaporwave"
   },
   "s08.f4b": { en: "Retro Kawaii.", es: "Retro Kawaii." },
-  "s08.f4cap": {
-    en: "Pastel vaporwave. It passes the same AA test as the rest — that constraint is what kept the pastels from going unreadable.",
-    es: "Pastel vaporwave. Pasa el mismo test AA que los demás — esa restricción es lo que evitó que los pasteles se volvieran ilegibles."
-  },
+  "s08.f4cap": {"en": "Pastel vaporwave colors, checked with the same WCAG AA contrast tests as the other themes.", "es": "Colores pastel vaporwave, comprobados con los mismos tests de contraste WCAG AA de los demás temas."},
   "s08.f5alt": {
     en: "EmuRV with the Disquete 90s theme: nineties desktop beige with coloured title bars",
     es: "EmuRV con el tema Disquete 90s: beige de escritorio noventero con barras de título de color"
   },
   "s08.f5b": { en: "Disquete 90s.", es: "Disquete 90s." },
-  "s08.f5cap": {
-    en: "Nineties desktop beige, coloured title bars. Same tokens, a different decade.",
-    es: "Beige de escritorio noventero, barras de título de color. Los mismos tokens, otra década."
-  },
+  "s08.f5cap": {"en": "Nineties desktop beige and colored title bars, using the same theme tokens.", "es": "Beige de escritorio de los noventa y barras de título de color, usando los mismos tokens de tema."},
   "s08.f6alt": {
     en: "EmuRV theme editor: a colour control per design token, with a live preview and a WCAG AA contrast warning",
     es: "Editor de temas de EmuRV: un control de color por design token, con preview en vivo y un aviso de contraste WCAG AA"
@@ -573,10 +447,7 @@ window.SiteI18n.dict = {
     es: "EmuRV en una ventana angosta: los botones de la barra pasan a solo-ícono y los controles se reacomodan"
   },
   "s08.f9b": { en: "Any window width.", es: "Cualquier ancho de ventana." },
-  "s08.f9cap": {
-    en: "The toolbar buttons drop to icon-only and the controls rewrap instead of being cut off — a laptop in a classroom is not a 27-inch display.",
-    es: "Los botones de la barra pasan a solo-ícono y los controles bajan de fila en vez de cortarse — una notebook en un aula no es un monitor de 27 pulgadas."
-  },
+  "s08.f9cap": {"en": "In narrow windows, toolbar buttons become icon-only and controls wrap onto another row.", "es": "En ventanas angostas, los botones de la barra pasan a mostrar solo el ícono y los controles se distribuyen en otra fila."},
   "s08.f10alt": {
     en: "EmuRV showing a user-built custom theme",
     es: "EmuRV mostrando un tema personalizado armado por el usuario"
@@ -586,21 +457,12 @@ window.SiteI18n.dict = {
     en: 'Unlike the built-ins, its values never enter <code>tokens.css</code>: they are CSS variables applied live on <code>:root</code> and saved on the machine.',
     es: 'A diferencia de los que vienen de fábrica, sus valores nunca entran a <code>tokens.css</code>: son variables CSS aplicadas en vivo sobre <code>:root</code> y guardadas en el equipo.'
   },
-  "s08.h3a": {
-    en: "One language decision, stated rather than hidden",
-    es: "Una decisión de idioma, declarada en vez de escondida"
-  },
-  "s08.p1": {
-    en: 'The interface has an ES/EN selector. The <b>assembler and runtime diagnostics, and the lesson content, stay in Spanish even in English mode</b>. That is a declared scope decision — the Spanish material is the didactic contribution of the thesis, and translating it would have meant maintaining two versions of the thing being evaluated. It is written down as a decision, not left as an oversight for someone to discover.',
-    es: 'La interfaz tiene selector ES/EN. Los <b>diagnósticos del ensamblador y del runtime, y el contenido de las lecciones, siguen en español también en modo inglés</b>. Es una decisión de alcance declarada: el material en español es el aporte didáctico de la tesis, y traducirlo hubiera significado mantener dos versiones de justo aquello que se evalúa. Está escrita como decisión, no dejada como olvido para que alguien la descubra.'
-  },
+  "s08.h3a": {"en": "Interface and teaching-material languages", "es": "Idioma de la interfaz y del material didáctico"},
+  "s08.p1": {"en": "The interface has an ES/EN selector. <b>Assembler and runtime diagnostics, and the lessons, remain in Spanish in both modes</b>. I kept the thesis teaching material in one language to avoid maintaining two versions during its evaluation.", "es": "La interfaz tiene selector ES/EN. <b>Los diagnósticos del ensamblador y del runtime, y las lecciones, siguen en español en ambos modos</b>. Conservé el material didáctico de la tesis en un solo idioma para evitar mantener dos versiones durante su evaluación."},
 
   /* ---------- 09 estado y stack ---------- */
-  "s09.sheet": { en: "SHEET 09/09 · STACK &amp; HONEST STATUS", es: "HOJA 09/09 · STACK Y ESTADO HONESTO" },
-  "s09.title": {
-    en: "Inventory, and what is still missing",
-    es: "Inventario, y lo que todavía falta"
-  },
+  "s09.sheet": {"en": "SHEET 09/09 · STACK AND STATUS", "es": "HOJA 09/09 · STACK Y ESTADO"},
+  "s09.title": {"en": "Technologies and pending work", "es": "Tecnologías y trabajo pendiente"},
   "s09.h1": { en: "Core", es: "Núcleo" },
   "s09.h1.li3": { en: "Own RV32IMAFDC / RV64IM assembler", es: "Ensamblador propio RV32IMAFDC / RV64IM" },
   "s09.h1.li4": { en: "Own disassembler", es: "Desensamblador propio" },
@@ -661,11 +523,8 @@ window.SiteI18n.dict = {
     en: "Documentary reconciliation against evidence",
     es: "Reconciliación documental contra la evidencia"
   },
-  "s09.h3a": { en: "Where it really stands", es: "En qué punto está de verdad" },
-  "s09.p1": {
-    en: "The thesis is in progress. Separating what is verified from what is merely built is the whole point of the exercise.",
-    es: "La tesis está en curso. Separar lo verificado de lo meramente construido es todo el sentido del ejercicio."
-  },
+  "s09.h3a": {"en": "Project status", "es": "Estado del proyecto"},
+  "s09.p1": {"en": "The thesis is in progress. The list separates tested features, builds awaiting validation and pending work.", "es": "La tesis sigue en curso. La lista separa las funciones probadas, las builds pendientes de validación y el trabajo que falta completar."},
   "s09.c1h": { en: "[x] Built and verified", es: "[x] Construido y verificado" },
   "s09.c1.li1": { en: "· RV32IMAFDC + switchable RV64IM", es: "· RV32IMAFDC + RV64IM conmutable" },
   "s09.c1.li2": { en: "· Official compliance, twice over", es: "· Compliance oficial, por dos caminos" },
@@ -695,11 +554,8 @@ window.SiteI18n.dict = {
     en: "· macOS on Apple Silicon is the only platform I have actually tested",
     es: "· macOS en Apple Silicon es la única plataforma que realmente probé"
   },
-  "s09.c3h": { en: "[ ] Missing, and named", es: "[ ] Falta, y lo nombro" },
-  "s09.c3.li1": {
-    en: "· <b>The usability study with students</b> — protocol and questionnaires ready; it needs the supervisor's sign-off and participants. It is what the committee actually grades",
-    es: "· <b>El estudio de usabilidad con estudiantes</b> — protocolo y cuestionarios listos; falta el aval del tutor y los participantes. Es lo que la comisión realmente califica"
-  },
+  "s09.c3h": {"en": "[ ] Pending work", "es": "[ ] Trabajo pendiente"},
+  "s09.c3.li1": {"en": "· <b>Student usability study:</b> protocol and questionnaires ready; awaiting the supervisor’s approval and participants for the thesis evaluation.", "es": "· <b>Estudio de usabilidad con estudiantes:</b> protocolo y cuestionarios listos; faltan el aval del tutor y los participantes para la evaluación de la tesis."},
   "s09.c3.li2": {
     en: "· Hardware interrupts: CLINT and PLIC over an engine that does not expose them",
     es: "· Interrupciones de hardware: CLINT y PLIC sobre un motor que no las expone"
@@ -716,10 +572,7 @@ window.SiteI18n.dict = {
     en: "Happy to go deeper into any of this — the assembler, the compliance run, or the benchmark method.",
     es: "Con gusto profundizo en cualquiera de estas cosas: el ensamblador, la corrida de compliance o el método del benchmark."
   },
-  "footer.small": {
-    en: "EmuRV is an undergraduate thesis prototype at FIUNI, Computer Engineering. The repository is private while the thesis is under evaluation; this page describes the engineering and reproduces published figures without exposing source code. Every number here comes from a result document in the repository, with its date and its measurement conditions.",
-    es: "EmuRV es un prototipo de trabajo final de grado en la FIUNI, Ingeniería en Computación. El repositorio es privado mientras la tesis está en evaluación; esta página describe la ingeniería y reproduce cifras publicadas sin exponer código fuente. Cada número de acá sale de un documento de resultados del repositorio, con su fecha y su condición de medición."
-  },
+  "footer.small": {"en": "EmuRV is an undergraduate thesis prototype in Ingeniería Informática at FIUNI. The repository remains private during evaluation. Results come from repository reports with their measurement dates and conditions; this page does not publish the source code.", "es": "EmuRV es un prototipo de trabajo final de grado de Ingeniería Informática en la FIUNI. El repositorio sigue privado durante la evaluación. Los resultados provienen de informes del repositorio con sus fechas y condiciones de medición; esta página no publica el código fuente."},
   "footer.row1": {
     en: "Enrique Chyrnia · Backend &amp; Infrastructure",
     es: "Enrique Chyrnia · Backend e infraestructura"

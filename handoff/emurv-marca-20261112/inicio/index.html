@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>EmuRV · Animación de inicio</title>
+  <link rel="stylesheet" href="inicio.css?v=20261113-encastre-2">
+  <script type="module" src="review.js?v=20261113-encastre-2"></script>
+</head>
+<body>
+  <header class="topbar"><a href="../">← Marca de EmuRV</a><span>Opción A / Paso</span></header>
+  <main>
+    <header class="heading"><div><p class="eyebrow">Marca / A · Paso</p><h1>Inicio de EmuRV</h1></div><p id="concept-description">Las piezas del monograma llegan desde distintas direcciones y encajan. El nombre se acomoda debajo.</p></header>
+    <fieldset class="variants"><legend>Animación</legend><label><input type="radio" name="variant" value="trazo"><span><b>1 · Trazo</b><small>La primera propuesta</small></span></label><label><input type="radio" name="variant" value="ensamble" checked><span><b>2 · Ensamble</b><small>Preferida por ahora</small></span></label><label><input type="radio" name="variant" value="cursor"><span><b>3 · Cursor</b><small>Dos barridos de ejecución</small></span></label></fieldset>
+    <div class="appearance"><fieldset class="segmented"><legend class="sr-only">Fondo de la animación</legend><label><input type="radio" name="theme" value="dark" checked><span>Oscuro</span></label><label><input type="radio" name="theme" value="paper"><span>Papel</span></label></fieldset><label class="reduced"><input id="reduce" type="checkbox">Reducir movimiento</label></div>
+    <section class="preview" aria-label="Reproductor de la animación de EmuRV">
+      <div class="stage-wrap" data-theme="dark"><div id="stage" class="stage"><div class="fallback"><img src="../simbolos/a-paso.svg" alt="EmuRV"><p>Creado por<br>Enrique Emmanuel Rios Chyrnia</p></div></div><button id="skip" type="button" class="skip">Omitir intro</button></div>
+      <div class="transport"><div class="actions"><button id="replay" type="button">↻ Repetir con sonido</button><button id="pause" type="button">Reproducir</button><button id="open" type="button" class="primary">Simular apertura ↗</button></div><span id="time" class="time" aria-hidden="true">0,0 / 5,4 s</span></div>
+      <div class="audio-settings"><label class="sound-toggle"><input id="sound" type="checkbox" checked>Sonido</label><label class="volume-label" for="volume">Volumen <input id="volume" type="range" min="0" max="100" step="5" value="65"><output id="volume-value" for="volume">65 %</output></label><span id="audio-status" role="status">Audio listo</span></div>
+      <label class="timeline-label" for="timeline">Recorrer la animación</label><input id="timeline" type="range" min="0" max="5400" step="10" value="0" aria-valuetext="0 segundos">
+      <div class="chapters" aria-label="Momentos de la animación"><button type="button" data-time="1000">01 <span>Piezas</span></button><button type="button" data-time="2000">02 <span>Ensamble</span></button><button type="button" data-time="3050">03 <span>Nombre</span></button><button type="button" data-time="4500">04 <span>Autor</span></button></div>
+      <p id="notice" class="notice" role="status">Pulsá Repetir con sonido o Simular apertura para escuchar la animación.</p>
+    </section>
+    <div class="notes"><p>La secuencia completa dura 5,4 segundos y se puede omitir desde el comienzo. «Simular apertura» la muestra sin los controles de revisión.</p><p>Esta propuesta es para abrir EmuRV. Todavía no está integrada en la aplicación; el botón Ejecutar de tus programas conserva su comportamiento.</p></div>
+    <footer><a id="gif-link" href="animacion-ensamble.gif">Ver animación en GIF</a><a id="video-link" href="animacion-ensamble-con-sonido.mp4">MP4 con sonido</a><a id="audio-link" href="audio/ensamble.mp3" download>Audio original</a><a href="sonido-elevenlabs.md">Prompts de sonido</a><a href="animacion-ensamble-con-sonido-anterior.mp4">Comparar ensamble anterior</a><a href="README.md">Diseño y archivos</a><span>Creado por Enrique Emmanuel Rios Chyrnia</span></footer>
+  </main>
+  <dialog id="startup-dialog" aria-label="Simulación de la pantalla de inicio de EmuRV"><div class="simulation" data-theme="dark"><div id="simulation-stage" class="stage"></div><button id="simulation-skip" type="button" class="skip" autofocus>Omitir intro · Esc</button></div></dialog>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+=== a-paso.svg  (435 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 22
+margins L18.0 R18.0 T40.0 B40.0 · bbox fill 0.591
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== b-registro.svg  (351 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 2: #262a20 #7a5fd8 · gradients 0 · anchors 18
+margins L28.0 R28.0 T40.0 B40.0 · bbox fill 0.537
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== c-trama.svg  (737 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 130
+margins L32.0 R32.0 T44.0 B44.0 · bbox fill 0.492
+· INFO [complexity] 130 anchor points (library median 53.0, p75 95.5). Check every point earns its place.
+production-readiness score: 99/100 (heuristic)
+
+=== d-tipo.svg  (465 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 19
+margins L40.0 R40.0 T40.0 B40.0 · bbox fill 0.473
+✔ no issues found
+production-readiness score: 100/100 (heuristic)

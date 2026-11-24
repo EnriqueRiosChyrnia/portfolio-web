@@ -1,0 +1,54 @@
+[
+  {
+    "id": "a",
+    "slug": "a-paso",
+    "name": "Paso",
+    "kind": "Monograma RV",
+    "idea": "La pierna de la R se une a la V en un solo recorrido.",
+    "reference": "Las instrucciones que avanzan y el nombre de la arquitectura.",
+    "risk": "Es la opción más angular; conviene comprobar que RV se reconozca sin explicación.",
+    "font": "InstrumentSans-Bold.ttf",
+    "symbol": "simbolos/a-paso.svg",
+    "lockup": "logotipos/a-paso.svg",
+    "wordmark": "logotipos/a-paso-nombre.svg"
+  },
+  {
+    "id": "b",
+    "slug": "b-registro",
+    "name": "Registro",
+    "kind": "Símbolo modular",
+    "idea": "Una E formada por filas, con una celda activa separada.",
+    "reference": "Los registros que cambian al ejecutar una instrucción.",
+    "risk": "La E es clara, pero por sí sola identifica menos a RISC-V.",
+    "font": "BricolageGrotesque-Bold.ttf",
+    "symbol": "simbolos/b-registro.svg",
+    "lockup": "logotipos/b-registro.svg",
+    "wordmark": "logotipos/b-registro-nombre.svg"
+  },
+  {
+    "id": "c",
+    "slug": "c-trama",
+    "name": "Trama",
+    "kind": "Monograma de píxeles",
+    "idea": "RV se construye sobre una cuadrícula de ocho por siete celdas.",
+    "reference": "La pantalla gráfica y los programas interactivos de EmuRV.",
+    "risk": "Tiene un carácter más lúdico y requiere más cuidado a 16 píxeles.",
+    "font": "PixelifySans-Medium.ttf",
+    "symbol": "simbolos/c-trama.svg",
+    "lockup": "logotipos/c-trama.svg",
+    "wordmark": "logotipos/c-trama-nombre.svg"
+  },
+  {
+    "id": "d",
+    "slug": "d-tipo",
+    "name": "Tipo",
+    "kind": "Logotipo dibujado",
+    "idea": "Letras propias de trazos abiertos y una e como símbolo abreviado.",
+    "reference": "La lectura del nombre y la claridad de una herramienta educativa.",
+    "risk": "La e aislada comunica menos sobre la arquitectura que el monograma RV.",
+    "font": null,
+    "symbol": "simbolos/d-tipo.svg",
+    "lockup": "logotipos/d-tipo.svg",
+    "wordmark": "logotipos/d-tipo-nombre.svg"
+  }
+]

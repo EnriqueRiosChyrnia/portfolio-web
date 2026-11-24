@@ -1,0 +1,61 @@
+
+=== a-paso-nombre.svg  (1570 bytes)
+viewBox 0 0 885 256 · aspect 3.457 (horizontal)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 110
+margins L31.9 R15.3 T36.0 B45.6 · bbox fill 0.645
+· INFO [precision] Coordinates with 4+ decimals: round to 0–2 decimals to reduce size and reveal misalignments.
+production-readiness score: 99/100 (heuristic)
+
+=== a-paso.svg  (1868 bytes)
+viewBox 0 0 1169 256 · aspect 4.566 (extra-wide)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 132
+margins L18.0 R15.3 T36.0 B40.0 · bbox fill 0.683
+· INFO [precision] Coordinates with 4+ decimals: round to 0–2 decimals to reduce size and reveal misalignments.
+· INFO [extra-wide] Extra-wide lockup (>4.5:1) shrinks badly; provide a stacked lockup and a standalone symbol.
+production-readiness score: 98/100 (heuristic)
+
+=== b-registro-nombre.svg  (1897 bytes)
+viewBox 0 0 950 256 · aspect 3.711 (horizontal)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 124
+margins L39.0 R14.2 T36.0 B44.4 · bbox fill 0.648
+▲ WARN [near-miss-angle] 3 straight edge(s) are 0.3–3° off a clean angle — they read as mistakes. Snap them: 89.7° (→90°) len 42.7 at (538,208); 73.8° (→75°) len 146.0 at (810,36); 106.3° (→105°) len 146.1 at (854,176). (Expected — and fine — for type set on a curve or deliberately rotated elements.)
+· INFO [precision] Coordinates with 4+ decimals: round to 0–2 decimals to reduce size and reveal misalignments.
+production-readiness score: 91/100 (heuristic)
+
+=== b-registro.svg  (2103 bytes)
+viewBox 0 0 1234 256 · aspect 4.82 (extra-wide)
+colours 2: #262a20 #7a5fd8 · gradients 0 · anchors 142
+margins L28.0 R14.2 T36.0 B40.0 · bbox fill 0.679
+▲ WARN [near-miss-angle] 2 straight edge(s) are 0.3–3° off a clean angle — they read as mistakes. Snap them: 73.8° (→75°) len 146.0 at (1094,36); 106.3° (→105°) len 146.1 at (1138,176). (Expected — and fine — for type set on a curve or deliberately rotated elements.)
+· INFO [precision] Coordinates with 4+ decimals: round to 0–2 decimals to reduce size and reveal misalignments.
+· INFO [extra-wide] Extra-wide lockup (>4.5:1) shrinks badly; provide a stacked lockup and a standalone symbol.
+production-readiness score: 90/100 (heuristic)
+
+=== c-trama-nombre.svg  (995 bytes)
+viewBox 0 0 798 256 · aspect 3.117 (horizontal)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 104
+margins L34.7 R24.1 T52.5 B45.1 · bbox fill 0.573
+· INFO [precision] Coordinates with 4+ decimals: round to 0–2 decimals to reduce size and reveal misalignments.
+production-readiness score: 99/100 (heuristic)
+
+=== c-trama.svg  (1593 bytes)
+viewBox 0 0 1082 256 · aspect 4.227 (horizontal)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 234
+margins L32.0 R24.1 T44.0 B44.0 · bbox fill 0.622
+· INFO [precision] Coordinates with 4+ decimals: round to 0–2 decimals to reduce size and reveal misalignments.
+· INFO [complexity] 234 anchor points (library median 75.0, p75 155.0). Check every point earns its place.
+production-readiness score: 98/100 (heuristic)
+
+=== d-tipo-nombre.svg  (1034 bytes)
+viewBox 0 0 867 256 · aspect 3.387 (horizontal)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 71
+margins L24.0 R23.6 T47.2 B35.4 · bbox fill 0.64
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== d-tipo.svg  (1362 bytes)
+viewBox 0 0 1151 256 · aspect 4.496 (horizontal)
+colours 2: #7a5fd8 #262a20 · gradients 0 · anchors 90
+margins L40.0 R23.6 T40.0 B35.4 · bbox fill 0.666
+✔ no issues found
+production-readiness score: 100/100 (heuristic)

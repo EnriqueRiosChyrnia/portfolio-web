@@ -1,0 +1,72 @@
+[
+  {
+    "colores": [
+      "#7A5FD8",
+      "#262A20"
+    ],
+    "contraste": 3.106
+  },
+  {
+    "colores": [
+      "#7A5FD8",
+      "#F7F4E6"
+    ],
+    "contraste": 4.272
+  },
+  {
+    "colores": [
+      "#7A5FD8",
+      "#6041B5"
+    ],
+    "contraste": 1.526
+  },
+  {
+    "colores": [
+      "#7A5FD8",
+      "#FFFFFF"
+    ],
+    "contraste": 4.713
+  },
+  {
+    "colores": [
+      "#262A20",
+      "#F7F4E6"
+    ],
+    "contraste": 13.272
+  },
+  {
+    "colores": [
+      "#262A20",
+      "#6041B5"
+    ],
+    "contraste": 2.036
+  },
+  {
+    "colores": [
+      "#262A20",
+      "#FFFFFF"
+    ],
+    "contraste": 14.64
+  },
+  {
+    "colores": [
+      "#F7F4E6",
+      "#6041B5"
+    ],
+    "contraste": 6.518
+  },
+  {
+    "colores": [
+      "#F7F4E6",
+      "#FFFFFF"
+    ],
+    "contraste": 1.103
+  },
+  {
+    "colores": [
+      "#6041B5",
+      "#FFFFFF"
+    ],
+    "contraste": 7.19
+  }
+]

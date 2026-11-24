@@ -1,0 +1,107 @@
+[
+  {
+    "archivo": "animacion-elegida/emurv-ensamble-mecanico-con-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-ensamble-con-sonido.mp4",
+    "sha256": "580dc303b78c5175ec9cff1617f8f0c52baf30b93aee89383db18a9e6d237dc1"
+  },
+  {
+    "archivo": "animacion-elegida/emurv-ensamble-mecanico-sin-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-ensamble.mp4",
+    "sha256": "9be97715af74b504ef4cb449c3a2681049e81df2483c6899ed1d1f09e31bd136"
+  },
+  {
+    "archivo": "animacion-elegida/emurv-ensamble-mecanico-preview.gif",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-ensamble.gif",
+    "sha256": "f459496289cb6e049ba9dcf3b0cde063923c63938e324fe925355c043d63a808"
+  },
+  {
+    "archivo": "alternativas/emurv-trazo-con-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-emurv-con-sonido.mp4",
+    "sha256": "748d5e68638165bbee009d6c574fd629aa1f50ed814add613cf208c878607f17"
+  },
+  {
+    "archivo": "alternativas/emurv-trazo-sin-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-emurv.mp4",
+    "sha256": "cbeb3b27310440b9fa95f2f9a7ccc8f98f1eda107b50e2ec557152489a853b37"
+  },
+  {
+    "archivo": "alternativas/emurv-cursor-con-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-cursor-con-sonido.mp4",
+    "sha256": "4c092734b4e3fd6b6bee7eb08a3dfec0fa7727435726068d953cd40144754af8"
+  },
+  {
+    "archivo": "alternativas/emurv-cursor-sin-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-cursor.mp4",
+    "sha256": "a2938e25cb8017b94dd90a7b5c56e11f52c33a0e7b6d5d1f9952b5c435d95544"
+  },
+  {
+    "archivo": "alternativas/emurv-ensamble-previo-con-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-ensamble-con-sonido-anterior.mp4",
+    "sha256": "0d4279018816cee7d104a2291a8a545cfa43a085bbc18fb4c5ae4e0467539b2a"
+  },
+  {
+    "archivo": "alternativas/emurv-ensamble-previo-sin-sonido.mp4",
+    "fuente": "handoff/emurv-marca-20261112/inicio/animacion-ensamble-anterior.mp4",
+    "sha256": "fa417255e4d48a9d8c72a7061c5b6d08dd091f3f6724c05802c70b09ca328e85"
+  },
+  {
+    "archivo": "sonidos/efectos/desplazamiento-servo-0700ms.mp3",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/piezas/desplazamiento.mp3",
+    "sha256": "ea9ca71a6a2b6bd426783dded1bedaaa2fa59f26aeabb1b0afb63dafdd1ff3c7"
+  },
+  {
+    "archivo": "sonidos/efectos/encaje-metal-pequeno-0300ms.mp3",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/piezas/encaje-pequeno.mp3",
+    "sha256": "f92016a109f0b5d66dc3d46eb0d332cfd094152e4664c972ec0de3ae41095243"
+  },
+  {
+    "archivo": "sonidos/efectos/encaje-metal-grande-0500ms.mp3",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/piezas/encaje-grande.mp3",
+    "sha256": "a572682e1e8191118dcc3d51edac28e7431528ec2bc091da15a0861aaf1f8c63"
+  },
+  {
+    "archivo": "sonidos/efectos/cierre-mecanico-final-0900ms.mp3",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/piezas/cierre-final.mp3",
+    "sha256": "b69c630f73ec9414a5024faa995684d8f09387ddada81fb90a6497fb0ca1ea25"
+  },
+  {
+    "archivo": "sonidos/mezclas/emurv-ensamble-mecanico-5400ms.wav",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/ensamble-industrial.wav",
+    "sha256": "a06cfb033e2e3bb2f0e6c3707e703088c07bcc8e0ec458ec957481d6169ec377"
+  },
+  {
+    "archivo": "sonidos/alternativas/emurv-trazo-5400ms.mp3",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/trazo.mp3",
+    "sha256": "ed255a0b3b4d4607de5aa4d302a29ae927d8a2cafd44d4d6d5f38bcad04464d2"
+  },
+  {
+    "archivo": "sonidos/alternativas/emurv-ensamble-suave-5400ms.mp3",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/ensamble.mp3",
+    "sha256": "43c562d7d1295a433a7c3add4c0ad26dfe2769cf5d556d30211b10401de8dd7c"
+  },
+  {
+    "archivo": "sonidos/alternativas/emurv-cursor-5400ms.mp3",
+    "fuente": "handoff/emurv-marca-20261112/inicio/audio/cursor.mp3",
+    "sha256": "13033dbb12cccaad63d84369c775861275ee7d0874e1e43c896ac50c3f1eb844"
+  },
+  {
+    "archivo": "marca/emurv-isotipo-purpura-negro.svg",
+    "fuente": "handoff/emurv-marca-20261112/simbolos/a-paso.svg",
+    "sha256": "32182cb5cbfd882b22311b2a1a176a9d8f2fa6fd648c6ba69316c4b7efd48c23"
+  },
+  {
+    "archivo": "marca/emurv-imagotipo-horizontal.svg",
+    "fuente": "handoff/emurv-marca-20261112/logotipos/a-paso.svg",
+    "sha256": "7dff425f744525385f080ba6041aa938ff9d29e5b27a9019cc349cae4d6631f4"
+  },
+  {
+    "archivo": "marca/emurv-logotipo.svg",
+    "fuente": "handoff/emurv-marca-20261112/logotipos/a-paso-nombre.svg",
+    "sha256": "8e6bb9b2b895bd73b9f5b285f17b9a393a54114b2021594605151c431a63d022"
+  },
+  {
+    "archivo": "marca/emurv-icono-app.svg",
+    "fuente": "EmuRV-TFG, adaptación del isotipo A para icono de escritorio",
+    "sha256": "2fb1683c74de1f54f86403e340fa646ef7d702be529a4d410e07171af5501949"
+  }
+]

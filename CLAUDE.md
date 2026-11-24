@@ -631,3 +631,11 @@ Lo mismo si se quiere un tour interactivo: copiar `.tour-grid`/`.tcard`/modal + 
   infraestructura, decisiones y su porqué por sobre lo visual/frontend.
 - Honestidad en el contenido: estados reales (sandbox, pendiente, en desarrollo), números
   reales, sin inflar. Es una marca de estas páginas (ver `#integraciones` de fil-grama).
+
+## Publicación selectiva de EmuRV ·24/11/2026
+
+Se integra la página EmuRV, su diccionario EN/ES, la marca A/Paso, la presentación automática Ensamble y la marca de la demo desde `codex/portfolio-trabajo-20261109` (239b18a). En portada solo se actualiza la descripción de EmuRV (`s04c.noteFull`) y la versión de su diccionario. No se incorporan los cambios de experiencia laboral, perfil, Ryguasu ni Fil-Grama de esa rama.
+
+Fuentes y exportaciones: `handoff/emurv-marca-20261112/` y `recursos/emurv/`. La intro usa módulos y audio locales, respeta movimiento reducido y libera la página al finalizar o si falla un recurso. El navegador puede bloquear el audio automático. La publicación existente se activa al subir `main`: Cloudflare Pages para `portfolio.fil-grama.com` y GitHub Pages para el espejo. Se crea `dev` para conservar la misma entrega aprobada.
+
+Validación previa: sintaxis JS, recursos locales de EmuRV presentes, diccionario de EmuRV sin claves faltantes/huérfanas y portada con únicamente la clave de EmuRV modificada. Para revertir esta entrega, revertir el commit selectivo; base anterior `1167523`.

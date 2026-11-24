@@ -1,0 +1,23 @@
+{
+  "trazo": {
+    "archivo": "Duration_5.4_seconds_#1-1794567189225.mp3",
+    "copia": "audio/trazo.mp3",
+    "sha256": "ed255a0b3b4d4607de5aa4d302a29ae927d8a2cafd44d4d6d5f38bcad04464d2",
+    "duracion_s": 5.4,
+    "asignacion": "Confirmada por Enrique el 13/11/2026"
+  },
+  "ensamble": {
+    "archivo": "Duration_5.4_seconds_#4-1794567225251.mp3",
+    "copia": "audio/ensamble.mp3",
+    "sha256": "43c562d7d1295a433a7c3add4c0ad26dfe2769cf5d556d30211b10401de8dd7c",
+    "duracion_s": 5.4,
+    "asignacion": "Confirmada por Enrique el 13/11/2026"
+  },
+  "cursor": {
+    "archivo": "Duration_5.4_seconds_#3-1794567256312.mp3",
+    "copia": "audio/cursor.mp3",
+    "sha256": "13033dbb12cccaad63d84369c775861275ee7d0874e1e43c896ac50c3f1eb844",
+    "duracion_s": 5.4,
+    "asignacion": "Confirmada por Enrique el 13/11/2026"
+  }
+}

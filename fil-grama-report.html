@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Vollkorn:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/infra/diagram.css">
 <style>
   /* Palatino es la serif de marca: macOS y Windows ya la traen instalada.
      Vollkorn queda como respaldo web para el resto. */
@@ -625,10 +626,25 @@
     <section id="infra" data-screen-label="07 Infraestructura">
       <div class="pgh"><span><img class="qmark" src="assets/filgrama/marca/codorniz.png" alt="" loading="lazy" decoding="async"><b>FIL-GRAMA.PRT</b></span><span data-i18n="s06.sheet">SHEET 07/10 · INFRASTRUCTURE</span><span>BLUEBAR · 132 COL</span></div>
       <h2 class="title"><span class="tn">07</span><span data-i18n="s06.title">How it's deployed</span></h2>
+      <p class="lede" data-i18n="s06.lede">I rented the server, wired the connections and deployed both halves myself: <b>backend on a Vultr VPS</b>, Docker Compose behind Caddy with Postgres, and <b>frontend on Cloudflare Pages</b>, which redeploys on every push to main.</p>
+      <figure id="diagrama-infraestructura" class="infra-diagram" aria-describedby="infra-diagram-caption">
+        <a class="infra-diagram__open" href="assets/filgrama/infraestructura-en.svg" data-i18n-attr="href:infra.diagram.path;aria-label:infra.diagram.open" aria-label="Enlarge the infrastructure diagram" target="_blank" rel="noopener">
+          <img src="assets/filgrama/infraestructura-en.svg" width="1280" height="650" alt="Fil-grama infrastructure: Cloudflare Pages and R2, a Vultr VPS with Caddy, Spring Boot and PostgreSQL, and the TikTok and Meta APIs." data-i18n-attr="src:infra.diagram.path;alt:infra.diagram.alt" loading="lazy" decoding="async">
+        </a>
+        <figcaption id="infra-diagram-caption" class="infra-diagram__caption" data-i18n="infra.diagram.caption">Select the diagram to see the technical details at full size.</figcaption>
+      </figure>
+      <dialog class="infra-dialog" aria-labelledby="infra-dialog-title">
+        <header class="infra-dialog__header">
+          <strong id="infra-dialog-title" data-i18n="infra.diagram.full">Infrastructure diagram</strong>
+          <form method="dialog"><button type="submit" class="infra-dialog__close" data-i18n="infra.diagram.close" autofocus>Close</button></form>
+        </header>
+        <div class="infra-dialog__scroll" tabindex="0" role="region" aria-label="Scrollable infrastructure diagram" data-i18n-attr="aria-label:infra.diagram.scroll">
+          <img width="1280" height="650" alt="">
+        </div>
+      </dialog>
       <div class="two">
         <div>
-          <p class="lede" data-i18n="s06.lede">I rented the server, wired the connections and deployed both halves myself: <b>backend on a Vultr VPS</b>, Docker Compose behind Caddy with Postgres, and <b>frontend on Cloudflare Pages</b>, which redeploys on every push to main.</p>
-          <p class="note" style="margin-top:26px" data-i18n="s06.note">For development I open a Cloudflare tunnel to the local backend, so I test against a real domain without exposing my machine. Backups run and every so often I restore one: a backup you never tested isn't a backup. This page has no IPs, credentials, tokens or internal URLs.</p>
+          <p class="note" style="margin-top:0" data-i18n="s06.note">For development I open a Cloudflare tunnel to the local backend, so I test against a real domain without exposing my machine. Backups run and every so often I restore one: a backup you never tested isn't a backup. This page has no IPs, credentials, tokens or internal URLs.</p>
         </div>
         <div>
           <div class="box"><b class="bt" data-i18n="s06.box1.bt">Backend</b><span>VPS Vultr · Docker Compose · Caddy · PostgreSQL</span></div>
@@ -954,5 +970,6 @@ document.getElementById('today').textContent=new Date().toISOString().slice(0,10
   setTimeout(snap,500);
 })();
 </script>
+<script src="assets/infra/diagram.js"></script>
 </body>
 </html>

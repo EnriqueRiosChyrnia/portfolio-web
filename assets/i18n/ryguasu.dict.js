@@ -4,6 +4,21 @@
  */
 window.SiteI18n = window.SiteI18n || {};
 window.SiteI18n.dict = {
+  "intro.animation.label": { en: "Ryguasu opening animation", es: "Animación de entrada de Ryguasu" },
+  "intro.animation.skip": { en: "Skip intro", es: "Saltar introducción" },
+  "infra.diagram.path": { en: "assets/ryguasu/infraestructura-en.svg", es: "assets/ryguasu/infraestructura-es.svg" },
+  "infra.diagram.alt": { en: "Ryguasu infrastructure: Cloudflare Pages and API ingress, Fly Machines, managed Postgres, and encrypted R2 backups.", es: "Infraestructura de Ryguasu: Cloudflare Pages y entrada de la API, Fly Machines, Postgres administrado y backups cifrados en R2." },
+  "infra.diagram.open": { en: "Enlarge the infrastructure diagram", es: "Ampliar el diagrama de infraestructura" },
+  "infra.diagram.caption": { en: "Select the diagram to see the technical details at full size.", es: "Seleccioná el diagrama para ver los detalles técnicos en tamaño completo." },
+  "infra.diagram.full": { en: "Ryguasu infrastructure diagram", es: "Diagrama de infraestructura de Ryguasu" },
+  "infra.diagram.close": { en: "Close", es: "Cerrar" },
+  "infra.diagram.scroll": { en: "Scrollable infrastructure diagram", es: "Diagrama de infraestructura desplazable" },
+  "infra.diagram.heading": { en: "Deployment architecture", es: "Arquitectura de despliegue" },
+
+  "infra.diagram.sheet": { en: "CLOUD INFRASTRUCTURE", es: "INFRAESTRUCTURA CLOUD" },
+  "infra.diagram.lede": { en: "I deploy and operate the Java backend on Fly.io, with managed PostgreSQL and encrypted backups in Cloudflare R2.", es: "Despliego y opero el backend Java en Fly.io, con PostgreSQL administrado y copias de seguridad cifradas en Cloudflare R2." },
+  "hero.infra": { en: "See the cloud infrastructure", es: "Ver la infraestructura cloud" },
+  "nav.infra": { en: "Infrastructure", es: "Infraestructura" },
 
   /* ===== meta ===== */
   "meta.title": { en: "Ryguasu — Backend Case Study · Enrique Chyrnia", es: "Ryguasu — Caso de estudio backend · Enrique Chyrnia" },
@@ -35,8 +50,8 @@ window.SiteI18n.dict = {
   },
   "hero.rolLabel": { en: "Role · Backend &amp; infrastructure", es: "Rol · Backend e infraestructura" },
   "hero.rolP": {
-    en: "I designed the data model and the architecture, wrote the backend, the isolation between businesses and the encrypted backups, and I take care of the deploys and of checking that production stays healthy. The frontend and the visual design are my teammates' work, built on my API contracts.",
-    es: "Diseñé el modelo de datos y la arquitectura, escribí el backend, el aislamiento entre negocios y los backups cifrados, y me encargo de los deploys y de verificar que producción siga sana. El frontend y el diseño visual son de mis compañeros, construidos sobre mis contratos de API."
+    en: "I designed the data model and the architecture, wrote the backend, the isolation between businesses and the encrypted backups, and I take care of the deploys and of checking that production stays healthy.",
+    es: "Diseñé el modelo de datos y la arquitectura, escribí el backend, el aislamiento entre negocios y los backups cifrados, y me encargo de los deploys y de verificar que producción siga sana."
   },
   "hero.fact1": { en: "endpoints", es: "endpoints" },
   "hero.fact2": { en: "tables · 25 under RLS", es: "tablas · 25 bajo RLS" },

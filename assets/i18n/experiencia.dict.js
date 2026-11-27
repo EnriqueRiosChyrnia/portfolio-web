@@ -25,8 +25,8 @@
       es: "Backend e infraestructura técnica en una plataforma en producción: APIs, persistencia, deploy y observabilidad."
     },
     "meta.ogImageAlt": {
-      en: "Enrique Chyrnia — Backend · APIs & Integration · Cloud systems",
-      es: "Enrique Chyrnia — Backend · APIs e integraciones · Sistemas en la nube"
+      en: "Chambito App — AWS infrastructure at Mas que bien service",
+      es: "Chambito App — Infraestructura AWS en Mas que bien service"
     },
     "meta.ogLocale": { en: "en_US", es: "es_PY" },
     "meta.twitterTitle": {

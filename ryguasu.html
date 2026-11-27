@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/infra/diagram.css">
 <style>
   :root{
     --desk:#43463e; --paper:#f7f4e6; --strip:#f2efdf;
@@ -174,9 +175,39 @@
 
   /* ---- fichas amenaza / defensa ---- */
   .ficha{border:1.5px solid var(--ink);background:var(--paper)}
-  .fhead{display:flex;gap:18px;align-items:baseline;padding:24px 28px 0}
-  .fhead .fnum{font-size:12px;color:var(--faint);white-space:nowrap}
-  .fhead h3{margin:0;font-size:clamp(19px,2.6vw,26px);line-height:1.35;font-weight:700;text-shadow:.6px 0 0 currentColor}
+  .rol-infra{display:inline-block;margin-top:10px;font-weight:700;text-underline-offset:4px}
+  .infra-lede{max-width:74ch;margin:0}
+  .ryguasu-intro{
+    position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:24px;
+    border:0;color:var(--ink);background:var(--paper);overflow:hidden;isolation:isolate;
+    background-image:repeating-linear-gradient(180deg,transparent 0 30px,rgba(67,70,62,.065) 30px 31px)
+  }
+  .ryguasu-intro[open]{display:grid;place-items:center}
+  .ryguasu-intro::backdrop{background:var(--desk)}
+  .ryguasu-intro video{display:block;width:min(88vw,680px);max-height:75vh;height:auto;object-fit:contain;
+    mix-blend-mode:multiply;visibility:hidden}
+  .ryguasu-intro.is-playing video{visibility:visible}
+  .ryguasu-intro .ctxbtn{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));right:max(24px,env(safe-area-inset-right))}
+  @media print{.ryguasu-intro[open]{display:none}}
+  .ficha-section{padding-bottom:12px}
+  .fhead{display:grid;grid-template-columns:max-content minmax(0,1fr) 1.1em;gap:16px;
+    align-items:center;padding:13px 20px;cursor:pointer;list-style:none}
+  .fhead::-webkit-details-marker{display:none}
+  .fhead:hover,.ficha[open] .fhead{background:var(--strip)}
+  .fhead:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  .fhead::after{content:'';width:8px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;
+    justify-self:center;transform:translateY(-2px) rotate(45deg)}
+  .ficha[open] .fhead{border-bottom:1px solid var(--rule)}
+  .ficha[open] .fhead::after{transform:translateY(2px) rotate(225deg)}
+  .fhead .fnum{font-size:11px;color:var(--faint);white-space:nowrap}
+  .fquestion{font-size:clamp(14px,1.7vw,19px);line-height:1.4;font-weight:700}
+  @media(max-width:640px){
+    .fhead{grid-template-columns:minmax(0,1fr) 1.1em;gap:2px 12px;padding:11px 13px}
+    .fquestion{grid-column:1;grid-row:2}
+    .fhead::after{grid-column:2;grid-row:1 / span 2}
+    .frule,.fcols,.ffoot{padding-left:14px;padding-right:14px}
+    .fstamp{white-space:normal;max-width:100%}
+  }
   .frule{display:flex;align-items:baseline;gap:12px;padding:18px 28px 0;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
   .frule .threat{color:var(--red);font-weight:700}
   .frule .defense{color:var(--ok);font-weight:700}
@@ -280,11 +311,17 @@
 </style>
 </head>
 <body>
+<dialog id="ryguasu-intro" class="ryguasu-intro" aria-label="Ryguasu opening animation" data-i18n-attr="aria-label:intro.animation.label">
+  <video id="architecture-animation" width="1280" height="720" playsinline muted preload="none"
+    poster="assets/ryguasu/capas-arquitectura-poster.png" src="assets/ryguasu/capas-arquitectura.mp4" aria-hidden="true"></video>
+  <button id="ryguasu-intro-skip" type="button" class="ctxbtn" data-i18n="intro.animation.skip" autofocus>Skip intro</button>
+</dialog>
 
 <div class="topbar">
   <div class="twrap">
     <span class="tid" data-i18n="topbar.tid">EC · ENRIQUE CHYRNIA <i>/ RYGUASU.PRT</i></span>
     <nav class="links">
+      <a href="#infra" data-i18n="nav.infra">Infrastructure</a>
       <a href="#producto" data-i18n="nav.producto">Product</a>
       <a href="#preguntas" data-i18n="nav.preguntas">The questions</a>
       <a href="#construccion" data-i18n="nav.construccion">How it's built</a>
@@ -316,7 +353,8 @@
           <p class="blead" data-snap="1" data-i18n="hero.blead">Ryguasu ("hen" in Guaraní) is an inventory, sales, and cash register system for the small retail of Paraguay: the minimarket, the corner store, the neighborhood butcher shop. Every business shares one backend and one database, and that forces you to take isolation seriously. On this page I don't list features: <b>I answer the questions I'd ask a system that keeps other people's money</b>.</p>
           <div class="rol" data-snap="1">
             <b class="rl" data-i18n="hero.rolLabel">Role · Backend &amp; infrastructure</b>
-            <p data-i18n="hero.rolP">I designed the data model and the architecture, wrote the backend, the isolation between businesses and the encrypted backups, and I take care of the deploys and of checking that production stays healthy. The frontend and the visual design are my teammates' work, built on my API contracts.</p>
+            <p data-i18n="hero.rolP">I designed the data model and the architecture, wrote the backend, the isolation between businesses and the encrypted backups, and I take care of the deploys and of checking that production stays healthy.</p>
+            <a class="rol-infra" href="#infra" data-i18n="hero.infra">See the cloud infrastructure</a>
           </div>
         </div>
         <div class="hero-side">
@@ -340,6 +378,29 @@
         <span><b>49</b> <span data-i18n="hero.fact4">decisions documented</span></span>
       </div>
     </header>
+
+    <!-- ============ INFRAESTRUCTURA ============ -->
+    <div class="tear" aria-hidden="true"></div>
+    <section id="infra" class="alt-blue" data-screen-label="Infraestructura">
+      <div class="pgh"><span><b>RYGUASU.PRT</b></span><span data-i18n="infra.diagram.sheet">CLOUD INFRASTRUCTURE</span><span>GREENBAR · 132 COL</span></div>
+      <h2 class="title" data-i18n="infra.diagram.heading">Deployment architecture</h2>
+      <p class="infra-lede" data-i18n="infra.diagram.lede">I deploy and operate the Java backend on Fly.io, with managed PostgreSQL and encrypted backups in Cloudflare R2.</p>
+      <figure id="diagrama-infraestructura" class="infra-diagram" aria-describedby="infra-diagram-caption">
+        <a class="infra-diagram__open" href="assets/ryguasu/infraestructura-en.svg" data-i18n-attr="href:infra.diagram.path;aria-label:infra.diagram.open" aria-label="Enlarge the infrastructure diagram" target="_blank" rel="noopener">
+          <img src="assets/ryguasu/infraestructura-en.svg" width="1280" height="650" alt="Ryguasu infrastructure: Cloudflare Pages and API ingress, Fly Machines, managed Postgres, and encrypted R2 backups." data-i18n-attr="src:infra.diagram.path;alt:infra.diagram.alt" loading="lazy" decoding="async">
+        </a>
+        <figcaption id="infra-diagram-caption" class="infra-diagram__caption" data-i18n="infra.diagram.caption">Select the diagram to see the technical details at full size.</figcaption>
+      </figure>
+      <dialog class="infra-dialog" aria-labelledby="infra-dialog-title">
+        <header class="infra-dialog__header">
+          <strong id="infra-dialog-title" data-i18n="infra.diagram.full">Infrastructure diagram</strong>
+          <form method="dialog"><button type="submit" class="infra-dialog__close" data-i18n="infra.diagram.close" autofocus>Close</button></form>
+        </header>
+        <div class="infra-dialog__scroll" tabindex="0" role="region" aria-label="Scrollable infrastructure diagram" data-i18n-attr="aria-label:infra.diagram.scroll">
+          <img width="1280" height="650" alt="">
+        </div>
+      </dialog>
+    </section>
 
     <!-- ============ 00 PRODUCTO ============ -->
     <div class="tear" aria-hidden="true"></div>
@@ -386,12 +447,12 @@
     </section>
 
     <!-- ============ FICHA 01 — AISLAMIENTO ============ -->
-    <section data-screen-label="Ficha 01 Aislamiento">
-      <div class="ficha">
-        <div class="fhead">
+    <section class="ficha-section" data-screen-label="Ficha 01 Aislamiento">
+      <details class="ficha">
+        <summary class="fhead">
           <span class="fnum" data-i18n="f01.num">CARD 01/07</span>
-          <h3 data-i18n="f01.q">What if one business queries another's data?</h3>
-        </div>
+          <span class="fquestion" data-i18n="f01.q">What if one business queries another's data?</span>
+        </summary>
         <div class="frule">
           <span class="threat" data-i18n="ficha.threat">Threat</span>
           <span class="dots"></span>
@@ -427,16 +488,16 @@
           <span class="fstamp" data-i18n="f01.stamp">Verified · 42/42 in 403</span>
           <span class="fverif" data-i18n="f01.verif"><b class="vt">Verification</b> — a suite authenticates as business A and hits all 42 endpoints with business B's identifiers. <b>My part:</b> both layers. I enabled RLS when the schema had 6 tables; bolting it on later, with 25, would have been much worse.</span>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- ============ FICHA 02 — CONCURRENCIA ============ -->
-    <section data-screen-label="Ficha 02 Concurrencia">
-      <div class="ficha">
-        <div class="fhead">
+    <section class="ficha-section" data-screen-label="Ficha 02 Concurrencia">
+      <details class="ficha">
+        <summary class="fhead">
           <span class="fnum" data-i18n="f02.num">CARD 02/07</span>
-          <h3 data-i18n="f02.q">What if two tills sell the last unit at the same time?</h3>
-        </div>
+          <span class="fquestion" data-i18n="f02.q">What if two tills sell the last unit at the same time?</span>
+        </summary>
         <div class="frule">
           <span class="threat" data-i18n="ficha.threat">Threat</span>
           <span class="dots"></span>
@@ -454,16 +515,16 @@
           <span class="fstamp" data-i18n="f02.stamp">1 sale · 0 errors</span>
           <span class="fverif" data-i18n="f02.verif"><b class="vt">Verification</b> — a race test with two threads against a real Postgres (Testcontainers). <b>My part:</b> the first version returned 500s under the race; I rewrote it and kept that same test as a permanent regression.</span>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- ============ FICHA 03 — OFFLINE ============ -->
-    <section data-screen-label="Ficha 03 Offline">
-      <div class="ficha">
-        <div class="fhead">
+    <section class="ficha-section" data-screen-label="Ficha 03 Offline">
+      <details class="ficha">
+        <summary class="fhead">
           <span class="fnum" data-i18n="f03.num">CARD 03/07</span>
-          <h3 data-i18n="f03.q">What if the internet drops mid-shift?</h3>
-        </div>
+          <span class="fquestion" data-i18n="f03.q">What if the internet drops mid-shift?</span>
+        </summary>
         <div class="frule">
           <span class="threat" data-i18n="ficha.threat">Threat</span>
           <span class="dots"></span>
@@ -484,16 +545,16 @@
           <span class="fstamp" data-i18n="f03.stamp">No sale lost</span>
           <span class="fverif" data-i18n="f03.verif"><b class="vt">Verification</b> — the sync suite: idempotent replay, injected conflicts, expired licenses inside and outside the grace window. <b>My part:</b> the sync protocol, the signed licenses and the conflict policy.</span>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- ============ FICHA 04 — MONEDA / HISTORIA ============ -->
-    <section data-screen-label="Ficha 04 Moneda">
-      <div class="ficha">
-        <div class="fhead">
+    <section class="ficha-section" data-screen-label="Ficha 04 Moneda">
+      <details class="ficha">
+        <summary class="fhead">
           <span class="fnum" data-i18n="f04.num">CARD 04/07</span>
-          <h3 data-i18n="f04.q">What if the dollar moves after the sale?</h3>
-        </div>
+          <span class="fquestion" data-i18n="f04.q">What if the dollar moves after the sale?</span>
+        </summary>
         <div class="frule">
           <span class="threat" data-i18n="ficha.threat">Threat</span>
           <span class="dots"></span>
@@ -507,16 +568,16 @@
           <span class="fstamp" data-i18n="f04.stamp">Immutable history</span>
           <span class="fverif" data-i18n="f04.verif"><b class="vt">Verification</b> — the demo tenant's reports (183 days, 4,551 sales) close against the frozen lines. <b>My part:</b> all the money is computed on the server; the client never sends amounts.</span>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- ============ FICHA 05 — ARRANQUE ============ -->
-    <section data-screen-label="Ficha 05 Arranque">
-      <div class="ficha">
-        <div class="fhead">
+    <section class="ficha-section" data-screen-label="Ficha 05 Arranque">
+      <details class="ficha">
+        <summary class="fhead">
           <span class="fnum" data-i18n="f05.num">CARD 05/07</span>
-          <h3 data-i18n="f05.q">What if it boots with default secrets?</h3>
-        </div>
+          <span class="fquestion" data-i18n="f05.q">What if it boots with default secrets?</span>
+        </summary>
         <div class="frule">
           <span class="threat" data-i18n="ficha.threat">Threat</span>
           <span class="dots"></span>
@@ -530,16 +591,16 @@
           <span class="fstamp" data-i18n="f05.stamp">7/7 findings closed</span>
           <span class="fverif" data-i18n="f05.verif"><b class="vt">Verification</b> — each finding was closed by running the attack again, not by ticking a spreadsheet. <b>My part:</b> the startup guard and closing all 7.</span>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- ============ FICHA 06 — BACKUP ============ -->
-    <section data-screen-label="Ficha 06 Backup">
-      <div class="ficha">
-        <div class="fhead">
+    <section class="ficha-section" data-screen-label="Ficha 06 Backup">
+      <details class="ficha">
+        <summary class="fhead">
           <span class="fnum" data-i18n="f06.num">CARD 06/07</span>
-          <h3 data-i18n="f06.q">What if the server dies tonight?</h3>
-        </div>
+          <span class="fquestion" data-i18n="f06.q">What if the server dies tonight?</span>
+        </summary>
         <div class="frule">
           <span class="threat" data-i18n="ficha.threat">Threat</span>
           <span class="dots"></span>
@@ -558,16 +619,16 @@
           <span class="fstamp" data-i18n="f06.stamp">Completes or screams</span>
           <span class="fverif" data-i18n="f06.verif"><b class="vt">Verification</b> — the v1 [FAIL] left me a lesson in writing: test with production privileges, not with my developer ones. <b>My part:</b> the whole pipeline, from the cron to the encryption.</span>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- ============ FICHA 07 — SILENCIO / RESTORE ============ -->
-    <section data-screen-label="Ficha 07 Restore">
-      <div class="ficha">
-        <div class="fhead">
+    <section class="ficha-section" data-screen-label="Ficha 07 Restore">
+      <details class="ficha">
+        <summary class="fhead">
           <span class="fnum" data-i18n="f07.num">CARD 07/07</span>
-          <h3 data-i18n="f07.q">What if the backup never ran — and nobody noticed?</h3>
-        </div>
+          <span class="fquestion" data-i18n="f07.q">What if the backup never ran — and nobody noticed?</span>
+        </summary>
         <div class="frule">
           <span class="threat" data-i18n="ficha.threat">Threat</span>
           <span class="dots"></span>
@@ -592,7 +653,7 @@
           <span class="fstamp" data-i18n="f07.stamp">Restore tested · 25/25</span>
           <span class="fverif" data-i18n="f07.verif"><b class="vt">Verification</b> — downloaded, checksum verified, decrypted and restored onto a clean Postgres. <b>My part:</b> the switch, the drill and the fix it left behind.</span>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- ============ CÓMO SE CONSTRUYE ============ -->
@@ -694,7 +755,7 @@ document.getElementById('today').textContent=new Date().toISOString().slice(0,10
   function snap(){
     var sheet=document.querySelector('.sheet');
     if(!sheet)return;
-    var els=sheet.querySelectorAll(':scope > header > *, :scope > section > *, :scope > footer > *, [data-snap]');
+    var els=sheet.querySelectorAll(':scope > header > *, :scope > section > :not(.ficha), :scope > footer > *, [data-snap]');
     els.forEach(function(el){el.style.paddingBottom='';});
     var top=sheet.getBoundingClientRect().top;
     els.forEach(function(el){
@@ -710,6 +771,20 @@ document.getElementById('today').textContent=new Date().toISOString().slice(0,10
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(req);
   document.addEventListener('load',function(e){if(e.target&&e.target.tagName==='IMG')req();},true);
   req();setTimeout(req,300);setTimeout(req,800);
+
+  // Imprimir todas las fichas y restaurar al cerrar la vista de impresión.
+  var collapsedForPrint=[];
+  window.addEventListener('beforeprint',function(){
+    collapsedForPrint=Array.from(document.querySelectorAll('.ficha:not([open])'));
+    collapsedForPrint.forEach(function(card){card.open=true;});
+    snap();
+  });
+  window.addEventListener('afterprint',function(){
+    collapsedForPrint.forEach(function(card){card.open=false;});
+    collapsedForPrint=[];
+    req();
+  });
+  document.querySelectorAll('.ficha').forEach(function(card){card.addEventListener('toggle',req);});
 
   // Toggle de contexto de tenant (ficha 01)
   var ctx=true;
@@ -737,5 +812,7 @@ document.getElementById('today').textContent=new Date().toISOString().slice(0,10
   window.SiteI18nRender=function(){renderCtx();req();};
 })();
 </script>
+<script src="assets/infra/diagram.js"></script>
+<script src="assets/ryguasu/capas-arquitectura.js"></script>
 </body>
 </html>

@@ -1,5 +1,12 @@
 window.SiteI18n = window.SiteI18n || {};
 window.SiteI18n.dict = {
+  "infra.diagram.path": { en: "assets/filgrama/infraestructura-en.svg", es: "assets/filgrama/infraestructura-es.svg" },
+  "infra.diagram.alt": { en: "Fil-grama infrastructure: Cloudflare Pages and R2, a Vultr VPS with Caddy, Spring Boot and PostgreSQL, and the TikTok and Meta APIs.", es: "Infraestructura de Fil-grama: Cloudflare Pages y R2, un VPS de Vultr con Caddy, Spring Boot y PostgreSQL, y las APIs de TikTok y Meta." },
+  "infra.diagram.open": { en: "Enlarge the infrastructure diagram", es: "Ampliar el diagrama de infraestructura" },
+  "infra.diagram.caption": { en: "Select the diagram to see the technical details at full size.", es: "Seleccioná el diagrama para ver los detalles técnicos en tamaño completo." },
+  "infra.diagram.full": { en: "Fil-grama infrastructure diagram", es: "Diagrama de infraestructura de Fil-grama" },
+  "infra.diagram.close": { en: "Close", es: "Cerrar" },
+  "infra.diagram.scroll": { en: "Scrollable infrastructure diagram", es: "Diagrama de infraestructura desplazable" },
   "meta.title": { en: "Fil-Grama — Enrique Chyrnia", es: "Fil-Grama — Enrique Chyrnia" },
   "meta.description": { en: "Fil-Grama case study: social media analytics for agencies. Backend, Meta and TikTok integrations, a daily capture job, reports and product design.", es: "Caso Fil-Grama: analítica de redes sociales para agencias. Backend, integraciones con Meta y TikTok, job diario de captura, reportes y diseño de producto." },
   "meta.ogTitle": { en: "Fil-Grama — Product Case Study · Enrique Chyrnia", es: "Fil-Grama — Caso de producto · Enrique Chyrnia" },
